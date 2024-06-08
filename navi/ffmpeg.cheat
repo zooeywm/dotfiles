@@ -1,0 +1,27 @@
+% ffmpeg
+
+$input: ls | sed 's/^\(.*\)$/"\1"/'
+$input2: ls | sed 's/^\(.*\)$/"\1"/'
+$resolution: echo -e "1280:720\n1920:1080"
+$audio-format: echo "mp3 wav aiff" | tr ' ' '\n'
+
+# show audio metadata
+ffprobe -v quiet -show_format -of json <input>
+
+# show video metadata
+ffprobe -v quiet -select_streams v -show_entries 'format=duration,size,bit_rate,filename' -show_streams -of json <input>
+
+# show audio bitrate
+ffprobe -v quiet -select_streams 'a:0' -show_entries 'stream=bit_rate' -of 'compact=p=0:nk=1' <input>
+
+# extract audio from video
+ffmpeg -i <input> -vn -c:a <audio-format> -q:a 0 -map a <output>.<audio-format>
+
+# merge video and audio
+ffmpeg -i <input> -i <input2> -c copy <output>
+
+# Compress video
+ffmpeg -i <input> -vf "scale=<resolution>,fps=<fps>" -c:v libx264 -crf 23 -c:a aac -b:a 128k <output>
+
+# Compress picture
+ffmpeg -i <input> -vf scale=<resolution> <output>

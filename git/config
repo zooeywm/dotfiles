@@ -1,0 +1,30 @@
+[include]
+    path = ~/.config/git/.gitconfig-work
+[user]
+    name = zooeywm
+    email = zooeywm@gmail.com
+[init]
+    defaultBranch = main
+[core]
+    pager = delta
+    quotepath = false
+    editor = lvim
+    excludesfile = ~/.config/git/gitignore_global
+    
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    side-by-side = true
+    line-numbers-left-format = ""
+    line-numbers-right-format = "│ "
+    syntax-theme = Nord
+[credential]
+    helper = store
+[log]
+    date = iso-strict-local
+[trim]
+    bases = develop,master,main
+[pull]
+	rebase = true
+[merge]
+    conflictStyle = diff3

@@ -1,0 +1,16 @@
+% file system
+$remote: echo -e "GoogleDrive OneDrive" | tr ' ' '\n'
+# 分配一段空间
+fallocate -l <size> <stem>.img
+
+# 映射文件为带分区的回环设备
+sudo losetup -P -f --show <file>
+
+# 查看映射设备
+ls -l /dev/mapper
+
+# BiSync resync
+rclone bisync <remote>: ~/Documents/rclone/<remote> --create-empty-src-dirs --compare size,modtime,checksum --slow-hash-sync-only --resilient -MvP --drive-skip-gdocs --fix-case --resync
+
+# BiSync
+rclone bisync <remote>: ~/Documents/rclone/<remote> --create-empty-src-dirs --compare size,modtime,checksum --slow-hash-sync-only --resilient -MvP --drive-skip-gdocs --fix-case

@@ -1,0 +1,10 @@
+[plugin]
+deps = [
+  { use = "DreamMaoMao/searchjump", commit = "8a2c574" },
+  { use = "TD-Sky/sudo", commit = "7c8db5e" },
+  { use = "Rolv-Apneseth/starship", commit = "6197e4c" },
+  { use = "Reledia/glow", commit = "536185a" },
+]
+
+[flavor]
+deps = []

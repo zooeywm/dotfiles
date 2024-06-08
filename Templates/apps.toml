@@ -1,0 +1,225 @@
+[desktop]
+xdg-user-dirs = "Stable user dirs"
+qt-theme.packages = ["qt6ct", "qt5ct", "kvantum"]
+wezterm = "Modern terminal written in rust"
+kitty = ""
+polkit-kde-agent = "Authorization Panel"
+fcitx.packages = [
+  "fcitx5",
+  "fcitx5-gtk",
+  "fcitx5-chinese-addons",
+  "fcitx5-pinyin-zhwiki",
+  "fcitx5-configtool",
+]
+thunar = { packages = ["thunar", "tumbler", "webp-pixbuf-loader"], desc = "File manager" }
+
+[wayland]
+swww = "Wallpaper engine"
+waybar = "Status bar"
+swaylock = "Lock screen"
+swayidle = "Lock screen when idle"
+wl-clipboard = "Clipboard"
+cliphist = "Clipboard history"
+grim = "Screen cut"
+slurp = "Screen area cut"
+satty = { manager = "paru", desc = "Screen cut editor" }
+dunst = "Notify channel"
+hyprland.packages = ["hyprland", "xdg-desktop-portal-hyprland", "qt5-wayland"]
+wofi = "Menu"
+
+[font]
+terminus-font = "Outter terminal font"
+nerd-fonts = ""
+noto-fonts.packages = ["noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk"]
+
+[shell]
+nushell = ""
+mcfly = "History command"
+starship = "Shell beautify"
+zoxide = "Workdir switcher"
+zellij = "Terminal multiplexer"
+bash-completion = ""
+zsh.packages = ["zsh", "zsh-autosuggestions", "zsh-syntax-highlighting", "zsh-completions"]
+
+
+[git]
+gitui = "git TUI"
+stgit = { manager = "paru", packages = ["stgit", "xmlto"], desc = "Git ui" }
+delta = { packages = ["git-delta"], desc = "Advanced diff" }
+git-cliff = "Changelog generator"
+git-filter-repo = "Advanced git cleanner"
+
+[data]
+p7zip = "7z"
+rar = ""
+zip.packages = ["zip", "unzip"]
+qbittorrent = ""
+unarchiver = ""
+
+[media]
+sof-firmware = "Audio card firmware"
+ffmpeg = ""
+mpv = "Watch video"
+viu = "View image in terminal"
+yt-dlp = "Download Youtube video"
+pandoc = { packages = ["pandoc-bin"], desc = "LaTex render" }
+kid3-qt = "Music metadata editor"
+krita = "Drawing"
+espeak = { packages = ["espeak-ng"], desc = "Ebook speaker" }
+mupdf-tools = "PDF tool box"
+zathura = { packages = ["zathura", "zathura-pdf-mupdf"], desc = "PDF reader" }
+pipewire = { packages = [
+  "pipewire",
+  "wireplumber",
+  "pipewire-pulse",
+  "pipewire-alsa",
+  "pipewire-jack",
+  # Record screen
+  "pipewire-v4l2",
+] }
+
+[language]
+python-pip = ""
+nvchecker = "PKGBUILD nvchecker"
+pacman-contrib = "PKGBUILD pacman-contrib"
+pot-translation = "Translater"
+didyoumean = { packages = ["didyoumean-bin"], manager = "paru", desc = "Correct english word" }
+
+[monitor]
+mkinitcpio-firmware.manager = "paru"
+bottom = "Advanced top"
+brightnessctl = "Adjust lightness"
+pamixer = "Adjust volume"
+procs = "View processed"
+pulsemixer = "Volume panel tui"
+duf = "Calculate partion size"
+erdtree = "Tree with size"
+macchina = { packages = ["macchine-bin"], manager = "paru", desc = "System info" }
+
+[network]
+networkmanager = ""
+gping = "Ping with tui"
+traceroute = "Trace route"
+lsof = "Get file opend port"
+openssh = "ssh"
+clash-verge = { packages = ["clash-verge", "clash-meta"], manager = "paru" }
+
+[dev]
+neovide = "neovim gui"
+silicon = "代码截图"
+hugo = ""
+base = ""
+base-devel = ""
+lua-language-server = ""
+stylua = "Lua formatter"
+taplo-cli = "Toml tool"
+shfmt = "bash/zsh formatter"
+gopls = "Go language server"
+yaml-language-server.manager = "npm"
+vscode-json-language-server = { manager = "npm", packages = ["vscode-langservers-extracted"] }
+volar = { manager = "npm", packages = ["@vue/language-server"] }
+prettier = { manager = "npm", packages = [
+  "prettier",
+  "@prettier/plugin-xml",
+], desc = "FE formatter" }
+typst = "现代标记语言"
+tinymist = { packages = ["tinymist-bin"], manager = "paru", desc = "typst的语言服务器" }
+fnm = "Node manager"
+bash-language-server.manager = "npm"
+mlc = { manager = "cargo", desc = "markdown linter" }
+sccache = "Cargo build cache"
+kondo = "Clean build artifacts"
+cargo-flamegraph = "Cargo flamegraph"
+docker = ""
+QEMU.packages = ["qemu-full"]
+ventoy = { manager = "paru", packages = ["ventoy-bin"], desc = "Make iso" }
+gdb = "Debug tool"
+mold = "Modern link tool"
+tokei = "Code statistic"
+gcc = "GNU C/C++ toolchain"
+cmake-language-server = "Cmake Language Server"
+strace = "Bin stack trace"
+# Node
+rescript = { manager = "npm", desc = "rescript toolchain" }
+# Typescript
+typescript-language-server = { manager = "npm", packages = [
+  "typescript",
+  "typescript-language-server",
+] }
+nrm = { manager = "npm", desc = "Manage npm mirror" }
+# Android
+android-tools = "adb"
+# Rust
+cargo-binutils = { manager = "cargo", desc = "Rust binary tool" }
+rust-script = "rust shell interpreter"
+rustup = "Manage rust toolchain"
+cargo-generate = "Program template"
+cargo-machete = "Check unused dependency"
+cargo-msrv = "Oldest usable rustc version"
+cargo-expand = "Expand macro"
+cargo-edit = "Edit dependency"
+cargo-supply-chain = "Dependency metadata"
+cargo-deny = "Analyze dependency"
+cargo-audit = { packages = ["cargo-audit", "cargo-auditable"], desc = "Audit" }
+cargo-depgraph = "Dependency graph"
+cargo-update = "Update apps installed by cargo"
+cargo-cache = { manager = "cargo", desc = "Manage cache" }
+cross = { manager = "cargo", desc = "Cross build" }
+sea-orm-cli = { manager = "cargo", desc = "sea-orm tool" }
+# Clang
+clang = { packages = ["clang", "llvm"], desc = "C/C++ toolchain" }
+
+
+[system]
+polkit = "Policy kit"
+bluez = "Blutooth kernel"
+bluez-utils = "Bluetooth cli"
+acpi = "Battery info"
+bandwhich = "Monitor network bandwidth"
+#[arch]
+archlinuxcn-keyring = ""
+[amd]
+mesa-vdpau = "Gpu video accelerator"
+amd-ucode = "AMD CPU driver"
+xf86-video-amdgpu = "AMD GPU video accelerator"
+
+[misc]
+qalculate-qt = "Calculator"
+asciinema = "shell recorder"
+firefox = "Mozilla firefox"
+dbeaver = "PostgreSQL client"
+sqlitebrowser = "SQlite client"
+bat = "Advaned cat"
+choose = "Advanced cut"
+dos2unix = "Change file platform"
+enca = "Check file code"
+eza = "Advanced ls"
+fd = "Advanced find"
+jaq = "Advanced jq"
+jless = "Json reader"
+ripgrep = "Regex match"
+rsync = "Advanced copy"
+sd = "Advanced sed"
+skim = "Fuzzy search in rs"
+fzf = "Fuzzy search in go"
+tree = "Tree view"
+protobuf = "ProtocolBuffers"
+navi = "Command search"
+pastel = "Color palette"
+hyperfine = "Run and compare command speed"
+pueue = "Shell commands manager"
+parallel-disk-usage = "Disk space statistic"
+yazi = { packages = ["yazi-git", "jq", "ffmpegthumbnailer"], desc = "Tui file manager" }
+hexyl = "Hex viewer"
+conceal = { packages = ["conceal-bin"], manager = "paru", desc = "Recycle bin" }
+dotter = { packages = ["dotter-rs-bin"], manager = "paru", desc = "Config files manager" }
+QQ = { packages = ["linuxqq"], manager = "paru" }
+wechat = { packages = ["com.tecent.WeChat"], manager = "flatpak" }
+telegram = { packages = ["telegram-desktop"] }
+wemeet = { packages = ["com.tencent.wemeet"], manager = "flatpak" }
+vmware-workstation.manager = "paru"
+v4l2loopback-dkms = "Virtual camera with screen"
+obs-studio = ""
+man-db = ""
+genact = "Linux 'Professor'"
+rclone = "Net Drive Synchronization"

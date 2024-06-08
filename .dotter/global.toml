@@ -1,0 +1,91 @@
+[helpers]
+
+[shell.files]
+shell = "~/.config/shell"
+navi = "~/.local/share/navi/cheats"
+memo = "~/.local/share/memo"
+"starship.toml" = "~/.config/starship.toml"
+
+[zsh]
+depends = ["shell"]
+[zsh.files]
+zshrc = "~/.zshrc"
+zimrc = { target = "~/.zimrc", type = "symbolic" }
+zsh = { target = "~/.config/zsh", type = "symbolic" }
+
+[bash]
+depends = ["shell"]
+files = { bashrc = "~/.bashrc" }
+
+[fish]
+depends = ["shell"]
+files = { fish = "~/.config/fish" }
+
+[nushell]
+files = { nushell = "~/.config/nushell" }
+
+[desktop.files]
+"rofi/config" = "~/.config/rofi"
+"rofi/themes" = "~/.local/share/rofi/themes"
+"mimeapps.list" = "~/.config/mimeapps.list"
+applications = "~/.local/share/applications"
+dunst = "~/.config/dunst"
+
+[X]
+depends = ["desktop"]
+[X.files]
+#xprofile = "~/.xprofile"
+#awesome = { target = "~/.config/awesome", type = "symbolic" }
+
+[wayland]
+depends = ["desktop"]
+[wayland.files]
+hypr = "~/.config/hypr"
+swaylock = "~/.config/swaylock"
+"waybar/config.jsonc" = "~/.config/waybar/config.jsonc"
+"waybar/style.css" = "~/.config/waybar/style.css"
+"waybar/latte.css" = "~/.config/waybar/latte.css"
+#plasma-workspace = "~/.config/plasma-workspace"
+
+[vim.files]
+LazyVim = { target = "~/.config/LazyVim", type = "symbolic" }
+neovide = "~/.config/neovide"
+
+[gtk.files]
+"gtk-3.0" = "~/.config/gtk-3.0"
+"gtk-4.0" = "~/.config/gtk-4.0"
+"gtkrc-2.0" = "~/.gtkrc-2.0"
+
+
+[scripts.files]
+bin = "~/.local/bin"
+
+[terminal.files]
+wezterm = "~/.config/wezterm"
+"kitty.conf" = "~/.config/kitty/kitty.conf"
+zellij = "~/.config/zellij"
+yazi = { target = "~/.config/yazi", type = "symbolic" }
+[git.files]
+git = "~/.config/git"
+git-cliff = { target = "~/.config/git-cliff", type = "symbolic" }
+gitui = "~/.config/gitui"
+
+[media.files]
+zathura = "~/.config/zathura"
+mpv = "~/.config/mpv"
+
+[templates.files]
+Templates = { target = "~/Templates", type = "symbolic" }
+
+[PL.files]
+cargo = "~/.cargo"
+gdb = "~/.config/gdb"
+"taplo.toml" = "~/.taplo.toml"
+"pip.conf" = "~/.config/pip/pip.conf"
+
+[monitor.files]
+macchina = "~/.config/macchina"
+
+[fcitx5.files]
+"fcitx5/config" = "~/.config/fcitx5"
+"fcitx5/share" = "~/.local/share/fcitx5"

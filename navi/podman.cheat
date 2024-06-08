@@ -1,0 +1,18 @@
+% podman
+
+# Show container log
+podman container logs <all-containers>
+
+# Instantiate images interactively in background
+podman run -itd --name <container-name> <local-images>
+
+# Exec container command interactively
+podman exec -it <running-containers> <command>
+
+# Restart container
+podman restart <all-containers>
+
+$ all-containers: podman container ls -a --- --column 1 --header-lines 1 --delimiter '\s+'
+$ running-containers: podman container ls -a --- --column 1 --header-lines 1 --delimiter '\s+'
+$ local-images: podman images --- --column 3 --header-lines 1 --delimiter '\s+'
+$ command: echo "/bin/sh /bin/bash" | tr ' ' '\n'
