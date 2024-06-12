@@ -1,0 +1,18 @@
+#!/bin/sh
+pid_count=$(fuser /usr/bin/wf-recorder 2>/dev/null | wc -w)
+if [ "$pid_count" -gt 0 ]; then
+	pkill wf-recorder && notify-send "Screen Recording ended."
+else
+	notify-send "Screen Recording started."
+	if [ "$1" = "area" ]; then
+		exec wf-recorder -f ~/Videos/screen-record/vid-$(date +"%Y-%m-%d-%H%M%S").mp4 -g "$(slurp)"
+	elif [ "$1" = "screen" ]; then
+		output=$(hyprctl monitors -j)
+
+		x=$(echo "$output" | jq -r '.[] | select(.focused == true) | .x')
+		y=$(echo "$output" | jq -r '.[] | select(.focused == true) | .y')
+		width=$(echo "$output" | jq -r '.[] | select(.focused == true) | .width')
+		height=$(echo "$output" | jq -r '.[] | select(.focused == true) | .height')
+		exec wf-recorder -f ~/Videos/screen-record/vid-$(date +"%Y-%m-%d-%H%M%S").mp4 -g "$x,$y $width"x"$height"
+	fi
+fi

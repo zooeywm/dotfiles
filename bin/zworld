@@ -2,17 +2,25 @@
 
 def main [] {}
 
-# 截取区域
+# Capture area
 def 'main area' [
-    --dir (-d): path, # 保存目录
+    --dir (-d): path,
 ] {
     grim -g (slurp -d) -
     | satty -f - --copy-command wl-copy --early-exit --output-filename ($dir | save-path)
 }
 
-# 截取全屏
+# Capture window
+def 'main window' [
+    --dir (-d): path,
+] {
+    grim -g (hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"') -
+    | satty -f - --copy-command wl-copy --early-exit --output-filename ($dir | save-path)
+}
+
+# Capture fullscreen
 def 'main screen' [
-    --dir (-d): path, # 保存目录
+    --dir (-d): path,
 ] {
     grim -o (
         hyprctl monitors -j | from json | where focused | first | get name
@@ -21,10 +29,36 @@ def 'main screen' [
         --init-tool crop --copy-command wl-copy --early-exit)
 }
 
-# 保存目录
+def 'main record-area' [
+    --dir (-d): path,
+] {
+    let recorder_using = ps | where name == 'wf-recorder'
+    let pid_count = $recorder_using | length
+    if $pid_count > 0 {
+        # Kill all processes of wf-recorder
+        $recorder_using | get pid | each {|it| kill $it };
+        notify-send "Screen Recording ended."
+    } else {
+        notify-send "Screen Recording started.";
+	    wf-recorder -f ($dir | video-save-path) -g (slurp -d)
+    }
+}
+
+def 'main test' [] {
+	wf-recorder -f (video-save-path) -g (slurp -d)
+}
+
+# Save path
 def save-path [] {
     $in
     | default '~/Pictures/screenshot'
-    | path join $"satty-(date now | format date '%Y-%m-%d_%H:%M:%S').png"
+    | path join $"grim-(date now | format date '%Y-%m-%d_%H:%M:%S').png"
+    | path expand
+}
+
+def video-save-path [] {
+    $in
+    | default '~/Videos/screen-record'
+    | path join $"vid-(date now | format date '%Y-%m-%d_%H:%M:%S').mp4"
     | path expand
 }

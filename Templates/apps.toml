@@ -22,6 +22,7 @@ wl-clipboard = "Clipboard"
 cliphist = "Clipboard history"
 grim = "Screen cut"
 slurp = "Screen area cut"
+wf-recorder = "wayland screen recorder"
 satty = { manager = "paru", desc = "Screen cut editor" }
 dunst = "Notify channel"
 hyprland.packages = ["hyprland", "xdg-desktop-portal-hyprland", "qt5-wayland"]
