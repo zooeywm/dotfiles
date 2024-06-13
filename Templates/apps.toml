@@ -1,7 +1,7 @@
 [desktop]
 xdg-user-dirs = "Stable user dirs"
 qt-theme.packages = ["qt6ct", "qt5ct", "kvantum"]
-wezterm = "Modern terminal written in rust"
+wezterm-git = "Modern terminal written in rust"
 kitty = ""
 polkit-kde-agent = "Authorization Panel"
 fcitx.packages = [
@@ -25,7 +25,7 @@ slurp = "Screen area cut"
 wf-recorder = "wayland screen recorder"
 satty = { manager = "paru", desc = "Screen cut editor" }
 dunst = "Notify channel"
-hyprland.packages = ["hyprland", "xdg-desktop-portal-hyprland", "qt5-wayland"]
+hyprland.packages = ["hyprland", "xdg-desktop-portal-hyprland-git", "qt5-wayland"]
 wofi = "Menu"
 
 [font]
@@ -131,7 +131,8 @@ mlc = { manager = "cargo", desc = "markdown linter" }
 sccache = "Cargo build cache"
 kondo = "Clean build artifacts"
 cargo-flamegraph = "Cargo flamegraph"
-docker = ""
+podman = "Container Runtime"
+firejail = "Sandbox"
 QEMU.packages = ["qemu-full"]
 ventoy = { manager = "paru", packages = ["ventoy-bin"], desc = "Make iso" }
 gdb = "Debug tool"

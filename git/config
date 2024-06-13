@@ -28,3 +28,5 @@
 	rebase = true
 [merge]
     conflictStyle = diff3
+[safe]
+	directory = /home/zooeywm/.dotfiles-root
