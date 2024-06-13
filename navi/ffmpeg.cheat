@@ -3,9 +3,13 @@
 $input: ls | sed 's/^\(.*\)$/"\1"/'
 $input2: ls | sed 's/^\(.*\)$/"\1"/'
 $resolution: ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s='\:':p=0 <input>
+$fps: ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 <input> | awk -F'/' '{print $1/$2}'
+$fps-list: echo "<fps> 30 60 120" | tr ' ' '\n'
 $resolution-list: echo -e "<resolution>\n1280:720\n1920:1080\n2880:1800"
 $audio-format: echo "mp3 wav aiff" | tr ' ' '\n'
 $scale: echo "0.5 0.8" | tr ' ' '\n'
+$input-filename: echo <input> | sed 's/\.[^.]*$//'
+$output: echo "<input-filename> output" | tr ' ' '\n'
 
 # show audio metadata
 ffprobe -v quiet -show_format -of json <input>
@@ -23,16 +27,19 @@ ffmpeg -i <input> -vn -c:a <audio-format> -q:a 0 -map a <output>.<audio-format>
 ffmpeg -i <input> -i <input2> -c copy <output>
 
 # Compress video with certain resolution
-ffmpeg -i <input> -vf "scale=<resolution-list>,fps=<fps>" -c:v libx264 -crf 23 -c:a aac -b:a 128k <output>
+ffmpeg -i <input> -vf "scale=<resolution-list>,fps=<fps-list>" -c:v libx264 -crf 23 -c:a aac -b:a 128k <output>
 
 # Compress picture with certain resolution
 ffmpeg -i <input> -vf "scale=<resolution-list>" <output>
 
 # Compress video with ratio
-ffmpeg -i <input> -vf "scale=iw*<scale>:ih*<scale>,fps=<fps>" -c:v libx264 -crf 23 -c:a aac -b:a 128k <output>
+ffmpeg -i <input> -vf "scale=iw*<scale>:ih*<scale>,fps=<fps-list>" -c:v libx264 -crf 23 -c:a aac -b:a 128k <output>
 
 # Compress picture with ratio
 ffmpeg -i <input> -vf "scale=iw*<scale>:ih*<scale>" <output>
 
 # Get Video or Picture resolution
 <resolution>
+
+# Convert video to gif
+ffmpeg -i <input> -vf "scale=iw*<scale>:ih*<scale>:flags=lanczos" -r <fps-list> <output>.gif
