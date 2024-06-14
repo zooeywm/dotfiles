@@ -12,9 +12,9 @@ return {
         dependencies = {
             "nvimdev/guard-collection",
         },
-        keys = {
-            { "<leader>lf", "<cmd>GuardFmt<cr>", desc = "异步格式化" },
-        },
+        -- keys = {
+        --     { "<leader>lf", "<cmd>GuardFmt<cr>", desc = "异步格式化" },
+        -- },
         opts = {
             lua = {
                 cmd = "stylua",
