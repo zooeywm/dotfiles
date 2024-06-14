@@ -29,14 +29,6 @@ vim.keymap.del({ "n", "i", "v" }, "<C-s>")
 
 wk.register({ l = { name = "language" } }, { prefix = "<leader>" })
 
-local function pango()
-    pcall(function()
-        vim.cmd([[%s/[^\x00-\xff]\zs\ze\w\|\w\zs\ze[^\x00-\xff]/ /g]])
-    end)
-
-    vim.cmd("GuardFmt")
-end
-
 -- 切换标签页
 map.n({
     { "[t", "<cmd>tabNext<cr>", desc = "Prev tab" },
@@ -52,7 +44,6 @@ map.n({
     },
     { "<leader>lc", "<cmd>LspConfig<cr>", desc = "Lsp Config" },
     { "<leader>ch", "<cmd>RustLsp hover actions<CR>", ft = "rust", desc = "RustLsp hover actions" },
-    { "<leader>lf", pango, desc = "Async format" },
 })
 
 -- emacs keymaps

@@ -3,7 +3,7 @@
 $input: ls | sed 's/^\(.*\)$/"\1"/'
 $input2: ls | sed 's/^\(.*\)$/"\1"/'
 $resolution: ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s='\:':p=0 <input>
-$fps: ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 <input> | awk -F'/' '{print $1/$2}'
+$fps: ffmpeg -i vid-2024-06-14-211203.mp4 2>&1 | grep "Stream.*Video" | awk '{for(i=1;i<=NF;i++) if ($i ~ /fps/) print $(i-1)}'
 $fps-list: echo "<fps> 30 60 120" | tr ' ' '\n'
 $resolution-list: echo -e "<resolution>\n1280:720\n1920:1080\n2880:1800"
 $audio-format: echo "mp3 wav aiff" | tr ' ' '\n'

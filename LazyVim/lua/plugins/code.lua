@@ -12,9 +12,9 @@ return {
         dependencies = {
             "nvimdev/guard-collection",
         },
-        -- keys = {
-        --     { "<leader>lf", "<cmd>GuardFmt<cr>", desc = "异步格式化" },
-        -- },
+        keys = {
+            { "<leader>lf", "<cmd>GuardFmt<cr>", desc = "异步格式化" },
+        },
         opts = {
             lua = {
                 cmd = "stylua",
@@ -60,6 +60,13 @@ return {
         config = function(_, opts)
             local ft = require("guard.filetype")
 
+            local function pango()
+                vim.cmd('silent! [[%s/[^\x00-\xff]\zs\ze\\w\\|\\w\zs\ze[^\x00-\xff]/ /g]]')
+                -- vim.cmd()
+            end
+            ft("markdown,*"):fmt({
+                fn = pango,
+            })
             for lang, opt in pairs(opts) do
                 ft(lang):fmt(opt)
             end
