@@ -1,9 +1,11 @@
 [plugin]
 deps = [
-  { use = "DreamMaoMao/searchjump", commit = "1003419" },
+  { use = "DreamMaoMao/searchjump", commit = "f7f783a" },
   { use = "TD-Sky/sudo", commit = "e963f1e" },
   { use = "Rolv-Apneseth/starship", commit = "6197e4c" },
   { use = "Reledia/glow", commit = "536185a" },
+  { use = "yazi-rs/plugins#smart-filter", commit = "db66036" },
+  { use = "yazi-rs/plugins#jump-to-char", commit = "db66036" },
 ]
 
 [flavor]

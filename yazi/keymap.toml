@@ -77,7 +77,7 @@ keymap = [
   { on = ["N"], run = "find_arrow --previous", desc = "Go to previous found file" },
 
   # Filter
-  { on = ["f"], run = "filter --smart", desc = "Filter the files" },
+  { on = ["f"], run = "plugin jump-to-char", desc = "Jump to char" },
 
   # Sorting
   { on = [",", "m"], run = "sort modified --dir-first", desc = "Sort by modified time" },
@@ -127,7 +127,8 @@ keymap = [
   { on = ["~"], run = "help", desc = "Open help" },
 
   # Plugin
-  { on = ["U"], run = "plugin searchjump", desc = "Search Jump" },
+  { on = ["U"], run = "plugin searchjump --args='autocd'", desc = "Search Jump(auto cd selected folder)" },
+  { on = ["F"], run = "plugin smart-filter", desc = "Smart filter" },
   { on = ["T"], run = "plugin --sync max-preview", desc = "Max preview" },
   { on = ["R", "p"], run = "plugin sudo --args='paste'", desc = "sudo paste" },
   { on = ["R", "l"], run = "plugin sudo --args='link'", desc = "sudo link" },
