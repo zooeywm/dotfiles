@@ -1,214 +1,177 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* Catppuccin Latte */
-
 * {
-  font-family: "JetBrainsMono Nerd Font";
-  font-weight: bold;
+  border: none;
+  border-radius: 0;
   min-height: 0;
-  /* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
-  font-size: 110%;
-  font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
-  padding: 1px;
+  font-family: JetBrainsMono Nerd Font;
+  font-size: 25px;
 }
 
 @import "latte.css";
 
 window#waybar {
+  background-color: #181825;
   transition-property: background-color;
   transition-duration: 0.5s;
-  /*background: transparent;*/
-  /* border-bottom: 2px solid @sapphire; */
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  /* background: transparent; */
+  opacity: 0.85;
 }
 
 window#waybar.hidden {
-  opacity: 0.2;
+  opacity: 0.5;
 }
 
-#waybar.empty #window {
-  background: none;
+#workspaces {
+  background-color: transparent;
+}
+
+#workspaces button {
+  all: initial;
+  /* Remove GTK theme values (waybar #1351) */
+  min-width: 0;
+  /* Fix weird spacing in materia (waybar #450) */
+  box-shadow: inset 0 -3px transparent;
+  /* Use box-shadow instead of border so the text isn't offset */
+  padding: 6px 18px;
+  margin: 6px 3px;
+  border-radius: 4px;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+}
+
+#workspaces button.active {
+  color: #1e1e2e;
+  background-color: #cdd6f4;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  color: #1e1e2e;
+  background-color: #cdd6f4;
+}
+
+#workspaces button.urgent {
+  background-color: #f38ba8;
 }
 
 #backlight,
-#battery,
 #bluetooth,
 #clock,
 #cpu,
-#memory,
-#network,
-#pulseaudio,
-#taskbar button,
-#taskbar,
 #temperature,
-#tray,
-#window,
-#workspaces {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-right: 5px;
-  padding-left: 5px;
+#memory,
+#power-profiles-daemon,
+#battery,
+#backlight,
+#pulseaudio,
+#network,
+#clock,
+#tray {
+  border-radius: 10px;
+  margin: 6px 3px;
+  padding: 6px 12px;
+  background-color: #1e1e2e;
+  color: #181825;
 }
 
 #power-profiles-daemon {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-right: 15px;
-  padding-left: 6px;
+  margin-right: 6px;
 }
 
-#idle_inhibitor {
-  color: @blue;
+#custom-logo {
+  padding-right: 7px;
+  padding-left: 7px;
+  margin-left: 5px;
+  font-size: 15px;
+  border-radius: 8px 0px 0px 8px;
+  color: #1793d1;
 }
 
-#backlight {
-  color: @peach;
+#tray {
+  background-color: @rosewater;
+}
+
+#cpu {
+  background-color: @teal;
+}
+
+#memory {
+  background-color: @lavender;
+}
+
+#temperature {
+  background-color: @sky;
 }
 
 #battery {
-  color: @green;
+  background-color: #f38ba8;
 }
 
 @keyframes blink {
   to {
-    color: @surface0;
+    background-color: #f38ba8;
+    color: #181825;
   }
 }
 
-#battery.critical:not(.charging) {
-  background-color: @red;
-  color: @theme_text_color;
+#battery.warning,
+#battery.critical,
+#battery.urgent {
+  background-color: #ff0048;
+  color: #181825;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-  box-shadow: inset 0 -3px transparent;
 }
 
-#bluetooth {
-  color: @blue;
+#battery.charging {
+  background-color: #a6e3a1;
 }
 
-#power-profiles-daemon.performance {
-  color: @maroon;
-}
-
-#power-profiles-daemon.power-saver {
-  color: @green;
-}
-
-#power-profiles-daemon.balanced {
-  color: @lavender;
-}
-
-#clock {
-  color: @sky;
-}
-
-#cpu {
-  color: @green;
-}
-
-#memory {
-  color: @sky;
-}
-
-#temperature {
-  color: @teal;
-}
-
-#temperature.critical {
-  background-color: @red;
-}
-
-#tray > .passive {
-  -gtk-icon-effect: dim;
-}
-#tray > .needs-attention {
-  -gtk-icon-effect: highlight;
-}
-
-#workspaces button {
-  box-shadow: none;
-  text-shadow: none;
-  padding: 0px;
-  border-radius: 9px;
-  padding-left: 4px;
-  padding-right: 4px;
-  animation: gradient_f 20s ease-in infinite;
-  transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.682);
-}
-
-#workspaces button:hover {
-  border-radius: 10px;
-  color: @overlay0;
-  background-color: @surface0;
-  padding-left: 2px;
-  padding-right: 2px;
-  animation: gradient_f 20s ease-in infinite;
-  transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
-}
-
-#workspaces button.persistent {
-  color: @surface1;
-  border-radius: 10px;
-}
-
-#workspaces button.active {
-  color: @peach;
-  border-radius: 10px;
-  padding-left: 8px;
-  padding-right: 8px;
-  animation: gradient_f 20s ease-in infinite;
-  transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
-}
-
-#workspaces button.urgent {
-  color: @red;
-  border-radius: 0px;
-}
-
-#taskbar button.active {
-  padding-left: 8px;
-  padding-right: 8px;
-  animation: gradient_f 20s ease-in infinite;
-  transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
-}
-
-#taskbar button:hover {
-  padding-left: 3px;
-  padding-right: 3px;
-  animation: gradient_f 20s ease-in infinite;
-  transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+#backlight {
+  background-color: #fab387;
 }
 
 #pulseaudio {
-  color: @sapphire;
-}
-#pulseaudio.bluetooth {
-  color: @pink;
-}
-#pulseaudio.muted {
-  color: @red;
-}
-#pulseaudio.source-muted {
-  color: @red;
-}
-#window {
-  color: @rosewater;
+  background-color: #f9e2af;
 }
 
 #network {
-  color: @teal;
-  /* min-width: 330px; */
+  background-color: #94e2d5;
+  padding-right: 17px;
 }
 
-#network.disconnected,
-#network.disabled {
-  background-color: @surface0;
-  color: @text;
+#bluetooth {
+  background-color: @blue;
 }
+
+#song {
+  font-size: 30px;
+  color: @crust;
+}
+
+#clock {
+  font-family: JetBrainsMono Nerd Font;
+  background-color: #cba6f7;
+}
+
+#power-profiles-daemon {
+  background-color: #f2cdcd;
+}
+
+tooltip {
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #131822;
+}
+
+tooltip label {
+  padding: 5px;
+  background-color: #eeeeff;
+}
+
 #submap {
   color: @blue;
 }

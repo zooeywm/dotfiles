@@ -14,14 +14,13 @@ $PATH:\
 $HOME/.local/bin:\
 $HOME/.dotnet/tools:\
 /usr/lib/jvm/default/bin:\
-$HOME/repos/others/depot_tools"
+$HOME/repos/others/depot_tools:\
+$HOME/go/bin"
 
 # fcitx5
 export XMODIFIERS='@im=fcitx'
 # Do NOT set GET_IM_MODULE: <https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#TL.3BDR_Do_we_still_need_XMODIFIERS.2C_GTK_IM_MODULE_and_QT_IM_MODULE.3F>
 # export GTK_IM_MODULE='fcitx'
-# export QT_IM_MODULE='fcitx'
-export QT_IM_MODULES='wayland;fcitx;ibus'
 export SDL_IM_MODULE='fcitx'
 export QT_QPA_PLATFORMTHEME='qt5ct'
 

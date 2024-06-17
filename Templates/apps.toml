@@ -25,7 +25,14 @@ slurp = "Screen area cut"
 wf-recorder = "wayland screen recorder"
 satty = { manager = "paru", desc = "Screen cut editor" }
 dunst = "Notify channel"
-hyprland.packages = ["hyprland", "xdg-desktop-portal-hyprland-git", "qt5-wayland"]
+hyprland.packages = [
+  "hyprland",
+  "wlroots",
+  # for hyprpm
+  "cpio",
+  "xdg-desktop-portal-hyprland-git",
+  "qt5-wayland",
+]
 wofi = "Menu"
 
 [font]
@@ -173,6 +180,7 @@ clang = { packages = ["clang", "llvm"], desc = "C/C++ toolchain" }
 
 
 [system]
+ntp = "Time sync daemon"
 polkit = "Policy kit"
 bluez = "Blutooth kernel"
 bluez-utils = "Bluetooth cli"

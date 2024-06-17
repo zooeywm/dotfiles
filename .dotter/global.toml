@@ -58,7 +58,7 @@ neovide = "~/.config/neovide"
 
 
 [scripts.files]
-bin = "~/.local/bin"
+bin = { target = "~/.local/bin", type = "symbolic" }
 
 [terminal.files]
 wezterm = "~/.config/wezterm"

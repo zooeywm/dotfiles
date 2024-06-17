@@ -1,0 +1,10 @@
+%system
+
+# OpenGL info
+glxinfo | grep "OpenGL"
+
+# Vulkan info
+vulkaninfo
+
+# Show kernel version
+uname -r

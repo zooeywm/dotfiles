@@ -1,37 +1,37 @@
 % rust
 
-; rust语言相关
+; rust 语言相关
 
-# 列印所有目标平台
+# Show all rustc supported triplet target
 rustc --print target-list
 
-# 测试时显示输出
+# Test with stdout visiable
 cargo test -- --nocapture
 
-# 测试隐藏的函数
+# Test ignored or hide items
 cargo test -- --ignored
 
-# 编译器切换成 nightly
+# Switch rust toolchain to nightly
 rustup override set nightly
 
-# 添加编译目标
+# Add triplet target
 rustup target add <target>
 $ target: rustc --print target-list
 
-# 安装工具链
+# Install toolchain
 rustup toolchain install <toolchain>
 
-# 卸载工具链
+# Uninstall an rust toolchain
 rustup toolchain uninstall <local-toolchain>
 $ local-toolchain: rustup toolchain list
 
-# 以树状图追踪一个包为何存在
+# Display tree visualization of a dependency graph
 cargo tree -i <crate>
 
-# 读取文件的 object 信息
+# Read objectfile information
 rust-readobj -h <object>
 
-# 反汇编指定段
+# 反汇编指定段 awsd 213
 rust-objdump --section=<section> --source <object>
 
 # 读取符号表（若有）
