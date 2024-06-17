@@ -9,11 +9,11 @@
 @import "latte.css";
 
 window#waybar {
-  background-color: #181825;
+  background-color: #000000;
   transition-property: background-color;
   transition-duration: 0.5s;
   /* background: transparent; */
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 window#waybar.hidden {
