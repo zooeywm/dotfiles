@@ -114,8 +114,8 @@
     "orientation": "horizontal",
     "modules": [
       "custom/song-title",
-      "custom/song-post",
       "custom/song-status",
+      // "custom/song-post",
       "custom/song-lyric",
     ],
     "on-click": "playerctl --player=ElectronNCM play-pause",
@@ -241,6 +241,7 @@
     "format": "{}",
     "exec": "song",
     "interval": 1,
+    "max-length": 40,
   },
   "custom/song-status": {
     "format": "{}",
@@ -251,6 +252,7 @@
     "format": "{}",
     "exec": "song title",
     "interval": 1,
+    "max-length": 25,
   },
   "custom/song-post": {
     "format": "{}",
