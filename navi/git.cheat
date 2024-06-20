@@ -33,3 +33,6 @@ git worktree add <path> <branch>
 
 # 拉取项目的git子模块
 git submodule update --init
+
+# t-git or tgit
+git commit -m '$(date --rfc-3339 seconds)'
