@@ -1,0 +1,6 @@
+% ideapad
+
+$brightness: echo "0 1 2" | tr ' ' '\n'
+
+# Adjust ideapad keyboard brightness
+echo <brightness> | sudo tee /sys/class/leds/platform::kbd_backlight/brightness

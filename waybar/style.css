@@ -66,7 +66,8 @@ window#waybar.hidden {
 #pulseaudio,
 #network,
 #clock,
-#tray {
+#tray,
+#taskbar {
   border-radius: 10px;
   margin: 6px 3px;
   padding: 6px 12px;
@@ -78,14 +79,14 @@ window#waybar.hidden {
   margin-right: 6px;
 }
 
-#custom-logo {
-  padding-right: 7px;
-  padding-left: 7px;
-  margin-left: 5px;
-  font-size: 15px;
-  border-radius: 8px 0px 0px 8px;
-  color: #1793d1;
-}
+/* #custom-logo { */
+/*   padding-right: 7px; */
+/*   padding-left: 7px; */
+/*   margin-left: 5px; */
+/*   font-size: 15px; */
+/*   border-radius: 8px 0px 0px 8px; */
+/*   color: #1793d1; */
+/* } */
 
 #tray {
   background-color: @rosewater;

@@ -82,17 +82,3 @@ makepkg -si
 
 # 抓取包的 PKGBUILD
 paru -G <package>
-
-# cpupower maximum clock frequency
-sudo cpupower frequency-set -u <clock-freq>
-# cpupower minimum clock frequency
-sudo cpupower frequency-set -d <clock-freq>
-# cpupower specified clock frequency
-sudo cpupower frequency-set -f <clock-freq>
-
-# list and find system desktop application
-ls /usr/share/applications
-# list and find user desktop application
-ls ~/.local/share/applications
-# list and find flatpak desktop application
-ls /var/lib/flatpak/exports/share/applications/
