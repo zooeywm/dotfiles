@@ -112,6 +112,22 @@ songStatus() {
 	fi
 }
 
+next() {
+	if [[ $songSt == "Playing" ]]; then
+		$playerShell next
+	fi
+}
+
+prev() {
+	if [[ $songSt == "Playing" ]]; then
+		$playerShell previous
+	fi
+}
+
+toogle-pause() {
+	$playerShell play-pause
+}
+
 case "$1" in
 "songStatus")
 	songStatus
@@ -125,7 +141,17 @@ case "$1" in
 "songId")
 	getSongId
 	;;
+"next")
+	next
+	;;
+"prev")
+	prev
+	;;
+"toogle-pause")
+	toogle-pause
+	;;
 *)
 	song
 	;;
 esac
+# pkill -RTMIN+11 waybar

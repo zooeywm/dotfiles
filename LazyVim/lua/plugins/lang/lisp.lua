@@ -1,14 +1,14 @@
 return {
-    { "elkowar/yuck.vim", enabled = false, ft = "yuck" },
+    -- { "elkowar/yuck.vim", enabled = false, ft = "yuck" },
     {
         "eraserhd/parinfer-rust",
-        enabled = false,
+        -- enabled = false,
         ft = {
             "clojure",
             "lisp",
             "scheme",
             "racket",
-            "yuck",
+            -- "yuck",
         },
         build = "cargo build --release",
     },

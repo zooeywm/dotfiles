@@ -1,13 +1,13 @@
 [global]
     monitor = eDP-1
-    font = Noto Sans 32
-    width = 1000
+    font = Noto Sans 28
+    width = 800
     transparency = 30
     frame_color = "#1e66f5"
     separator_color= frame
 
-    min_icon_size = 256
-    max_icon_size = 256
+    min_icon_size = 200
+    max_icon_size = 200
 
 [urgency_low]
 background = "#eff1f5"

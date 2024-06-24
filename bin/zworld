@@ -7,7 +7,7 @@ def 'main area' [
     --dir (-d): path,
 ] {
     grim -g (slurp -d) -
-    | satty -f - --copy-command wl-copy --early-exit --output-filename ($dir | save-path)
+    | satty -f - --copy-command wl-copy --early-exit --default-hide-toolbars --output-filename ($dir | save-path)
 }
 
 # Capture window
@@ -15,7 +15,7 @@ def 'main window' [
     --dir (-d): path,
 ] {
     grim -g (hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"') -
-    | satty -f - --copy-command wl-copy --early-exit --output-filename ($dir | save-path)
+    | satty -f - --copy-command wl-copy --early-exit --default-hide-toolbars --output-filename ($dir | save-path)
 }
 
 # Capture fullscreen
@@ -25,7 +25,7 @@ def 'main screen' [
     grim -o (
         hyprctl monitors -j | from json | where focused | first | get name
     ) -
-    | (satty -f - --fullscreen --output-filename ($dir | save-path)
+    | (satty -f - --fullscreen --default-hide-toolbars --output-filename ($dir | save-path)
         --init-tool crop --copy-command wl-copy --early-exit)
 }
 
@@ -40,12 +40,12 @@ def 'main record-area' [
         notify-send "Screen Recording ended."
     } else {
         notify-send "Screen Recording started.";
-	    wf-recorder -f ($dir | video-save-path) -g (slurp -d)
+	    wf-recorder -f ($dir | video-save-path) --audio=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -g (slurp -d)
     }
 }
 
 def 'main test' [] {
-	wf-recorder -f (video-save-path) -g (slurp -d)
+	wf-recorder -f (video-save-path) --audio=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -g (slurp -d)
 }
 
 # Save path

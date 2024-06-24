@@ -4,6 +4,7 @@
   min-height: 0;
   font-family: JetBrainsMono Nerd Font;
   font-size: 25px;
+  opacity: 0.95;
 }
 
 @import "latte.css";
@@ -13,12 +14,11 @@ window#waybar {
   transition-property: background-color;
   transition-duration: 0.5s;
   /* background: transparent; */
-  opacity: 0.8;
 }
 
-window#waybar.hidden {
-  opacity: 0.5;
-}
+/* window#waybar.hidden { */
+/*   opacity: 0.5; */
+/* } */
 
 #workspaces {
   background-color: transparent;
@@ -67,12 +67,20 @@ window#waybar.hidden {
 #network,
 #clock,
 #tray,
-#taskbar {
+#taskbar,
+#dunst-paused,
+#custom-dunst-paused,
+#custom-updates {
   border-radius: 10px;
   margin: 6px 3px;
   padding: 6px 12px;
   background-color: #1e1e2e;
   color: #181825;
+  /* opacity: 0.6; */
+}
+
+#taskbar.empty {
+  background: transparent;
 }
 
 #power-profiles-daemon {
@@ -84,10 +92,12 @@ window#waybar.hidden {
 }
 
 #cpu {
+  min-width: 75px;
   background-color: @teal;
 }
 
 #memory {
+  min-width: 75px;
   background-color: @lavender;
 }
 
@@ -136,12 +146,22 @@ window#waybar.hidden {
 }
 
 #bluetooth {
+  min-width: 75px;
   background-color: @blue;
 }
 
 #song {
   font-size: 30px;
   color: @crust;
+}
+
+#custom-dunst-paused {
+  color: @crust;
+}
+
+#custom-updates {
+  color: @crust;
+  background-color: @teal;
 }
 
 #clock {

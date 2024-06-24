@@ -88,6 +88,7 @@ return {
     {
         "hrsh7th/nvim-cmp",
         opts = function(_, tbl)
+            local cmp = require("cmp")
             local override = {
                 matching = {
                     disallow_fuzzy_matching = false,
@@ -96,8 +97,24 @@ return {
                     disallow_partial_matching = false,
                     disallow_prefix_unmatching = false,
                 },
+                mapping = cmp.mapping.preset.insert({
+                    ["<M-Space>"] = cmp.mapping.complete(),
+                    ["<TAB>"] = LazyVim.cmp.confirm({ select = auto_select }),
+                }),
+                window = {
+                    completion = cmp.config.window.bordered({
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                        col_offset = -10,
+                        side_padding = 1,
+                    }),
+                    documentation = cmp.config.window.bordered({
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                        col_offset = 20,
+                        side_padding = 1,
+                    }),
+                },
             }
-            return vim.tbl_extend("force", tbl, override)
+            return vim.tbl_deep_extend("force", tbl, override)
         end,
     },
 }

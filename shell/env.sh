@@ -37,5 +37,6 @@ export FNM_NODE_DIST_MIRROR='https://npmmirror.com/mirrors/node'
 export GOPROXY='https://goproxy.cn'
 
 # mcfly
-export MCFLY_FUZZY=2
-export MCFLY_RESULTS=25
+export MCFLY_FUZZY=5
+export MCFLY_RESULTS=50
+export MCFLY_RESULTS_SORT=LAST_RUN
