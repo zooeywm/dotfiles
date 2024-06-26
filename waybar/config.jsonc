@@ -24,7 +24,7 @@
     "format": "{icon}",
     "icon-size": 40,
     "icon-theme": "Numix-Circle",
-    "tooltip-format": "{title}\n{name}\n{app_id}\n{state}\n{short_state}",
+    "tooltip-format": "title: {title}\nname: {name}\napp_id: {app_id}\nstate: {state}\nshort_state: {short_state}",
     "on-click": "activate",
     "on-click-middle": "close",
     // "on-click-right": "bash -c '[ '$(hyprctl clients -j | jq -r '.[] | select(.title == {title})' | jq -r '.workspace.name')' == 'special:minimized' ] && hyprctl dispatch movetoworkspace +0,title:{title} || hyprctl dispatch movetoworkspacesilent special:minimized,title:{title}'",
@@ -268,7 +268,7 @@
     "format": "{}",
     "exec": "bash -c '[ '$(dunstctl is-paused)' = 'false' ] && echo '🔔' || echo '🔕' '",
     "on-double-click": "dunstctl set-paused true",
-    "on-click": "bash -c '[ '$(dunstctl is-paused)' = 'false' ] && dunstctl set-paused true || dunstctl set-paused false'",
+    "on-click": "hyprland-scripts toggle-dunst-pause",
     "signal": 10,
   },
   "custom/updates": {

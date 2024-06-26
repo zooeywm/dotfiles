@@ -10,7 +10,7 @@ return {
                 enabled = false,
             },
             codelens = {
-                enabled = true,
+                enabled = false,
             },
             -- LSP Server Settings
             servers = {

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-is_xwayland() {
-	notify-send "Is X-wayland:" "$(hyprctl activewindow -j | jq ".xwayland")"
+info() {
+	notify-send "Window info:" "xwayland: $(hyprctl activewindow -j | jq -r ".xwayland")\nclass: $(hyprctl activewindow -j | jq -r ".initialClass")"
 }
 
 toggle_dunst_pause() {
@@ -40,8 +40,8 @@ toggle_bluetooth_power() {
 }
 
 case "$1" in
-"is-xwayland")
-	is_xwayland
+"info")
+	info
 	;;
 "toggle-dunst-pause")
 	toggle_dunst_pause

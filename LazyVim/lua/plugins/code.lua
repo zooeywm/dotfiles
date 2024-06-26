@@ -101,18 +101,10 @@ return {
                     ["<M-Space>"] = cmp.mapping.complete(),
                     ["<TAB>"] = LazyVim.cmp.confirm({ select = auto_select }),
                 }),
-                window = {
-                    completion = cmp.config.window.bordered({
-                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-                        col_offset = -10,
-                        side_padding = 1,
-                    }),
-                    documentation = cmp.config.window.bordered({
-                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-                        col_offset = 20,
-                        side_padding = 1,
-                    }),
-                },
+                -- window = {
+                --     completion = cmp.config.window.bordered(),
+                --     documentation = cmp.config.window.bordered(),
+                -- },
             }
             return vim.tbl_deep_extend("force", tbl, override)
         end,
