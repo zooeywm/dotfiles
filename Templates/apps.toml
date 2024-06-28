@@ -16,8 +16,6 @@ thunar = { packages = ["thunar", "tumbler", "webp-pixbuf-loader"], desc = "File 
 [wayland]
 swww = "Wallpaper engine"
 waybar = "Status bar"
-swaylock = "Lock screen"
-swayidle = "Lock screen when idle"
 wl-clipboard = "Clipboard"
 cliphist = "Clipboard history"
 grim = "Screen cut"
@@ -27,13 +25,15 @@ satty = { manager = "paru", desc = "Screen cut editor" }
 dunst = "Notify channel"
 hyprland.packages = [
   "hyprland",
+  "hyprlock",
+  "hypridle",
   "wlroots",
   # for hyprpm
   "cpio",
   "xdg-desktop-portal-hyprland-git",
   "qt5-wayland",
 ]
-wofi = "Menu"
+rofi-wayland = "Menu"
 
 [font]
 terminus-font = "Outter terminal font"
@@ -224,7 +224,7 @@ hexyl = "Hex viewer"
 conceal = { packages = ["conceal-bin"], manager = "paru", desc = "Recycle bin" }
 dotter = { packages = ["dotter-rs-bin"], manager = "paru", desc = "Config files manager" }
 QQ = { packages = ["linuxqq"], manager = "paru" }
-wechat = { packages = ["com.tecent.WeChat"], manager = "flatpak" }
+wechat = { packages = ["wechat-universal-bwrap"], manager = "paru" }
 telegram = { packages = ["telegram-desktop"] }
 wemeet = { packages = ["com.tencent.wemeet"], manager = "flatpak" }
 vmware-workstation.manager = "paru"
