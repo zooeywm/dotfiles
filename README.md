@@ -14,7 +14,7 @@ $ dotter deploy -vvv
 
 ### Shell
 
-- Login shell: **fish**
+- Login shell: [zsh](https://wiki.archlinux.org/title/zsh)
 
 - Prompt: [starship](https://starship.rs)
 
@@ -22,15 +22,13 @@ $ dotter deploy -vvv
 
 - Windows manager: [Hyprland](https://hyprland.org)
 
-- Application launcher: **rofi**
+- Application launcher: [rofi-wayland](https://archlinux.org/packages/?name=rofi-wayland)
 
 - Status bar: [waybar](https://github.com/Alexays/Waybar)
 
 ### Terminal
 
-- Terminal emulator: [wezterm](https://wezfurlong.org/wezterm/)
-
-- Terminal multiplexer: [zellij](https://zellij.dev)
+- Terminal emulator: [kitty](https://sw.kovidgoyal.net/kitty/)
 
 - Terminal file manager: [yazi](https://yazi-rs.github.io)
 

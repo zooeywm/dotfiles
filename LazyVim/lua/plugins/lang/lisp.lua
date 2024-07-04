@@ -8,7 +8,7 @@ return {
             "lisp",
             "scheme",
             "racket",
-            -- "yuck",
+            "query",
         },
         build = "cargo build --release",
     },
