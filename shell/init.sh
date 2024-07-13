@@ -8,7 +8,7 @@ else
 	return
 fi
 
-# 整理 PATH，删除重复路径
+# Remove dulplicated PATH
 if [ -n "$PATH" ]; then
 	old_PATH=$PATH:
 	PATH=

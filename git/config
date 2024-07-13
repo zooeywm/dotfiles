@@ -33,3 +33,5 @@
 	directory = ~/.dotfiles-root
 [gpg]
 	format = ssh
+[commit]
+	gpgsign = true
