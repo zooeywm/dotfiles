@@ -3,6 +3,7 @@
 [user]
     name = zooeywm
     email = zooeywm@gmail.com
+	signingkey = ~/.ssh/id_ed25519.pub
 [init]
     defaultBranch = main
 [core]
@@ -29,4 +30,6 @@
 [merge]
     conflictStyle = diff3
 [safe]
-	directory = /home/zooeywm/.dotfiles-root
+	directory = ~/.dotfiles-root
+[gpg]
+	format = ssh
