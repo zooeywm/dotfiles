@@ -20,6 +20,7 @@ eval "$(starship init $SH)"
 eval "$(fnm env --use-on-cd)"
 eval "$(mcfly init $SH)"
 eval "$(navi widget $SH)"
-# eval "$(opam env)"
+
+alias hp='ssh-agent Hyprland'
 
 INTER_DONE=1
