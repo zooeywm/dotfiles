@@ -26,7 +26,7 @@ files = { nushell = "~/.config/nushell" }
 
 [desktop.files]
 "rofi/config" = "~/.config/rofi"
-"rofi/themes" = "~/.local/share/rofi/themes"
+"rofi/themes" = { target = "~/.local/share/rofi/themes", type = "symbolic" }
 "mimeapps.list" = "~/.config/mimeapps.list"
 applications = "~/.local/share/applications"
 dunst = "~/.config/dunst"
@@ -80,7 +80,6 @@ Templates = { target = "~/Templates", type = "symbolic" }
 [PL.files]
 cargo = "~/.cargo"
 gdb = "~/.config/gdb"
-"taplo.toml" = "~/.taplo.toml"
 "pip.conf" = "~/.config/pip/pip.conf"
 
 [monitor.files]

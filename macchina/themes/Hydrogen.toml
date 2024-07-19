@@ -1,6 +1,6 @@
 # Hydrogen
 
-spacing         = 2
+spacing         = 1
 padding         = 0
 separator       = " "
 key_color       = "Yellow"
@@ -11,6 +11,12 @@ path = "~/.config/macchina/ascii/archlinux.ascii"
 
 [palette]
 type = "Full"
+visible = false
+
+[bar]
+glyph = "o"
+symbol_open = '['
+symbol_close = ']'
 visible = false
 
 [box]
@@ -28,8 +34,8 @@ separator_color = false
 [keys]
 host            = "Host"
 kernel          = "Kernel"
-battery         = "Battery"
 os              = "OS"
+machine         = "Machine"
 de              = "DE"
 wm              = "WM"
 distro          = "Distro"
@@ -37,12 +43,12 @@ terminal        = "Terminal"
 shell           = "Shell"
 packages        = "Packages"
 uptime          = "Uptime"
-memory          = "Memory"
-machine         = "Machine"
 local_ip        = "Local IP"
+memory          = "Memory"
+battery         = "Battery"
 backlight       = "Brightness"
 resolution      = "Resolution"
-cpu_load        = "CPU Load"
 cpu             = "CPU"
+cpu_load        = "CPU Load"
 gpu             = "GPU"
 disk_space      = "Disk Space"
