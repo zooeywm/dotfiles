@@ -91,7 +91,7 @@ rules = [
     "reveal",
   ] },
 
-  { mime = "application/json", use = [
+  { mime = "application/{json,x-ndjson}", use = [
     "edit",
     "reveal",
   ] },
@@ -99,7 +99,7 @@ rules = [
     "edit",
     "reveal",
   ] },
-  { mime = "*", use = [
+  { name = "*", use = [
     "open",
     "reveal",
   ] },
@@ -116,13 +116,13 @@ suppress_preload = false
 [plugin]
 fetchers = [
   # Mimetype
-  { id = "mine", name = "*", cond = "!mime", run = "mime", prio = "high" },
+  { id = "mine", name = "*", if = "!mime", run = "mime", prio = "high" },
 ]
 prepend_previewers = [{ name = "*.md", run = "glow" }]
 
 preloaders = [
   # Image
-  { mime = "image/{heic,jxl,svg+xml}", run = "magick" },
+  { mime = "image/{avif,heic,jxl,svg+xml}", run = "magick" },
   { mime = "image/*", run = "image" },
   # Video
   { mime = "video/*", run = "video" },
@@ -141,11 +141,9 @@ previewers = [
   { mime = "*/javascript", run = "code" },
   { mime = "*/x-wine-extension-ini", run = "code" },
   # JSON
-  { mime = "application/json", run = "json" },
+  { mime = "application/{json,x-ndjson}", run = "json" },
   # Image
-  { mime = "image/svg+xml", run = "magick" },
-  { mime = "image/heic", run = "magick" },
-  { mime = "image/jxl", run = "magick" },
+  { mime = "image/{avif,heic,jxl,svg+xml}", run = "magick" },
   { mime = "image/*", run = "image" },
   # Video
   { mime = "video/*", run = "video" },
@@ -153,7 +151,7 @@ previewers = [
   { mime = "application/pdf", run = "pdf" },
   # Archive
   { mime = "application/{,g}zip", run = "archive" },
-  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", run = "archive" },
+  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar,iso9660-image}", run = "archive" },
   # Font
   { mime = "font/*", run = "font" },
   { mime = "application/vnd.ms-opentype", run = "font" },
