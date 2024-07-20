@@ -144,9 +144,11 @@ keymap = [
   { on = "~", run = "help", desc = "Open help" },
 
   # Plugin
-  { on = "U", run = "plugin searchjump --args='autocd'", desc = "Search Jump(auto cd selected folder)" },
+  # { on = "U", run = "plugin searchjump --args='autocd'", desc = "Search Jump(auto cd selected folder)" },
+  { on = "U", run = "plugin jump-to-char", desc = "Jump to char" },
   { on = "F", run = "plugin smart-filter", desc = "Smart filter" },
-  { on = "T", run = "plugin --sync max-preview", desc = "Max preview" },
+  { on = "M", run = "plugin --sync max-preview", desc = "Max preview" },
+  { on = "H", run = "plugin --sync hide-preview", desc = "Hide preview" },
   { on = ["R", "p"], run = "plugin sudo --args='paste'", desc = "sudo paste" },
   { on = ["R", "l"], run = "plugin sudo --args='link'", desc = "sudo link" },
   { on = ["R", "a"], run = "plugin sudo --args='create'", desc = "sudo create" },
