@@ -59,7 +59,7 @@ git-filter-repo = "Advanced git cleanner"
 
 [data]
 p7zip = "7z"
-rar = ""
+unrar.packages = ["unrar-free"]
 zip.packages = ["zip", "unzip"]
 qbittorrent = ""
 unarchiver = ""
@@ -139,7 +139,7 @@ sccache = "Cargo build cache"
 kondo = "Clean build artifacts"
 cargo-flamegraph = "Cargo flamegraph"
 podman = "Container Runtime"
-firejail = "Sandbox"
+# firejail = "Sandbox"
 QEMU.packages = ["qemu-full"]
 ventoy = { manager = "paru", packages = ["ventoy-bin"], desc = "Make iso" }
 gdb = "Debug tool"

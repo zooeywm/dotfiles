@@ -44,11 +44,7 @@ depends = ["desktop"]
 depends = ["desktop"]
 [wayland.files]
 hypr = "~/.config/hypr"
-swaylock = "~/.config/swaylock"
-"waybar/config.jsonc" = "~/.config/waybar/config.jsonc"
-"waybar/style.css" = "~/.config/waybar/style.css"
-"waybar/latte.css" = "~/.config/waybar/latte.css"
-#plasma-workspace = "~/.config/plasma-workspace"
+waybar = { target = "~/.config/waybar", tpe = "symbolic" }
 
 [vim.files]
 LazyVim = { target = "~/.config/LazyVim", type = "symbolic" }
@@ -58,7 +54,6 @@ neovide = "~/.config/neovide"
 "gtk-3.0" = "~/.config/gtk-3.0"
 "gtk-4.0" = "~/.config/gtk-4.0"
 "gtkrc-2.0" = "~/.gtkrc-2.0"
-
 
 [scripts.files]
 bin = { target = "~/.local/bin", type = "symbolic" }
@@ -77,17 +72,16 @@ gitui = "~/.config/gitui"
 zathura = "~/.config/zathura"
 mpv = "~/.config/mpv"
 
-[templates.files]
-Templates = { target = "~/Templates", type = "symbolic" }
-
 [PL.files]
 cargo = "~/.cargo"
 gdb = "~/.config/gdb"
 "pip.conf" = "~/.config/pip/pip.conf"
 
-[monitor.files]
-macchina = "~/.config/macchina"
-
 [fcitx5.files]
 "fcitx5/config" = "~/.config/fcitx5"
 "fcitx5/share" = "~/.local/share/fcitx5"
+
+[misc.files]
+macchina = "~/.config/macchina"
+Templates = { target = "~/Templates", type = "symbolic" }
+paru = "~/.config/paru"

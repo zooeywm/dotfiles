@@ -79,7 +79,7 @@ zcomet fpath zsh-users/zsh-completions src
 zcomet fpath nix-community/nix-zsh-completions
 
 zcomet load tj/git-extras etc/git-extras-completion.zsh
-zcomet load trapd00r/LS_COLORS lscolors.sh
+# zcomet load trapd00r/LS_COLORS lscolors.sh
 zcomet load QuarticCat/zsh-smartcache
 zcomet load chisui/zsh-nix-shell
 zcomet load romkatv/zsh-no-ps2
@@ -100,6 +100,7 @@ alias rsi='rust-script'
 alias d4v='mkdir -p $XDG_CACHE_HOME/nvim/{backup,info,swap,undo}'
 alias sudo='sudo ' # 尾随空格以递归展开余下的别名
 alias l='eza -a --color=auto -s=type'
+alias ls='eza -a --color=auto -s=type'
 alias pb='curl -F "c=@-" "http://fars.ee/?u=1"'
 
 alias -g :n='>/dev/null'
