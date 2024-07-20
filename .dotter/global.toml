@@ -9,9 +9,12 @@ memo = "~/.local/share/memo"
 [zsh]
 depends = ["shell"]
 [zsh.files]
-zshrc = "~/.zshrc"
-zimrc = { target = "~/.zimrc", type = "symbolic" }
-zsh = { target = "~/.config/zsh", type = "symbolic" }
+"zsh/zshenv" = "~/.zshenv"
+"zsh/zshrc" = "~/.config/zsh/.zshrc"
+"zsh/p10k.zsh" = "~/.config/zsh/p10k.zsh"
+# zshrc = "~/.zshrc"
+# zimrc = { target = "~/.zimrc", type = "symbolic" }
+# zsh = { target = "~/.config/zsh", type = "symbolic" }
 
 [bash]
 depends = ["shell"]

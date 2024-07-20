@@ -1,0 +1,57 @@
+#!/usr/bin/env zsh
+
+# XDG
+export XDG_CONFIG_HOME=~/.config
+export XDG_CACHE_HOME=~/.cache
+export XDG_DATA_HOME=~/.local/share
+export XDG_STATE_HOME=~/.local/state
+
+# Rust
+export RUSTUP_DIST_SERVER="https://rsproxy.cn"         # affect `rustup update`
+export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"  # affect `rustup self-update`
+export RUSTC_WRAPPER="/usr/bin/sccache"
+export SCCACHE_DIR='$HOME/.cache/sccache'
+export SCCACHE_CACHE_SIZE="100G"
+
+export XMODIFIERS='@im=fcitx'
+export SDL_IM_MODULE='fcitx'
+export QT_QPA_PLATFORMTHEME='qt5ct'
+
+export EDITOR='lvim'
+export VISUAL='lvim'
+
+# fnm nodejs mirror
+export FNM_NODE_DIST_MIRROR='https://npmmirror.com/mirrors/node'
+
+# go mirror
+export GOPROXY='https://goproxy.cn'
+
+# mcfly
+export MCFLY_FUZZY=5
+export MCFLY_RESULTS=50
+export MCFLY_RESULTS_SORT=LAST_RUN
+
+export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS --chop-long-lines'
+
+export FZF_DEFAULT_OPTS='--ansi --height=60% --reverse --cycle --bind=tab:accept'
+
+export MANPAGER='sh -c "col -bx | bat -pl man --theme=Monokai\ Extended"'
+export MANROFFOPT='-c'
+
+export MOLD_JOBS=1
+
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive  # see https://nixos.wiki/wiki/Locales
+
+ZDOTDIR=$XDG_CONFIG_HOME/zsh
+
+# executable files path
+typeset -U path # Make unique
+path=(
+    ~/.cargo/bin
+    ~/.local/bin
+    $path
+    ~/.dotnet/tools
+    /usr/lib/jvm/default/bin
+    ~/repos/others/depot_tools
+    ~/go/bin
+)

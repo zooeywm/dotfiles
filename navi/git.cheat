@@ -35,4 +35,4 @@ git worktree add <path> <branch>
 git submodule update --init
 
 # t-git or tgit
-git commit -m '$(date --rfc-3339 seconds)'
+git commit -S -m '$(date --rfc-3339 seconds)'

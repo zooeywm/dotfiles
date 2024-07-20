@@ -2,7 +2,7 @@
 
 ## 快速提交，内容为当前时区的时间戳
 function t-git {
-	git commit -m "$(date --rfc-3339 seconds)"
+	git commit -S -m "$(date --rfc-3339 seconds)"
 }
 
 ##################################################

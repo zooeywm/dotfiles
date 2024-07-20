@@ -7,6 +7,9 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # rust 工具链镜像源
 export RUSTUP_DIST_SERVER='https://mirrors.ustc.edu.cn/rust-static'
 export RUSTUP_UPDATE_ROOT='https://mirrors.ustc.edu.cn/rust-static/rustup'
+export RUSTC_WRAPPER="/usr/bin/sccache"
+export SCCACHE_DIR='$HOME/.cache/sccache'
+export SCCACHE_CACHE_SIZE="100G"
 
 # 用户可执行程序目录
 export PATH="$HOME/.cargo/bin:\
