@@ -12,9 +12,6 @@ depends = ["shell"]
 "zsh/zshenv" = "~/.zshenv"
 "zsh/zshrc" = "~/.config/zsh/.zshrc"
 "zsh/p10k.zsh" = "~/.config/zsh/p10k.zsh"
-# zshrc = "~/.zshrc"
-# zimrc = { target = "~/.zimrc", type = "symbolic" }
-# zsh = { target = "~/.config/zsh", type = "symbolic" }
 
 [bash]
 depends = ["shell"]
@@ -39,12 +36,11 @@ depends = ["desktop"]
 [X.files]
 #xprofile = "~/.xprofile"
 #awesome = { target = "~/.config/awesome", type = "symbolic" }
-
 [wayland]
 depends = ["desktop"]
 [wayland.files]
 hypr = "~/.config/hypr"
-waybar = { target = "~/.config/waybar", tpe = "symbolic" }
+waybar = { target = "~/.config/waybar", type = "symbolic" }
 
 [vim.files]
 LazyVim = { target = "~/.config/LazyVim", type = "symbolic" }
@@ -63,6 +59,7 @@ wezterm = "~/.config/wezterm"
 "kitty.conf" = "~/.config/kitty/kitty.conf"
 zellij = "~/.config/zellij"
 yazi = { target = "~/.config/yazi", type = "symbolic" }
+
 [git.files]
 git = "~/.config/git"
 git-cliff = { target = "~/.config/git-cliff", type = "symbolic" }
