@@ -26,8 +26,11 @@ vim.keymap.del("n", "<Leader>l")
 vim.keymap.del("n", "<Leader>gG")
 vim.keymap.del("n", "<Leader>cd")
 vim.keymap.del({ "n", "i", "v" }, "<C-s>")
+vim.keymap.del("n", "<C-f>")
+vim.keymap.del("n", "<C-b>")
 
 wk.add({ "<leader>l", group = "language" })
+wk.add({ "<leader>t", group = "toggle" })
 
 -- 切换标签页
 map.n({
@@ -44,11 +47,24 @@ map.n({
     },
     { "<leader>lc", "<cmd>LspConfig<cr>", desc = "Lsp Config" },
     { "<leader>ch", "<cmd>RustLsp hover actions<CR>", ft = "rust", desc = "RustLsp hover actions" },
+    { "<leader>tw", ":lua ToggleWordWrap()<CR>", desc = "Toggle word wrap" },
+    { "<M-l>", "zl", desc = "Screen to the right" },
+    { "<M-h>", "zh", desc = "Screen to the left" },
+    { "<M-L>", "zL", desc = "Screen half to the right" },
+    { "<M-H>", "zH", desc = "Screen half to the right" },
 })
+
+function ToggleWordWrap()
+    local wrap = vim.opt.wrap:get()
+    vim.opt.wrap = not wrap
+    print("Word wrap " .. (wrap and "disabled" or "enabled"))
+end
 
 -- emacs keymaps
 map.i({
     -- move
+    ["<C-h>"] = "<Left>",
+    ["<C-l>"] = "<Right>",
     ["<C-b>"] = "<Left>",
     ["<C-f>"] = "<Right>",
     -- jump
@@ -61,7 +77,7 @@ map.i({
 
 -- line text object
 map.v({
-    ["ik"] = "0o$h", -- exclude end
-    ["ak"] = "0o$", -- include end
+    ["il"] = "0o$h", -- exclude end
+    ["al"] = "0o$", -- include end
 })
 vim.keymap.set("o", "ik", "<cmd>normal vik<cr>")

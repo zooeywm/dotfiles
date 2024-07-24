@@ -7,11 +7,11 @@ export XDG_DATA_HOME=~/.local/share
 export XDG_STATE_HOME=~/.local/state
 
 # Rust
-export RUSTUP_DIST_SERVER="https://rsproxy.cn"         # affect `rustup update`
-export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"  # affect `rustup self-update`
-export RUSTC_WRAPPER="/usr/bin/sccache"
-export SCCACHE_DIR='$HOME/.cache/sccache'
-export SCCACHE_CACHE_SIZE="100G"
+export RUSTUP_DIST_SERVER='https://rsproxy.cn'         # affect `rustup update`
+export RUSTUP_UPDATE_ROOT='https://rsproxy.cn/rustup'  # affect `rustup self-update`
+export RUSTC_WRAPPER=/usr/bin/sccache
+export SCCACHE_DIR=~/.cache/sccache
+export SCCACHE_CACHE_SIZE='100G'
 
 export XMODIFIERS='@im=fcitx'
 export SDL_IM_MODULE='fcitx'
