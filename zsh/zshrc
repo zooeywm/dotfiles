@@ -32,16 +32,6 @@ function swap {
 	mv "$1.swapping" $2
 }
 
-## yazi移动
-function yy {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
 # 编译graphviz图
 function dot-png {
 	dot -Tpng $1 -o "$(echo $1 | choose -f '\.' 0).png"
@@ -175,18 +165,18 @@ autoload -z edit-command-line
 zle -N edit-command-line
 bindkey '^O' edit-command-line
 
-# Navigate on yazi
-# Ref: https://yazi-rs.github.io/docs/quick-start#shell-wrapper
-yazi-nav() {
-	local tmp="$(mktemp -t yazi-cwd.XXXXX)"
+## yazi移动
+function yy {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
 	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [[ -n "$cwd" ]] && [[ "$cwd" != "$PWD" ]] {
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		cd -- "$cwd"
-    }
+	fi
 	rm -f -- "$tmp"
 }
-zle -N yazi-nav
-bindkey '^V' yazi-nav
+
+zle -N yy
+bindkey '^Y' yy
 
 # Trim trailing spaces from pasted text to trigger no running
 # Ref: https://unix.stackexchange.com/questions/693118

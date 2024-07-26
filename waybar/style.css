@@ -62,7 +62,7 @@ window#waybar {
 /* #memory, */
 #motherboard,
 /* #power-profiles-daemon, */
-/* #battery, */
+#battery,
 /* #backlight, */
 #laptop,
 /* #bluetooth, */
@@ -115,8 +115,7 @@ window#waybar {
 
 @keyframes blink {
   to {
-    background-color: #f38ba8;
-    color: #f0f8ff;
+    color: #f38ba8;
   }
 }
 #battery.charging {
@@ -126,7 +125,6 @@ window#waybar {
 #battery.warning,
 #battery.critical,
 #battery.urgent {
-  background-color: #ff0048;
   color: #f0f8ff;
   animation-name: blink;
   animation-duration: 0.5s;
