@@ -16,7 +16,7 @@ return {
             wk.add({
                 mode = { "n", "o", "x" },
                 { "gt", group = "text-case" },
-                { "gt-", convert_case("to_upper_case"),    desc = "to-dash" },
+                { "gt-", convert_case("to_upper_case"), desc = "to-dash" },
                 { "gt/", convert_case("to_lower_case"), desc = "to/path" },
                 { "gtC", convert_case("to_snake_case"), desc = "TO_CONSTANT" },
                 { "gtP", convert_case("to_dash_case"), desc = "ToPascal" },
@@ -50,6 +50,13 @@ return {
                     \    'kind': ['add', 'delete', 'replace'],
                     \    'action': ['add', 'delete','replace'],
                     \    'input': ['（', '）']
+                    \  },
+                    \  {
+                    \    'buns': ['【', '】'],
+                    \    'nesting': 1, 'match_syntax': 1,
+                    \    'kind': ['add', 'delete', 'replace'],
+                    \    'action': ['add', 'delete','replace'],
+                    \    'input': ['【', '】']
                     \  },
                     \ ]
                 ]],

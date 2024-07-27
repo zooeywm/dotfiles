@@ -1,10 +1,13 @@
 % podman
 
+# $ container: podman container list -a --format '{{.Names}}'
+# $ image: podman images --format '{{.Repository}}:{{.Tag}}'
+
 # Show container log
 podman container logs <all-containers>
 
 # Instantiate images interactively in background
-podman run -itd --name <container-name> <local-images>
+podman run -itd --name <all-containers> <local-images>
 
 # Exec container command interactively
 podman exec -it <running-containers> <command>
@@ -13,6 +16,6 @@ podman exec -it <running-containers> <command>
 podman restart <all-containers>
 
 $ all-containers: podman container ls -a --- --column 1 --header-lines 1 --delimiter '\s+'
-$ running-containers: podman container ls -a --- --column 1 --header-lines 1 --delimiter '\s+'
+$ running-containers: podman container ls --- --column 1 --header-lines 1 --delimiter '\s+'
 $ local-images: podman images --- --column 3 --header-lines 1 --delimiter '\s+'
 $ command: echo "/bin/sh /bin/bash" | tr ' ' '\n'
