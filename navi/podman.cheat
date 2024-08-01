@@ -1,8 +1,5 @@
 % podman
 
-# $ container: podman container list -a --format '{{.Names}}'
-# $ image: podman images --format '{{.Repository}}:{{.Tag}}'
-
 # Show container log
 podman container logs <all-containers>
 

@@ -10,6 +10,7 @@
     pager = delta
     quotepath = false
     editor = lvim
+    hooksPath = .githooks
     excludesfile = ~/.config/git/gitignore_global
     
 [interactive]

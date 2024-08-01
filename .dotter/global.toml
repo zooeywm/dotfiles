@@ -31,11 +31,6 @@ files = { nushell = "~/.config/nushell" }
 applications = "~/.local/share/applications"
 dunst = "~/.config/dunst"
 
-[X]
-depends = ["desktop"]
-[X.files]
-#xprofile = "~/.xprofile"
-#awesome = { target = "~/.config/awesome", type = "symbolic" }
 [wayland]
 depends = ["desktop"]
 [wayland.files]
@@ -47,9 +42,9 @@ LazyVim = { target = "~/.config/LazyVim", type = "symbolic" }
 neovide = "~/.config/neovide"
 
 [gtk.files]
-"gtk-3.0" = "~/.config/gtk-3.0"
-"gtk-4.0" = "~/.config/gtk-4.0"
-"gtkrc-2.0" = "~/.gtkrc-2.0"
+"gtk/gtk-3.0" = "~/.config/gtk-3.0"
+"gtk/gtk-4.0" = "~/.config/gtk-4.0"
+"gtk/gtkrc-2.0" = "~/.gtkrc-2.0"
 
 [scripts.files]
 bin = { target = "~/.local/bin", type = "symbolic" }
