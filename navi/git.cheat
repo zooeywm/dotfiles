@@ -36,3 +36,6 @@ git submodule update --init
 
 # t-git or tgit
 git commit -S -m '$(date --rfc-3339 seconds)'
+
+# show file change history
+git log -p -- <file_name>
