@@ -47,6 +47,15 @@ extract = [
   { run = 'unar "$1"', desc = "Extract here", for = "unix" },
   { run = 'unar "%1"', desc = "Extract here", for = "windows" },
 ]
+zip = [
+  { run = 'zip -r "$1.zip" "$1" ', desc = "Zip" },
+]
+targz = [
+  { run = 'tar -czvf "$1.tar.gz" "$1" ', desc = "Tar.gz" },
+]
+tar = [
+  { run = 'tar -cvf "$1.tar" "$1" ', desc = "Tar" },
+]
 play = [
   { run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
   { run = 'mpv --force-window "%1"', orphan = true, for = "windows" },
@@ -55,9 +64,10 @@ play = [
 
 [open]
 rules = [
-  { name = "*", use = [
-    "edit",
-    "open",
+  { mime = "inode/directory", use = [
+    "zip",
+    "tar",
+    "targz",
     "reveal",
   ] },
   { mime = "text/html", use = [
@@ -82,7 +92,6 @@ rules = [
     "reveal",
   ] },
   { mime = "application/{,g}zip", use = [
-    "pdf",
     "extract",
     "reveal",
   ] },
@@ -90,7 +99,6 @@ rules = [
     "extract",
     "reveal",
   ] },
-
   { mime = "application/{json,x-ndjson}", use = [
     "edit",
     "reveal",
@@ -100,6 +108,7 @@ rules = [
     "reveal",
   ] },
   { name = "*", use = [
+    "edit",
     "open",
     "reveal",
   ] },

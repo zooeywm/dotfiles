@@ -42,8 +42,8 @@ keymap = [
   { on = "<C-r>", run = "select_all --state=none", desc = "Inverse selection of all files" },
 
   # Operation
-  { on = "o", run = "open", desc = "Open the selected files" },
-  { on = "O", run = "open --interactive", desc = "Open the selected files interactively" },
+  # { on = "O", run = "open", desc = "Open the selected files" },
+  { on = "o", run = "open --interactive", desc = "Open the selected files interactively" },
   { on = "e", run = "shell --confirm 'xdg-open .'", desc = "Look up in file manager" },
   { on = "<S-e>", run = """shell 'dragon-drop -x -i -T "$1"' --confirm""", desc = "Drag and drop" },
   { on = "<Enter>", run = "open", desc = "Open the selected files" },
