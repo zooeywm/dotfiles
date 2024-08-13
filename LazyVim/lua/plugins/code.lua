@@ -40,8 +40,8 @@ return {
             ["c,cpp"] = {
                 cmd = "clang-format",
                 args = {
-                    "--style",
-                    "{IndentWidth: 4}",
+                    -- "--style",
+                    -- "{IndentWidth: 4}",
                 },
                 stdin = true,
             },

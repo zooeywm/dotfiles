@@ -233,3 +233,6 @@ obs-studio = ""
 man-db = ""
 genact = "Linux 'Professor'"
 rclone = "Net Drive Synchronization"
+
+[qt]
+qt6-languageserver = ""

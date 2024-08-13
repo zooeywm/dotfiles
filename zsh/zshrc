@@ -42,11 +42,6 @@ function vr {
 	cat "${1:-/dev/stdin}" | lvim -R
 }
 
-#=====================#
-# P10k Instant Prompt #
-#=====================#
-
-_source-existent ~cache/p10k-instant-prompt-${(%):-%n}.zsh
 
 #==================#
 # Plugins (Part 1) #
@@ -56,13 +51,20 @@ _source-existent ~cache/p10k-instant-prompt-${(%):-%n}.zsh
 
 source ~zdot/.zcomet/bin/zcomet.zsh
 
-# update every 7 days
+# Update every 7 days
+# Start p10k instant prompt only when no update, otherwise update logs might not be displayed.
 _qc_last_update=(~zdot/.zcomet/update(Nm-7))
 if [[ -z $_qc_last_update ]] {
     touch ~zdot/.zcomet/update
     zcomet self-update
     zcomet update
     zcomet compile ~zdot/*.zsh  # NOTE: https://github.com/romkatv/zsh-bench#cutting-corners
+} else {
+    # #=====================#
+    # # P10k Instant Prompt #
+    # #=====================#
+    #
+    _source-existent ~cache/p10k-instant-prompt-${(%):-%n}.zsh
 }
 
 zcomet fpath zsh-users/zsh-completions src
@@ -79,7 +81,13 @@ AUTOPAIR_BKSPC_WIDGET=backward-delete-char
 AUTOPAIR_DELWORD_WIDGET=backward-delete-word
 zcomet load hlissner/zsh-autopair
 
-#=========#
+#=======================#
+# Generated Completions #
+#=======================#
+
+# smartcache comp gix completions -s zsh
+# smartcache comp ein completions -s zsh
+
 # Aliases #
 #=========#
 
@@ -92,6 +100,7 @@ alias sudo='sudo ' # 尾随空格以递归展开余下的别名
 alias l='eza -a --color=auto -s=type'
 alias ls='eza -a --color=auto -s=type'
 alias pb='curl -F "c=@-" "http://fars.ee/?u=1"'
+alias v='lvim'
 
 alias -g :n='>/dev/null'
 alias -g :nn='&>/dev/null'
@@ -236,6 +245,7 @@ ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(qc-{sub,shell}-r)
 
 zcomet load zdharma-continuum/fast-syntax-highlighting
 unset 'FAST_HIGHLIGHT[chroma-man]'  # chroma-man will stuck history browsing
+unset 'FAST_HIGHLIGHT[chroma-ssh]'  # chroma-ssh doesn't support argument in back, and false in highlight
 
 zcomet load romkatv/powerlevel10k
 

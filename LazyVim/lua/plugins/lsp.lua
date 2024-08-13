@@ -40,6 +40,9 @@ return {
                 },
                 wgsl_analyzer = {},
                 glslls = {},
+                qmlls = {
+                    cmd = { "qmlls6" },
+                },
             },
         },
         config = function(_, opts)
@@ -93,6 +96,7 @@ return {
         event = "LspAttach",
         keys = {
             -- 跳转
+            { "gD", "<cmd>Lspsaga goto_type_definition<cr>", desc = "Goto Type Definition" },
             { "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Goto Definition" },
             { "gi", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
             { "gR", "<cmd>Telescope lsp_references<cr>", desc = "References" },
