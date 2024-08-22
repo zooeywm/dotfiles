@@ -30,6 +30,7 @@
     // "on-click-right": "bash -c '[ '$(hyprctl clients -j | jq -r '.[] | select(.title == {title})' | jq -r '.workspace.name')' == 'special:minimized' ] && hyprctl dispatch movetoworkspace +0,title:{title} || hyprctl dispatch movetoworkspacesilent special:minimized,title:{title}'",
     "ignore-list": [
       "kitty",
+      "org.wezfurlong.wezterm",
       "waybar",
       "lvim",
       "satty",

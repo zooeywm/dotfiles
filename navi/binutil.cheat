@@ -1,0 +1,9 @@
+% binuitl
+
+$binary: ls | sed 's/^\(.*\)$/"\1"/'
+
+# strip
+strip --only-keep-debug <binary> -o <binary>.debug && strip <binary>
+
+# aarch-strip
+aarch64-linux-gnu-strip --only-keep-debug <binary> -o <binary>.debug && aarch64-linux-gnu-strip <binary>

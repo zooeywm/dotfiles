@@ -37,4 +37,5 @@
     stash_open: Some(( code: Char('l'), modifiers: "")),
 
     abort_merge: Some(( code: Char('M'), modifiers: "SHIFT")),
+    undo_commit: Some(( code: Char('C'), modifiers: "SHIFT"))
 )

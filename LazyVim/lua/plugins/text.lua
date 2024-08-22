@@ -137,4 +137,12 @@ return {
             return vim.tbl_extend("force", tbl, override)
         end,
     },
+    {
+        "chrisgrieser/nvim-recorder",
+        event = "RecordingEnter",
+        keys = {
+            { "q", desc = "Start Recording" },
+            { "Q", desc = "Play Recording" },
+        },
+    },
 }

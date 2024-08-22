@@ -1,13 +1,13 @@
 [plugin]
 deps = [
   # { use = "DreamMaoMao/searchjump", commit = "adb0a74" },
-  { use = "TD-Sky/sudo", commit = "198d471" },
-  { use = "Rolv-Apneseth/starship", commit = "dc9989c" },
-  { use = "Reledia/glow", commit = "536185a" },
-  { use = "yazi-rs/plugins#smart-filter", commit = "2dc65ab" },
-  { use = "yazi-rs/plugins#jump-to-char", commit = "2dc65ab" },
-  { use = "yazi-rs/plugins#max-preview", commit = "2dc65ab" },
-  { use = "yazi-rs/plugins#hide-preview", commit = "2dc65ab" },
+  { use = "TD-Sky/sudo", rev = "198d471" },
+  { use = "Rolv-Apneseth/starship", rev = "20d5a4d" },
+  { use = "Reledia/glow", rev = "536185a" },
+  { use = "yazi-rs/plugins:smart-filter", rev = "b659791" },
+  { use = "yazi-rs/plugins:jump-to-char", rev = "b659791" },
+  { use = "yazi-rs/plugins:max-preview", rev = "b659791" },
+  { use = "yazi-rs/plugins:hide-preview", rev = "b659791" },
 ]
 
 [flavor]
