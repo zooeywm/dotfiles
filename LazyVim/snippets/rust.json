@@ -3,8 +3,7 @@
     "prefix": "proxy-field",
     "body": [
       "#[inline]",
-      "#[allow(unused)]",
-      "pub fn ${1:field}(mut self, $1: ${2:Type}) -> Self {",
+      "pub fn ${1:field}(&mut self, $1: ${2:Type}) -> &mut Self {",
       "    self.$1 = $1;",
       "    self",
       "}"
@@ -121,9 +120,19 @@
     "body": ["#[$1]"],
     "description": "attribute"
   },
-  "impl-as-ref": {
-    "prefix": "impl-as-ref",
+  "impl-asref": {
+    "prefix": "impl-asref",
     "body": ["impl AsRef<$1>"],
     "description": "impl AsRef"
+  },
+  "r-string": {
+    "prefix": "r-string",
+    "body": ["r\"$1\""],
+    "description": "raw string"
+  },
+  "raw-string": {
+    "prefix": "raw-string",
+    "body": ["r#\"$1\"#"],
+    "description": "raw string (`\"` included)"
   }
 }

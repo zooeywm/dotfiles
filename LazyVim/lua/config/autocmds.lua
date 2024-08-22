@@ -3,7 +3,6 @@
 -- Add any additional autocmds here
 
 local my_group = vim.api.nvim_create_augroup("MyAutocommands", { clear = true })
-
 vim.api.nvim_create_autocmd("BufReadPre", {
     callback = function(_)
         local root_dir = require("lazyvim.util").root.get()

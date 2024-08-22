@@ -22,11 +22,9 @@ return {
     },
     {
         "mrcjkb/rustaceanvim",
-        -- version = "^4",
         ft = { "rust" },
         keys = {
             { "<leader>ce", "<cmd>RustLsp expandMacro<CR>", ft = "rust", desc = "展开宏" },
-            { "<leader>cr", "<cmd>RustLsp runnables<CR>", ft = "rust", desc = "Run" },
             { "<leader>cg", "<cmd>RustLsp openCargo<CR>", ft = "rust", desc = "编辑Cargo.toml" },
             { "<S-k>", "<cmd>RustLsp hover actions<CR>", ft = "rust", desc = "hover actions" },
             { "<leader>ld", "<cmd>RustLsp renderDiagnostic current<CR>", ft = "rust", desc = "diagnostic current" },
@@ -37,6 +35,7 @@ return {
                 inlay_hints = {
                     only_current_line = true,
                 },
+
                 float_win_config = {
                     -- the border that is used for the hover window or explain_error window
                     ---@see vim.api.nvim_open_win()

@@ -8,7 +8,7 @@ return {
                 "rust", "slint",
                 "go", "gomod",
                 "python", "ruby", "perl",
-                "bash", "fish",
+                "bash", "fish", "nu",
                 "c","cpp", "cmake",
                 "scheme", "haskell",
                 "html", "vue",
@@ -17,9 +17,10 @@ return {
                 "java", "kotlin",
                 "json", "json5", "jsonc",
                 "latex", "bibtex",
-                "markdown", "markdown_inline", "dot",
+                "markdown", "markdown_inline",
+                "typst", "dot",
                 "toml", "yaml", "kdl", "ron",
-                "vim", "comment", "wgsl", "nu", "hlsl"
+                "vim", "comment", "wgsl", "hlsl"
             },
             highlight = {
                 enable = true,
@@ -35,7 +36,11 @@ return {
             max_lines = 1,
         },
     },
-    { "nkrkv/nvim-treesitter-rescript", enabled = false, ft = "rescript" },
+    {
+        "nkrkv/nvim-treesitter-rescript",
+        enabled = false,
+        ft = "rescript",
+    },
     {
         "rayliwell/tree-sitter-rstml",
         enabled = false,

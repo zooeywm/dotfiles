@@ -46,7 +46,6 @@ map.n({
         desc = "Open term here",
     },
     { "<leader>lc", "<cmd>LspConfig<cr>", desc = "Lsp Config" },
-    { "<leader>ch", "<cmd>RustLsp hover actions<CR>", ft = "rust", desc = "RustLsp hover actions" },
     { "<leader>tw", ":lua ToggleWordWrap()<CR>", desc = "Toggle word wrap" },
     { "<M-l>", "zl", desc = "Screen to the right" },
     { "<M-h>", "zh", desc = "Screen to the left" },
@@ -59,7 +58,6 @@ function ToggleWordWrap()
     vim.opt.wrap = not wrap
     print("Word wrap " .. (wrap and "disabled" or "enabled"))
 end
-
 -- emacs keymaps
 map.i({
     -- move
