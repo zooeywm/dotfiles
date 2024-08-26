@@ -1,7 +1,7 @@
 [plugin]
 deps = [
   # { use = "DreamMaoMao/searchjump", commit = "adb0a74" },
-  { use = "TD-Sky/sudo", rev = "198d471" },
+  { use = "TD-Sky/sudo", rev = "7797682" },
   { use = "Rolv-Apneseth/starship", rev = "20d5a4d" },
   { use = "Reledia/glow", rev = "536185a" },
   { use = "yazi-rs/plugins:smart-filter", rev = "b659791" },

@@ -32,10 +32,6 @@ return {
         },
         opts = {
             tools = {
-                inlay_hints = {
-                    only_current_line = true,
-                },
-
                 float_win_config = {
                     -- the border that is used for the hover window or explain_error window
                     ---@see vim.api.nvim_open_win()
@@ -62,6 +58,14 @@ return {
                             workspace = false,
                         },
                         checkOnSave = true,
+                        inlayHints = {
+                            typeHints = {
+                                enable = false,
+                            },
+                            parameterHints = {
+                                enable = false,
+                            },
+                        },
                     },
                 },
             },

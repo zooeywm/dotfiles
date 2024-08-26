@@ -7,7 +7,7 @@ return {
                 update_in_insert = true,
             },
             inlay_hints = {
-                enabled = false,
+                enabled = true,
             },
             codelens = {
                 enabled = true,

@@ -38,7 +38,12 @@ rofi-wayland = "Menu"
 [font]
 terminus-font = "Outter terminal font"
 nerd-fonts = ""
-noto-fonts.packages = ["noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk"]
+noto-fonts.packages = [
+  "noto-fonts",
+  "noto-fonts-emoji",
+  "noto-fonts-extra",
+  "noto-fonts-cjk",
+]
 
 [shell]
 nushell = ""
@@ -47,7 +52,12 @@ starship = "Shell beautify"
 zoxide = "Workdir switcher"
 zellij = "Terminal multiplexer"
 bash-completion = ""
-zsh.packages = ["zsh", "zsh-autosuggestions", "zsh-syntax-highlighting", "zsh-completions"]
+zsh.packages = [
+  "zsh",
+  "zsh-autosuggestions",
+  "zsh-syntax-highlighting",
+  "zsh-completions",
+]
 
 
 [git]
@@ -91,7 +101,9 @@ python-pip = ""
 nvchecker = "PKGBUILD nvchecker"
 pacman-contrib = "PKGBUILD pacman-contrib"
 pot-translation = "Translater"
-didyoumean = { packages = ["didyoumean-bin"], manager = "paru", desc = "Correct english word" }
+didyoumean = { packages = [
+  "didyoumean-bin",
+], manager = "paru", desc = "Correct english word" }
 
 [monitor]
 mkinitcpio-firmware.manager = "paru"
@@ -102,7 +114,9 @@ procs = "View processed"
 pulsemixer = "Volume panel tui"
 duf = "Calculate partion size"
 erdtree = "Tree with size"
-macchina = { packages = ["macchine-bin"], manager = "paru", desc = "System info" }
+macchina = { packages = [
+  "macchine-bin",
+], manager = "paru", desc = "System info" }
 
 [network]
 networkmanager = ""
@@ -124,14 +138,18 @@ taplo-cli = "Toml tool"
 shfmt = "bash/zsh formatter"
 gopls = "Go language server"
 yaml-language-server.manager = "npm"
-vscode-json-language-server = { manager = "npm", packages = ["vscode-langservers-extracted"] }
+vscode-json-language-server = { manager = "npm", packages = [
+  "vscode-langservers-extracted",
+] }
 volar = { manager = "npm", packages = ["@vue/language-server"] }
 prettier = { manager = "npm", packages = [
   "prettier",
   "@prettier/plugin-xml",
 ], desc = "FE formatter" }
 typst = "现代标记语言"
-tinymist = { packages = ["tinymist-bin"], manager = "paru", desc = "typst的语言服务器" }
+tinymist = { packages = [
+  "tinymist-bin",
+], manager = "paru", desc = "typst的语言服务器" }
 fnm = "Node manager"
 bash-language-server.manager = "npm"
 mlc = { manager = "cargo", desc = "markdown linter" }
@@ -219,10 +237,16 @@ pastel = "Color palette"
 hyperfine = "Run and compare command speed"
 pueue = "Shell commands manager"
 parallel-disk-usage = "Disk space statistic"
-yazi = { packages = ["yazi-git", "jq", "ffmpegthumbnailer"], desc = "Tui file manager" }
+yazi = { packages = [
+  "yazi-git",
+  "jq",
+  "ffmpegthumbnailer",
+], desc = "Tui file manager" }
 hexyl = "Hex viewer"
 conceal = { packages = ["conceal-bin"], manager = "paru", desc = "Recycle bin" }
-dotter = { packages = ["dotter-rs-bin"], manager = "paru", desc = "Config files manager" }
+dotter = { packages = [
+  "dotter-rs-bin",
+], manager = "paru", desc = "Config files manager" }
 QQ = { packages = ["linuxqq"], manager = "paru" }
 wechat = { packages = ["wechat-universal-bwrap"], manager = "paru" }
 telegram = { packages = ["telegram-desktop"] }
