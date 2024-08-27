@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+mpv ~/Pictures/wallpaper/pure-color.png --image-display-duration=inf --video-zoom=2 --no-border
