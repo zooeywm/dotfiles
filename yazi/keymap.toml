@@ -136,6 +136,7 @@ keymap = [
   { on = ["g", "c"], run = "cd ~/.config", desc = "Go to the config directory" },
   { on = ["g", "d"], run = "cd ~/Downloads", desc = "Go to the downloads directory" },
   { on = ["g", "t"], run = "cd /tmp", desc = "Go to the temporary directory" },
+  { on = ["g", "u"], run = "cd /run/media", desc = "Go to the usb mount directory" },
   { on = ["g", "v"], run = "cd ~/Videos", desc = "Go to video directory" },
   { on = ["g", "<Space>"], run = "cd --interactive", desc = "Go to a directory interactively" },
 

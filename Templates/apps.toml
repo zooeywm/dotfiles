@@ -11,7 +11,11 @@ fcitx.packages = [
   "fcitx5-pinyin-zhwiki",
   "fcitx5-configtool",
 ]
-thunar = { packages = ["thunar", "tumbler", "webp-pixbuf-loader"], desc = "File manager" }
+thunar = { packages = [
+  "thunar",
+  "tumbler",
+  "webp-pixbuf-loader",
+], desc = "File manager" }
 
 [wayland]
 swww = "Wallpaper engine"
@@ -206,6 +210,8 @@ acpi = "Battery info"
 bandwhich = "Monitor network bandwidth"
 #[arch]
 archlinuxcn-keyring = ""
+udisk = { packages = ["udisks2", "udiskie"], desc = "Usb device auto mount" }
+
 [amd]
 mesa-vdpau = "Gpu video accelerator"
 amd-ucode = "AMD CPU driver"

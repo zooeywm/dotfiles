@@ -52,7 +52,7 @@ bin = { target = "~/.local/bin", type = "symbolic" }
 
 [terminal.files]
 wezterm = "~/.config/wezterm"
-"kitty.conf" = "~/.config/kitty/kitty.conf"
+kitty = "~/.config/kitty"
 zellij = "~/.config/zellij"
 yazi = { target = "~/.config/yazi", type = "symbolic" }
 
