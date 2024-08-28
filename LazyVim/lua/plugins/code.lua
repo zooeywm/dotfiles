@@ -46,7 +46,11 @@ return {
                 },
                 stdin = true,
             },
-            rust = "rustfmt",
+            rust = {
+                cmd = "rustfmt",
+                args = { "+nightly" },
+                stdin = true,
+            },
             go = "gofmt",
             cs = {
                 cmd = "dotnet-csharpier",
@@ -61,16 +65,9 @@ return {
         config = function(_, opts)
             local ft = require("guard.filetype")
 
-            local function pango()
-                -- `[[ ... ]]` is Lua's way to denote a multi-line string, which makes it easier to include complex patterns without needing to escape characters.
-                vim.cmd([[ silent! %s/[^\x00-\xff]\zs\ze\w\|\w\zs\ze[^\x00-\xff]/ /g ]])
-            end
             for lang, opt in pairs(opts) do
                 ft(lang):fmt(opt)
             end
-            ft("markdown"):fmt({
-                fn = pango,
-            })
 
             require("guard").setup({ fmt_on_save = false })
         end,

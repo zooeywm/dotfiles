@@ -49,9 +49,7 @@ binutil = [
   { run = 'aarch64-linux-gnu-strip --only-keep-debug $1 -o $1.debug && aarch64-linux-gnu-strip $1', desc = "aarch64-strip" },
 ]
 images = [{ run = 'swww img $1', desc = "Set as wallpaper" }]
-deb = [
-  { run = 'dpkg-deb -x "$1" "${1%.deb}"', desc = "Extract deb here" },
-]
+deb = [{ run = 'dpkg-deb -x "$1" "${1%.deb}"', desc = "Extract deb here" }]
 
 [open]
 rules = [
@@ -70,8 +68,8 @@ rules = [
     "reveal",
   ] },
   { mime = "image/*", use = [
-    "images",
     "open",
+    "images",
     "reveal",
   ] },
   { mime = "{audio,video}/*", use = [
