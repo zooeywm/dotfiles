@@ -1,14 +1,24 @@
 {
   "activeProfiles": {
-    "General": "default",
-    "Keybindings": "default_copy_1725090179728",
-    "Appearance": "default",
-    "Blacklist": "default"
+    "General": "default_genaral",
+    "Keybindings": "lazyvim",
+    "Appearance": "default_appearance",
+    "Blacklist": "default_blacklist"
   },
   "profiles": {
-    "General": {},
+    "General": {
+      "default_genaral": {
+        "enabled": true,
+        "preventStealFocus": false,
+        "disablePageShortcuts": false,
+        "autoActivateHint": true,
+        "hintDetectByCursorStyle": true,
+        "smoothScroll": true,
+        "scrollStep": 16
+      }
+    },
     "Keybindings": {
-      "default_copy_1725090179728": {
+      "lazyvim": {
         "physicalKeys": true,
         "ignoreModifierKeys": false,
         "toggleHelpMenu": [],
@@ -95,36 +105,48 @@
         "scrollPageDown": [
           [
             {
-              "code": "KeyJ",
-              "key": "J",
-              "shiftKey": true
+              "code": "KeyD",
+              "key": "d",
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "metaKey": false
             }
           ]
         ],
         "scrollPageUp": [
           [
             {
-              "code": "KeyK",
-              "key": "K",
-              "shiftKey": true
+              "code": "KeyU",
+              "key": "u",
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "metaKey": false
             }
           ]
         ],
         "scrollHalfPageDown": [
           [
             {
-              "code": "KeyD",
-              "key": "D",
-              "shiftKey": true
+              "code": "KeyE",
+              "key": "e",
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "metaKey": false
             }
           ]
         ],
         "scrollHalfPageUp": [
           [
             {
-              "code": "KeyS",
-              "key": "S",
-              "shiftKey": true
+              "code": "KeyY",
+              "key": "y",
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "metaKey": false
             }
           ]
         ],
@@ -322,9 +344,9 @@
         "duplicateTab": [
           [
             {
-              "code": "KeyD",
-              "key": "d",
-              "shiftKey": false,
+              "code": "KeyT",
+              "key": "T",
+              "shiftKey": true,
               "ctrlKey": true,
               "altKey": false,
               "metaKey": false
@@ -419,7 +441,35 @@
         "clipboardIncognitoWindow": []
       }
     },
-    "Appearance": {},
-    "Blacklist": {}
+    "Appearance": {
+      "default_appearance": {
+        "hintUseTargetSize": true,
+        "hintHorizontalPlacement": "left",
+        "hintHorizontalTranslation": 0,
+        "hintVerticalTranslation": 0,
+        "hintVerticalPlacement": "center",
+        "hintUseCustomCSS": false,
+        "hintTextColor": "#3f51f5",
+        "hintBackgroundColor": "#ffffff",
+        "hintBorderColor": "#ffffff",
+        "hintOpacity": 1,
+        "hintFontFamily": "Roboto, sans-serif",
+        "hintFontSize": 12,
+        "hintFontWeight": "900",
+        "hintHorizontalPadding": 0.25,
+        "hintVerticalPadding": 0.15,
+        "hintBorderWidth": 0,
+        "hintBorderRadius": 4,
+        "hintShadow": true,
+        "hintCSS": "font-family: Roboto, sans-serif;\nfont-size: 0.8rem;\npadding: 0.15rem 0.25rem;\ncolor: #3f51F5;\nbackground-color: rgb(255, 255, 255);\nborder-radius: 4px;\ntext-align: center;\ntext-decoration: none;\ntext-transform: uppercase;\nvertical-align: middle;\nbox-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);\ntransform: translate3d(0, -50%, 0);\nfont-weight: bold;",
+        "hintNormalCharCSS": "",
+        "hintActiveCharCSS": "opacity: 0.5;"
+      }
+    },
+    "Blacklist": {
+      "default_blacklist": {
+        "blacklist": ""
+      }
+    }
   }
 }
