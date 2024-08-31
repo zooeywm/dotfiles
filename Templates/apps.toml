@@ -199,6 +199,7 @@ cross = { manager = "cargo", desc = "Cross build" }
 sea-orm-cli = { manager = "cargo", desc = "sea-orm tool" }
 # Clang
 clang = { packages = ["clang", "llvm"], desc = "C/C++ toolchain" }
+slint_lsp = { manager = "cargo", desc = "slint lsp" }
 
 
 [system]

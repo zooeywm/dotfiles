@@ -61,6 +61,11 @@ return {
                 cmd = "typstyle",
                 stdin = true,
             },
+            slint = {
+                cmd = "slint-lsp",
+                args = { "format" },
+                stdin = true,
+            },
         },
         config = function(_, opts)
             local ft = require("guard.filetype")
@@ -81,7 +86,24 @@ return {
     },
     {
         "numToStr/Comment.nvim",
-        config = true,
+        -- FIXME: interim
+        config = function()
+            require("Comment").setup({
+                pre_hook = function(ctx)
+                    local U = require("Comment.utils")
+                    local filetype = vim.bo.filetype
+
+                    if filetype == "slint" then
+                        local commentstring = "// %s"
+                        if ctx.ctype == U.ctype.linewise then
+                            return commentstring
+                        elseif ctx.ctype == U.ctype.blockwise then
+                            return "/* %s */"
+                        end
+                    end
+                end,
+            })
+        end,
     },
     {
         "hrsh7th/nvim-cmp",

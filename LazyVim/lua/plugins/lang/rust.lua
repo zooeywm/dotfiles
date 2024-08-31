@@ -26,7 +26,7 @@ return {
         keys = {
             { "<leader>ce", "<cmd>RustLsp expandMacro<CR>", ft = "rust", desc = "展开宏" },
             { "<leader>cg", "<cmd>RustLsp openCargo<CR>", ft = "rust", desc = "编辑Cargo.toml" },
-            { "<S-k>", "<cmd>RustLsp hover actions<CR>", ft = "rust", desc = "hover actions" },
+            { "<leader>ch", "<cmd>RustLsp hover actions<CR>", ft = "rust", desc = "hover actions" },
             { "<leader>ld", "<cmd>RustLsp renderDiagnostic current<CR>", ft = "rust", desc = "diagnostic current" },
             { "gp", "<cmd>RustLsp parentModule<CR>", ft = "rust", desc = "回到父模块" },
         },
