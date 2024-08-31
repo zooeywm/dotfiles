@@ -8,7 +8,7 @@
     "hyprland/submap",
     "group/motherboard",
     "tray",
-    "group/song",
+    "custom/song",
   ],
   "modules-center": ["hyprland/workspaces", "wlr/taskbar"],
   "modules-right": [
@@ -114,19 +114,6 @@
   "group/audio": {
     "orientation": "horizontal",
     "modules": ["bluetooth", "pulseaudio", "pulseaudio#microphone"],
-  },
-  "group/song": {
-    "orientation": "horizontal",
-    "modules": [
-      "custom/song-title",
-      "custom/song-status",
-      // "custom/song-post",
-      "custom/song-lyric",
-    ],
-    "on-click": "song toogle-pause",
-    "on-click-right": "electron-netease-cloud-music",
-    "on-scroll-down": "song next",
-    "on-scroll-up": "song prev",
   },
   "battery": {
     "format": "{icon}{capacity}%",
@@ -252,27 +239,15 @@
     "format-critical": "  {temperatureC}°C",
     "format": "  {temperatureC}°C",
   },
-  "custom/song-lyric": {
+  "custom/song": {
     "format": "{}",
-    "exec": "song",
+    "exec": "song title songStatus post",
     "interval": 1,
     "max-length": 40,
-  },
-  "custom/song-status": {
-    "format": "{}",
-    "exec": "song songStatus",
-    "interval": 1,
-  },
-  "custom/song-title": {
-    "format": "{}",
-    "exec": "song title",
-    "interval": 1,
-    "max-length": 25,
-  },
-  "custom/song-post": {
-    "format": "{}",
-    "exec": "song post",
-    "interval": 1,
+    "on-click": "song toggle-pause",
+    "on-click-right": "electron-netease-cloud-music",
+    "on-scroll-down": "song next",
+    "on-scroll-up": "song prev",
   },
   "custom/dunst-paused": {
     "format": "{}",

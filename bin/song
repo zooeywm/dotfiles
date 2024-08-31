@@ -7,6 +7,8 @@ lyricsPath="$HOME/.config/waybar/lyrics.lrc"
 songIcons="$HOME/.config/waybar/songIcon"
 songSt=$($playerShell status)
 
+output=""
+
 song() {
 	# 歌曲标题
 	title=$($playerShell metadata title)
@@ -55,7 +57,6 @@ getSongId() {
 	elif [[ $playerName == "NeteaseCloudMusicGtk4" ]]; then
 		echo $($playerShell metadata mpris:trackid | cut -d "/" -f6 | cut -d "'" -f1)
 	fi
-
 }
 
 getSongMedia() {
@@ -83,7 +84,7 @@ notifySongInfo() {
 
 title() {
 	if [[ $songSt == "Playing" ]]; then
-		echo "$($playerShell metadata title) "
+		output+="$($playerShell metadata title) "
 	fi
 }
 
@@ -96,7 +97,7 @@ post() {
 			# if [[ $le != "" ]]; then
 			#   echo " [$dp|$le] "
 			# else
-			echo " [$dp] "
+			output+=" [$dp] "
 			# fi
 		fi
 	fi
@@ -106,9 +107,9 @@ post() {
 songStatus() {
 	# 音乐播放器当前状态
 	if [[ $songSt == "Playing" ]]; then
-		echo "►"
+		output+="►"
 	else
-		echo "⏸︎"
+		output+="⏸︎"
 	fi
 }
 
@@ -124,34 +125,38 @@ prev() {
 	fi
 }
 
-toogle-pause() {
+toggle-pause() {
 	$playerShell play-pause
 }
 
-case "$1" in
-"songStatus")
-	songStatus
-	;;
-"post")
-	post
-	;;
-"title")
-	title
-	;;
-"songId")
-	getSongId
-	;;
-"next")
-	next
-	;;
-"prev")
-	prev
-	;;
-"toogle-pause")
-	toogle-pause
-	;;
-*)
-	song
-	;;
-esac
+for arg in "$@"; do
+	case $arg in
+	"songStatus")
+		songStatus
+		;;
+	"post")
+		post
+		;;
+	"title")
+		title
+		;;
+	"songId")
+		getSongId
+		;;
+	"next")
+		next
+		;;
+	"prev")
+		prev
+		;;
+	"toggle-pause")
+		toggle-pause
+		;;
+	*)
+		song
+		;;
+	esac
+done
+
+echo $output
 # pkill -RTMIN+11 waybar

@@ -47,6 +47,7 @@ map.n({
     },
     { "<leader>lc", "<cmd>LspConfig<cr>", desc = "Lsp Config" },
     { "<leader>tw", ":lua ToggleWordWrap()<CR>", desc = "Toggle word wrap" },
+    { "<leader>tc", ":lua ToggleColorizer()<CR>", desc = "Toggle Colorizer" },
     { "<M-l>", "zl", desc = "Screen to the right" },
     { "<M-h>", "zh", desc = "Screen to the left" },
     { "<M-L>", "zL", desc = "Screen half to the right" },
@@ -57,6 +58,10 @@ function ToggleWordWrap()
     local wrap = vim.opt.wrap:get()
     vim.opt.wrap = not wrap
     print("Word wrap " .. (wrap and "disabled" or "enabled"))
+end
+
+function ToggleColorizer()
+    vim.cmd("ColorizerToggle")
 end
 -- emacs keymaps
 map.i({
