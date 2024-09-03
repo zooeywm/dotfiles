@@ -46,11 +46,6 @@ return {
                 },
                 stdin = true,
             },
-            rust = {
-                cmd = "rustfmt",
-                args = { "+nightly" },
-                stdin = true,
-            },
             go = "gofmt",
             cs = {
                 cmd = "dotnet-csharpier",
@@ -63,12 +58,13 @@ return {
             },
             slint = {
                 cmd = "slint-lsp",
-                args = { "format" },
-                stdin = true,
+                args = { "format", "-i" },
+                fname = true,
             },
         },
         config = function(_, opts)
             local ft = require("guard.filetype")
+            ft("rust"):fmt("rustfmt"):extra("+nightly")
 
             for lang, opt in pairs(opts) do
                 ft(lang):fmt(opt)

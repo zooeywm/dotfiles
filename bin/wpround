@@ -8,7 +8,7 @@ def main [wallpapers: path = "~/Pictures/wallpaper"] {
         let iterator = $wallpapers
         for wp in $iterator {
             swww img --transition-type=fade $wp
-            sleep 10min
+            sleep 2min
         }
     }
 }
