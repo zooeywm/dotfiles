@@ -29,6 +29,10 @@
     "on-click-middle": "close",
     // "on-click-right": "bash -c '[ '$(hyprctl clients -j | jq -r '.[] | select(.title == {title})' | jq -r '.workspace.name')' == 'special:minimized' ] && hyprctl dispatch movetoworkspace +0,title:{title} || hyprctl dispatch movetoworkspacesilent special:minimized,title:{title}'",
     "ignore-list": [
+      // "QQ",
+      // "wechat",
+      // "Feishu",
+      // "firefox",
       "kitty",
       "org.wezfurlong.wezterm",
       "waybar",
@@ -50,7 +54,7 @@
       "balanced": " ",
       "power-saver": " ",
     },
-  }, // module 各自的配置等
+  },
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -66,17 +70,17 @@
       "8": "8",
       "9": "9",
       "10": "10",
-      "11": "z",
-      "urgent": "󱓻",
+      "11": "🧿",
+      "urgent": "",
     },
-    // "persistent-workspaces": {
-    //   "eDP-1": [1],
-    //   "HDMI-A-1": [2],
-    // },
-    "active-only": true,
+    "persistent-workspaces": {
+      // "eDP-1": [2, 3, 4, 8],
+      // "HDMI-A-1": [2],
+    },
+    // "active-only": true,
   },
   "hyprland/submap": {
-    "format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
+    "format": "<span style=\"italic\">  {}</span>",
     "tooltip": false,
   },
   "tray": {
@@ -126,7 +130,7 @@
       "charging": ["󰢜 ", "󰂆 ", "󰂇 ", "󰂈 ", "󰢝 ", "󰂉 ", "󰢞 ", "󰂊 ", "󰂋 ", "󰂅 "],
       "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     },
-    // "format-full": "󰁹Charged",
+    "format-full": "󰁹Full",
   },
   "bluetooth": {
     // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
@@ -233,9 +237,7 @@
     "max-length": 10,
   },
   "temperature": {
-    // "thermal-zone": 2,
-    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    // "critical-threshold": 80,
+    "critical-threshold": 80,
     "format-critical": "  {temperatureC}°C",
     "format": "  {temperatureC}°C",
   },
@@ -254,7 +256,7 @@
     "exec": "bash -c '[ '$(dunstctl is-paused)' = 'false' ] && echo '🔔' || echo '🔕' '",
     "on-double-click": "dunstctl set-paused true",
     "on-click": "hyprland-scripts toggle-dunst-pause",
-    "signal": 10,
+    "signal": 1,
   },
   "custom/updates": {
     "format": "{} {icon}",

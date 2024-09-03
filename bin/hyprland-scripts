@@ -10,7 +10,7 @@ toggle_dunst_pause() {
 	else
 		dunstctl set-paused false
 	fi
-	pkill -RTMIN+10 waybar
+	pkill -RTMIN+1 waybar
 }
 
 close_last_dunst_notification() {
