@@ -254,6 +254,7 @@ conceal = { packages = ["conceal-bin"], manager = "paru", desc = "Recycle bin" }
 dotter = { packages = [
   "dotter-rs-bin",
 ], manager = "paru", desc = "Config files manager" }
+cargo-get = { manager = "cargo", desc = "toml extrator" }
 QQ = { packages = ["linuxqq"], manager = "paru" }
 wechat = { packages = ["wechat-universal-bwrap"], manager = "paru" }
 telegram = { packages = ["telegram-desktop"] }

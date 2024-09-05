@@ -35,9 +35,9 @@ reveal = [
 ]
 extract = [{ run = 'unar "$1"', desc = "Extract here", for = "unix" }]
 compress = [
-  { run = 'zip -r "$1.zip" "$1" ', desc = "Zip" },
-  { run = 'tar -czvf "$1.tar.gz" "$1" ', desc = "Tar.gz" },
-  { run = 'tar -cvf "$1.tar" "$1" ', desc = "Tar" },
+  { run = 'zip -r $1.zip $(realpath --relative-to="$PWD" $1) ', desc = "Zip" },
+  { run = 'tar -czvf $1.tar.gz $(realpath --relative-to="$PWD" $1) ', desc = "Tar.gz" },
+  { run = 'tar -cvf $1.tar $(realpath --relative-to="$PWD" $1) ', desc = "Tar" },
 ]
 play = [
   { run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
