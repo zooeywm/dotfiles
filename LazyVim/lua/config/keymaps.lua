@@ -41,11 +41,12 @@ map.n({
     {
         "<leader><CR>",
         function()
-            os.execute("open-term-here")
+            vim.system({ "open-term-here" })
         end,
         desc = "Open term here",
     },
     { "<leader>lc", "<cmd>LspConfig<cr>", desc = "Lsp Config" },
+    { "<C-a>", "ggVG", desc = "Select all" },
     { "<leader>tw", ":lua ToggleWordWrap()<CR>", desc = "Toggle word wrap" },
     { "<leader>tc", ":lua ToggleColorizer()<CR>", desc = "Toggle Colorizer" },
     { "<M-l>", "zl", desc = "Screen to the right" },

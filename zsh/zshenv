@@ -51,7 +51,6 @@ path=(
     ~/.local/bin
     $path
     ~/.dotnet/tools
-    /usr/lib/jvm/default/bin
     ~/repos/others/depot_tools
     ~/go/bin
 )
