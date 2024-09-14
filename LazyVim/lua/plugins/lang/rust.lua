@@ -27,6 +27,7 @@ return {
             { "<leader>ce", "<cmd>RustLsp expandMacro<CR>", ft = "rust", desc = "Expand macro" },
             { "<leader>cr", "<cmd>RustLsp runnables<CR>", ft = "rust", desc = "Run" },
             { "<leader>cc", "<cmd>RustLsp openCargo<CR>", ft = "rust", desc = "Edit Cargo.toml" },
+            { "<leader>cd", "<cmd>RustLsp openDocs<CR>", ft = "rust", desc = "Open rust doc" },
             { "<leader>ch", "<cmd>RustLsp hover actions<CR>", ft = "rust", desc = "hover actions" },
             { "<leader>ld", "<cmd>RustLsp renderDiagnostic current<CR>", ft = "rust", desc = "diagnostic current" },
             { "gp", "<cmd>RustLsp parentModule<CR>", ft = "rust", desc = "回到父模块" },
