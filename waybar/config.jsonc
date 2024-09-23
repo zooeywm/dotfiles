@@ -29,8 +29,8 @@
     "on-click-middle": "close",
     // "on-click-right": "bash -c '[ '$(hyprctl clients -j | jq -r '.[] | select(.title == {title})' | jq -r '.workspace.name')' == 'special:minimized' ] && hyprctl dispatch movetoworkspace +0,title:{title} || hyprctl dispatch movetoworkspacesilent special:minimized,title:{title}'",
     "ignore-list": [
-      // "QQ",
-      // "wechat",
+      "QQ",
+      "wechat",
       // "Feishu",
       // "firefox",
       "kitty",
@@ -77,7 +77,7 @@
       // "eDP-1": [2, 3, 4, 8],
       // "HDMI-A-1": [2],
     },
-    // "active-only": true,
+    "active-only": true,
   },
   "hyprland/submap": {
     "format": "<span style=\"italic\">  {}</span>",

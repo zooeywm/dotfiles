@@ -1,4 +1,4 @@
 #/!bin/bash
 
-# exec wezterm start --cwd $PWD 2>/dev/null
-exec kitty --detach $PWD 2>/dev/null
+exec wezterm start --cwd $PWD 2>/dev/null
+# exec kitty --detach $PWD 2>/dev/null

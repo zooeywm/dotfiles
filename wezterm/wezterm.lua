@@ -12,11 +12,11 @@ return {
         "Noto Serif Grantha", -- 古印度文
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
-    font_size = 20,
-    color_scheme = "Abernathy",
+    font_size = 21,
+    color_scheme = "Brogrammer",
     force_reverse_video_cursor = true, -- 光标反色
     -- window_background_opacity = 0.90,
-    line_height = 1.1,
+    line_height = 1.0,
     window_padding = {
         left = 0,
         right = 0,
