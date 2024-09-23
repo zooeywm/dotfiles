@@ -118,9 +118,7 @@ procs = "View processed"
 pulsemixer = "Volume panel tui"
 duf = "Calculate partion size"
 erdtree = "Tree with size"
-macchina = { packages = [
-  "macchine-bin",
-], manager = "paru", desc = "System info" }
+macchina = "System info"
 
 [network]
 networkmanager = ""
@@ -151,6 +149,7 @@ prettier = { manager = "npm", packages = [
   "@prettier/plugin-xml",
 ], desc = "FE formatter" }
 typst = "现代标记语言"
+ruff = "Python formatter"
 tinymist = { packages = [
   "tinymist-bin",
 ], manager = "paru", desc = "typst的语言服务器" }
