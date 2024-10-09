@@ -151,4 +151,19 @@ return {
             require("log-highlight").setup({})
         end,
     },
+    {
+        "tzachar/highlight-undo.nvim",
+        event = "VeryLazy",
+        opts = {
+            duration = 100,
+            keymaps = {
+                paste = {
+                    disabled = true,
+                },
+                Paste = {
+                    disabled = true,
+                },
+            },
+        },
+    },
 }

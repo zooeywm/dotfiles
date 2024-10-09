@@ -186,7 +186,7 @@ function yy {
 }
 
 zle -N yy
-bindkey '^Y' yy
+# bindkey '^Y' yy
 
 # Trim trailing spaces from pasted text to trigger no running
 # Ref: https://unix.stackexchange.com/questions/693118

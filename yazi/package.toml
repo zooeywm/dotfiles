@@ -8,6 +8,7 @@ deps = [
   { use = "yazi-rs/plugins:max-preview", rev = "b659791" },
   { use = "yazi-rs/plugins:hide-preview", rev = "b659791" },
   { use = "TD-Sky/sudo", rev = "7797682" },
+  { use = "ndtoan96/ouch", rev = "251da69" },
 ]
 
 [flavor]

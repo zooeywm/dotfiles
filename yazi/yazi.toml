@@ -129,7 +129,8 @@ prepend_previewers = [{ name = "*.md", run = "glow" }]
 
 preloaders = [
   # Image
-  { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+  { mime = "image/{avif,hei?,jxl,xml}", run = "magick" },
+  # { mime = "image/svg", run = "magick" },
   { mime = "image/*", run = "image" },
   # Video
   { mime = "video/*", run = "video" },
@@ -159,8 +160,9 @@ previewers = [
   # PDF
   { mime = "application/pdf", run = "pdf" },
   # Archive
-  { mime = "application/{,g}zip", run = "archive" },
-  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar,iso9660-image}", run = "archive" },
+  { mime = "application/{gzip,x-bzip*,xz,zstd}", run = "ouch" },
+  { mime = "application/zip", run = "archive" },
+  { mime = "application/x-{tar,7z-compressed,rar,iso9660-image}", run = "archive" },
   # Font
   { mime = "font/*", run = "font" },
   { mime = "application/vnd.ms-opentype", run = "font" },

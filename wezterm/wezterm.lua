@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 
 return {
     enable_wayland = true,
@@ -13,7 +14,7 @@ return {
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
     font_size = 21,
-    color_scheme = "Brogrammer",
+    color_scheme = "GitHub Dark",
     force_reverse_video_cursor = true, -- 光标反色
     -- window_background_opacity = 0.90,
     line_height = 1.0,
@@ -39,5 +40,13 @@ return {
             }),
         },
         { key = "l", mods = "CTRL|SHIFT", action = wezterm.action.QuickSelectArgs({ patterns = { ".*" } }) },
+        { key = "y", mods = "ALT", action = act.ScrollByLine(-1) },
+        { key = "e", mods = "ALT", action = act.ScrollByLine(1) },
+        -- { key = "k", mods = "ALT", action = act.ScrollByLine(-1) },
+        -- { key = "j", mods = "ALT", action = act.ScrollByLine(1) },
+        { key = "u", mods = "ALT", action = act.ScrollByLine(-10) },
+        { key = "d", mods = "ALT", action = act.ScrollByLine(10) },
+        { key = "g", mods = "ALT", action = act.ScrollToTop },
+        { key = "g", mods = "ALT|SHIFT", action = act.ScrollToBottom },
     },
 }
