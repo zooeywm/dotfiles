@@ -1,13 +1,13 @@
 [plugin]
 deps = [
   # { use = "DreamMaoMao/searchjump", commit = "adb0a74" },
-  { use = "Rolv-Apneseth/starship", rev = "20d5a4d" },
-  { use = "Reledia/glow", rev = "536185a" },
-  { use = "yazi-rs/plugins:smart-filter", rev = "b659791" },
-  { use = "yazi-rs/plugins:jump-to-char", rev = "b659791" },
-  { use = "yazi-rs/plugins:max-preview", rev = "b659791" },
-  { use = "yazi-rs/plugins:hide-preview", rev = "b659791" },
-  { use = "TD-Sky/sudo", rev = "7797682" },
+  { use = "Rolv-Apneseth/starship", rev = "77a65f5" },
+  { use = "Reledia/glow", rev = "f52b382" },
+  { use = "yazi-rs/plugins:smart-filter", rev = "4f1d0ae" },
+  { use = "yazi-rs/plugins:jump-to-char", rev = "4f1d0ae" },
+  { use = "yazi-rs/plugins:max-preview", rev = "4f1d0ae" },
+  { use = "yazi-rs/plugins:hide-preview", rev = "4f1d0ae" },
+  { use = "TD-Sky/sudo", rev = "7cbc3f1" },
   { use = "ndtoan96/ouch", rev = "251da69" },
 ]
 

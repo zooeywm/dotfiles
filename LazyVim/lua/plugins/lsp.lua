@@ -18,7 +18,7 @@ return {
                 texlab = {},
                 taplo = {},
                 gopls = {},
-                tsserver = {},
+                ts_ls = {},
                 volar = {},
                 tinymist = {},
                 bashls = {},

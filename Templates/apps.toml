@@ -267,3 +267,13 @@ rclone = "Net Drive Synchronization"
 
 [qt]
 qt6-languageserver = ""
+
+[unknown.wps]
+packages = [
+  "wps-office-cn",
+  "wps-office-mui-zh-cn",
+  "ttf-wps-fonts",
+  "wps-office-fonts",
+]
+manager = "paru"
+desc = "WPS本体+中文语言包+符号字体+中文常用字体"

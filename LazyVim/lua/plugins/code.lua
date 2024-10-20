@@ -54,7 +54,8 @@ return {
             },
             slint = {
                 cmd = "slint-lsp",
-                args = { "format", "-i" },
+                args = { "format" },
+                stdin = true,
                 fname = true,
             },
         },
