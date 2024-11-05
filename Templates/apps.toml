@@ -1,21 +1,9 @@
 [desktop]
 xdg-user-dirs = "Stable user dirs"
 qt-theme.packages = ["qt6ct", "qt5ct", "kvantum"]
-wezterm-git = "Modern terminal written in rust"
-kitty = ""
 polkit-kde-agent = "Authorization Panel"
-fcitx.packages = [
-  "fcitx5",
-  "fcitx5-gtk",
-  "fcitx5-chinese-addons",
-  "fcitx5-pinyin-zhwiki",
-  "fcitx5-configtool",
-]
-thunar = { packages = [
-  "thunar",
-  "tumbler",
-  "webp-pixbuf-loader",
-], desc = "File manager" }
+fcitx.packages = [ "fcitx5", "fcitx5-gtk", "fcitx5-chinese-addons", "fcitx5-pinyin-zhwiki", "fcitx5-configtool" ]
+thunar = { packages = [ "thunar", "tumbler", "webp-pixbuf-loader" ], desc = "File manager" }
 
 [wayland]
 swww = "Wallpaper engine"
@@ -27,41 +15,25 @@ slurp = "Screen area cut"
 wf-recorder = "wayland screen recorder"
 satty = { manager = "paru", desc = "Screen cut editor" }
 dunst = "Notify channel"
-hyprland.packages = [
-  "hyprland",
-  "hyprlock",
-  "hypridle",
-  "wlroots",
-  # for hyprpm
-  "cpio",
-  "xdg-desktop-portal-hyprland-git",
-  "qt5-wayland",
-]
+# cpio is for hyprpm
+hyprland.packages = [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland-git", "qt5-wayland" ]
 rofi-wayland = "Menu"
 
 [font]
+kitty = "kitty"
 terminus-font = "Outter terminal font"
 nerd-fonts = ""
-noto-fonts.packages = [
-  "noto-fonts",
-  "noto-fonts-emoji",
-  "noto-fonts-extra",
-  "noto-fonts-cjk",
-]
+noto-fonts.packages = [ "noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk" ]
 
 [shell]
+wezterm-git = "Modern terminal written in rust"
 nushell = ""
 mcfly = "History command"
 starship = "Shell beautify"
 zoxide = "Workdir switcher"
 zellij = "Terminal multiplexer"
 bash-completion = ""
-zsh.packages = [
-  "zsh",
-  "zsh-autosuggestions",
-  "zsh-syntax-highlighting",
-  "zsh-completions",
-]
+zsh.packages = [ "zsh", "zsh-autosuggestions", "zsh-syntax-highlighting", "zsh-completions" ]
 
 
 [git]
@@ -90,24 +62,14 @@ krita = "Drawing"
 espeak = { packages = ["espeak-ng"], desc = "Ebook speaker" }
 mupdf-tools = "PDF tool box"
 zathura = { packages = ["zathura", "zathura-pdf-mupdf"], desc = "PDF reader" }
-pipewire = { packages = [
-  "pipewire",
-  "wireplumber",
-  "pipewire-pulse",
-  "pipewire-alsa",
-  "pipewire-jack",
-  # Record screen
-  "pipewire-v4l2",
-] }
+# pipewire-v4l2 is for Record screen
+pipewire = { packages = [ "pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2" ] }
 
 [language]
 python-pip = ""
 nvchecker = "PKGBUILD nvchecker"
 pacman-contrib = "PKGBUILD pacman-contrib"
 pot-translation = "Translater"
-didyoumean = { packages = [
-  "didyoumean-bin",
-], manager = "paru", desc = "Correct english word" }
 
 [monitor]
 mkinitcpio-firmware.manager = "paru"
@@ -131,28 +93,20 @@ clash-verge = { packages = ["clash-verge", "clash-meta"], manager = "paru" }
 [dev]
 neovide = "neovim gui"
 silicon = "代码截图"
-hugo = ""
-base = ""
-base-devel = ""
-lua-language-server = ""
+hugo = "blog"
+base = "Minimal package set to define a basic Arch Linux installation"
+base-devel = "Basic tools to build Arch Linux packages"
+lua-language-server = "lua language server"
 stylua = "Lua formatter"
 taplo-cli = "Toml tool"
 shfmt = "bash/zsh formatter"
 gopls = "Go language server"
 yaml-language-server.manager = "npm"
-vscode-json-language-server = { manager = "npm", packages = [
-  "vscode-langservers-extracted",
-] }
 volar = { manager = "npm", packages = ["@vue/language-server"] }
-prettier = { manager = "npm", packages = [
-  "prettier",
-  "@prettier/plugin-xml",
-], desc = "FE formatter" }
+prettier = { manager = "npm", packages = [ "prettier", "@prettier/plugin-xml", ], desc = "FE formatter" }
 typst = "现代标记语言"
 ruff = "Python formatter"
-tinymist = { packages = [
-  "tinymist-bin",
-], manager = "paru", desc = "typst的语言服务器" }
+tinymist = { packages = [ "tinymist-bin", ], manager = "paru", desc = "typst的语言服务器" }
 fnm = "Node manager"
 bash-language-server.manager = "npm"
 mlc = { manager = "cargo", desc = "markdown linter" }
@@ -160,7 +114,6 @@ sccache = "Cargo build cache"
 kondo = "Clean build artifacts"
 cargo-flamegraph = "Cargo flamegraph"
 podman = "Container Runtime"
-# firejail = "Sandbox"
 QEMU.packages = ["qemu-full"]
 ventoy = { manager = "paru", packages = ["ventoy-bin"], desc = "Make iso" }
 gdb = "Debug tool"
@@ -172,10 +125,7 @@ strace = "Bin stack trace"
 # Node
 rescript = { manager = "npm", desc = "rescript toolchain" }
 # Typescript
-typescript-language-server = { manager = "npm", packages = [
-  "typescript",
-  "typescript-language-server",
-] }
+typescript-language-server = { manager = "npm", packages = [ "typescript", "typescript-language-server", ] }
 nrm = { manager = "npm", desc = "Manage npm mirror" }
 # Android
 android-tools = "adb"
@@ -243,16 +193,10 @@ pastel = "Color palette"
 hyperfine = "Run and compare command speed"
 pueue = "Shell commands manager"
 parallel-disk-usage = "Disk space statistic"
-yazi = { packages = [
-  "yazi-git",
-  "jq",
-  "ffmpegthumbnailer",
-], desc = "Tui file manager" }
+yazi = { packages = [ "yazi-git", "jq", "ffmpegthumbnailer", ], desc = "Tui file manager" }
 hexyl = "Hex viewer"
 conceal = { packages = ["conceal-bin"], manager = "paru", desc = "Recycle bin" }
-dotter = { packages = [
-  "dotter-rs-bin",
-], manager = "paru", desc = "Config files manager" }
+dotter = { packages = [ "dotter-rs-bin", ], manager = "paru", desc = "Config files manager" }
 cargo-get = { manager = "cargo", desc = "toml extrator" }
 QQ = { packages = ["linuxqq"], manager = "paru" }
 wechat = { packages = ["wechat-universal-bwrap"], manager = "paru" }
@@ -266,14 +210,9 @@ genact = "Linux 'Professor'"
 rclone = "Net Drive Synchronization"
 
 [qt]
-qt6-languageserver = ""
+qt6-languageserver = "qt6 languageserver"
 
 [unknown.wps]
-packages = [
-  "wps-office-cn",
-  "wps-office-mui-zh-cn",
-  "ttf-wps-fonts",
-  "wps-office-fonts",
-]
+packages = [ "wps-office-cn", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ]
 manager = "paru"
 desc = "WPS本体+中文语言包+符号字体+中文常用字体"

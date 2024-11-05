@@ -4,6 +4,7 @@
 
 [manager]
 keymap = [
+  { on = ["c", "m"], run = "plugin chmod", desc = "Chmod on selected files" },
   # { on = "<Esc>", run = "escape", desc = "Exit visual mode, clear selected, or cancel search" },
   { on = "q", run = "quit", desc = "Quit the process" },
   { on = "Q", run = "quit --no-cwd-file", desc = "Quit the process without writing cwd-file" },

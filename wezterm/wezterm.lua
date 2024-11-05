@@ -16,6 +16,7 @@ return {
     font_size = 21,
     color_scheme = "GitHub Dark",
     force_reverse_video_cursor = true, -- 光标反色
+    max_fps = 120,
     -- window_background_opacity = 0.90,
     line_height = 1.0,
     window_padding = {
