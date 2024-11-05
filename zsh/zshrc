@@ -298,3 +298,7 @@ eval "$(fnm env --node-dist-mirror 'https://npmmirror.com/mirrors/node' --use-on
 
 _source-existent ~zdot/local.zsh
 _source-existent ~zdot/p10k.zsh
+
+if [[ -f "$HOME/.bash_completion" ]]; then
+    source "$HOME/.bash_completion"
+fi
