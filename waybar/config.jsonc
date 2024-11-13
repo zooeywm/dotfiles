@@ -4,12 +4,7 @@
   "spacing": 0,
   "height": 82,
   "output": "eDP-1",
-  "modules-left": [
-    "hyprland/submap",
-    "group/motherboard",
-    "tray",
-    "custom/song",
-  ],
+  "modules-left": ["hyprland/submap", "group/motherboard", "tray"],
   "modules-center": ["hyprland/workspaces", "wlr/taskbar"],
   "modules-right": [
     "custom/updates",
