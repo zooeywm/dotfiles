@@ -7,8 +7,8 @@
   "modules-left": ["hyprland/submap", "group/motherboard", "tray"],
   "modules-center": ["hyprland/workspaces", "wlr/taskbar"],
   "modules-right": [
-    "custom/updates",
     "network",
+    "custom/updates",
     "group/audio",
     "group/laptop",
     "clock",
@@ -184,7 +184,7 @@
     "tooltip-format": "Volume: {volume}%",
     "smooth-scrolling-threshold": 1,
     "on-click": "pamixer -t",
-    "on-click-right": "kitty --title pulsemixer sh -c 'pulsemixer'",
+    "on-click-right": "wezterm start pulsemixer",
   },
   "pulseaudio#microphone": {
     "format": "{format_source}{source_volume}%",
@@ -195,12 +195,12 @@
     "tooltip-format": "Mic: {source_volume}%",
     "scroll-step": 5,
     "on-click": "pamixer --default-source -t",
-    "on-click-right": "kitty --title pulsemixer sh -c 'pulsemixer'",
+    "on-click-right": "wezterm start pulsemixer",
   },
   "network": {
     "interval": 1,
     "format": "{ifname}",
-    "format-alt": "󱛇",
+    "format-alt": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "format-wifi": "{icon}",
     "format-ethernet": "󰀂 ",
     "format-linked": "󰈁",
@@ -211,7 +211,7 @@
     "tooltip-format-disconnected": "󰌙 Disconnected",
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     "nospacing": 1,
-    "on-click-right": "kitty --title nmtui sh -c 'nmtui'",
+    "on-click-right": "wezterm start nmtui",
   },
   "cpu": {
     "format": "󰍛 {usage}%",
@@ -228,7 +228,7 @@
     "format-alt-click": "click",
     "tooltip": true,
     "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
-    "on-click-right": "kitty --title btm sh -c 'btm'",
+    "on-click-right": "wezterm start btm",
     "max-length": 10,
   },
   "temperature": {
