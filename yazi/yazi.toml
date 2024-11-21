@@ -29,7 +29,7 @@ ueberzug_scale = 1
 ueberzug_offset = [0, 0, 0, 0]
 
 [opener]
-edit = [{ run = '$EDITOR "$@"', desc = "$EDITOR", block = true, for = "unix" }]
+edit = [{ run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" }]
 open = [{ run = 'xdg-open "$@"', desc = "Open", for = "linux" }]
 reveal = [
   { run = 'xdg-open "$(dirname "$0")"', desc = "Reveal", for = "linux" },
@@ -126,7 +126,20 @@ fetchers = [
   # Mimetype
   { id = "mine", name = "*", if = "!mime", run = "mime", prio = "high" },
 ]
-prepend_previewers = [{ name = "*.md", run = "glow" }]
+spotters = [
+	{ name = "*/", run = "folder" },
+	# Code
+	{ mime = "text/*", run = "code" },
+	{ mime = "*/{xml,javascript,x-wine-extension-ini}", run = "code" },
+	# Image
+	{ mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+	{ mime = "image/*", run = "image" },
+	# Video
+	{ mime = "video/*", run = "video" },
+	# Fallback
+	{ name = "*", run = "file" },
+]
+# prepend_previewers = [{ name = "*.md", run = "glow" }]
 
 preloaders = [
   # Image

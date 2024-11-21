@@ -49,6 +49,9 @@ keymap = [
 
   { on = "v", run = "visual_mode", desc = "Enter visual mode (selection mode)" },
   { on = "V", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
+  
+  # Spotting
+  { on = "<Tab>", run = "spot", desc = "Spot hovered file" },
 
   # Operation
   { on = "O", run = "open", desc = "Open selected files" },
@@ -74,6 +77,7 @@ keymap = [
   { on = "P", run = "paste --force", desc = "Paste the files (overwrite if the destination exists)" },
   { on = ["p", "l"], run = "link", desc = "Symlink the absolute path of files" },
   { on = ["p", "L"], run = "link --relative", desc = "Symlink the relative path of files" },
+  { on = ["p", "H"], run = "hardlink", desc = "Hardlink yanked files" },
   { on = "d", run = "remove", desc = "Move the files to the trash" },
   { on = "D", run = "remove --permanently", desc = "Permanently delete the files" },
   { on = "a", run = "create", desc = "Create a file or directory (ends with / for directories)" },

@@ -52,21 +52,21 @@ return {
             { "gb", "<cmd>Gitsigns blame_line<cr>", desc = "git blame" },
         },
     },
-    {
-        "nvimdev/dashboard-nvim",
-        optional = true,
-        opts = function(_, opts)
-            local projects = {
-                action = "Telescope neovim-project history",
-                desc = " Projects",
-                icon = " ",
-                key = "p",
-            }
-
-            projects.desc = projects.desc .. string.rep(" ", 43 - #projects.desc)
-            projects.key_format = "  %s"
-
-            table.insert(opts.config.center, 3, projects)
-        end,
-    },
+    -- {
+    --     "nvimdev/dashboard-nvim",
+    --     optional = true,
+    --     opts = function(_, opts)
+    --         local projects = {
+    --             action = "Telescope neovim-project history",
+    --             desc = " Projects",
+    --             icon = " ",
+    --             key = "p",
+    --         }
+    --
+    --         projects.desc = projects.desc .. string.rep(" ", 43 - #projects.desc)
+    --         projects.key_format = "  %s"
+    --
+    --         table.insert(opts.config.center, 3, projects)
+    --     end,
+    -- },
 }

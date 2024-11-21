@@ -116,7 +116,7 @@
   },
   "battery": {
     "format": "{icon}{capacity}%",
-    "interval": 1,
+    "interval": 60,
     "states": {
       "warning": 60,
       "critical": 30,

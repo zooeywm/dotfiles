@@ -49,7 +49,7 @@ return {
                 },
             },
             server = {
-                settings = {
+                default_settings = {
                     ["rust-analyzer"] = {
                         check = {
                             command = "clippy",

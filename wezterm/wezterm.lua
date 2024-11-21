@@ -30,24 +30,13 @@ return {
     hide_tab_bar_if_only_one_tab = true,
     keys = {
         { key = "t", mods = "CTRL", action = wezterm.action.SpawnWindow },
-        {
-            key = "w",
-            mods = "CTRL|SHIFT",
-            action = wezterm.action.QuickSelectArgs({
-                patterns = {
-                    "[0-9a-f]{7,40}",
-                    "[^\\s]+",
-                },
-            }),
-        },
-        { key = "l", mods = "CTRL|SHIFT", action = wezterm.action.QuickSelectArgs({ patterns = { ".*" } }) },
-        { key = "y", mods = "ALT", action = act.ScrollByLine(-1) },
-        { key = "e", mods = "ALT", action = act.ScrollByLine(1) },
-        -- { key = "k", mods = "ALT", action = act.ScrollByLine(-1) },
-        -- { key = "j", mods = "ALT", action = act.ScrollByLine(1) },
+        -- { key = "u", mods = "ALT", action = wezterm.action.QuickSelectArgs({ patterns = { ".*" } }) },
+        { key = "e", mods = "ALT", action = act.ScrollByLine(-1) },
+        { key = "y", mods = "ALT", action = act.ScrollByLine(1) },
         { key = "u", mods = "ALT", action = act.ScrollByLine(-10) },
         { key = "d", mods = "ALT", action = act.ScrollByLine(10) },
         { key = "g", mods = "ALT", action = act.ScrollToTop },
         { key = "g", mods = "ALT|SHIFT", action = act.ScrollToBottom },
+        { key = "u", mods = "ALT|SHIFT", action = wezterm.action.ActivateCopyMode },
     },
 }
