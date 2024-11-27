@@ -3,266 +3,268 @@
 # "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
 [manager]
-ratio = [1, 3, 4]
-sort_by = "alphabetical"
-sort_sensitive = true
-sort_reverse = false
+linemode       = "btime"
+mouse_events   = ["click", "scroll"]
+ratio          = [1, 3, 4]
+scrolloff      = 5
+show_hidden    = true
+show_symlink   = true
+sort_by        = "btime"
 sort_dir_first = true
-sort_translit = false
-linemode = "size"
-show_hidden = true
-show_symlink = true
-scrolloff = 5
-mouse_events = ["click", "scroll"]
-title_format = "Yazi: {cwd}"
+sort_reverse   = true
+sort_sensitive = true
+sort_translit  = false
+title_format   = "Yazi: {cwd}"
 
 [preview]
-wrap = "no"
-tab_size = 2
-max_width = 3200
-max_height = 2000
-cache_dir = ""
-image_filter = "triangle"
-image_quality = 90
-sixel_fraction = 15
-ueberzug_scale = 1
+cache_dir       = ""
+image_filter    = "triangle"
+image_quality   = 90
+max_height      = 2000
+max_width       = 3200
+sixel_fraction  = 15
+tab_size        = 2
 ueberzug_offset = [0, 0, 0, 0]
+ueberzug_scale  = 1
+wrap            = "no"
 
 [opener]
-edit = [{ run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" }]
-open = [{ run = 'xdg-open "$@"', desc = "Open", for = "linux" }]
-reveal = [
-  { run = 'xdg-open "$(dirname "$0")"', desc = "Reveal", for = "linux" },
-  { run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
-]
-extract = [{ run = 'unar "$1"', desc = "Extract here", for = "unix" }]
-compress = [
-  { run = 'zip -r $1.zip $(realpath --relative-to="$PWD" $1) ', desc = "Zip" },
-  { run = 'tar -czvf $1.tar.gz $(realpath --relative-to="$PWD" $1) ', desc = "Tar.gz" },
-  { run = 'tar -cvf $1.tar $(realpath --relative-to="$PWD" $1) ', desc = "Tar" },
-]
-play = [
-  { run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
-  { run = 'mpv --force-window "%1"', orphan = true, for = "windows" },
-  { run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
-]
 binutil = [
-  { run = 'strip --only-keep-debug $1 -o $1.debug && strip $1', desc = "strip" },
-  { run = 'aarch64-linux-gnu-strip --only-keep-debug $1 -o $1.debug && aarch64-linux-gnu-strip $1', desc = "aarch64-strip" },
+    { run = 'strip --only-keep-debug $1 -o $1.debug && strip $1', desc = "strip" },
+    { run = 'aarch64-linux-gnu-strip --only-keep-debug $1 -o $1.debug && aarch64-linux-gnu-strip $1', desc = "aarch64-strip" },
 ]
-images = [{ run = 'swww img $1', desc = "Set as wallpaper" }]
+compress = [
+    { run = 'zip -r $1.zip $(realpath --relative-to="$PWD" $1) ', desc = "Zip" },
+    { run = 'tar -czvf $1.tar.gz $(realpath --relative-to="$PWD" $1) ', desc = "Tar.gz" },
+    { run = 'tar -cvf $1.tar $(realpath --relative-to="$PWD" $1) ', desc = "Tar" },
+]
 deb = [{ run = 'dpkg-deb -x "$1" "${1%.deb}"', desc = "Extract deb here" }]
+edit = [{ run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" }]
+extract = [{ run = 'unar "$1"', desc = "Extract here", for = "unix" }]
+images = [{ run = 'swww img $1', desc = "Set as wallpaper" }]
+open = [{ run = 'xdg-open "$@"', desc = "Open", for = "linux" }]
+play = [
+    { run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
+    { run = 'mpv --force-window "%1"', orphan = true, for = "windows" },
+    { run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
+]
+reveal = [
+    { run = 'xdg-open "$(dirname "$0")"', desc = "Reveal", for = "linux" },
+    { run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+]
 
 [open]
 rules = [
-  { mime = "inode/directory", use = [
-    "compress",
-    "reveal",
-  ] },
-  { mime = "text/html", use = [
-    "open",
-    "edit",
-    "reveal",
-  ] },
-  { mime = "text/*", use = [
-    "edit",
-    "open",
-    "reveal",
-  ] },
-  { mime = "image/*", use = [
-    "open",
-    "images",
-    "reveal",
-  ] },
-  { mime = "{audio,video}/*", use = [
-    "play",
-    "reveal",
-  ] },
-  { mime = "inode/x-empty", use = [
-    "edit",
-    "reveal",
-  ] },
-  { mime = "application/{,g}zip", use = [
-    "extract",
-    "reveal",
-  ] },
-  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = [
-    "extract",
-    "reveal",
-  ] },
-  { mime = "application/{json,x-ndjson}", use = [
-    "edit",
-    "reveal",
-  ] },
-  { mime = "*/javascript", use = [
-    "edit",
-    "reveal",
-  ] },
-  { mime = "application/x-{sharedlib,pie-executable}", use = [
-    "binutil",
-    "reveal",
-  ] },
-  { mime = "application/vnd.debian.binary-package", use = [
-    "deb",
-    "reveal",
-  ] },
-  { name = "*", use = [
-    "edit",
-    "open",
-    "reveal",
-  ] },
+    { mime = "inode/directory", use = [
+        "compress",
+        "reveal",
+    ] },
+    { mime = "text/html", use = [
+        "open",
+        "edit",
+        "reveal",
+    ] },
+    { mime = "text/*", use = [
+        "edit",
+        "open",
+        "reveal",
+    ] },
+    { mime = "image/*", use = [
+        "open",
+        "images",
+        "reveal",
+    ] },
+    { mime = "{audio,video}/*", use = [
+        "play",
+        "reveal",
+    ] },
+    { mime = "inode/empty", use = [
+        "edit",
+        "reveal",
+    ] },
+    { mime = "application/{,g}zip", use = [
+        "extract",
+        "reveal",
+    ] },
+    { mime = "application/{tar,bzip*,7z-compressed,xz,rar}", use = [
+        "extract",
+        "reveal",
+    ] },
+    { mime = "application/{json,ndjson}", use = [
+        "edit",
+        "reveal",
+    ] },
+    { mime = "*/javascript", use = [
+        "edit",
+        "reveal",
+    ] },
+    { mime = "application/x-{sharedlib,pie-executable}", use = [
+        "binutil",
+        "reveal",
+    ] },
+    { mime = "application/vnd.debian.binary-package", use = [
+        "deb",
+        "reveal",
+    ] },
+    { name = "*", use = [
+        "edit",
+        "open",
+        "reveal",
+    ] },
 ]
 
 [tasks]
-micro_workers = 10
-macro_workers = 25
-bizarre_retry = 5
-image_alloc = 536870912  # 512MB
-image_bound = [0, 0]
+bizarre_retry    = 5
+image_alloc      = 536870912 # 512MB
+image_bound      = [0, 0]
+macro_workers    = 25
+micro_workers    = 10
 suppress_preload = false
 
 [plugin]
 fetchers = [
-  # Mimetype
-  { id = "mine", name = "*", if = "!mime", run = "mime", prio = "high" },
+    # Mimetype
+    { id = "mine", name = "*", if = "!mime", run = "mime", prio = "high" },
 ]
 spotters = [
-	{ name = "*/", run = "folder" },
-	# Code
-	{ mime = "text/*", run = "code" },
-	{ mime = "*/{xml,javascript,x-wine-extension-ini}", run = "code" },
-	# Image
-	{ mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
-	{ mime = "image/*", run = "image" },
-	# Video
-	{ mime = "video/*", run = "video" },
-	# Fallback
-	{ name = "*", run = "file" },
+    { name = "*/", run = "folder" },
+    # Code
+    { mime = "text/*", run = "code" },
+    { mime = "*/{xml,javascript,wine-extension-ini}", run = "code" },
+    # Image
+    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+    { mime = "image/*", run = "image" },
+    # Video
+    { mime = "video/*", run = "video" },
+    # Fallback
+    { name = "*", run = "file" },
 ]
-# prepend_previewers = [{ name = "*.md", run = "glow" }]
+
+append_previewers  = [{ name = "*", run = "hexyl" }]
+prepend_previewers = [{ name = "*.md", run = "mdcat" }]
 
 preloaders = [
-  # Image
-  { mime = "image/{avif,hei?,jxl,xml}", run = "magick" },
-  # { mime = "image/svg", run = "magick" },
-  { mime = "image/*", run = "image" },
-  # Video
-  { mime = "video/*", run = "video" },
-  # PDF
-  { mime = "application/pdf", run = "pdf" },
-  # Font
-  { mime = "font/*", run = "font" },
-  { mime = "application/vnd.ms-opentype", run = "font" },
-  # Empty file
-  # { mime = "inode/x-empty", run = "empty" },
+    # Image
+    # { mime = "image/svg", run = "magick" },
+    { mime = "image/{avif,hei?,jxl,xml}", run = "magick" },
+    { mime = "image/*", run = "image" },
+    # Video
+    { mime = "video/*", run = "video" },
+    # PDF
+    { mime = "application/pdf", run = "pdf" },
+    # Font
+    { mime = "font/*", run = "font" },
+    { mime = "application/vnd.ms-opentype", run = "font" },
+    # Empty file
+    # { mime = "inode/empty", run = "empty" },
 ]
 previewers = [
-  { name = "*/", run = "folder", sync = true },
-  # Code
-  { mime = "text/*", run = "code" },
-  { mime = "*/{xml,javascript,x-wine-extension-ini}", run = "code" },
-  { mime = "*/xml", run = "code" },
-  { mime = "*/javascript", run = "code" },
-  { mime = "*/x-wine-extension-ini", run = "code" },
-  # JSON
-  { mime = "application/{json,x-ndjson}", run = "json" },
-  # Image
-  { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
-  { mime = "image/*", run = "image" },
-  # Video
-  { mime = "video/*", run = "video" },
-  # PDF
-  { mime = "application/pdf", run = "pdf" },
-  # Archive
-  { mime = "application/{gzip,x-bzip*,xz,zstd}", run = "ouch" },
-  { mime = "application/zip", run = "archive" },
-  { mime = "application/x-{tar,7z-compressed,rar,iso9660-image}", run = "archive" },
-  # Font
-  { mime = "font/*", run = "font" },
-  { mime = "application/vnd.ms-opentype", run = "font" },
-  # Fallback
-  { name = "*", run = "file" },
+    { name = "*/", run = "folder", sync = true },
+    # Code
+    { mime = "text/*", run = "code" },
+    { mime = "*/{xml,javascript,wine-extension-ini}", run = "code" },
+    { mime = "*/xml", run = "code" },
+    { mime = "*/javascript", run = "code" },
+    { mime = "*/wine-extension-ini", run = "code" },
+    # JSON
+    { mime = "application/{json,ndjson}", run = "json" },
+    # Image
+    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+    { mime = "image/*", run = "image" },
+    # Video
+    { mime = "video/*", run = "video" },
+    # PDF
+    { mime = "application/pdf", run = "pdf" },
+    # Archive
+    { mime = "application/{gzip,x-bzip*,xz,zstd}", run = "ouch" },
+    { mime = "application/zip", run = "archive" },
+    { mime = "application/{tar,7z-compressed,rar,iso9660-image}", run = "archive" },
+    # Font
+    { mime = "font/*", run = "font" },
+    { mime = "application/vnd.ms-opentype", run = "font" },
+    # Fallback
+    { name = "*", run = "file" },
 ]
 
 [input]
 cursor_blink = true
 # cd
-cd_title = "Change directory:"
-cd_origin = "top-center"
 cd_offset = [0, 2, 50, 3]
+cd_origin = "top-center"
+cd_title  = "Change directory:"
 
 # create
-create_title = ["Create:", "Create (dir):"]
-create_origin = "top-center"
 create_offset = [0, 2, 50, 3]
+create_origin = "top-center"
+create_title  = ["Create:", "Create dir:"]
 
 # rename
-rename_title = "Rename:"
-rename_origin = "hovered"
 rename_offset = [0, 1, 50, 3]
+rename_origin = "hovered"
+rename_title  = "Rename:"
 
 # trash
-trash_title = "Move {n} selected file{s} to trash? (y/N)"
-trash_origin = "top-center"
 trash_offset = [0, 2, 50, 3]
+trash_origin = "top-center"
+trash_title  = "Move {n} selected file{s} to trash? (y/N)"
 
 # delete
-delete_title = "Delete {n} selected file{s} permanently? (y/N)"
-delete_origin = "top-center"
 delete_offset = [0, 2, 50, 3]
+delete_origin = "top-center"
+delete_title  = "Delete {n} selected file{s} permanently? (y/N)"
 
 # filter
-filter_title = "Filter:"
-filter_origin = "top-center"
 filter_offset = [0, 2, 50, 3]
+filter_origin = "top-center"
+filter_title  = "Filter:"
 
 # find
-find_title = ["Find next:", "Find previous:"]
-find_origin = "top-center"
 find_offset = [0, 2, 50, 3]
+find_origin = "top-center"
+find_title  = ["Find next:", "Find previous:"]
 
 # search
-search_title = "Search via {n}:"
-search_origin = "top-center"
 search_offset = [0, 2, 50, 3]
+search_origin = "top-center"
+search_title  = "Search via {n}:"
 
 # shell
-shell_title = ["Shell:", "Shell (block):"]
-shell_origin = "top-center"
 shell_offset = [0, 2, 50, 3]
+shell_origin = "top-center"
+shell_title  = ["Shell:", "Shell (block):"]
 
 [confirm]
 # trash
-trash_title = "Trash {n} selected file{s}?"
-trash_origin = "center"
 trash_offset = [0, 0, 70, 20]
+trash_origin = "center"
+trash_title  = "Trash {n} selected file{s}?"
 # delete
-delete_title = "Permanently delete {n} selected file{s}?"
-delete_origin = "center"
 delete_offset = [0, 0, 70, 20]
+delete_origin = "center"
+delete_title  = "Permanently delete {n} selected file{s}?"
 
 # overwrite
-overwrite_title = "Overwrite file?"
 overwrite_content = "Will overwrite the following file:"
-overwrite_origin = "center"
-overwrite_offset = [0, 0, 50, 15]
+overwrite_offset  = [0, 0, 50, 15]
+overwrite_origin  = "center"
+overwrite_title   = "Overwrite file?"
 
 # quit
-quit_title = "Quit?"
 quit_content = "The following task is still running, are you sure you want to quit?"
-quit_origin = "center"
-quit_offset = [0, 0, 50, 15]
+quit_offset  = [0, 0, 50, 15]
+quit_origin  = "center"
+quit_title   = "Quit?"
 
 [pick]
-open_title = "Open with:"
-open_origin = "hovered"
 open_offset = [0, 1, 50, 7]
+open_origin = "hovered"
+open_title  = "Open with:"
 
 [which]
-sort_by = "none"
+sort_by        = "none"
+sort_reverse   = false
 sort_sensitive = false
-sort_reverse = false
-sort_translit = false
+sort_translit  = false
 
 [log]
 enabled = true

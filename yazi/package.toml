@@ -1,15 +1,20 @@
 [plugin]
 deps = [
-  # { use = "DreamMaoMao/searchjump", commit = "adb0a74" },
-  { use = "Rolv-Apneseth/starship", rev = "77a65f5" },
-  { use = "Reledia/glow", rev = "388e847" },
-  { use = "yazi-rs/plugins:smart-filter", rev = "ab7068e" },
-  { use = "yazi-rs/plugins:jump-to-char", rev = "ab7068e" },
-  { use = "yazi-rs/plugins:max-preview", rev = "ab7068e" },
-  { use = "yazi-rs/plugins:hide-preview", rev = "ab7068e" },
-  { use = "TD-Sky/sudo", rev = "7cbc3f1" },
-  { use = "ndtoan96/ouch", rev = "db14883" },
-  { use = "yazi-rs/plugins:chmod", rev = "ab7068e" },
+    # { use = "DreamMaoMao/searchjump", commit = "adb0a74" },
+    { use = "Rolv-Apneseth/starship", rev = "77a65f5" },
+    { use = "yazi-rs/plugins:smart-filter", rev = "38418dd" },
+    { use = "yazi-rs/plugins:jump-to-char", rev = "38418dd" },
+    { use = "yazi-rs/plugins:max-preview", rev = "38418dd" },
+    { use = "yazi-rs/plugins:hide-preview", rev = "38418dd" },
+    # { use = "TD-Sky/sudo", rev = "7cbc3f1" },
+    { use = "ndtoan96/ouch", rev = "db14883" },
+    { use = "yazi-rs/plugins:chmod", rev = "38418dd" },
+    { use = "DreamMaoMao/searchjump", rev = "002785f" },
+    { use = "GrzegorzKozub/mdcat", rev = "1706af4" },
+    { use = "yazi-rs/plugins:diff", rev = "38418dd" },
+    { use = "pirafrank/what-size", rev = "f08f7f2" },
+    # Preview binary files
+    # { use = "Reledia/hexyl", rev = "ccc0a4a" },
 ]
 
 [flavor]

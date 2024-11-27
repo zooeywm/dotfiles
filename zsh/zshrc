@@ -107,6 +107,7 @@ alias -g :nn='&>/dev/null'
 alias -g :bg='&>/dev/null &!'
 alias -g :h='--help 2>&1 | bat -pl help'
 alias cls='printf "\033c"'
+alias y='yazi'
 
 #============#
 # Completion #
@@ -176,7 +177,7 @@ zle -N edit-command-line
 bindkey '^O' edit-command-line
 
 ## yazi移动
-function yy {
+function e {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
 	yazi "$@" --cwd-file="$tmp"
 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
@@ -185,8 +186,8 @@ function yy {
 	rm -f -- "$tmp"
 }
 
-zle -N yy
-# bindkey '^Y' yy
+zle -N e
+bindkey '^e' e
 
 # Trim trailing spaces from pasted text to trigger no running
 # Ref: https://unix.stackexchange.com/questions/693118

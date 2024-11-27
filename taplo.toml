@@ -1,0 +1,10 @@
+[formatting]
+align_entries       = true
+array_auto_collapse = true
+array_auto_expand   = true
+column_width        = 150
+include             = "yazi/*.toml"
+indent_string       = "    "
+reorder_array       = true
+reorder_keys        = true
+trailing_newline    = true
