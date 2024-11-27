@@ -13,6 +13,7 @@ deps = [
     { use = "GrzegorzKozub/mdcat", rev = "1706af4" },
     { use = "yazi-rs/plugins:diff", rev = "38418dd" },
     { use = "pirafrank/what-size", rev = "f08f7f2" },
+    { use = "DreamMaoMao/clipboard", rev = "e49a06c" },
     # Preview binary files
     # { use = "Reledia/hexyl", rev = "ccc0a4a" },
 ]

@@ -1,218 +1,218 @@
 [desktop]
-xdg-user-dirs = "Stable user dirs"
+fcitx.packages    = ["fcitx5", "fcitx5-gtk", "fcitx5-chinese-addons", "fcitx5-pinyin-zhwiki", "fcitx5-configtool"]
+polkit-kde-agent  = "Authorization Panel"
 qt-theme.packages = ["qt6ct", "qt5ct", "kvantum"]
-polkit-kde-agent = "Authorization Panel"
-fcitx.packages = [ "fcitx5", "fcitx5-gtk", "fcitx5-chinese-addons", "fcitx5-pinyin-zhwiki", "fcitx5-configtool" ]
-thunar = { packages = [ "thunar", "tumbler", "webp-pixbuf-loader" ], desc = "File manager" }
+thunar            = { packages = ["thunar", "tumbler", "webp-pixbuf-loader"], desc = "File manager" }
+xdg-user-dirs     = "Stable user dirs"
 
 [wayland]
-swww = "Wallpaper engine"
-waybar = "Status bar"
+cliphist     = "Clipboard history"
+dunst        = "Notify channel"
+grim         = "Screen cut"
+satty        = { manager = "paru", desc = "Screen cut editor" }
+slurp        = "Screen area cut"
+swww         = "Wallpaper engine"
+waybar       = "Status bar"
+wf-recorder  = "wayland screen recorder"
 wl-clipboard = "Clipboard"
-cliphist = "Clipboard history"
-grim = "Screen cut"
-slurp = "Screen area cut"
-wf-recorder = "wayland screen recorder"
-satty = { manager = "paru", desc = "Screen cut editor" }
-dunst = "Notify channel"
 # cpio is for hyprpm
-hyprland.packages = [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland-git", "qt5-wayland" ]
-rofi-wayland = "Menu"
+hyprland.packages = ["hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland-git", "qt5-wayland"]
+rofi-wayland      = "Menu"
 
 [font]
-kitty = "kitty"
-terminus-font = "Outter terminal font"
-nerd-fonts = ""
-noto-fonts.packages = [ "noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk" ]
+kitty               = "kitty"
+nerd-fonts          = ""
+noto-fonts.packages = ["noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk"]
+terminus-font       = "Outter terminal font"
 
 [shell]
-wezterm-git = "Modern terminal written in rust"
-nushell = ""
-mcfly = "History command"
-starship = "Shell beautify"
-zoxide = "Workdir switcher"
-zellij = "Terminal multiplexer"
 bash-completion = ""
-zsh.packages = [ "zsh", "zsh-autosuggestions", "zsh-syntax-highlighting", "zsh-completions" ]
+mcfly           = "History command"
+nushell         = ""
+starship        = "Shell beautify"
+wezterm-git     = "Modern terminal written in rust"
+zellij          = "Terminal multiplexer"
+zoxide          = "Workdir switcher"
+zsh.packages    = ["zsh", "zsh-autosuggestions", "zsh-syntax-highlighting", "zsh-completions"]
 
 
 [git]
-gitui = "git TUI"
-stgit = { manager = "paru", packages = ["stgit", "xmlto"], desc = "Git ui" }
-delta = { packages = ["git-delta"], desc = "Advanced diff" }
-git-cliff = "Changelog generator"
+delta           = { packages = ["git-delta"], desc = "Advanced diff" }
+git-cliff       = "Changelog generator"
 git-filter-repo = "Advanced git cleanner"
+gitui           = "git TUI"
+stgit           = { manager = "paru", packages = ["stgit", "xmlto"], desc = "Git ui" }
 
 [data]
-p7zip = "7z"
+p7zip          = "7z"
+qbittorrent    = ""
+unarchiver     = ""
 unrar.packages = ["unrar-free"]
-zip.packages = ["zip", "unzip"]
-qbittorrent = ""
-unarchiver = ""
+zip.packages   = ["zip", "unzip"]
 
 [media]
+espeak       = { packages = ["espeak-ng"], desc = "Ebook speaker" }
+ffmpeg       = ""
+kid3-qt      = "Music metadata editor"
+krita        = "Drawing"
+mpv          = "Watch video"
+mupdf-tools  = "PDF tool box"
+pandoc       = { packages = ["pandoc-bin"], desc = "LaTex render" }
 sof-firmware = "Audio card firmware"
-ffmpeg = ""
-mpv = "Watch video"
-viu = "View image in terminal"
-yt-dlp = "Download Youtube video"
-pandoc = { packages = ["pandoc-bin"], desc = "LaTex render" }
-kid3-qt = "Music metadata editor"
-krita = "Drawing"
-espeak = { packages = ["espeak-ng"], desc = "Ebook speaker" }
-mupdf-tools = "PDF tool box"
-zathura = { packages = ["zathura", "zathura-pdf-mupdf"], desc = "PDF reader" }
+viu          = "View image in terminal"
+yt-dlp       = "Download Youtube video"
+zathura      = { packages = ["zathura", "zathura-pdf-mupdf"], desc = "PDF reader" }
 # pipewire-v4l2 is for Record screen
-pipewire = { packages = [ "pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2" ] }
+pipewire = { packages = ["pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2"] }
 
 [language]
-python-pip = ""
-nvchecker = "PKGBUILD nvchecker"
-pacman-contrib = "PKGBUILD pacman-contrib"
+nvchecker       = "PKGBUILD nvchecker"
+pacman-contrib  = "PKGBUILD pacman-contrib"
 pot-translation = "Translater"
+python-pip      = ""
 
 [monitor]
+bottom                      = "Advanced top"
+brightnessctl               = "Adjust lightness"
+duf                         = "Calculate partion size"
+erdtree                     = "Tree with size"
+macchina                    = "System info"
 mkinitcpio-firmware.manager = "paru"
-bottom = "Advanced top"
-brightnessctl = "Adjust lightness"
-pamixer = "Adjust volume"
-procs = "View processed"
-pulsemixer = "Volume panel tui"
-duf = "Calculate partion size"
-erdtree = "Tree with size"
-macchina = "System info"
+pamixer                     = "Adjust volume"
+procs                       = "View processed"
+pulsemixer                  = "Volume panel tui"
 
 [network]
+clash-verge    = { packages = ["clash-verge", "clash-meta"], manager = "paru" }
+gping          = "Ping with tui"
+lsof           = "Get file opend port"
 networkmanager = ""
-gping = "Ping with tui"
-traceroute = "Trace route"
-lsof = "Get file opend port"
-openssh = "ssh"
-clash-verge = { packages = ["clash-verge", "clash-meta"], manager = "paru" }
+openssh        = "ssh"
+traceroute     = "Trace route"
 
 [dev]
-neovide = "neovim gui"
-silicon = "代码截图"
-hugo = "blog"
-base = "Minimal package set to define a basic Arch Linux installation"
-base-devel = "Basic tools to build Arch Linux packages"
-lua-language-server = "lua language server"
-stylua = "Lua formatter"
-taplo-cli = "Toml tool"
-shfmt = "bash/zsh formatter"
-gopls = "Go language server"
-yaml-language-server.manager = "npm"
-volar = { manager = "npm", packages = ["@vue/language-server"] }
-prettier = { manager = "npm", packages = [ "prettier", "@prettier/plugin-xml", ], desc = "FE formatter" }
-typst = "现代标记语言"
-ruff = "Python formatter"
-tinymist = { packages = [ "tinymist-bin", ], manager = "paru", desc = "typst的语言服务器" }
-fnm = "Node manager"
+QEMU.packages                = ["qemu-full"]
+base                         = "Minimal package set to define a basic Arch Linux installation"
+base-devel                   = "Basic tools to build Arch Linux packages"
 bash-language-server.manager = "npm"
-mlc = { manager = "cargo", desc = "markdown linter" }
-sccache = "Cargo build cache"
-kondo = "Clean build artifacts"
-cargo-flamegraph = "Cargo flamegraph"
-podman = "Container Runtime"
-QEMU.packages = ["qemu-full"]
-ventoy = { manager = "paru", packages = ["ventoy-bin"], desc = "Make iso" }
-gdb = "Debug tool"
-mold = "Modern link tool"
-tokei = "Code statistic"
-gcc = "GNU C/C++ toolchain"
-cmake-language-server = "Cmake Language Server"
-strace = "Bin stack trace"
+cargo-flamegraph             = "Cargo flamegraph"
+cmake-language-server        = "Cmake Language Server"
+fnm                          = "Node manager"
+gcc                          = "GNU C/C++ toolchain"
+gdb                          = "Debug tool"
+gopls                        = "Go language server"
+hugo                         = "blog"
+kondo                        = "Clean build artifacts"
+lua-language-server          = "lua language server"
+mlc                          = { manager = "cargo", desc = "markdown linter" }
+mold                         = "Modern link tool"
+neovide                      = "neovim gui"
+podman                       = "Container Runtime"
+prettier                     = { manager = "npm", packages = ["prettier", "@prettier/plugin-xml"], desc = "FE formatter" }
+ruff                         = "Python formatter"
+sccache                      = "Cargo build cache"
+shfmt                        = "bash/zsh formatter"
+silicon                      = "代码截图"
+strace                       = "Bin stack trace"
+stylua                       = "Lua formatter"
+taplo-cli                    = "Toml tool"
+tinymist                     = { packages = ["tinymist-bin"], manager = "paru", desc = "typst的语言服务器" }
+tokei                        = "Code statistic"
+typst                        = "现代标记语言"
+ventoy                       = { manager = "paru", packages = ["ventoy-bin"], desc = "Make iso" }
+volar                        = { manager = "npm", packages = ["@vue/language-server"] }
+yaml-language-server.manager = "npm"
 # Node
 rescript = { manager = "npm", desc = "rescript toolchain" }
 # Typescript
-typescript-language-server = { manager = "npm", packages = [ "typescript", "typescript-language-server", ] }
-nrm = { manager = "npm", desc = "Manage npm mirror" }
+nrm                        = { manager = "npm", desc = "Manage npm mirror" }
+typescript-language-server = { manager = "npm", packages = ["typescript", "typescript-language-server"] }
 # Android
 android-tools = "adb"
 # Rust
-cargo-binutils = { manager = "cargo", desc = "Rust binary tool" }
-rust-script = "rust shell interpreter"
-rustup = "Manage rust toolchain"
-cargo-generate = "Program template"
-cargo-machete = "Check unused dependency"
-cargo-msrv = "Oldest usable rustc version"
-cargo-expand = "Expand macro"
-cargo-edit = "Edit dependency"
+cargo-audit        = { packages = ["cargo-audit", "cargo-auditable"], desc = "Audit" }
+cargo-binutils     = { manager = "cargo", desc = "Rust binary tool" }
+cargo-cache        = { manager = "cargo", desc = "Manage cache" }
+cargo-deny         = "Analyze dependency"
+cargo-depgraph     = "Dependency graph"
+cargo-edit         = "Edit dependency"
+cargo-expand       = "Expand macro"
+cargo-generate     = "Program template"
+cargo-machete      = "Check unused dependency"
+cargo-msrv         = "Oldest usable rustc version"
 cargo-supply-chain = "Dependency metadata"
-cargo-deny = "Analyze dependency"
-cargo-audit = { packages = ["cargo-audit", "cargo-auditable"], desc = "Audit" }
-cargo-depgraph = "Dependency graph"
-cargo-update = "Update apps installed by cargo"
-cargo-cache = { manager = "cargo", desc = "Manage cache" }
-cross = { manager = "cargo", desc = "Cross build" }
-sea-orm-cli = { manager = "cargo", desc = "sea-orm tool" }
+cargo-update       = "Update apps installed by cargo"
+cross              = { manager = "cargo", desc = "Cross build" }
+rust-script        = "rust shell interpreter"
+rustup             = "Manage rust toolchain"
+sea-orm-cli        = { manager = "cargo", desc = "sea-orm tool" }
 # Clang
-clang = { packages = ["clang", "llvm"], desc = "C/C++ toolchain" }
+clang     = { packages = ["clang", "llvm"], desc = "C/C++ toolchain" }
 slint_lsp = { manager = "cargo", desc = "slint lsp" }
 
 
 [system]
-ntp = "Time sync daemon"
-polkit = "Policy kit"
-bluez = "Blutooth kernel"
+acpi        = "Battery info"
+bandwhich   = "Monitor network bandwidth"
+bluez       = "Blutooth kernel"
 bluez-utils = "Bluetooth cli"
-acpi = "Battery info"
-bandwhich = "Monitor network bandwidth"
+ntp         = "Time sync daemon"
+polkit      = "Policy kit"
 #[arch]
 archlinuxcn-keyring = ""
-udisk = { packages = ["udisks2", "udiskie"], desc = "Usb device auto mount" }
+udisk               = { packages = ["udisks2", "udiskie"], desc = "Usb device auto mount" }
 
 [amd]
-mesa-vdpau = "Gpu video accelerator"
-amd-ucode = "AMD CPU driver"
+amd-ucode         = "AMD CPU driver"
+mesa-vdpau        = "Gpu video accelerator"
 xf86-video-amdgpu = "AMD GPU video accelerator"
 
 [misc]
-qalculate-qt = "Calculator"
-asciinema = "shell recorder"
-firefox = "Mozilla firefox"
-dbeaver = "PostgreSQL client"
-sqlitebrowser = "SQlite client"
-bat = "Advaned cat"
-choose = "Advanced cut"
-dos2unix = "Change file platform"
-enca = "Check file code"
-eza = "Advanced ls"
-fd = "Advanced find"
-jaq = "Advanced jq"
-jless = "Json reader"
-ripgrep = "Regex match"
-rsync = "Advanced copy"
-sd = "Advanced sed"
-skim = "Fuzzy search in rs"
-fzf = "Fuzzy search in go"
-tree = "Tree view"
-protobuf = "ProtocolBuffers"
-navi = "Command search"
-pastel = "Color palette"
-hyperfine = "Run and compare command speed"
-pueue = "Shell commands manager"
-parallel-disk-usage = "Disk space statistic"
-yazi = { packages = [ "yazi-git", "jq", "ffmpegthumbnailer", ], desc = "Tui file manager" }
-hexyl = "Hex viewer"
-conceal = { packages = ["conceal-bin"], manager = "paru", desc = "Recycle bin" }
-dotter = { packages = [ "dotter-rs-bin", ], manager = "paru", desc = "Config files manager" }
-cargo-get = { manager = "cargo", desc = "toml extrator" }
-QQ = { packages = ["linuxqq"], manager = "paru" }
-wechat = { packages = ["wechat-universal-bwrap"], manager = "paru" }
-telegram = { packages = ["telegram-desktop"] }
-wemeet = { packages = ["com.tencent.wemeet"], manager = "flatpak" }
+QQ                         = { packages = ["linuxqq"], manager = "paru" }
+asciinema                  = "shell recorder"
+bat                        = "Advaned cat"
+cargo-get                  = { manager = "cargo", desc = "toml extrator" }
+choose                     = "Advanced cut"
+conceal                    = { packages = ["conceal-bin"], manager = "paru", desc = "Recycle bin" }
+dbeaver                    = "PostgreSQL client"
+dos2unix                   = "Change file platform"
+dotter                     = { packages = ["dotter-rs-bin"], manager = "paru", desc = "Config files manager" }
+enca                       = "Check file code"
+eza                        = "Advanced ls"
+fd                         = "Advanced find"
+firefox                    = "Mozilla firefox"
+fzf                        = "Fuzzy search in go"
+genact                     = "Linux 'Professor'"
+hexyl                      = "Hex viewer"
+hyperfine                  = "Run and compare command speed"
+jaq                        = "Advanced jq"
+jless                      = "Json reader"
+man-db                     = ""
+navi                       = "Command search"
+obs-studio                 = ""
+parallel-disk-usage        = "Disk space statistic"
+pastel                     = "Color palette"
+protobuf                   = "ProtocolBuffers"
+pueue                      = "Shell commands manager"
+qalculate-qt               = "Calculator"
+rclone                     = "Net Drive Synchronization"
+ripgrep                    = "Regex match"
+rsync                      = "Advanced copy"
+sd                         = "Advanced sed"
+skim                       = "Fuzzy search in rs"
+sqlitebrowser              = "SQlite client"
+telegram                   = { packages = ["telegram-desktop"] }
+tree                       = "Tree view"
+v4l2loopback-dkms          = "Virtual camera with screen"
 vmware-workstation.manager = "paru"
-v4l2loopback-dkms = "Virtual camera with screen"
-obs-studio = ""
-man-db = ""
-genact = "Linux 'Professor'"
-rclone = "Net Drive Synchronization"
+wechat                     = { packages = ["wechat-universal-bwrap"], manager = "paru" }
+wemeet                     = { packages = ["com.tencent.wemeet"], manager = "flatpak" }
+yazi                       = { packages = ["yazi-git", "jq", "ffmpegthumbnailer"], desc = "Tui file manager" }
 
 [qt]
 qt6-languageserver = "qt6 languageserver"
 
 [unknown.wps]
-packages = [ "wps-office-cn", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ]
-manager = "paru"
-desc = "WPS本体+中文语言包+符号字体+中文常用字体"
+desc     = "WPS本体+中文语言包+符号字体+中文常用字体"
+manager  = "paru"
+packages = ["wps-office-cn", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts"]

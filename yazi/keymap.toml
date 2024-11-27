@@ -155,6 +155,7 @@ keymap = [
     { on = ["g", "t"], run = "cd /tmp", desc = "Goto /tmp" },
     { on = ["g", "u"], run = "cd /run/media", desc = "Goto /run/media" },
     { on = ["g", "v"], run = "cd ~/Videos", desc = "Goto ~/Videos" },
+    { on = ["g", "p"], run = "cd ~/Pictures", desc = "Goto ~/Pictures" },
     { on = ["g", "<Space>"], run = "cd --interactive", desc = "Jump interactively" },
 
     # Help
@@ -179,9 +180,13 @@ keymap = [
 prepend_keymap = [
     { on = "<C-d>", run = "plugin diff", desc = "Diff the selected with the hovered file" },
     { on = [
-        ".",
+        "c",
         "s",
     ], run = "plugin what-size", desc = "Calc size of selection or cwd" },
+    { on = [
+        "y",
+        "s",
+    ], run = "plugin clipboard" },
 ]
 
 [tasks]

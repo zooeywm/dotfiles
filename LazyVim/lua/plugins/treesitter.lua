@@ -1,7 +1,7 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        dependencies = { "nushell/tree-sitter-nu", "tree-sitter-grammars/tree-sitter-hlsl" },
+        dependencies = { "tree-sitter-grammars/tree-sitter-hlsl" },
         opts = {
             -- stylua: ignore
             ensure_installed = {
@@ -36,11 +36,6 @@ return {
         opts = {
             max_lines = 1,
         },
-    },
-    {
-        "nkrkv/nvim-treesitter-rescript",
-        enabled = false,
-        ft = "rescript",
     },
     {
         "rayliwell/tree-sitter-rstml",
