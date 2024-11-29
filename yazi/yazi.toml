@@ -42,14 +42,14 @@ deb = [{ run = 'dpkg-deb -x "$1" "${1%.deb}"', desc = "Extract deb here" }]
 edit = [{ run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" }]
 extract = [{ run = 'unar "$1"', desc = "Extract here", for = "unix" }]
 images = [{ run = 'swww img $1', desc = "Set as wallpaper" }]
-open = [{ run = 'xdg-open "$@"', desc = "Open", for = "linux" }]
+open = [{ run = 'xdg-open "$1"', desc = "Open", for = "linux" }]
 play = [
     { run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
-    { run = 'mpv --force-window "%1"', orphan = true, for = "windows" },
+    { run = 'mpv --force-window %*', orphan = true, for = "windows" },
     { run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 reveal = [
-    { run = 'xdg-open "$(dirname "$0")"', desc = "Reveal", for = "linux" },
+    { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "linux" },
     { run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 
@@ -106,8 +106,8 @@ rules = [
         "deb",
         "reveal",
     ] },
+    # Fallback
     { name = "*", use = [
-        "edit",
         "open",
         "reveal",
     ] },
@@ -122,27 +122,16 @@ micro_workers    = 10
 suppress_preload = false
 
 [plugin]
+append_previewers = [
+    { name = "*", run = "hexyl" },
+    { name = "*", run = "file-extra-metadata" },
+]
 fetchers = [
     # Mimetype
     { id = "mine", name = "*", if = "!mime", run = "mime", prio = "high" },
+    { id = "git", name = "*", run = "git" },
+    { id = "git", name = "*/", run = "git" },
 ]
-spotters = [
-    { name = "*/", run = "folder" },
-    # Code
-    { mime = "text/*", run = "code" },
-    { mime = "*/{xml,javascript,wine-extension-ini}", run = "code" },
-    # Image
-    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
-    { mime = "image/*", run = "image" },
-    # Video
-    { mime = "video/*", run = "video" },
-    # Fallback
-    { name = "*", run = "file" },
-]
-
-append_previewers  = [{ name = "*", run = "hexyl" }]
-prepend_previewers = [{ name = "*.md", run = "mdcat" }]
-
 preloaders = [
     # Image
     # { mime = "image/svg", run = "magick" },
@@ -158,6 +147,8 @@ preloaders = [
     # Empty file
     # { mime = "inode/empty", run = "empty" },
 ]
+prepend_previewers = [{ name = "*.md", run = "mdcat" }]
+prepend_spotters = [{ name = "*", run = "file-extra-metadata" }]
 previewers = [
     { name = "*/", run = "folder", sync = true },
     # Code
@@ -182,6 +173,19 @@ previewers = [
     # Font
     { mime = "font/*", run = "font" },
     { mime = "application/vnd.ms-opentype", run = "font" },
+    # Fallback
+    { name = "*", run = "file" },
+]
+spotters = [
+    { name = "*/", run = "folder" },
+    # Code
+    { mime = "text/*", run = "code" },
+    { mime = "*/{xml,javascript,wine-extension-ini}", run = "code" },
+    # Image
+    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+    { mime = "image/*", run = "image" },
+    # Video
+    { mime = "video/*", run = "video" },
     # Fallback
     { name = "*", run = "file" },
 ]

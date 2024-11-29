@@ -20,7 +20,7 @@ return {
                 "markdown", "markdown_inline",
                 "typst", "dot",
                 "toml", "yaml", "kdl", "ron",
-                "vim", "comment", "wgsl", "hlsl"
+                "vim", "comment", "wgsl", "hlsl", "hyprlang"
             },
             highlight = {
                 enable = true,

@@ -1,3 +1,4 @@
+local hyprls = require("lspconfig.configs.hyprls")
 return {
     {
         "neovim/nvim-lspconfig",
@@ -29,6 +30,7 @@ return {
                 nushell = {},
                 clangd = {},
                 cmake = {},
+                hyprls = {},
                 slangd = {
                     settings = {
                         predefinedMacros = { "MY_VALUE_MACRO=1" },

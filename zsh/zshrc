@@ -187,7 +187,6 @@ function e {
 }
 
 zle -N e
-bindkey '^e' e
 
 # Trim trailing spaces from pasted text to trigger no running
 # Ref: https://unix.stackexchange.com/questions/693118

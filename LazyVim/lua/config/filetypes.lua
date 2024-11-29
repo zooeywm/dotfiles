@@ -7,6 +7,7 @@ vim.filetype.add({
         hlsl = "hlsl",
     },
     pattern = {
+        [".*/hypr/.*.conf"] = "hyprlang",
         [".*"] = {
             priority = -math.huge,
             function(_, bufnr)
