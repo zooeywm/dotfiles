@@ -2,5 +2,7 @@
 require("session"):setup({
     sync_yanked = true,
 })
-require("git"):setup()
+require("git"):setup({
+    show_branch = true,
+})
 require("githead"):setup()

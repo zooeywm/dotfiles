@@ -57,8 +57,8 @@ keymap = [
     # Operation
     { on = "O", run = "open", desc = "Open selected files" },
     { on = "o", run = "open --interactive", desc = "Open  selected files interactively" },
-    { on = "e", run = "shell --confirm 'xdg-open .'", desc = "Look up in file manager" },
-    { on = "<S-e>", run = """shell 'dragon-drop -x -i -T "$1"' --confirm""", desc = "Drag and drop" },
+    { on = "e", run = "shell 'xdg-open .'", desc = "Look up in file manager" },
+    { on = "<S-e>", run = """shell 'dragon-drop -x -i -T "$1"' """, desc = "Drag and drop" },
     { on = "<Enter>", run = "open", desc = "Open selected files" },
     { on = "<S-Enter>", run = "open --interactive", desc = "Open selected files interactively" },
     { on = ["y", "y"], run = ["escape --visual", "yank"], desc = "Copy selected files" },
@@ -71,7 +71,7 @@ keymap = [
         shell '
         if [[ -f $1 ]]; then
             xs < $1
-        fi' --confirm"""], desc = "Copy file content" },
+        fi' """], desc = "Copy file content" },
     { on = "x", run = "yank --cut", desc = "Cut selected files" },
     { on = "X", run = "unyank", desc = "Cancel the yank status of files" },
     { on = ["p", "p"], run = "paste", desc = "Paste the files" },
@@ -92,7 +92,7 @@ keymap = [
     { on = "<C-c>", run = "search none", desc = "Cancel the ongoing search" },
     { on = "z", run = "plugin zoxide", desc = "Jump to a directory using zoxide" },
     { on = "Z", run = "plugin fzf", desc = "Jump to a directory, or reveal a file using fzf" },
-    { on = "<C-s>", run = '''shell "$SHELL" --block --confirm''', desc = "Open shell here" },
+    { on = "<C-s>", run = '''shell "$SHELL" --block''', desc = "Open shell here" },
 
     # Linemode
     { on = ["m", "s"], run = "linemode size", desc = "Linemode: size" },

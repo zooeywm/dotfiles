@@ -7,7 +7,7 @@ set print asm-demangle off
 set print static-members off
 set debuginfod enabled off
 
-tui new-layout hsplit { -horizontal src 1 asm 1 } 2 cmd 1
+# tui new-layout hsplit { -horizontal src 1 asm 1 } 2 cmd 1
 layout hsplit
 
 focus cmd
