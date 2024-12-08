@@ -108,6 +108,7 @@ alias -g :bg='&>/dev/null &!'
 alias -g :h='--help 2>&1 | bat -pl help'
 alias cls='printf "\033c"'
 alias y='yazi'
+alias g='gitui -d "$(git rev-parse --show-toplevel)"'
 
 #============#
 # Completion #

@@ -1,7 +1,7 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        dependencies = { "tree-sitter-grammars/tree-sitter-hlsl" },
+        -- dependencies = { "tree-sitter-grammars/tree-sitter-hlsl" },
         opts = {
             -- stylua: ignore
             ensure_installed = {
@@ -20,7 +20,7 @@ return {
                 "markdown", "markdown_inline",
                 "typst", "dot",
                 "toml", "yaml", "kdl", "ron",
-                "vim", "comment", "wgsl", "hlsl", "hyprlang"
+                "vim", "comment", "wgsl", "hyprlang"
             },
             highlight = {
                 enable = true,

@@ -4,7 +4,6 @@ vim.filetype.add({
         typ = "typst",
         nu = "nu",
         wgsl = "wgsl",
-        hlsl = "hlsl",
     },
     pattern = {
         [".*/hypr/.*.conf"] = "hyprlang",

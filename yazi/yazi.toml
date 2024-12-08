@@ -124,7 +124,7 @@ suppress_preload = false
 [plugin]
 append_previewers = [
     # { name = "*", run = "hexyl" },
-    { name = "*", run = "file-extra-metadata" },
+    # { name = "*", run = "file-extra-metadata" },
 ]
 fetchers = [
     # Mimetype
