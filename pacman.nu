@@ -39,7 +39,7 @@ const MANIFEST = {
     yaml-language-server: { manager: "npm" },
     volar: { manager: "npm", packages: ["@vue/language-server"] },
     prettier: { manager: "npm", packages: ["prettier", "@prettier/plugin-xml"], desc: "前端格式化器" },
-    mise: { manager: "paru", packages: ["mise-bin"], desc: "管理语言工具链" },
+    mise: "管理语言工具链",
     bash-language-server: { manager: "npm" },
     mlc: { manager: "cargo", desc: "markdown linter" },
     sccache: "编译缓存",
@@ -234,6 +234,7 @@ const MANIFEST = {
     vmware-workstation.manager: "paru",
     v4l2loopback-dkms: "Virtual camera with screen",
     rclone: "Net Drive Synchronization"
+    libfido2: "ssh-agent dependency"
 }
 
 def main [] {

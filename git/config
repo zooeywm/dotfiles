@@ -12,6 +12,7 @@
     editor = lvim
     hooksPath = .githooks
     excludesfile = ~/.config/git/gitignore_global
+	fileMode = false
     
 [interactive]
     diffFilter = delta --color-only

@@ -31,8 +31,8 @@ return {
     keys = {
         { key = "t", mods = "CTRL", action = wezterm.action.SpawnWindow },
         -- { key = "u", mods = "ALT", action = wezterm.action.QuickSelectArgs({ patterns = { ".*" } }) },
-        { key = "e", mods = "ALT", action = act.ScrollByLine(-1) },
-        { key = "y", mods = "ALT", action = act.ScrollByLine(1) },
+        { key = "y", mods = "ALT", action = act.ScrollByLine(-1) },
+        { key = "e", mods = "ALT", action = act.ScrollByLine(1) },
         { key = "u", mods = "ALT", action = act.ScrollByLine(-10) },
         { key = "d", mods = "ALT", action = act.ScrollByLine(10) },
         { key = "g", mods = "ALT", action = act.ScrollToTop },

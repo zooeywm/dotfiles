@@ -102,7 +102,7 @@ rules = [
         "binutil",
         "reveal",
     ] },
-    { mime = "application/vnd.debian.binary-package", use = [
+    { mime = "application/{vnd.debian.binary-package,debian.binary-package}", use = [
         "deb",
         "reveal",
     ] },
