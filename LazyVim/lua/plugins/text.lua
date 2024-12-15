@@ -126,18 +126,6 @@ return {
         end,
     },
     {
-        "lukas-reineke/indent-blankline.nvim",
-        opts = function(_, tbl)
-            local override = {
-                indent = {
-                    char = "┆",
-                    tab_char = "│",
-                },
-            }
-            return vim.tbl_extend("force", tbl, override)
-        end,
-    },
-    {
         "chrisgrieser/nvim-recorder",
         event = "RecordingEnter",
         keys = {

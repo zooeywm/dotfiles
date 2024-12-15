@@ -2,11 +2,9 @@ local hyprls = require("lspconfig.configs.hyprls")
 return {
     {
         "neovim/nvim-lspconfig",
+        dependencies = { "saghen/blink.cmp" },
         event = "LazyFile",
         opts = {
-            diagnostics = {
-                update_in_insert = true,
-            },
             inlay_hints = {
                 enabled = false,
             },
@@ -50,12 +48,31 @@ return {
         config = function(_, opts)
             LazyVim.lsp.setup()
 
-            vim.lsp.inlay_hint.enable(opts.inlay_hints.enabled)
+            if vim.g.project_lspconfig ~= nil then
+                opts.servers = vim.tbl_deep_extend("force", opts.servers, vim.g.project_lspconfig)
+            end
+            -- 指定诊断日志的图标
+            for severity, icon in pairs(opts.diagnostics.signs.text) do
+                local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
+                name = "DiagnosticSign" .. name
+                vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+            end
+            if opts.inlay_hints.enabled then
+                LazyVim.lsp.on_supports_method("textDocument/inlayHint", function(_, buffer)
+                    if
+                        vim.api.nvim_buf_is_valid(buffer)
+                        and vim.bo[buffer].buftype == ""
+                        and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
+                    then
+                        vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
+                    end
+                end)
+            end
 
-            if opts.codelens.enabled then
+            if opts.codelens.enabled and vim.lsp.codelens then
                 LazyVim.lsp.on_supports_method("textDocument/codeLens", function(_, buffer)
                     vim.lsp.codelens.refresh()
-                    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+                    vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
                         buffer = buffer,
                         callback = vim.lsp.codelens.refresh,
                     })
@@ -73,18 +90,18 @@ return {
                 vim.fn.sign_define(level, { text = icon, texthl = level, numhl = "" })
             end
             -- 配置诊断
-            vim.diagnostic.config(opts.diagnostics)
+            vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
             local capabilities = vim.tbl_deep_extend(
                 "force",
                 vim.lsp.protocol.make_client_capabilities(),
-                require("cmp_nvim_lsp").default_capabilities(), -- 令 cmp-nvim-lsp 连接服务器
+                require("blink.cmp").get_lsp_capabilities(), -- 令 blink.cmp 连接服务器
                 opts.capabilities or {}
             )
 
             for server, server_opts in pairs(opts.servers) do
                 server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
-                -- 如果语言服务器不支持语义化token，高亮就会fallback到treesitter
+                -- 如果语言服务器不支持语义化 token，高亮就会 fallback 到 treesitter
                 require("lspconfig")[server].setup(server_opts)
             end
         end,

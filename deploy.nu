@@ -23,7 +23,7 @@ def main [] {
     | pf fcitx5/share ~/.local/share/fcitx5
     | pf Templates -t ~
     | pfs [
-        starship.toml fish nushell dunst dconf hypr waybar
+        starship.toml fish nushell dunst hypr waybar
         LazyVim neovide wezterm kitty zellij yazi git git-cliff
         gitui zathura mpv gdb pip.conf macchina paru mimeapps.list
     ] ~/.config

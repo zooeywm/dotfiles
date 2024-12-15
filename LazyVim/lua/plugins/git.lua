@@ -25,5 +25,8 @@ return {
                 desc = "跳转到远程仓库相应位置",
             },
         },
+        opts = {
+            scroll = { enabled = false },
+        },
     },
 }

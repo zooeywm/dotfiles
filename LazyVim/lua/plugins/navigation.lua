@@ -13,29 +13,6 @@ return {
         },
     },
     {
-        "nvim-telescope/telescope.nvim",
-        keys = {
-            { "<leader><space>", false },
-            { "<leader>fF", false },
-            { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find git" },
-        },
-        opts = {
-            pickers = {
-                find_files = {
-                    previewer = false,
-                },
-                git_files = {
-                    previewer = false,
-                },
-                live_grep = {
-                    layout_config = {
-                        preview_width = 0.5,
-                    },
-                },
-            },
-        },
-    },
-    {
         "mbbill/undotree",
         keys = {
             { "<leader>uu", "<cmd>UndotreeToggle<cr>", desc = "Toggle Undotree" },
@@ -100,7 +77,6 @@ return {
         end,
         dependencies = {
             { "nvim-lua/plenary.nvim" },
-            { "nvim-telescope/telescope.nvim" },
             { "Shatur/neovim-session-manager" },
         },
     },

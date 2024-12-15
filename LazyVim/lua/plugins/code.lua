@@ -2,12 +2,6 @@ local utils = require("utils")
 
 return {
     {
-        "garymjr/nvim-snippets",
-        opts = {
-            search_paths = { vim.fn.stdpath("config") .. "/snippets" },
-        },
-    },
-    {
         "nvimdev/guard.nvim",
         dependencies = {
             "nvimdev/guard-collection",
@@ -72,13 +66,13 @@ return {
             }
         end,
     },
-    {
-        "folke/todo-comments.nvim",
-        keys = {
-            { "[t", false },
-            { "]t", false },
-        },
-    },
+    -- {
+    --     "folke/todo-comments.nvim",
+    --     keys = {
+    --         { "[t", false },
+    --         { "]t", false },
+    --     },
+    -- },
     {
         "numToStr/Comment.nvim",
         -- FIXME: interim
@@ -101,27 +95,25 @@ return {
         end,
     },
     {
-        "hrsh7th/nvim-cmp",
-        opts = function(_, tbl)
-            local cmp = require("cmp")
-            local override = {
-                matching = {
-                    disallow_fuzzy_matching = false,
-                    disallow_fullfuzzy_matching = false,
-                    disallow_partial_fuzzy_matching = false,
-                    disallow_partial_matching = false,
-                    disallow_prefix_unmatching = false,
+        "saghen/blink.cmp",
+        event = "InsertEnter",
+        opts = {
+            completion = {
+                menu = {
+                    border = "rounded",
                 },
-                mapping = cmp.mapping.preset.insert({
-                    ["<M-Space>"] = cmp.mapping.complete(),
-                    ["<TAB>"] = LazyVim.cmp.confirm({ select = auto_select }),
-                }),
-                -- window = {
-                --     completion = cmp.config.window.bordered(),
-                --     documentation = cmp.config.window.bordered(),
-                -- },
-            }
-            return vim.tbl_deep_extend("force", tbl, override)
-        end,
+                documentation = {
+                    window = {
+                        border = "rounded",
+                    },
+                },
+            },
+            signature = {
+                enabled = true,
+                window = {
+                    border = "rounded",
+                },
+            },
+        },
     },
 }
