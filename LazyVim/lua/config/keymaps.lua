@@ -94,4 +94,7 @@ if vim.g.neovide then
 	vim.api.nvim_set_keymap('c', '<sc-v>', '<C-o>l<C-o>"+<C-o>P<C-o>l', {noremap = true})
 	vim.api.nvim_set_keymap('i', '<sc-v>', '<ESC>l"+Pli', {noremap = true})
 	vim.api.nvim_set_keymap('t', '<sc-v>', '<C-\\><C-n>"+Pi', {noremap = true})
+	vim.api.nvim_set_keymap('n', '<c-+>', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>', {noremap = true})
+	vim.api.nvim_set_keymap('n', '<c-_>', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>', {noremap = true})
+	vim.api.nvim_set_keymap('n', '<c-0>', ':lua vim.g.neovide_scale_factor = 1.0<CR>', {noremap = true})
 end
