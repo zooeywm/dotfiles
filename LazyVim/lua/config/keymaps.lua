@@ -85,3 +85,13 @@ map.v({
     ["al"] = "0o$", -- include end
 })
 vim.keymap.set("o", "ik", "<cmd>normal vik<cr>")
+
+-- NOTE: use for neovide to paste
+if vim.g.neovide then
+	vim.api.nvim_set_keymap('v', '<sc-c>', '"+y', {noremap = true})
+	vim.api.nvim_set_keymap('n', '<sc-v>', 'l"+P', {noremap = true})
+	vim.api.nvim_set_keymap('v', '<sc-v>', '"+P', {noremap = true})
+	vim.api.nvim_set_keymap('c', '<sc-v>', '<C-o>l<C-o>"+<C-o>P<C-o>l', {noremap = true})
+	vim.api.nvim_set_keymap('i', '<sc-v>', '<ESC>l"+Pli', {noremap = true})
+	vim.api.nvim_set_keymap('t', '<sc-v>', '<C-\\><C-n>"+Pi', {noremap = true})
+end

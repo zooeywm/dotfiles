@@ -100,7 +100,7 @@ alias sudo='sudo ' # 尾随空格以递归展开余下的别名
 alias l='eza -a --color=auto -s=type'
 alias ls='eza -a --color=auto -s=type'
 alias pb='curl -F "c=@-" "http://fars.ee/?u=1"'
-alias v='lvim'
+alias v='lvide'
 
 alias -g :n='>/dev/null'
 alias -g :nn='&>/dev/null'

@@ -99,9 +99,9 @@ return {
         event = "InsertEnter",
         opts = {
             completion = {
-                menu = {
-                    border = "rounded",
-                },
+                -- menu = {
+                --     border = "rounded",
+                -- },
                 documentation = {
                     window = {
                         border = "rounded",

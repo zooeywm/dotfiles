@@ -13,12 +13,13 @@ return {
         "Noto Serif Grantha", -- 古印度文
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
-    font_size = 21,
+    font_size = 19,
     color_scheme = "GitHub Dark",
     force_reverse_video_cursor = true, -- 光标反色
     max_fps = 120,
     -- window_background_opacity = 0.90,
     line_height = 1.0,
+    harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" },
     window_padding = {
         left = 0,
         right = 0,

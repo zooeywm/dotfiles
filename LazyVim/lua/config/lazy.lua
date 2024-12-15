@@ -29,7 +29,7 @@ require("lazy").setup({
         version = false,
     },
     install = {
-        colorscheme = { "tokyonight" },
+        colorscheme = { "catppuccin" },
     },
     checker = {
         enabled = false, -- automatically check for plugin updates
