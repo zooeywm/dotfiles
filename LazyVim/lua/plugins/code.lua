@@ -1,4 +1,4 @@
-local utils = require("utils")
+-- local utils = require("utils")
 
 return {
     {
@@ -75,24 +75,22 @@ return {
     -- },
     {
         "numToStr/Comment.nvim",
-        -- FIXME: interim
-        config = function()
-            require("Comment").setup({
-                pre_hook = function(ctx)
-                    local U = require("Comment.utils")
-                    local filetype = vim.bo.filetype
+        -- NOTE: For block comment
+        opts = {
+            pre_hook = function(ctx)
+                local U = require("Comment.utils")
+                local filetype = vim.bo.filetype
 
-                    if filetype == "slint" then
-                        local commentstring = "// %s"
-                        if ctx.ctype == U.ctype.linewise then
-                            return commentstring
-                        elseif ctx.ctype == U.ctype.blockwise then
-                            return "/* %s */"
-                        end
+                if filetype == "slint" then
+                    local commentstring = "// %s"
+                    if ctx.ctype == U.ctype.linewise then
+                        return commentstring
+                    elseif ctx.ctype == U.ctype.blockwise then
+                        return "/* %s */"
                     end
-                end,
-            })
-        end,
+                end
+            end,
+        },
     },
     {
         "saghen/blink.cmp",
@@ -116,6 +114,9 @@ return {
                 window = {
                     border = "rounded",
                 },
+            },
+            keymap = {
+                ["<Tab>"] = { "select_and_accept" },
             },
         },
     },
