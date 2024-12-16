@@ -1,7 +1,11 @@
 #!/bin/bash
 
 info() {
-	notify-send "Window info:" "xwayland: $(hyprctl activewindow -j | jq -r ".xwayland")\nclass: $(hyprctl activewindow -j | jq -r ".initialClass")"
+    result=$(hyprctl activewindow -j)
+    xwayland=$(echo $result | jq -r ".xwayland")
+    class=$(echo $result | jq -r ".class")
+    title=$(echo $result | jq -r ".title")
+	notify-send "Window info:" "xwayland: $xwayland\nclass: $class\ntitle: $title"
 }
 
 toggle_dunst_pause() {
