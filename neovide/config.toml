@@ -1,4 +1,4 @@
-frame = "none"
+# frame = "none"
 idle = false
 tabs = false
 vsync = true

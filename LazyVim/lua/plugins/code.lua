@@ -94,22 +94,27 @@ return {
     },
     {
         "saghen/blink.cmp",
-        event = "InsertEnter",
         opts = {
             completion = {
                 trigger = {
                     show_on_x_blocked_trigger_characters = { "'", '"', "(", "{", "=" },
                 },
-                -- menu = {
-                --     border = "rounded",
-                -- },
+                menu = {
+                    min_width = 30,
+                    max_height = 200,
+                },
                 documentation = {
+                    auto_show_delay_ms = 0,
                     window = {
                         border = "rounded",
                     },
                 },
                 list = {
-                    selection = "auto_insert",
+                    selection = "preselect",
+                    -- 'preselect' will automatically select the first item in the completion list
+                    -- 'manual' will not select any item by default
+                    -- 'auto_insert' will not select any item by default, and insert the completion items automatically
+                    -- when selecting them
                 },
             },
             signature = {

@@ -147,6 +147,7 @@ return {
                         enabled = true,
                         style = "nvchad",
                     },
+                    blink_cmp = true,
                 },
             })
         end,
