@@ -79,33 +79,6 @@ local function pretty_path(opts)
 end
 
 return {
-    -- {
-    --     "sainnhe/gruvbox-material",
-    --     config = function()
-    --         vim.g.gruvbox_material_backgroud = "soft"
-    --         vim.g.gruvbox_material_current_word = "underline"
-    --         vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
-    --         vim.g.gruvbox_material_visual = "red background"
-    --         vim.cmd.colorscheme("gruvbox-material")
-    --         -- Colors are applied automatically based on user-defined highlight groups.
-    --         -- There is no default value.
-    --         vim.cmd.highlight("IndentLine guifg=#808080")
-    --         -- Current indent line highlight
-    --         vim.cmd.highlight("IndentLineCurrent guifg=#FF6347")
-    --     end,
-    -- },
-    -- {
-    --     "Shatur/neovim-ayu",
-    --     config = function()
-    --         require("ayu").setup({
-    --             mirage = false, -- Set to `true` to use `mirage` variant instead of `dark` for dark background.
-    --             terminal = true, -- Set to `false` to let terminal manage its own colors.
-    --             overrides = {}, -- A dictionary of group names, each associated with a dictionary of parameters (`bg`, `fg`, `sp` and `style`) and colors in hex.
-    --         })
-    --         require("ayu").colorscheme()
-    --     end,
-    -- },
-    --
     {
         "catppuccin/nvim",
         lazy = true,
@@ -213,35 +186,6 @@ return {
                 -- },
             }
             return opts
-        end,
-    },
-    {
-        "b0o/incline.nvim",
-        event = "BufReadPre",
-        keys = {
-            {
-                "<leader>uI",
-                function()
-                    require("incline").toggle()
-                end,
-                desc = "Toggle Incline",
-            },
-        },
-        config = function()
-            require("incline").setup({
-                highlight = {
-                    groups = {
-                        InclineNormal = { default = true, group = "lualine_a_normal" },
-                        InclineNormalNC = { default = true, group = "Comment" },
-                    },
-                },
-                window = { margin = { vertical = 0, horizontal = 1 } },
-                render = function(props)
-                    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-                    local icon, color = require("nvim-web-devicons").get_icon_color(filename)
-                    return { { icon, guifg = color }, { icon and " " or "" }, { filename } }
-                end,
-            })
         end,
     },
 }
