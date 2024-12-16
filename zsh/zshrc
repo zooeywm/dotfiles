@@ -101,6 +101,7 @@ alias l='eza -a --color=auto -s=type'
 alias ls='eza -a --color=auto -s=type'
 alias pb='curl -F "c=@-" "http://fars.ee/?u=1"'
 alias v='lvide'
+alias dev='echo -ne "\033]0;dev\007"'
 
 alias -g :n='>/dev/null'
 alias -g :nn='&>/dev/null'

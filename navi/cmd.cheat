@@ -133,3 +133,6 @@ $ gdb-ip: printf '\nlocalhost'
 
 # coredump gdb last crash
 coredumpctl gdb $("coredumpctl list | tail -n 1 | awk '{print $5}'")
+
+# set terminal title
+echo -ne "\033]0;<title>\007"

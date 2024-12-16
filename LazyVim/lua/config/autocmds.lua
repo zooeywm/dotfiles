@@ -28,5 +28,3 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
     group = my_group,
 })
-
-vim.cmd.colorscheme "catppuccin-macchiato"
