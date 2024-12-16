@@ -30,7 +30,6 @@ files = { nushell = "~/.config/nushell" }
 "mimeapps.list" = "~/.config/mimeapps.list"
 applications = "~/.local/share/applications"
 dunst = "~/.config/dunst"
-# dconf = { target = "~/.config/dconf", type = "symbolic" }
 
 [wayland]
 depends = ["desktop"]
