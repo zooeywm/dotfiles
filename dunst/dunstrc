@@ -1,6 +1,6 @@
 [global]
     monitor = eDP-1
-    font = JetBrainsMono Nerd Font 14
+    font = JetBrainsMono Nerd Font 12
     format = "<b>%s</b>\n%b"
     sort = yes
     indicate_hidden = yes
