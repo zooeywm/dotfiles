@@ -1,23 +1,49 @@
 [global]
     monitor = eDP-1
-    font = Noto Sans 28
-    width = 800
-    transparency = 30
-    frame_color = "#1e66f5c0"
-    separator_color= frame
+    font = JetBrainsMono Nerd Font 14
+    format = "<b>%s</b>\n%b"
+    sort = yes
+    indicate_hidden = yes
+    alignment = left
+    show_age_threshold = 60
+    word_wrap = true
+    ignore_newline = no
+    stack_duplicates = yes
+    hide_duplicate_count = no
+    origin = "top-right"
+    separator_height = 2
+    padding = 8
+    horizontal_padding = 8
+    frame_width = 2
+    frame_color = "#aaaaaa"
+    separator_color = "frame"
+    idle_threshold = 120
+    follow = none
+    sticky_history = yes
+    history_length = 20
+    show_indicators = yes
+    line_height = -3
+    icon_position = "left"
+    corner_radius = 15
 
-    min_icon_size = 200
-    max_icon_size = 200
+    width = 400
+
+    min_icon_size = 120
+    max_icon_size = 120
+    offset = "(0, -3)"
 
 [urgency_low]
-background = "#eff1f5c0"
-foreground = "#4c4f69c0"
+background = "#eff1f5b5"
+foreground = "#4c4f69b5"
+timeout = 10
 
 [urgency_normal]
-background = "#eff1f5c0"
-foreground = "#4c4f69c0"
+background = "#eff1f5b5"
+foreground = "#4c4f69b5"
+timeout = 10
 
 [urgency_critical]
-background = "#eff1f5c0"
-foreground = "#4c4f69c0"
-frame_color = "#fe640bc0"
+background = "#eff1f5b5"
+foreground = "#4c4f69b5"
+frame_color = "#fe640bb5"
+timeout = 0

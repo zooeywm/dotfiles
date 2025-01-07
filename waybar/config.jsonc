@@ -2,7 +2,7 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
-  "height": 82,
+  "height": 20,
   "output": "eDP-1",
   "modules-left": ["hyprland/submap", "group/motherboard", "tray"],
   "modules-center": ["hyprland/workspaces", "wlr/taskbar"],
@@ -17,7 +17,7 @@
   "wlr/taskbar": {
     "all-outputs": true,
     "format": "{icon}",
-    "icon-size": 40,
+    "icon-size": 20,
     "icon-theme": "Numix-Circle",
     "tooltip-format": "title: {title}\nname: {name}\napp_id: {app_id}\nstate: {state}\nshort_state: {short_state}",
     "on-click": "activate",
@@ -79,7 +79,7 @@
     "tooltip": false,
   },
   "tray": {
-    "icon-size": 40,
+    "icon-size": 20,
     "spacing": 10,
   },
   "backlight": {

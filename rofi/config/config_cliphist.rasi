@@ -1,25 +1,20 @@
 configuration {
     modi: "drun,run";
-    sidebar-mode: true;
     show-icons: true;
     matching: "prefix";
-    disable-history: true;
+    //disable-history: true;
     sort: true;
     sorting-method: "fzf";
     kb-accept-entry: "Return,KP_Enter";
-    kb-row-up: "Up,Alt+k";
-    kb-row-down: "Down,Alt+j";
-    kb-row-left: "Alt+h";
-    kb-row-right: "Alt+l";
     timeout {
         action: "kb-cancel";
         delay:  0;
     }
-    dpi: 200;
+    dpi: 100;
     filebrowser {
         directories-first: true;
         sorting-method: "name";
     }
 }
 
-@theme "~/.local/share/rofi/themes/iggy_cliphist.rasi"
+@theme "/home/zooeywm/.local/share/rofi/themes/rounded-pink-dark.rasi"

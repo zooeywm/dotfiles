@@ -53,7 +53,7 @@ local options = {
 
     number = true,
     -- display
-    relativenumber = false,
+    relativenumber = true,
     signcolumn = "yes",
     laststatus = 3,
     list = true,

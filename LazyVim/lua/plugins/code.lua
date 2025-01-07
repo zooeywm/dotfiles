@@ -101,9 +101,11 @@ return {
                 },
                 menu = {
                     min_width = 30,
-                    max_height = 200,
+                    max_height = 10,
                 },
                 documentation = {
+                    auto_show = true,
+                    update_delay_ms = 0,
                     auto_show_delay_ms = 0,
                     window = {
                         border = "rounded",
@@ -123,9 +125,9 @@ return {
                     border = "rounded",
                 },
             },
-            keymap = {
-                ["<Tab>"] = { "select_and_accept" },
-            },
+            -- keymap = {
+            --     ["<Tab>"] = { "select_and_accept" },
+            -- },
         },
     },
 }

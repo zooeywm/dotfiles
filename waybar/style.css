@@ -3,7 +3,7 @@
   border-radius: 0;
   min-height: 0;
   font-family: JetBrainsMono Nerd Font;
-  font-size: 25px;
+  font-size: 13px;
 }
 
 @import "latte.css";
@@ -13,14 +13,15 @@ window#waybar {
   transition-property: background-color;
   opacity: 0.65;
   transition-duration: 0.5s;
+  padding: 5px;
 }
 
 #workspaces button {
   all: initial;
   min-width: 0;
   box-shadow: inset 0 -3px transparent;
-  padding: 6px 18px;
-  margin: 6px 3px;
+  padding: 0px 5px;
+  margin: 0px 2.5px;
   border-radius: 4px;
   color: #666666;
 }
@@ -55,8 +56,8 @@ window#waybar {
 #workspaces,
 #custom-updates {
   border-radius: 10px;
-  margin: 6px 3px;
-  padding: 6px 12px;
+  margin: 0px 2.5px;
+  padding: 0px 5px;
   color: #ffffff;
   opacity: 1;
 }
@@ -66,17 +67,17 @@ window#waybar {
 }
 
 #power-profiles-daemon {
-  margin-right: 6px;
+  margin-right: 2.5px;
   color: #f2cdcd;
 }
 
 #cpu {
-  min-width: 75px;
+  margin-right: 2.5px;
   color: @teal;
 }
 
 #memory {
-  min-width: 75px;
+  margin-right: 2.5px;
   color: @lavender;
 }
 
@@ -130,16 +131,16 @@ window#waybar {
 
 #network {
   color: #c6e2ff;
-  padding-right: 17px;
+  padding-right: 2.5px;
 }
 
 #bluetooth {
-  min-width: 75px;
+  min-width: 20px;
   color: #2acaea;
 }
 
 #custom-song {
-  font-size: 30px;
+  font-size: 15px;
   color: #ffd1df;
 }
 
@@ -164,6 +165,7 @@ tooltip {
 }
 
 tooltip label {
+  font-size: 20px;
   padding: 5px;
   color: #f0f8ff;
 }

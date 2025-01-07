@@ -86,6 +86,10 @@ rules = [
         "extract",
         "reveal",
     ] },
+    { name = "*.zip", use = [
+        "extract",
+        "reveal",
+    ] },
     { mime = "application/{tar,bzip*,7z-compressed,xz,rar}", use = [
         "extract",
         "reveal",
@@ -98,7 +102,7 @@ rules = [
         "edit",
         "reveal",
     ] },
-    { mime = "application/x-{sharedlib,pie-executable}", use = [
+    { mime = "application/{sharedlib,x-sharedlib,x-pie-executable}", use = [
         "binutil",
         "reveal",
     ] },
@@ -169,6 +173,7 @@ previewers = [
     # Archive
     { mime = "application/{gzip,x-bzip*,xz,zstd}", run = "ouch" },
     { mime = "application/zip", run = "archive" },
+    { name = "*.zip", run = "archive" },
     { mime = "application/{tar,7z-compressed,rar,iso9660-image}", run = "archive" },
     # Font
     { mime = "font/*", run = "font" },

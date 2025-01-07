@@ -304,3 +304,4 @@ _source-existent ~zdot/p10k.zsh
 if [[ -f "$HOME/.bash_completion" ]]; then
     source "$HOME/.bash_completion"
 fi
+eval "$(mise activate zsh)"
