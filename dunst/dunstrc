@@ -28,22 +28,22 @@
 
     width = 400
 
-    min_icon_size = 120
-    max_icon_size = 120
+    min_icon_size = 100
+    max_icon_size = 100
     offset = "(0, -3)"
 
 [urgency_low]
-background = "#eff1f5b5"
-foreground = "#4c4f69b5"
+background = "#eff1f5c0"
+foreground = "#4c4f69c0"
 timeout = 10
 
 [urgency_normal]
-background = "#eff1f5b5"
-foreground = "#4c4f69b5"
+background = "#eff1f5c0"
+foreground = "#4c4f69c0"
 timeout = 10
 
 [urgency_critical]
-background = "#eff1f5b5"
-foreground = "#4c4f69b5"
-frame_color = "#fe640bb5"
+background = "#eff1f5c0"
+foreground = "#4c4f69c0"
+frame_color = "#fe640bc0"
 timeout = 0
