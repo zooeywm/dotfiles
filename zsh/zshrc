@@ -222,6 +222,15 @@ clear-screen() {
 zle -N clear-screen
 bindkey '^L' clear-screen
 
+zd() {
+    local p=$(sk --ansi -i -c "fd -c 'always' -H -I -E '.git' {}")
+    if [ -f "$p" ]; then
+        cd "$(dirname "$p")"
+    elif [ -d "$p" ]; then
+        cd "$p"
+    fi
+}
+
 #==================#
 # Plugins (Part 2) #
 #==================#
@@ -293,8 +302,9 @@ _cache-eval () {
     (( ${+commands[$1]} )) && smartcache eval $@
 }
 _cache-eval zoxide init zsh
+_cache-eval atuin init zsh
 # _cache-eval starship init zsh
-_cache-eval mcfly init zsh
+# _cache-eval mcfly init zsh
 _cache-eval navi widget zsh
 # eval "$(fnm env --node-dist-mirror 'https://npmmirror.com/mirrors/node' --use-on-cd)" # Different everytime
 

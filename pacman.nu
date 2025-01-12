@@ -1,4 +1,5 @@
-#!/usr/bin/env nu
+
+mise atuin!/usr/bin/env -S nu --stdin
 
 const MANIFEST = {
     # 社交
@@ -48,7 +49,7 @@ const MANIFEST = {
     clang: { packages: ["clang", "llvm"], desc: "C/C++工具链" },
     slint-lsp: { manager: "cargo", desc: "slint lsp" },
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] },
-    typst: { packages: ["typst", "typstyle-bin"], manager: "paru" },
+    typst: { packages: ["typst", "tinymist", "typstyle"], },
     tinymist-bin: ""
     tree-sitter-cli: "安装tree-sitter解析器",
     uv: "python项目管理",
@@ -58,6 +59,11 @@ const MANIFEST = {
     cmake-language-server: "Cmake Language Server",
     strace: "Bin stack trace",
     qt6-languageserver: "qt6 languageserver"
+    astro-ls: {
+        manager: "npm",
+        packages: ["@astrojs/language-server"]
+        desc: "AstroJS的语言服务器",
+    },
 
     # desktop
     xdg-user-dirs: "规范目录",
@@ -96,14 +102,17 @@ const MANIFEST = {
 
     # shell
     nushell: "结构化shell",
-    mcfly: "历史命令",
+    # mcfly: "历史命令",
+    atuin: "历史命令",
     starship: "装饰提示符",
     zoxide: "瞬移",
     zellij: "终端复用器",
     bash-completion: "bash补全",
     zsh: { packages: ["zsh", "zsh-completions"], desc: "zsh 及额外补全包" },
     terminus-font: "Outter terminal font",
-    
+    halp: "命令行选项标准化检验",
+    aichat: "LLM CLI",
+
     # filesystem
     eza: "高级ls",
     rsync: "超级复制",

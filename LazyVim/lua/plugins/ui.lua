@@ -52,6 +52,10 @@ return {
             { "gb", "<cmd>Gitsigns blame_line<cr>", desc = "git blame" },
         },
     },
+    {
+        "nvim-focus/focus.nvim",
+        config = true,
+    },
     -- {
     --     "nvimdev/dashboard-nvim",
     --     optional = true,

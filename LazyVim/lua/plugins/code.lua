@@ -41,7 +41,13 @@ return {
                 cmd = "dotnet-csharpier",
                 args = { "--write-stdout" },
             },
-            ["vue,json,jsonc,javascript,typescript,xml,yaml,html,css"] = "prettier",
+            ["vue,json,javascript,typescript,xml,yaml,html,css,astro"] = "prettier",
+            ["jsonc,json5"] = {
+                cmd = "prettier",
+                args = { "--trailing-comma", "none", "--stdin-filepath" },
+                fname = true,
+                stdin = true,
+            },
             typst = {
                 cmd = "typstyle",
                 stdin = true,

@@ -1,4 +1,4 @@
-#!/usr/bin/env nu
+#!/usr/bin/env -S nu --stdin
 
 use std/log
 use std/iter
@@ -16,7 +16,6 @@ def main [] {
     | pf rofi/themes ~/.local/share/rofi/themes
     | pf gtk/gtk-3.0 ~/.config/gtk-3.0
     | pf gtk/gtk-4.0 ~/.config/gtk-4.0
-    | pf gtk/gtkrc-2.0 ~/.gtkrc-2.0
     | pf bin -t ~/.local
     | pf cargo ~/.cargo
     | pf fcitx5/config ~/.config/fcitx5
@@ -26,6 +25,7 @@ def main [] {
         starship.toml fish nushell dunst hypr waybar
         LazyVim neovide wezterm kitty zellij yazi git git-cliff
         gitui zathura mpv gdb pip.conf macchina paru mimeapps.list
+        mise atuin
     ] ~/.config
     | pfs [memo applications] ~/.local/share
     | each {|it| deploy-item $it }
@@ -153,7 +153,7 @@ def link [src: string, dest: path] {
     }
 }
 
-def is-linked [src: path, dest: path] -> bool {
+def is-linked [src: path, dest: path]: nothing -> bool {
     try {
         $src == (realpath $dest)
     } catch {
@@ -161,6 +161,6 @@ def is-linked [src: path, dest: path] -> bool {
     }
 }
 
-def 'path strip' [...prefix: string] -> path {
+def 'path strip' [...prefix: string]: nothing -> path {
     $in | path relative-to ($prefix | path join)
 }
