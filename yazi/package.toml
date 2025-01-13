@@ -75,7 +75,7 @@ hash = "49f2baf77a7e779d06b7521a02ebc253"
 
 [[plugin.deps]]
 use = "TD-Sky/sudo"
-rev = "=a8287ea"
+rev = "a8287ea"
 hash = "17e712ced895143bab875643c8913de"
 
 [flavor]
