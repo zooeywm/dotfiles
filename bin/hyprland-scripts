@@ -17,10 +17,6 @@ toggle_dunst_pause() {
 	pkill -RTMIN+1 waybar
 }
 
-close_last_dunst_notification() {
-	dunstctl close
-}
-
 restart_xdph() {
 	sleep 1
 	killall xdg-desktop-portal-hyprland
@@ -49,9 +45,6 @@ case "$1" in
 	;;
 "toggle-dunst-pause")
 	toggle_dunst_pause
-	;;
-"close-last-dunst-notification")
-	close_last_dunst_notification
 	;;
 "restart-xdph")
 	restart_xdph

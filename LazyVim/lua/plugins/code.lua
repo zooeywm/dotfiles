@@ -118,7 +118,7 @@ return {
                     },
                 },
                 list = {
-                    selection = "preselect",
+                    selection = { preselect = true, auto_insert = true },
                     -- 'preselect' will automatically select the first item in the completion list
                     -- 'manual' will not select any item by default
                     -- 'auto_insert' will not select any item by default, and insert the completion items automatically
