@@ -9,10 +9,10 @@
 @import "latte.css";
 
 window#waybar {
-  background-color: #000000;
+  background-color: #090000;
   transition-property: background-color;
-  opacity: 0.65;
-  transition-duration: 0.5s;
+  opacity: 1;
+  transition-duration: 1s;
   padding: 5px;
 }
 

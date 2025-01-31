@@ -1,5 +1,4 @@
-
-mise atuin!/usr/bin/env -S nu --stdin
+#!/usr/bin/env -S nu --stdin
 
 const MANIFEST = {
     # 社交
