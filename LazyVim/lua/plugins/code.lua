@@ -100,12 +100,34 @@ return {
     },
     {
         "saghen/blink.cmp",
+        dependencies = { "xzbdmw/colorful-menu.nvim" },
+        -- event = "InsertEnter",
         opts = {
             completion = {
                 trigger = {
                     show_on_x_blocked_trigger_characters = { "'", '"', "(", "{", "=" },
                 },
                 menu = {
+                    border = "rounded",
+                    draw = {
+                        columns = {
+                            { "kind_icon" },
+                            {
+                                "label",
+                                gap = 0,
+                            },
+                        },
+                        components = {
+                            label = {
+                                text = function(ctx)
+                                    return require("colorful-menu").blink_components_text(ctx)
+                                end,
+                                highlight = function(ctx)
+                                    return require("colorful-menu").blink_components_highlight(ctx)
+                                end,
+                            },
+                        },
+                    },
                     min_width = 30,
                     max_height = 10,
                 },
@@ -131,9 +153,6 @@ return {
                     border = "rounded",
                 },
             },
-            -- keymap = {
-            --     ["<Tab>"] = { "select_and_accept" },
-            -- },
         },
     },
 }
