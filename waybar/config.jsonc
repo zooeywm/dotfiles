@@ -12,7 +12,7 @@
     "group/audio",
     "group/laptop",
     "clock",
-    "custom/dunst-paused",
+    "custom/dunst"
   ],
   "wlr/taskbar": {
     "all-outputs": true,
@@ -37,7 +37,8 @@
       "Neovide",
       "Show Me The Key",
       "showmethekey-gtk",
-    ],
+      "Picture-in-Picture"
+    ]
   },
   "power-profiles-daemon": {
     "format": "{icon}",
@@ -47,8 +48,8 @@
       "default": " ",
       "performance": " ",
       "balanced": " ",
-      "power-saver": " ",
-    },
+      "power-saver": " "
+    }
   },
   "hyprland/workspaces": {
     "on-click": "activate",
@@ -65,22 +66,22 @@
       "8": "8",
       "9": "9",
       "10": "10",
-      "11": "🧿",
-      "urgent": "",
+      "11": "🧿"
+      // "urgent": ""
     },
     "persistent-workspaces": {
       // "eDP-1": [2, 3, 4, 8],
       // "HDMI-A-1": [2],
     },
-    "active-only": true,
+    "active-only": false
   },
   "hyprland/submap": {
     "format": "<span style=\"italic\">  {}</span>",
-    "tooltip": false,
+    "tooltip": false
   },
   "tray": {
     "icon-size": 35,
-    "spacing": 10,
+    "spacing": 10
   },
   "backlight": {
     "format": "{icon} {percent}%",
@@ -99,44 +100,44 @@
       "",
       "",
       "",
-      "",
-    ],
+      ""
+    ]
   },
   "group/motherboard": {
     "orientation": "horizontal",
-    "modules": ["cpu", "memory", "temperature"],
+    "modules": ["cpu", "memory", "temperature"]
   },
   "group/laptop": {
     "orientation": "horizontal",
-    "modules": ["backlight", "battery", "power-profiles-daemon"],
+    "modules": ["backlight", "battery", "power-profiles-daemon"]
   },
   "group/audio": {
     "orientation": "horizontal",
-    "modules": ["bluetooth", "pulseaudio", "pulseaudio#microphone"],
+    "modules": ["bluetooth", "pulseaudio", "pulseaudio#microphone"]
   },
   "battery": {
     "format": "{icon}{capacity}%",
     "interval": 60,
     "states": {
       "warning": 60,
-      "critical": 30,
+      "critical": 30
     },
     "format-icons": {
       "charging": ["󰢜 ", "󰂆 ", "󰂇 ", "󰂈 ", "󰢝 ", "󰂉 ", "󰢞 ", "󰂊 ", "󰂋 ", "󰂅 "],
-      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
     },
-    "format-full": "󰁹Full",
+    "format-full": "󰁹Full"
   },
   "bluetooth": {
     // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
-    "format": " {status} ",
+    "format": " {status}",
     "format-disabled": "󰂳 ", // an empty format will hide the module
     "format-connected": "󰂱 {num_connections} ",
     "tooltip-format": "{controller_alias}\t{controller_address}",
     "tooltip-format-connected": "{id}\n{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
     "on-click": "hyprland-scripts toggle-bluetooth-power",
-    "on-click-right": "blueman-manager",
+    "on-click-right": "blueman-manager"
   },
   "clock": {
     "interval": 1,
@@ -153,20 +154,20 @@
         "days": "<span><b>{}</b></span>",
         "weeks": "<span><b>W{}</b></span>",
         "weekdays": "<span><b>{}</b></span>",
-        "today": "<span><b><u>{}</u></b></span>",
-      },
+        "today": "<span><b><u>{}</u></b></span>"
+      }
     },
     "actions": {
       "on-click-right": "mode",
       "on-click-forward": "tz_up",
       "on-click-backward": "tz_down",
       "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down",
+      "on-scroll-down": "shift_down"
     },
-    "locale": "en_US.utf8",
+    "locale": "en_US.utf8"
   },
   "pulseaudio": {
-    "format": "{icon}{volume}%",
+    "format": "{icon} {volume}%",
     "format-bluetooth": "󰂰 {volume}%",
     "format-muted": "󰖁 {volume}%",
     "format-icons": {
@@ -177,14 +178,14 @@
       "portable": " ",
       "car": " ",
       "default": ["", "", "󰕾 ", " "],
-      "ignored-sinks": ["Easy Effects Sink"],
+      "ignored-sinks": ["Easy Effects Sink"]
     },
     "scroll-step": 1.0,
     // "tooltip-format": "{icon} {desc} | {volume}%",
     "tooltip-format": "Volume: {volume}%",
     "smooth-scrolling-threshold": 1,
     "on-click": "pamixer -t",
-    "on-click-right": "wezterm start pulsemixer",
+    "on-click-right": "wezterm start pulsemixer"
   },
   "pulseaudio#microphone": {
     "format": "{format_source}{source_volume}%",
@@ -195,7 +196,7 @@
     "tooltip-format": "Mic: {source_volume}%",
     "scroll-step": 5,
     "on-click": "pamixer --default-source -t",
-    "on-click-right": "wezterm start pulsemixer",
+    "on-click-right": "wezterm start pulsemixer"
   },
   "network": {
     "interval": 1,
@@ -211,30 +212,30 @@
     "tooltip-format-disconnected": "󰌙 Disconnected",
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     "nospacing": 1,
-    "on-click-right": "wezterm start nmtui",
+    "on-click-right": "wezterm start nmtui"
   },
   "cpu": {
-    "format": "󰍛 {usage}% ",
+    "format": "󰍛 {usage}%",
     "interval": 1,
     "format-alt-click": "click",
-    "format-alt": "{icon0}{icon1}{icon2}{icon3} 󰍛{usage:>2}% ",
+    "format-alt": "{icon0}{icon1}{icon2}{icon3} 󰍛{usage:>2}%",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
-    "on-click-right": "flatpak run net.nokyan.Resources",
+    "on-click-right": "flatpak run net.nokyan.Resources"
   },
   "memory": {
     "interval": 1,
-    "format": "󰾆 {percentage}% ",
-    "format-alt": "󰾆 {used:0.1f}G ",
+    "format": "󰾆 {percentage}%",
+    "format-alt": "󰾆 {used:0.1f}G",
     "format-alt-click": "click",
     "tooltip": true,
     "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
     "on-click-right": "wezterm start btm",
-    "max-length": 10,
+    "max-length": 10
   },
   "temperature": {
     "critical-threshold": 80,
-    "format-critical": " {temperatureC}°C ",
-    "format": " {temperatureC}°C ",
+    "format-critical": " {temperatureC}°C",
+    "format": " {temperatureC}°C"
   },
   "custom/song": {
     "format": "{}",
@@ -244,23 +245,23 @@
     "on-click": "song toggle-pause",
     "on-click-right": "electron-netease-cloud-music",
     "on-scroll-down": "song next",
-    "on-scroll-up": "song prev",
+    "on-scroll-up": "song prev"
   },
-  "custom/dunst-paused": {
+  "custom/dunst": {
     "format": "{}",
     "exec": "bash -c '[ '$(dunstctl is-paused)' = 'false' ] && echo '🔔' || echo '🔕' '",
     "on-double-click": "dunstctl set-paused true",
     "on-click": "hyprland-scripts toggle-dunst-pause",
-    "signal": 1,
+    "signal": 1
   },
   "custom/updates": {
-    "format": "{} {icon}",
+    "format": "{}",
     "return-type": "json",
     "format-icons": {
       "has-updates": "󱍷",
-      "updated": "󰂪",
+      "updated": "󰂪"
     },
     "exec-if": "which waybar-module-pacman-updates",
-    "exec": "waybar-module-pacman-updates  --interval-seconds 5 --network-interval-seconds 300",
-  },
+    "exec": "waybar-module-pacman-updates  --interval-seconds 5 --network-interval-seconds 300"
+  }
 }

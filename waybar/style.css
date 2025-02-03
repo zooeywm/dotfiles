@@ -1,12 +1,9 @@
+@import "latte.css";
+
 * {
-  border: none;
-  border-radius: 0;
-  min-height: 0;
   font-family: JetBrainsMono Nerd Font;
   font-size: 24px;
 }
-
-@import "latte.css";
 
 window#waybar {
   background-color: #090000;
@@ -41,23 +38,28 @@ window#waybar {
   background-color: #f38ba8;
 }
 
-#backlight,
-#clock,
-#motherboard,
-#battery,
-#laptop,
-#audio,
-#network,
-#clock,
+#submap,
+
+#cpu,
+#memory,
+#temperature,
 #tray,
-#taskbar,
-#custom-dunst-paused,
-#custom-song,
+/* #custom-song, */
+
 #workspaces,
-#custom-updates {
-  border-radius: 10px;
-  margin: 0px 2.5px;
-  padding: 0px 5px;
+#taskbar,
+
+#network,
+#custom-updates,
+#bluetooth,
+#pulseaudio,
+#pulseaudio.microphone,
+#backlight,
+#battery,
+#power-profiles-daemon,
+#clock,
+#custom-dunst {
+  margin: 0px 4px;
   color: #ffffff;
   opacity: 1;
 }
@@ -66,18 +68,29 @@ window#waybar {
   background: transparent;
 }
 
+#power-profiles-daemon.performance {
+  margin-left: -6px;
+  padding-right: 10px;
+  color: @flamingo;
+}
+
+#power-profiles-daemon.balanced {
+  color: @sapphire;
+}
+
+#power-profiles-daemon.power-saver {
+  color: @green;
+}
+
 #power-profiles-daemon {
-  margin-right: 2.5px;
-  color: #f2cdcd;
+  /* margin-right: 12px; */
 }
 
 #cpu {
-  margin-right: 2.5px;
   color: @teal;
 }
 
 #memory {
-  margin-right: 2.5px;
   color: @lavender;
 }
 
@@ -86,7 +99,7 @@ window#waybar {
 }
 
 #battery {
-  color: #bada55;
+  color: @green;
 }
 
 @keyframes blink {
@@ -94,8 +107,9 @@ window#waybar {
     color: #f38ba8;
   }
 }
+
 #battery.charging {
-  color: #a6e3a1;
+  color: @teal;
 }
 
 #battery.warning,
@@ -114,38 +128,24 @@ window#waybar {
 }
 
 #pulseaudio {
-  color: #ffd700;
+  color: @sky;
 }
 
-#pulseaudio.bluetooth {
-  color: #2acaea;
+#pulseaudio.microphone {
+  color: @lavender;
 }
 
 #pulseaudio.muted {
   color: #ff0048;
 }
 
-#pulseaudio.source-muted {
-  color: #ff0048;
-}
-
 #network {
   color: #c6e2ff;
-  padding-right: 2.5px;
+  margin-right: 15px;
 }
 
 #bluetooth {
-  min-width: 20px;
   color: #2acaea;
-}
-
-#custom-song {
-  font-size: 15px;
-  color: #ffd1df;
-}
-
-#custom-dunst-paused {
-  color: @crust;
 }
 
 #custom-updates {
@@ -153,8 +153,7 @@ window#waybar {
 }
 
 #clock {
-  font-family: JetBrainsMono Nerd Font;
-  color: #cba6f7;
+  color: @lavender;
 }
 
 tooltip {
@@ -165,11 +164,11 @@ tooltip {
 }
 
 tooltip label {
-  font-size: 20px;
+  font-size: 30px;
   padding: 5px;
   color: #f0f8ff;
 }
 
 #submap {
-  color: @blue;
+  color: @red;
 }
