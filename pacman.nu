@@ -4,7 +4,7 @@ const MANIFEST = {
     # 社交
     QQ: { packages: ["linuxqq-nt-bwrap"], manager: "paru" },
     telegram: { packages: ["telegram-desktop"], },
-    wechat: { packages: ["wechat-universal-bwrap"], manager: "paru", },
+    wechat: { packages: ["wechat"], manager: "paru", },
     wemeet: { packages: ["wemeet-bin"], manager: "paru", },
     feishu: { packages: ["feishu-bin"], manager: "paru", },
 
@@ -94,7 +94,7 @@ const MANIFEST = {
     rofi-wayland: "Menu",
 
     # clients
-    firefox: "Mozilla firefox",
+    zen-browser: "Browser using the firefox core vertical label bar",
     dbeaver: "PostgreSQL客户端",
     sqlitebrowser: "SQLite客户端",
     wps: { packages: [ "wps-office-cn", "wps-office-mui-zh-cn", ], manager: "paru", desc: "WPS本体+中文语言包" },

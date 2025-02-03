@@ -1,6 +1,6 @@
 [global]
     monitor = eDP-1
-    font = JetBrainsMono Nerd Font 12
+    font = JetBrainsMono Nerd Font 24
     format = "<b>%s</b>\n%b"
     sort = yes
     indicate_hidden = yes
@@ -26,10 +26,10 @@
     icon_position = "left"
     corner_radius = 15
 
-    width = 400
+    width = 800
 
-    min_icon_size = 100
-    max_icon_size = 100
+    min_icon_size = 150
+    max_icon_size = 150
     offset = "(0, -3)"
 
 [urgency_low]

@@ -2,7 +2,7 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
-  "height": 32,
+  "height": 50,
   "output": "eDP-1",
   "modules-left": ["hyprland/submap", "group/motherboard", "tray"],
   "modules-center": ["hyprland/workspaces", "wlr/taskbar"],
@@ -17,7 +17,7 @@
   "wlr/taskbar": {
     "all-outputs": true,
     "format": "{icon}",
-    "icon-size": 20,
+    "icon-size": 35,
     "icon-theme": "Numix-Circle",
     "tooltip-format": "title: {title}\nname: {name}\napp_id: {app_id}\nstate: {state}\nshort_state: {short_state}",
     "on-click": "activate",
@@ -79,7 +79,7 @@
     "tooltip": false,
   },
   "tray": {
-    "icon-size": 20,
+    "icon-size": 35,
     "spacing": 10,
   },
   "backlight": {
@@ -214,17 +214,17 @@
     "on-click-right": "wezterm start nmtui",
   },
   "cpu": {
-    "format": "󰍛 {usage}%",
+    "format": "󰍛 {usage}% ",
     "interval": 1,
     "format-alt-click": "click",
-    "format-alt": "{icon0}{icon1}{icon2}{icon3} 󰍛{usage:>2}%",
+    "format-alt": "{icon0}{icon1}{icon2}{icon3} 󰍛{usage:>2}% ",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
     "on-click-right": "flatpak run net.nokyan.Resources",
   },
   "memory": {
     "interval": 1,
-    "format": "󰾆 {percentage}%",
-    "format-alt": "󰾆 {used:0.1f}G",
+    "format": "󰾆 {percentage}% ",
+    "format-alt": "󰾆 {used:0.1f}G ",
     "format-alt-click": "click",
     "tooltip": true,
     "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
@@ -233,8 +233,8 @@
   },
   "temperature": {
     "critical-threshold": 80,
-    "format-critical": "  {temperatureC}°C",
-    "format": "  {temperatureC}°C",
+    "format-critical": " {temperatureC}°C ",
+    "format": " {temperatureC}°C ",
   },
   "custom/song": {
     "format": "{}",

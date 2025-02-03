@@ -10,7 +10,7 @@ configuration {
         action: "kb-cancel";
         delay:  0;
     }
-    dpi: 100;
+    dpi: 200;
     filebrowser {
         directories-first: true;
         sorting-method: "name";

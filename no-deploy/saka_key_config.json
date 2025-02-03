@@ -1,15 +1,15 @@
 {
   "activeProfiles": {
-    "General": "default_genaral",
+    "General": "default_copy_1725091652009",
     "Keybindings": "lazyvim",
-    "Appearance": "default_appearance",
-    "Blacklist": "default_blacklist"
+    "Appearance": "default_copy_1725091652022",
+    "Blacklist": "default_copy_1725091652066"
   },
   "profiles": {
     "General": {
-      "default_genaral": {
+      "default_copy_1725091652009": {
         "enabled": true,
-        "preventStealFocus": false,
+        "preventStealFocus": true,
         "disablePageShortcuts": false,
         "autoActivateHint": true,
         "hintDetectByCursorStyle": true,
@@ -23,13 +23,7 @@
         "ignoreModifierKeys": false,
         "toggleHelpMenu": [],
         "toggleSaka": [],
-        "openLink": [],
-        "openLinkInBackgroundTab": [],
-        "openLinkInForegroundTab": [],
-        "openLinkInNewWindow": [],
-        "openLinkInIncognitoWindow": [],
-        "downloadLink": [],
-        "focusLink": [
+        "openLink": [
           [
             {
               "code": "KeyU",
@@ -41,6 +35,12 @@
             }
           ]
         ],
+        "openLinkInBackgroundTab": [],
+        "openLinkInForegroundTab": [],
+        "openLinkInNewWindow": [],
+        "openLinkInIncognitoWindow": [],
+        "downloadLink": [],
+        "focusLink": [],
         "focusInput": [
           [
             {
@@ -340,8 +340,7 @@
           ]
         ],
         "newTab": [],
-        "restoreTab": [],
-        "duplicateTab": [
+        "restoreTab": [
           [
             {
               "code": "KeyT",
@@ -353,6 +352,7 @@
             }
           ]
         ],
+        "duplicateTab": [],
         "duplicateTabIncognito": [],
         "newWindow": [],
         "newIncognitoWindow": [],
@@ -442,7 +442,7 @@
       }
     },
     "Appearance": {
-      "default_appearance": {
+      "default_copy_1725091652022": {
         "hintUseTargetSize": true,
         "hintHorizontalPlacement": "left",
         "hintHorizontalTranslation": 0,
@@ -467,8 +467,8 @@
       }
     },
     "Blacklist": {
-      "default_blacklist": {
-        "blacklist": ""
+      "default_copy_1725091652066": {
+        "blacklist": "https://www.bilibili.com"
       }
     }
   }
