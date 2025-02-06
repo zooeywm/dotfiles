@@ -20,7 +20,7 @@ def main [] {
     | pf cargo ~/.cargo
     | pf fcitx5/config ~/.config/fcitx5
     | pf fcitx5/share ~/.local/share/fcitx5
-    | pf Templates -t ~
+    # | pf Templates -t ~
     | pfs [
         starship.toml fish nushell dunst hypr waybar
         LazyVim neovide wezterm kitty zellij yazi git git-cliff
