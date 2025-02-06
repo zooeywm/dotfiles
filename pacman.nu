@@ -76,9 +76,9 @@ const MANIFEST = {
     noto-fonts: { packages: [ "noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk" ], desc: "零豆腐块字体" },
     polkit-kde-agent: "Authorization Panel",
     polkit: "Policy kit",
-    thunar: { packages: [ "thunar", "tumbler", "webp-pixbuf-loader" ], desc: "File manager" },
     bluez: "Blutooth kernel",
     bluez-utils: "Bluetooth cli",
+    overskride: { manager: "paru", desc: "Bluetooth GUI" }
 
     ## wayland
     wl-clipboard: "剪贴板",
@@ -90,7 +90,7 @@ const MANIFEST = {
     wf-recorder: "wayland screen recorder",
     dunst: "Notify channel",
     satty: { manager: "paru", desc: "Screen cut editor" },
-    hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland-git", "qt5-wayland" ] },
+    hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland-git", "qt5-wayland", "hyprsunset", "hyprpolkitagent" ] },
     rofi-wayland: "Menu",
 
     # clients
@@ -194,7 +194,7 @@ const MANIFEST = {
     udisk: { packages: ["udisks2", "udiskie"], desc: "Usb device auto mount" },
 
     # network
-    networkmanager: "",
+    networkmanager: { packages: [ "networkmanager", "stalonetray", "network-manager-applet"] },
     gping: "图形化ping",
     traceroute: "路由显形",
     lsof: "监测端口",

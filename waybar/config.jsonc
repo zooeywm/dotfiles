@@ -137,7 +137,7 @@
     "tooltip-format-connected": "{id}\n{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}\t{device_battery_percentage}",
     "on-click": "hyprland-scripts toggle-bluetooth-power",
-    "on-click-right": "blueman-manager"
+    "on-click-right": "overskride"
   },
   "clock": {
     "interval": 1,
