@@ -36,8 +36,8 @@ keymap = [
     { on = "<Down>", run = "arrow 1", desc = "Move cursor down" },
     { on = "<Left>", run = "leave", desc = "Go back to the parent directory" },
     { on = "<Right>", run = "enter", desc = "Enter the child directory" },
-    { on = ["g", "g"], run = "arrow -99999999", desc = "Move cursor to the top" },
-    { on = "G", run = "arrow 99999999", desc = "Move cursor to the bottom" },
+    { on = ["g", "g"], run = "arrow top", desc = "Move cursor to the top" },
+    { on = "G", run = "arrow bot", desc = "Move cursor to the bottom" },
     { on = "H", run = "back", desc = "Go back to the previous directory" },
     { on = "L", run = "forward", desc = "Go forward to the next directory" },
 

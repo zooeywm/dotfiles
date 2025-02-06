@@ -69,10 +69,7 @@
       "11": "🧿"
       // "urgent": ""
     },
-    "persistent-workspaces": {
-      // "eDP-1": [2, 3, 4, 8],
-      // "HDMI-A-1": [2],
-    },
+    "all-outputs": true,
     "active-only": false
   },
   "hyprland/submap": {
@@ -101,7 +98,8 @@
       "",
       "",
       ""
-    ]
+    ],
+    "tooltip-format": "Brightness: {percent}%"
   },
   "group/motherboard": {
     "orientation": "horizontal",
@@ -113,7 +111,7 @@
   },
   "group/audio": {
     "orientation": "horizontal",
-    "modules": ["bluetooth", "pulseaudio", "pulseaudio#microphone"]
+    "modules": ["bluetooth", "pulseaudio#output", "pulseaudio#source"]
   },
   "battery": {
     "format": "{icon}{capacity}%",
@@ -166,7 +164,7 @@
     },
     "locale": "en_US.utf8"
   },
-  "pulseaudio": {
+  "pulseaudio#output": {
     "format": "{icon} {volume}%",
     "format-bluetooth": "󰂰 {volume}%",
     "format-muted": "󰖁 {volume}%",
@@ -187,7 +185,7 @@
     "on-click": "pamixer -t",
     "on-click-right": "wezterm start pulsemixer"
   },
-  "pulseaudio#microphone": {
+  "pulseaudio#source": {
     "format": "{format_source}{source_volume}%",
     "format-source": " ",
     "format-source-muted": " ",
@@ -252,7 +250,8 @@
     "exec": "bash -c '[ '$(dunstctl is-paused)' = 'false' ] && echo '🔔' || echo '🔕' '",
     "on-double-click": "dunstctl set-paused true",
     "on-click": "hyprland-scripts toggle-dunst-pause",
-    "signal": 1
+    "signal": 1,
+    "tooltip": false
   },
   "custom/updates": {
     "format": "{}",

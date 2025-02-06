@@ -52,8 +52,8 @@ window#waybar {
 #network,
 #custom-updates,
 #bluetooth,
-#pulseaudio,
-#pulseaudio.microphone,
+#pulseaudio.output,
+#pulseaudio.source,
 #backlight,
 #battery,
 #power-profiles-daemon,
@@ -127,15 +127,16 @@ window#waybar {
   color: #fab387;
 }
 
-#pulseaudio {
+#pulseaudio.output {
   color: @sky;
 }
 
-#pulseaudio.microphone {
+#pulseaudio.source {
   color: @lavender;
 }
 
-#pulseaudio.muted {
+#pulseaudio.output.muted,
+#pulseaudio.source.source-muted {
   color: #ff0048;
 }
 
