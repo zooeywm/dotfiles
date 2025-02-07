@@ -69,11 +69,6 @@ rev = "02d18be"
 hash = "4d6a07559118975e2dee983d27474d70"
 
 [[plugin.deps]]
-use = "llanosrocas/githead"
-rev = "45bd61e"
-hash = "49f2baf77a7e779d06b7521a02ebc253"
-
-[[plugin.deps]]
 use = "TD-Sky/sudo"
 rev = "f403008"
 hash = "bd78d2296020f9b410e2c47bc7eb6375"

@@ -5,4 +5,4 @@ require("session"):setup({
 require("git"):setup({
     show_branch = true,
 })
-require("githead"):setup()
+-- require("githead"):setup()
