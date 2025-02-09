@@ -51,7 +51,7 @@ const MANIFEST = {
     typst: { packages: ["typst", "tinymist", "typstyle"], },
     tinymist-bin: ""
     tree-sitter-cli: "安装tree-sitter解析器",
-    uv: "python项目管理",
+    uv: "Python package manager written in rust",
     ruff: "python格式化器",
     basedpyright: { manager: "uv", desc: "python语言服务器", },
     hugo: "blog",
@@ -78,7 +78,8 @@ const MANIFEST = {
     polkit: "Policy kit",
     bluez: "Blutooth kernel",
     bluez-utils: "Bluetooth cli",
-    overskride: { manager: "paru", desc: "Bluetooth GUI" }
+    overskride: { manager: "paru", desc: "Bluetooth GUI" },
+    kalker: { manager: "paru", desc: "Terminal calculator" }
 
     ## wayland
     wl-clipboard: "剪贴板",
@@ -237,7 +238,6 @@ const MANIFEST = {
     xf86-video-amdgpu: "AMD GPU video accelerator",
 
     # misc
-    qalculate-qt: "Calculator",
     vmware-workstation.manager: "paru",
     v4l2loopback-dkms: "Virtual camera with screen",
     rclone: "Net Drive Synchronization"

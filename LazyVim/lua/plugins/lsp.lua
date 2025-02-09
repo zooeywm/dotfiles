@@ -29,6 +29,7 @@ return {
                 },
                 nushell = {},
                 clangd = {},
+                basedpyright = {},
                 cmake = {},
                 hyprls = {},
                 slangd = {

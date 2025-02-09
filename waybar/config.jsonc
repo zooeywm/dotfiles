@@ -38,7 +38,9 @@
       "Neovide",
       "Show Me The Key",
       "showmethekey-gtk",
-      "Picture-in-Picture"
+      "Picture-in-Picture",
+      "org.telegram.desktop",
+      "stalonetray"
     ]
   },
   "power-profiles-daemon": {
@@ -211,8 +213,8 @@
     "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-disconnected": "󰌙 Disconnected",
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-    "nospacing": 1,
-    "on-click-right": "wezterm start nmtui"
+    "nospacing": 1
+    // "on-click-right": "wezterm start nmtui"
   },
   "cpu": {
     "format": "󰍛 {usage}%",

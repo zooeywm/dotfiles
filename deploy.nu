@@ -25,7 +25,7 @@ def main [] {
         starship.toml fish nushell dunst hypr waybar
         LazyVim neovide wezterm kitty zellij yazi git git-cliff
         gitui zathura mpv gdb pip.conf macchina paru mimeapps.list
-        mise atuin
+        mise atuin uv
     ] ~/.config
     | pfs [memo applications] ~/.local/share
     | each {|it| deploy-item $it }

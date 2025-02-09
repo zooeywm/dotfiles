@@ -275,5 +275,5 @@ sort_reverse   = false
 sort_sensitive = false
 sort_translit  = false
 
-[log]
-enabled = true
+# [log]
+# enabled = true

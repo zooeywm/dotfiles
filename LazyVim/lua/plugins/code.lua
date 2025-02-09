@@ -108,7 +108,7 @@ return {
                     show_on_x_blocked_trigger_characters = { "'", '"', "(", "{", "=" },
                 },
                 menu = {
-                    border = "rounded",
+                    -- border = "rounded",
                     draw = {
                         columns = {
                             { "kind_icon" },

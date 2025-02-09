@@ -85,6 +85,7 @@ zcomet load hlissner/zsh-autopair
 # Generated Completions #
 #=======================#
 
+smartcache comp mise completion zsh
 # smartcache comp gix completions -s zsh
 # smartcache comp ein completions -s zsh
 
@@ -110,6 +111,10 @@ alias -g :h='--help 2>&1 | bat -pl help'
 alias cls='printf "\033c"'
 alias y='yazi'
 alias g='gitui -d "$(git rev-parse --show-toplevel)"'
+# podman 伪装 docker 从而使用 lazydocker
+alias docker='podman'
+alias docker-compose='podman-compose'
+alias lazypod='DOCKER_HOST=unix:///run/user/1000/podman/podman.sock lazydocker'
 
 #============#
 # Completion #
@@ -180,12 +185,14 @@ bindkey '^O' edit-command-line
 
 ## yazi移动
 function e {
+    echo -ne "\033]0;yazi\007"
 	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
 	yazi "$@" --cwd-file="$tmp"
 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
+    echo -ne "\033]0;terminal\007"
 }
 
 zle -N e
@@ -306,6 +313,7 @@ _cache-eval atuin init zsh --disable-up-arrow
 # _cache-eval starship init zsh
 # _cache-eval mcfly init zsh
 _cache-eval navi widget zsh
+_cache-eval mise activate zsh
 # eval "$(fnm env --node-dist-mirror 'https://npmmirror.com/mirrors/node' --use-on-cd)" # Different everytime
 
 _source-existent ~zdot/local.zsh
@@ -314,4 +322,3 @@ _source-existent ~zdot/p10k.zsh
 if [[ -f "$HOME/.bash_completion" ]]; then
     source "$HOME/.bash_completion"
 fi
-eval "$(mise activate zsh)"

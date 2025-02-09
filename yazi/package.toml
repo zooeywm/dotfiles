@@ -1,32 +1,32 @@
 [[plugin.deps]]
 use = "DreamMaoMao/searchjump"
-rev = "26d3687"
-hash = "f8654905a120588786f06b0e3446103"
+rev = "df6ee75"
+hash = "b82022e48c23a2c8d0879b7bc46990a0"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
-rev = "af8bf6f"
-hash = "3e56b7665569519e3fc54b02868627c4"
+rev = "d1cd0a3"
+hash = "d1fee6d0f74cb52d4e031dc6b9207f31"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-filter"
-rev = "02d18be"
-hash = "ea24edab4a62c94dbd205adfb6f2c08d"
+rev = "0725851"
+hash = "b482f4f2d3c4e0aa3f8db89a95699439"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "02d18be"
-hash = "72c66a0b3d60f8377eb9db5e1d8b60b2"
+rev = "0725851"
+hash = "af11685de39c366ec1137fcbccacdbff"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:max-preview"
-rev = "02d18be"
-hash = "9bc26d10d2f6e2aa93b10905b1b76979"
+rev = "0725851"
+hash = "15b2ff7f6563c14d5b2e93b3e9da35de"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:hide-preview"
-rev = "02d18be"
-hash = "5be5885898ca9df783bdec0d402bf4b0"
+rev = "0725851"
+hash = "55904f17e1053cfb91dacd9015a99f9d"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
@@ -35,8 +35,8 @@ hash = "ed6c185514109d7c5463f609282b220c"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "02d18be"
-hash = "4c7e8fd0266eedee7b619d966bd2d025"
+rev = "0725851"
+hash = "f28138c2e11e87962b66d583fef724c3"
 
 [[plugin.deps]]
 use = "GrzegorzKozub/mdcat"
@@ -45,8 +45,8 @@ hash = "40c20e6c1085d1f45309b9f148bf4f6e"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "02d18be"
-hash = "284f6694e3b1a4afd686acf1052acd90"
+rev = "0725851"
+hash = "7a08e303167d5b655c06da6d570f0333"
 
 [[plugin.deps]]
 use = "pirafrank/what-size"
@@ -60,18 +60,18 @@ hash = "3af52f1d5ba79a7dd9cbc1d2918feab5"
 
 [[plugin.deps]]
 use = "boydaihungst/file-extra-metadata"
-rev = "fdea1c6"
-hash = "8fd3b7f3607be6a8a3ef7b7692e923ce"
+rev = "dc8e790"
+hash = "c52ba4aed37df0772b6f699e135e72f"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "02d18be"
-hash = "4d6a07559118975e2dee983d27474d70"
+rev = "0725851"
+hash = "771f18427fb75fb19990ce602bb322f4"
 
 [[plugin.deps]]
 use = "TD-Sky/sudo"
-rev = "f403008"
-hash = "bd78d2296020f9b410e2c47bc7eb6375"
+rev = "af70636"
+hash = "a94dcbe9266512806c677138e8591ddb"
 
 [flavor]
 deps = []

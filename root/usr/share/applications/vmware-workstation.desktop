@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=VMware Workstation
+Comment=Run and manage virtual machines
+Exec=env GDK_SCALE=2 /usr/bin/vmware %U
+Terminal=false
+Type=Application
+Icon=vmware-workstation
+StartupNotify=true
+StartupWMClass=vmware
+Categories=System;
+MimeType=application/x-vmware-vm;application/x-vmware-team;application/x-vmware-enc-vm;x-scheme-handler/vmrc;
