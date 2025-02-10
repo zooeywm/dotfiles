@@ -20,9 +20,12 @@ def main [] {
     | pf cargo ~/.cargo
     | pf fcitx5/config ~/.config/fcitx5
     | pf fcitx5/share ~/.local/share/fcitx5
+    | pf waybar/style.less ~/.config/waybar/style.css
+    | pf waybar/latte.css ~/.config/waybar/latte.css
+    | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
     # | pf Templates -t ~
     | pfs [
-        starship.toml fish nushell dunst waybar
+        starship.toml fish nushell dunst hypr
         LazyVim neovide wezterm kitty zellij yazi git git-cliff
         gitui zathura mpv gdb pip.conf macchina paru mimeapps.list
         mise atuin uv

@@ -47,6 +47,7 @@ return {
                     cmd = { "qmlls6" },
                 },
                 astro = {},
+                cssls = {},
             },
         },
         config = function(_, opts)
