@@ -58,7 +58,9 @@ $ sudo ./deploy.nu root
 
 [*dunst*](./dunst) - Lightweight and customizable notification daemon [dunst](https://github.com/dunst-project/dunst).
 
-[*mise*](./mise) - dev tools, env vars, task runner [mise](https://github.com/jdx/mise).
+[*mise*](./mise) - Dev tools, env vars, task runner [mise](https://github.com/jdx/mise).
+
+[*uv*](./uv) - An extremely fast Python package and project manager, written in Rust. [uv](https://github.com/astral-sh/uv).
 
 ## Favorite Applications
 
