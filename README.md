@@ -1,5 +1,7 @@
 ## About
 
+![ShowCase](./showcase.jpg)
+
 These files are managed by [deploy.nu](./deploy.nu).
 
 Distribute the files to specified locations in file system via:
