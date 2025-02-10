@@ -27,6 +27,7 @@ return {
         },
         opts = {
             scroll = { enabled = false },
+            bigfile = {},
         },
     },
 }

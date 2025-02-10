@@ -1,11 +1,11 @@
 # A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
-# "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
 [manager]
 linemode       = "size"
 mouse_events   = ["click", "scroll"]
-ratio          = [1, 3, 4]
+ratio          = [1, 2, 6]
 scrolloff      = 5
 show_hidden    = true
 show_symlink   = true
@@ -13,16 +13,17 @@ sort_by        = "natural"
 sort_dir_first = true
 sort_reverse   = false
 sort_sensitive = true
-sort_translit  = false
+sort_translit  = true
 title_format   = "Yazi: {cwd}"
 
 [preview]
 cache_dir       = ""
-image_filter    = "triangle"
-image_quality   = 90
+image_delay     = 0
+image_filter    = "nearest"
+image_quality   = 50
 max_height      = 2000
 max_width       = 3200
-sixel_fraction  = 15
+sixel_fraction  = 20
 tab_size        = 2
 ueberzug_offset = [0, 0, 0, 0]
 ueberzug_scale  = 1
@@ -56,6 +57,7 @@ reveal = [
 [open]
 rules = [
     { mime = "inode/directory", use = [
+        "open",
         "compress",
         "reveal",
     ] },
@@ -76,10 +78,12 @@ rules = [
     ] },
     { mime = "{audio,video}/*", use = [
         "play",
+        "open",
         "reveal",
     ] },
     { mime = "inode/empty", use = [
         "edit",
+        "open",
         "reveal",
     ] },
     { mime = "application/{,g}zip", use = [
@@ -110,10 +114,9 @@ rules = [
         "deb",
         "reveal",
     ] },
-    # Fallback
     { name = "*", use = [
-        "open",
         "reveal",
+        "open",
     ] },
 ]
 
@@ -212,16 +215,6 @@ rename_offset = [0, 1, 50, 3]
 rename_origin = "hovered"
 rename_title  = "Rename:"
 
-# trash
-trash_offset = [0, 2, 50, 3]
-trash_origin = "top-center"
-trash_title  = "Move {n} selected file{s} to trash? (y/N)"
-
-# delete
-delete_offset = [0, 2, 50, 3]
-delete_origin = "top-center"
-delete_title  = "Delete {n} selected file{s} permanently? (y/N)"
-
 # filter
 filter_offset = [0, 2, 50, 3]
 filter_origin = "top-center"
@@ -247,6 +240,7 @@ shell_title  = ["Shell:", "Shell (block):"]
 trash_offset = [0, 0, 70, 20]
 trash_origin = "center"
 trash_title  = "Trash {n} selected file{s}?"
+
 # delete
 delete_offset = [0, 0, 70, 20]
 delete_origin = "center"
@@ -274,6 +268,3 @@ sort_by        = "none"
 sort_reverse   = false
 sort_sensitive = false
 sort_translit  = false
-
-# [log]
-# enabled = true

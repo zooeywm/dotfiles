@@ -9,11 +9,6 @@ rev = "d1cd0a3"
 hash = "d1fee6d0f74cb52d4e031dc6b9207f31"
 
 [[plugin.deps]]
-use = "yazi-rs/plugins:smart-filter"
-rev = "0725851"
-hash = "b482f4f2d3c4e0aa3f8db89a95699439"
-
-[[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
 rev = "0725851"
 hash = "af11685de39c366ec1137fcbccacdbff"
