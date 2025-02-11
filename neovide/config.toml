@@ -1,5 +1,5 @@
 # frame = "none"
-idle = false
+idle = true
 tabs = false
 vsync = true
 
@@ -11,4 +11,4 @@ normal = [
   "Noto Serif Grantha",
   "Noto Sans Gujarati UI",
 ]
-size = 10
+size = 18
