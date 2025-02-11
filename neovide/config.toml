@@ -1,14 +1,14 @@
 # frame = "none"
-idle = true
-tabs = false
+idle  = false
+tabs  = false
 vsync = true
 
 [font]
 normal = [
-  "JetBrains Mono",
-  "FiraCode Nerd Font",
-  "Noto Sans CJK SC",
-  "Noto Serif Grantha",
-  "Noto Sans Gujarati UI",
+    "JetBrains Mono",
+    "FiraCode Nerd Font",
+    "Noto Sans CJK SC",
+    "Noto Serif Grantha",
+    "Noto Sans Gujarati UI",
 ]
 size = 18
