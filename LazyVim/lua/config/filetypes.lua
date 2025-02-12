@@ -4,6 +4,7 @@ vim.filetype.add({
         typ = "typst",
         nu = "nu",
         wgsl = "wgsl",
+        mdx = "markdown",
     },
     pattern = {
         [".*/hypr/.*.conf"] = "hyprlang",
