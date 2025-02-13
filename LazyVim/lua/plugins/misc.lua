@@ -53,4 +53,30 @@ return {
         },
     },
     { "norcalli/nvim-colorizer.lua" },
+    {
+        "folke/snacks.nvim",
+        keys = {
+            {
+                "<leader>gb",
+                function()
+                    Snacks.gitbrowse()
+                end,
+                desc = "跳转到远程仓库相应位置",
+            },
+        },
+        opts = {
+            scroll = { enabled = false },
+            bigfile = {},
+            styles = {
+                input = {
+                    relative = "cursor",
+                    row = 1,
+                    col = 0,
+                    keys = {
+                        i_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "1", expr = true },
+                    },
+                },
+            },
+        },
+    },
 }

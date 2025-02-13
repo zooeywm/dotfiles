@@ -46,6 +46,13 @@ map.n({
         desc = "Open term here",
     },
     { "<leader>lc", "<cmd>LspConfig<cr>", desc = "Lsp Config" },
+    {
+        "<leader>cl",
+        function()
+            Snacks.picker.lsp_config()
+        end,
+        desc = "Lsp Info",
+    },
     { "<C-a>", "ggVG", desc = "Select all" },
     { "<leader>tw", ":lua ToggleWordWrap()<CR>", desc = "Toggle word wrap" },
     { "<leader>tc", ":lua ToggleColorizer()<CR>", desc = "Toggle Colorizer" },
@@ -56,6 +63,7 @@ map.n({
 })
 
 function ToggleWordWrap()
+    ---@diagnostic disable-next-line: undefined-field
     local wrap = vim.opt.wrap:get()
     vim.opt.wrap = not wrap
     print("Word wrap " .. (wrap and "disabled" or "enabled"))
@@ -88,13 +96,29 @@ vim.keymap.set("o", "ik", "<cmd>normal vik<cr>")
 
 -- NOTE: use for neovide to paste
 if vim.g.neovide then
-	vim.api.nvim_set_keymap('v', '<sc-c>', '"+y', {noremap = true})
-	vim.api.nvim_set_keymap('n', '<sc-v>', 'l"+P', {noremap = true})
-	vim.api.nvim_set_keymap('v', '<sc-v>', '"+P', {noremap = true})
-	vim.api.nvim_set_keymap('c', '<sc-v>', '<C-o>l<C-o>"+<C-o>P<C-o>l', {noremap = true})
-	vim.api.nvim_set_keymap('i', '<sc-v>', '<ESC>l"+Pli', {noremap = true})
-	vim.api.nvim_set_keymap('t', '<sc-v>', '<C-\\><C-n>"+Pi', {noremap = true})
-	vim.api.nvim_set_keymap('n', '<c-+>', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>', {noremap = true})
-	vim.api.nvim_set_keymap('n', '<c-_>', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>', {noremap = true})
-	vim.api.nvim_set_keymap('n', '<c-0>', ':lua vim.g.neovide_scale_factor = 1.0<CR>', {noremap = true})
+    vim.api.nvim_set_keymap("v", "<sc-c>", '"+y', { noremap = true })
+    vim.api.nvim_set_keymap("n", "<sc-v>", 'l"+p', { noremap = true })
+    vim.api.nvim_set_keymap("v", "<sc-v>", '"+P', { noremap = true })
+    for _, mode in ipairs({ "c", "i" }) do
+        vim.api.nvim_set_keymap(mode, "<S-C-V>", "<C-R>+", { noremap = true })
+    end
+    vim.api.nvim_set_keymap("t", "<sc-v>", '<C-\\><C-n>"+Pi', { noremap = true })
+
+    local function increase_scale()
+        vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1
+    end
+
+    local function decrease_scale()
+        vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1
+    end
+
+    local function reset_scale()
+        vim.g.neovide_scale_factor = 1.0
+    end
+
+    for _, mode in ipairs({ "v", "n", "c", "i", "t" }) do
+        vim.keymap.set(mode, "<C-+>", increase_scale, { noremap = true })
+        vim.keymap.set(mode, "<C-_>", decrease_scale, { noremap = true })
+        vim.keymap.set(mode, "<C-)>", reset_scale, { noremap = true })
+    end
 end
