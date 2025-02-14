@@ -1,8 +1,19 @@
 return {
     {
         "lewis6991/gitsigns.nvim",
+        opts = {
+            current_line_blame = true,
+            numhl = true,
+            current_line_blame_opts = {
+                virt_text = true,
+                virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+                delay = 0,
+                ignore_whitespace = false,
+                virt_text_priority = 100,
+            },
+        },
         keys = {
-            { "gb", "<cmd>Gitsigns blame_line<cr>", desc = "git blame" },
+            { "gb", "<cmd>Gitsigns blame_line<cr>", desc = "git-blame" },
         },
     },
     {
@@ -10,8 +21,8 @@ return {
         config = true,
         keys = {
             { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "diff" },
-            { "<leader>gH", "<cmd>DiffviewFileHistory<cr>", desc = "文件历史" },
-            { "<leader>gf", "<cmd>DiffviewFileHistory %<cr>", desc = "当前文件历史" },
+            { "<leader>gH", "<cmd>DiffviewFileHistory<cr>", desc = "file-history" },
+            { "<leader>gf", "<cmd>DiffviewFileHistory %<cr>", desc = "file-history-current" },
         },
     },
 }

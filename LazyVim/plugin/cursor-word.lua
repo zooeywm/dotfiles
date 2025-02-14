@@ -7,9 +7,7 @@ local function matchadd()
     local right = vim.fn.matchstr(line:sub(column + 1), [[^\k*]]):sub(2)
     local cursorword = left .. right
 
-    if cursorword == vim.w.cursorword then
-        return
-    end
+    if cursorword == vim.w.cursorword then return end
 
     vim.w.cursorword = cursorword
 
@@ -18,9 +16,7 @@ local function matchadd()
         vim.w.cursorword_id = nil
     end
 
-    if cursorword == "" or #cursorword > MAX_LEN or cursorword:find("[\192-\255]+") ~= nil then
-        return
-    end
+    if cursorword == "" or #cursorword > MAX_LEN or cursorword:find("[\192-\255]+") ~= nil then return end
 
     vim.w.cursorword_id = vim.fn.matchadd("CursorWord", [[\<]] .. cursorword .. [[\>]], -1)
 end

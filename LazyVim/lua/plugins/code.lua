@@ -12,36 +12,30 @@ return {
         opts = {
             lua = {
                 cmd = "stylua",
-                args = { "--indent-type", "Spaces", "-" },
+                args = { "--column-width", "200", "--indent-type", "Spaces", "--collapse-simple-statement", "Always", "--sort-requires", "-" },
                 stdin = true,
             },
             python = "ruff",
             toml = "taplo",
-            -- ocaml = {
-            --     cmd = "ocamlformat",
-            --     args = {
-            --         "--enable-outside-detected-project",
-            --         "--name",
-            --         utils.vim.current_buffer_name(),
-            --         "-",
-            --     },
-            --     stdin = true,
-            -- },
-            sh = "shfmt",
+            sh = {
+                cmd = "shfmt",
+                args = { "-i", "4" },
+                stdin = true,
+            },
             ["c,cpp"] = {
                 cmd = "clang-format",
                 args = {
-                    -- "--style",
-                    -- "{IndentWidth: 4}",
+                    "--style",
+                    "{IndentWidth: 4}",
                 },
                 stdin = true,
             },
             go = "gofmt",
+            ["vue,json,javascript,typescript,xml,yaml,html,css,scss,less,astro,graphql,markdown"] = "prettier",
             cs = {
                 cmd = "dotnet-csharpier",
                 args = { "--write-stdout" },
             },
-            ["vue,json,javascript,typescript,xml,yaml,html,css,scss,less,astro,graphql,markdown"] = "prettier",
             ["jsonc,json5"] = {
                 cmd = "prettier",
                 args = { "--trailing-comma", "none", "--stdin-filepath" },
@@ -58,27 +52,22 @@ return {
                 stdin = true,
                 fname = true,
             },
+            rust = {
+                cmd = "rustfmt",
+                args = { "+nightly", "--edition", "2024", "--emit", "stdout" },
+                stdin = true,
+            },
         },
         config = function(_, opts)
             local ft = require("guard.filetype")
-            ft("rust"):fmt("rustfmt"):extra("+nightly")
-
             for lang, opt in pairs(opts) do
                 ft(lang):fmt(opt)
             end
-
             vim.g.guard_config = {
                 fmt_on_save = false,
             }
         end,
     },
-    -- {
-    --     "folke/todo-comments.nvim",
-    --     keys = {
-    --         { "[t", false },
-    --         { "]t", false },
-    --     },
-    -- },
     {
         "numToStr/Comment.nvim",
         -- NOTE: For block comment
@@ -108,7 +97,6 @@ return {
                     show_on_x_blocked_trigger_characters = { "'", '"', "(", "{", "=" },
                 },
                 menu = {
-                    -- border = "rounded",
                     draw = {
                         columns = {
                             { "kind_icon" },
@@ -119,17 +107,13 @@ return {
                         },
                         components = {
                             label = {
-                                text = function(ctx)
-                                    return require("colorful-menu").blink_components_text(ctx)
-                                end,
-                                highlight = function(ctx)
-                                    return require("colorful-menu").blink_components_highlight(ctx)
-                                end,
+                                text = function(ctx) return require("colorful-menu").blink_components_text(ctx) end,
+                                highlight = function(ctx) return require("colorful-menu").blink_components_highlight(ctx) end,
                             },
                         },
                     },
                     min_width = 30,
-                    max_height = 10,
+                    max_height = 15,
                 },
                 documentation = {
                     auto_show = true,
@@ -152,6 +136,9 @@ return {
                 window = {
                     border = "rounded",
                 },
+            },
+            keymap = {
+                ["<C-k>"] = {},
             },
         },
     },

@@ -14,36 +14,11 @@ return {
         },
     },
     {
-        "nvim-telescope/telescope.nvim",
-        keys = {
-            { "<leader><space>", false },
-            { "<leader>fF", false },
-            { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find git" },
-        },
-        opts = {
-            pickers = {
-                find_files = {
-                    previewer = false,
-                },
-                git_files = {
-                    previewer = false,
-                },
-                live_grep = {
-                    layout_config = {
-                        preview_width = 0.5,
-                    },
-                },
-            },
-        },
-    },
-    {
         "mbbill/undotree",
         keys = {
             { "<leader>uu", "<cmd>UndotreeToggle<cr>", desc = "Toggle Undotree" },
         },
-        config = function()
-            vim.g.undotree_WindowLayout = 4
-        end,
+        config = function() vim.g.undotree_WindowLayout = 4 end,
     },
     {
         "crusj/bookmarks.nvim",
@@ -72,9 +47,7 @@ return {
         keys = {
             {
                 "<leader>e",
-                function()
-                    require("yazi").yazi()
-                end,
+                function() require("yazi").yazi() end,
                 desc = "Open the file manager",
             },
         },
@@ -87,22 +60,6 @@ return {
                     end
                 end,
             },
-        },
-    },
-    {
-        "coffebar/neovim-project",
-        opts = {
-            projects = {},
-            last_session_on_startup = false,
-        },
-        init = function()
-            -- enable saving the state of plugins in the session
-            vim.opt.sessionoptions:append("globals") -- save global variables that start with an uppercase letter and contain at least one lowercase letter.
-        end,
-        dependencies = {
-            { "nvim-lua/plenary.nvim" },
-            { "nvim-telescope/telescope.nvim" },
-            { "Shatur/neovim-session-manager" },
         },
     },
 }

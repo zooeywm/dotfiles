@@ -51,8 +51,8 @@ local options = {
         "*.android",
     }, ','),
 
-    number = true,
     -- display
+    number = true,
     relativenumber = true,
     signcolumn = "yes",
     laststatus = 3,

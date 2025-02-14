@@ -1,24 +1,13 @@
 return {
     {
-        "rcarriga/nvim-notify",
-        opts = {
-            timeout = 500,
-            stages = "fade",
-        },
-    },
-    {
         "TD-Sky/neo-rhythm",
         opts = {
             range = {
                 start = { 7, 0 },
                 ending = { 18, 30 },
             },
-            day = function()
-                vim.o.background = "dark"
-            end,
-            night = function()
-                vim.o.background = "dark"
-            end,
+            day = function() vim.o.background = "dark" end,
+            night = function() vim.o.background = "dark" end,
         },
     },
     {
@@ -47,30 +36,7 @@ return {
         },
     },
     {
-        "lewis6991/gitsigns.nvim",
-        keys = {
-            { "gb", "<cmd>Gitsigns blame_line<cr>", desc = "git blame" },
-        },
-    },
-    {
         "nvim-focus/focus.nvim",
         config = true,
     },
-    -- {
-    --     "nvimdev/dashboard-nvim",
-    --     optional = true,
-    --     opts = function(_, opts)
-    --         local projects = {
-    --             action = "Telescope neovim-project history",
-    --             desc = " Projects",
-    --             icon = " ",
-    --             key = "p",
-    --         }
-    --
-    --         projects.desc = projects.desc .. string.rep(" ", 43 - #projects.desc)
-    --         projects.key_format = "  %s"
-    --
-    --         table.insert(opts.config.center, 3, projects)
-    --     end,
-    -- },
 }

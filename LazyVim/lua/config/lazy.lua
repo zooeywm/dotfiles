@@ -41,6 +41,7 @@ require("lazy").setup({
                 "tarPlugin",
                 "tohtml",
                 "tutor",
+                "matchparen",
                 "zipPlugin",
             },
         },

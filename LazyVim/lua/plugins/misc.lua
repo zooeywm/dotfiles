@@ -13,11 +13,9 @@ return {
     {
         "JuanZoran/Trans.nvim",
         dependencies = { "kkharji/sqlite.lua" },
-        build = function()
-            require("Trans").install()
-        end,
+        build = function() require("Trans").install() end,
         keys = {
-            { "gl", "<cmd>Translate<cr>", mode = { "n", "x" }, desc = " Translate" },
+            { "t", "<cmd>Translate<cr>", mode = { "n", "x" }, desc = " Translate" },
         },
         opts = {
             frontend = {
@@ -58,9 +56,7 @@ return {
         keys = {
             {
                 "<leader>gb",
-                function()
-                    Snacks.gitbrowse()
-                end,
+                function() Snacks.gitbrowse() end,
                 desc = "跳转到远程仓库相应位置",
             },
         },
@@ -78,5 +74,13 @@ return {
                 },
             },
         },
+    },
+    {
+        "2kabhishek/nerdy.nvim",
+        dependencies = {
+            "stevearc/dressing.nvim",
+            "nvim-telescope/telescope.nvim",
+        },
+        cmd = "Nerdy",
     },
 }

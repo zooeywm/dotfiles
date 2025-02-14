@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=env QT_SCALE_FACTOR=2 "/home/zooeywm/Qt/Tools/QtCreator/bin/qtcreator" %F
+Name=Qt Creator
+GenericName=The IDE of choice for Qt development.
+Icon=QtProject-qtcreator
+StartupWMClass=qtcreator
+Terminal=false
+Categories=Development;IDE;Qt;
+MimeType=text/x-c++src;text/x-c++hdr;text/x-xsrc;application/x-designer;application/vnd.qt.qmakeprofile;application/vnd.qt.xml.resource;text/x-qml;text/x-qt.qml;text/x-qt.qbs;

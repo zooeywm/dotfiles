@@ -1,8 +1,6 @@
-local hyprls = require("lspconfig.configs.hyprls")
 return {
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "saghen/blink.cmp" },
         event = "LazyFile",
         opts = {
             inlay_hints = {
@@ -53,9 +51,7 @@ return {
         config = function(_, opts)
             LazyVim.lsp.setup()
 
-            if vim.g.project_lspconfig ~= nil then
-                opts.servers = vim.tbl_deep_extend("force", opts.servers, vim.g.project_lspconfig)
-            end
+            if vim.g.project_lspconfig ~= nil then opts.servers = vim.tbl_deep_extend("force", opts.servers, vim.g.project_lspconfig) end
             -- 指定诊断日志的图标
             for severity, icon in pairs(opts.diagnostics.signs.text) do
                 local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
@@ -64,11 +60,7 @@ return {
             end
             if opts.inlay_hints.enabled then
                 LazyVim.lsp.on_supports_method("textDocument/inlayHint", function(_, buffer)
-                    if
-                        vim.api.nvim_buf_is_valid(buffer)
-                        and vim.bo[buffer].buftype == ""
-                        and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
-                    then
+                    if vim.api.nvim_buf_is_valid(buffer) and vim.bo[buffer].buftype == "" and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype) then
                         vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
                     end
                 end)
@@ -152,10 +144,10 @@ return {
             -- 更改
             { "<leader>lr", "<cmd>Lspsaga rename<cr>", desc = "Rename" },
             {
+                mode = { "n", "v" },
                 "<leader>la",
                 "<cmd>Lspsaga code_action<cr>",
                 desc = "Code Action",
-                mode = { "n", "v" },
             },
             {
                 "<leader>lA",

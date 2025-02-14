@@ -1,5 +1,3 @@
-local utils = require("utils")
-
 return {
     {
         "johmsalas/text-case.nvim",
@@ -8,25 +6,22 @@ return {
             local wk = require("which-key")
 
             local function convert_case(dest_case)
-                return function()
-                    textcase.current_word(dest_case)
-                end
+                return function() textcase.current_word(dest_case) end
             end
 
             wk.add({
-                mode = { "n", "o", "x" },
-                { "gt", group = "text-case" },
-                { "gt-", convert_case("to_dash_case"), desc = "to-dash" },
-                { "gt/", convert_case("to_path_case"), desc = "to/path" },
-                { "gtC", convert_case("to_constant_case"), desc = "TO_CONSTANT" },
-                { "gtP", convert_case("to_pascal_case"), desc = "ToPascal" },
-                { "gtc", convert_case("to_camel_case"), desc = "toCamel" },
-                { "gt.", convert_case("to_dot_case"), desc = "to.dot" },
-                { "gtl", convert_case("to_lower_case"), desc = "to lower" },
-                { "gtu", convert_case("to_upper_case"), desc = "to UPPER" },
-                { "gtp", convert_case("to_phrase_case"), desc = "To phrase" },
-                { "gts", convert_case("to_snake_case"), desc = "to_snake" },
-                { "gtt", convert_case("to_title_case"), desc = "To Title" },
+                mode = { "n", "o", "v" },
+                { "<leader>t-", convert_case("to_dash_case"), desc = "to-dash-case" },
+                { "<leader>t/", convert_case("to_path_case"), desc = "to/path/case" },
+                { "<leader>tC", convert_case("to_constant_case"), desc = "TO_CONSTANT_CASE" },
+                { "<leader>tP", convert_case("to_pascal_case"), desc = "ToPascalCaser" },
+                { "<leader>tc", convert_case("to_camel_case"), desc = "toCamelCase" },
+                { "<leader>t.", convert_case("to_dot_case"), desc = "to.dot.case" },
+                { "<leader>tl", convert_case("to_lower_case"), desc = "to lower case" },
+                { "<leader>tu", convert_case("to_upper_case"), desc = "TO UPPER CASE" },
+                { "<leader>tp", convert_case("to_phrase_case"), desc = "To phrase case" },
+                { "<leader>ts", convert_case("to_snake_case"), desc = "to_snake_case" },
+                { "<leader>tt", convert_case("to_title_case"), desc = "To Title Case" },
             })
         end,
     },
@@ -76,6 +71,9 @@ return {
         config = true,
     },
     {
+        "ibhagwan/fzf-lua",
+    },
+    {
         -- retake keymap for flash.nvim
         "folke/flash.nvim",
         dependencies = {
@@ -86,10 +84,8 @@ return {
                     {
                         "<leader><space>",
                         mode = { "n", "x", "o" },
-                        function()
-                            require("utils").treesitter.try_exec(require("flash").treesitter)
-                        end,
-                        desc = "Flash Treesitter",
+                        function() require("utils").treesitter.try_exec(require("flash").treesitter) end,
+                        desc = "flash-treesitter",
                     },
                 },
             },
@@ -104,33 +100,14 @@ return {
                 },
             },
         },
-        keys = function()
-            return {
-                {
-                    "U",
-                    mode = { "n", "x", "o" },
-                    function()
-                        require("flash").jump()
-                    end,
-                    desc = "Flash Jump",
-                },
-            }
-        end,
-    },
-    {
-        "echasnovski/mini.indentscope",
-        opts = function(_, tbl)
-            vim.api.nvim_set_hl(0, "MiniIndentscopeSymbol", { fg = "#00CCCC" })
-            local override = {
-                symbol = "┆",
-                draw = {
-                    delay = 0,
-                    animation = require("mini.indentscope").gen_animation.none(),
-                    priority = 2,
-                },
-            }
-            return vim.tbl_extend("force", tbl, override)
-        end,
+        keys = {
+            {
+                "U",
+                mode = { "n", "x", "o" },
+                function() require("flash").jump() end,
+                desc = "flash-jump",
+            },
+        },
     },
     {
         "chrisgrieser/nvim-recorder",
@@ -142,23 +119,13 @@ return {
     },
     {
         "fei6409/log-highlight.nvim",
-        config = function()
-            require("log-highlight").setup({})
-        end,
+        config = function() require("log-highlight").setup({}) end,
     },
     {
         "tzachar/highlight-undo.nvim",
         event = "VeryLazy",
         opts = {
             duration = 100,
-            keymaps = {
-                paste = {
-                    disabled = true,
-                },
-                Paste = {
-                    disabled = true,
-                },
-            },
         },
     },
 }
