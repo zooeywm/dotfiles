@@ -73,6 +73,7 @@ return {
                     },
                 },
             },
+            image = { enabled = true },
         },
     },
     {
