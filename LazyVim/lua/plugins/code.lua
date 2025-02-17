@@ -22,14 +22,7 @@ return {
                 args = { "-i", "4" },
                 stdin = true,
             },
-            ["c,cpp"] = {
-                cmd = "clang-format",
-                args = {
-                    "--style",
-                    "{IndentWidth: 4}",
-                },
-                stdin = true,
-            },
+            ["c,cpp"] = "clang-format",
             go = "gofmt",
             ["vue,json,javascript,typescript,xml,yaml,html,css,scss,less,astro,graphql,markdown"] = "prettier",
             cs = {
