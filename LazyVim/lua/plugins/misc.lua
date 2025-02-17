@@ -60,9 +60,9 @@ return {
                 desc = "跳转到远程仓库相应位置",
             },
         },
+        ---@type snacks.Config
         opts = {
             scroll = { enabled = false },
-            bigfile = {},
             styles = {
                 input = {
                     relative = "cursor",

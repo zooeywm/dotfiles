@@ -27,7 +27,7 @@ def main [] {
     | pfs [
         starship.toml fish nushell dunst hypr
         LazyVim neovide wezterm kitty zellij yazi git git-cliff
-        gitui zathura mpv gdb pip.conf macchina paru mimeapps.list
+        gitui lazygit zathura mpv gdb pip.conf macchina paru mimeapps.list
         mise atuin uv
     ] ~/.config
     | pfs [memo applications] ~/.local/share
