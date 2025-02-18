@@ -18,7 +18,7 @@ const MANIFEST = {
     sof-firmware: "Audio card firmware",
     linux-headers: "内核头文件",
     pipewire: { packages: [ "pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2" ], desc: "音频系统" },
-    ntp: "Time sync daemon",
+    chrony: "Time sync daemon",
 
     # PL
     gdb: "GNU 调试器",
@@ -147,7 +147,8 @@ const MANIFEST = {
     libtree: "程序的库依赖树视图",
 
     # git
-    gitui: "git TUI",
+    # gitui: "git TUI",
+    lazygit: "git TUI",
     difftastic: "语言diff",
     git-cliff: "变更日志生成器",
     gitoxide: "锈化git",
@@ -199,13 +200,13 @@ const MANIFEST = {
     gping: "图形化ping",
     traceroute: "路由显形",
     lsof: "监测端口",
-    v2raya: "飞越长城",
+    # v2raya: "飞越长城",
     clash-verge: "飞越长城",
     openssh: "ssh",
 
     # show
     asciinema: "录制命令行视频",
-    screenkey: "按键回显",
+    # screenkey: "按键回显",
     obs-studio: "流录制",
 
     # cargo
