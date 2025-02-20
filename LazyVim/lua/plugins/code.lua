@@ -82,9 +82,20 @@ return {
     },
     {
         "saghen/blink.cmp",
-        dependencies = { "xzbdmw/colorful-menu.nvim" },
-        -- event = "InsertEnter",
+        dependencies = { "xzbdmw/colorful-menu.nvim", "giuxtaposition/blink-cmp-copilot" },
         opts = {
+            sources = {
+                default = { "copilot" },
+                providers = {
+                    copilot = {
+                        name = "copilot",
+                        module = "blink-cmp-copilot",
+                        kind = "Copilot",
+                        score_offset = 100,
+                        async = true,
+                    },
+                },
+            },
             completion = {
                 trigger = {
                     show_on_x_blocked_trigger_characters = { "'", '"', "(", "{", "=" },

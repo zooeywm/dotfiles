@@ -22,6 +22,8 @@ const MANIFEST = {
 
     # PL
     gdb: "GNU 调试器",
+    neovim: "editor",
+    neovide: "neovim gui",
     lldb: "LLVM 调试器",
     mold: "现代链接器",
     rust-script: "rust 脚本解释器",
@@ -49,7 +51,7 @@ const MANIFEST = {
     slint-lsp: { manager: "cargo", desc: "slint lsp" },
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] },
     typst: { packages: ["typst", "tinymist", "typstyle"], },
-    tree-sitter: "安装tree-sitter解析器",
+    tree-sitter-cli: "安装tree-sitter解析器",
     uv: "Python package manager written in rust",
     ruff: "python格式化器",
     basedpyright: { manager: "uv", desc: "python语言服务器", },
