@@ -1,5 +1,9 @@
 % cmd
 
+# sha256 hashsum
+sha256sum <file> | choose 0 | xs
+$ file: fd --type file .
+
 # 查看指定进程的状态
 cat /proc/<PID>/stat
 
@@ -136,9 +140,3 @@ coredumpctl gdb $("coredumpctl list | tail -n 1 | awk '{print $5}'")
 
 # set terminal title
 echo -ne "\033]0;<title>\007"
-
-# sha or hashsum
-sha256sum <file> | choose 0 | xs
-$ file: ls -a1
-
-

@@ -14,7 +14,7 @@ const MANIFEST = {
     podman: "容器运行时",
 
     # kernel
-    mkinitcpio-firmware.manager: "paru",
+    mkinitcpio-firmware: { manager: "paru", desc: "get rid of the annoying 'WARNING: Possibly missing firmware for module:' messages" },
     sof-firmware: "Audio card firmware",
     linux-headers: "内核头文件",
     pipewire: { packages: [ "pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2" ], desc: "音频系统" },
@@ -49,8 +49,7 @@ const MANIFEST = {
     slint-lsp: { manager: "cargo", desc: "slint lsp" },
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] },
     typst: { packages: ["typst", "tinymist", "typstyle"], },
-    tinymist-bin: ""
-    tree-sitter-cli: "安装tree-sitter解析器",
+    tree-sitter: "安装tree-sitter解析器",
     uv: "Python package manager written in rust",
     ruff: "python格式化器",
     basedpyright: { manager: "uv", desc: "python语言服务器", },
@@ -91,7 +90,7 @@ const MANIFEST = {
     wf-recorder: "wayland screen recorder",
     dunst: "Notify channel",
     satty: { manager: "paru", desc: "Screen cut editor" },
-    hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland-git", "qt5-wayland", "hyprsunset", "hyprpolkitagent" ] },
+    hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent" ] },
     rofi-wayland: "Menu",
 
     # clients
@@ -239,7 +238,7 @@ const MANIFEST = {
     xf86-video-amdgpu: "AMD GPU video accelerator",
 
     # misc
-    vmware-workstation.manager: "paru",
+    vmware-workstation: { manager: "paru", desc: "vmware workstation" }
     v4l2loopback-dkms: "Virtual camera with screen",
     rclone: "Net Drive Synchronization"
     libfido2: "ssh-agent dependency"
@@ -276,8 +275,8 @@ def main [] {
         uv: [],
     }
     for it in $manifest {
-        let packages = try { $it.packages } | default [$it.name]
-        let mgr = try { $it.manager } | default 'pacman'
+        let packages = $it.packages? | default [$it.name]
+        let mgr = $it.manager? | default 'pacman'
 
         let subtbl = $tbl | get $mgr | append $packages
         $tbl = $tbl | upsert $mgr $subtbl
@@ -285,7 +284,7 @@ def main [] {
 
     try {
         if $paru != null {
-            paru -Sy --needed ...$tbl.paru
+            paru -Sy --needed ...$tbl.pacman ...$tbl.paru
         } else {
             pacman -Sy --needed ...$tbl.pacman
         }
