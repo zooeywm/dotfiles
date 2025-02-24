@@ -140,3 +140,6 @@ coredumpctl gdb $("coredumpctl list | tail -n 1 | awk '{print $5}'")
 
 # set terminal title
 echo -ne "\033]0;<title>\007"
+
+# go to fonts dir
+z /usr/share/fonts

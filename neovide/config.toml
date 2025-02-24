@@ -5,10 +5,10 @@ vsync = true
 
 [font]
 normal = [
-    "JetBrains Mono",
+    # "InconsolataGo Nerd Font",
+    # "RecMonoSmCasual Nerd Font",
+    "JetBrainsMono Nerd Font",
     "FiraCode Nerd Font",
     "Noto Sans CJK SC",
-    "Noto Serif Grantha",
-    "Noto Sans Gujarati UI",
 ]
-size = 18
+size = 20

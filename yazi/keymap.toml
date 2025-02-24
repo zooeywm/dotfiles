@@ -7,8 +7,8 @@ keymap = [
     { on = ["c", "m"], run = "plugin chmod", desc = "Chmod on selected files" },
     { on = "<C-c>", run = "quit", desc = "Close the current tab, or quit if it is last tab" },
     { on = "Q", run = "quit --no-cwd-file", desc = "Quit the process without writing cwd-file" },
-    { on = "q", run = "close", desc = "Exit visual mode, clear selected, or cancel search" },
-    { on = "<Esc>", run = "close", desc = "Quit the process" },
+    { on = "q", run = "close", desc = "Exit the program" },
+    { on = "<Esc>", run = "escape", desc = "Exit visual mode, clear selected, or cancel search" },
 
     { on = "k", run = "arrow -1", desc = "Move cursor up" },
     { on = "j", run = "arrow 1", desc = "Move cursor down" },

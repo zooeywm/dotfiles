@@ -52,6 +52,7 @@ x-scheme-handler/tg=org.telegram.desktop.desktop;
 x-scheme-handler/unknown=firefox.desktop;
 x-scheme-handler/bitwarden=bitwarden.desktop
 application/xhtml+xml=zen-browser.desktop
+x-scheme-handler/discord-455712169795780630=discord-455712169795780630.desktop
 
 [Added Associations]
 x-scheme-handler/http=zen-browser.desktop;

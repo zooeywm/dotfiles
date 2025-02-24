@@ -5,8 +5,8 @@ return {
     enable_wayland = true,
     enable_scroll_bar = false,
     font = wezterm.font_with_fallback({
-        "JetBrains Mono", -- 代码 <内置>
-        "FiraCode Nerd Font", -- 炫酷图标
+        "JetBrainsMono Nerd Font", -- 代码 <内置>
+        -- "FiraCode Nerd Font", -- 炫酷图标
         "Noto Sans CJK SC", -- 汉字
         "DejaVu Sans Mono",
         "Noto Sans Symbols2",

@@ -53,7 +53,7 @@ map.n({
     { "<leader><CR>", function() vim.system({ "open-term-here" }) end, "open-term-here" },
     { "<leader>lc", "<cmd>LspConfig<cr>", "lsp-config" },
     { "<leader>cl", function() Snacks.picker.lsp_config() end, "lsp-info" },
-    { "<C-a>", "ggVG", "select-all" },
+    -- { "<C-a>", "ggVG", "select-all" },
     { "<leader>tw", function() ToggleWordWrap() end, "toggle-word-wrap" },
     { "<leader>tc", function() ToggleColorizer() end, "toggle-colorizer" },
     { "<M-l>", "zl", "scroll-right-one-character" },

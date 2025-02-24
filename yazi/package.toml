@@ -5,23 +5,23 @@ hash = "b82022e48c23a2c8d0879b7bc46990a0"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
-rev = "d1cd0a3"
-hash = "d1fee6d0f74cb52d4e031dc6b9207f31"
+rev = "6c639b4"
+hash = "5614c46d5de76623c283d415bfac8025"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "8945e54"
+rev = "5186af7"
 hash = "af11685de39c366ec1137fcbccacdbff"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:max-preview"
-rev = "8945e54"
-hash = "15b2ff7f6563c14d5b2e93b3e9da35de"
+rev = "5186af7"
+hash = "a8025f2bb311e869069364fba01abffc"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:hide-preview"
-rev = "8945e54"
-hash = "55904f17e1053cfb91dacd9015a99f9d"
+rev = "5186af7"
+hash = "1e31898370b752e4faf335b762b3eeaf"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
@@ -30,7 +30,7 @@ hash = "ed6c185514109d7c5463f609282b220c"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "8945e54"
+rev = "5186af7"
 hash = "f28138c2e11e87962b66d583fef724c3"
 
 [[plugin.deps]]
@@ -40,7 +40,7 @@ hash = "40c20e6c1085d1f45309b9f148bf4f6e"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "8945e54"
+rev = "5186af7"
 hash = "7a08e303167d5b655c06da6d570f0333"
 
 [[plugin.deps]]
@@ -55,12 +55,12 @@ hash = "3af52f1d5ba79a7dd9cbc1d2918feab5"
 
 [[plugin.deps]]
 use = "boydaihungst/file-extra-metadata"
-rev = "dc8e790"
-hash = "c52ba4aed37df0772b6f699e135e72f"
+rev = "9a38001"
+hash = "b504fc1ec260e2a7136ff3dfa4372507"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "8945e54"
+rev = "5186af7"
 hash = "771f18427fb75fb19990ce602bb322f4"
 
 [[plugin.deps]]
