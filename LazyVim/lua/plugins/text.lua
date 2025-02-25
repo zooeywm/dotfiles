@@ -76,20 +76,6 @@ return {
     {
         -- retake keymap for flash.nvim
         "folke/flash.nvim",
-        dependencies = {
-            {
-                "ibhagwan/fzf-lua",
-                cmd = "FzfLua",
-                keys = {
-                    {
-                        "<leader><space>",
-                        mode = { "n", "x", "o" },
-                        function() require("utils").treesitter.try_exec(require("flash").treesitter) end,
-                        desc = "flash-treesitter",
-                    },
-                },
-            },
-        },
         opts = {
             modes = {
                 search = {
@@ -106,6 +92,12 @@ return {
                 mode = { "n", "x", "o" },
                 function() require("flash").jump() end,
                 desc = "flash-jump",
+            },
+            {
+                "<leader><space>",
+                mode = { "n", "x", "o" },
+                function() require("utils").treesitter.try_exec(require("flash").treesitter) end,
+                desc = "Flash Treesitter",
             },
         },
     },

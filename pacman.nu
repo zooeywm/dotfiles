@@ -10,7 +10,7 @@ const MANIFEST = {
 
     # OS
     QEMU: { packages: ["qemu-full"], },
-    ventoy: { manager: "paru", packages: ["ventoy-bin"], desc: "制作镜像盘" },
+    ventoy: "制作镜像盘",
     podman: "容器运行时",
 
     # kernel
@@ -22,7 +22,7 @@ const MANIFEST = {
 
     # PL
     gdb: "GNU 调试器",
-    neovim: "editor",
+    neovim-git: "editor",
     neovide: "neovim gui",
     lldb: "LLVM 调试器",
     mold: "现代链接器",
@@ -227,6 +227,11 @@ const MANIFEST = {
     cargo-wizard: { manager: "cargo", desc: "编译配置" },
     cargo-binstall: "下载crate的二进制",
     cargo-get: { manager: "cargo", desc: "读取Cargo.toml信息" },
+    cargo-workspace-unused-pub: {
+        packages: ["https://github.com/cpg314/cargo-workspace-unused-pub.git"],
+        manager: "cargo:src",
+        desc: "检查工作空间未使用的pub项",
+    },
 
     # arch
     nvchecker: "检查包版本",
@@ -272,7 +277,7 @@ def main [] {
         pacman: [],
         paru: [],
         cargo: [],
-        # 'cargo:src': [],
+        'cargo:src': [],
         npm: [],
         uv: [],
     }
@@ -304,11 +309,13 @@ def main [] {
         }
     }
 
-    # try {
-    #     if $cargo != null {
-    #         cargo install ...$tbl.'cargo:src'
-    #     }
-    # }
+    if $cargo != null {
+        for p in $tbl.'cargo:src' {
+            try {
+                cargo install --git $p
+            }
+        }
+    }
 
     try {
         if $uv != null {

@@ -5,7 +5,7 @@
 [manager]
 linemode       = "size"
 mouse_events   = ["click", "scroll"]
-ratio          = [1, 2, 6]
+ratio          = [2, 5, 5]
 scrolloff      = 5
 show_hidden    = true
 show_symlink   = true
@@ -129,19 +129,13 @@ micro_workers    = 10
 suppress_preload = false
 
 [plugin]
-append_previewers = [
-    # { name = "*", run = "hexyl" },
-    # { name = "*", run = "file-extra-metadata" },
-]
 fetchers = [
     # Mimetype
-    { id = "mine", name = "*", if = "!mime", run = "mime", prio = "high" },
-    { id = "git", name = "*", run = "git" },
-    { id = "git", name = "*/", run = "git" },
+    { id = "mime", name = "*", run = "mime", prio = "high" },
 ]
 preloaders = [
     # Image
-    # { mime = "image/svg", run = "magick" },
+    { mime = "image/svg", run = "magick" },
     { mime = "image/{avif,hei?,jxl,xml}", run = "magick" },
     { mime = "image/*", run = "image" },
     # Video
@@ -154,6 +148,7 @@ preloaders = [
     # Empty file
     # { mime = "inode/empty", run = "empty" },
 ]
+prepend_fetchers = [{ id = "mime-ext", name = "*", run = "mime-ext", prio = "high" }]
 prepend_previewers = [{ name = "*.md", run = "mdcat" }]
 prepend_spotters = [{ name = "*", run = "file-extra-metadata" }]
 previewers = [

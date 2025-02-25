@@ -54,11 +54,14 @@ return {
     {
         "folke/snacks.nvim",
         keys = {
-            {
-                "<leader>gb",
-                function() Snacks.gitbrowse() end,
-                desc = "跳转到远程仓库相应位置",
-            },
+            -- git
+            { "<leader>gb", false },
+            { "<leader>gl", false },
+            { "<leader>gL", false },
+            { "<leader>gs", false },
+            { "<leader>gS", false },
+            { "<leader>gd", false },
+            { "<leader>gf", false },
         },
         ---@type snacks.Config
         opts = {

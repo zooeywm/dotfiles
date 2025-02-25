@@ -17,7 +17,8 @@ if vim.g.neovide then
     vim.g.neovide_fullscreen = false
     vim.g.neovide_no_idle = true
 
-    vim.g.neovide_cursor_vfx_modes = { "pixiedust", "ripple" }
+    -- vim.g.neovide_cursor_vfx_modes = { "pixiedust", "ripple" }
+    vim.g.neovide_cursor_vfx_mode = "ripple"
     vim.g.neovide_cursor_vfx_opacity = 200
     vim.g.neovide_cursor_vfx_particle_lifetime = 3
     vim.g.neovide_cursor_vfx_particle_density = 10

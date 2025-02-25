@@ -2,7 +2,7 @@
 
 # sha256 hashsum
 sha256sum <file> | choose 0 | xs
-$ file: fd --type file .
+$ file: fd -c='always' -H -E='.git' -I --type file .
 
 # 查看指定进程的状态
 cat /proc/<PID>/stat

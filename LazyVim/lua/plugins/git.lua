@@ -10,16 +10,16 @@ return {
                 ignore_whitespace = false,
                 virt_text_priority = 100,
             },
-            signs = {
-                add = { text = "│" },
-                change = { text = "│" },
-                delete = { text = "│" },
-            },
-            signs_staged = {
-                add = { text = "┃" },
-                change = { text = "┃" },
-                delete = { text = "│" },
-            },
+            -- signs = {
+            --     add = { text = "│" },
+            --     change = { text = "│" },
+            --     delete = { text = "│" },
+            -- },
+            -- signs_staged = {
+            --     add = { text = "┃" },
+            --     change = { text = "┃" },
+            --     delete = { text = "│" },
+            -- },
         },
         keys = {
             { "gb", "<cmd>Gitsigns blame_line<cr>", desc = "git-blame" },

@@ -42,8 +42,6 @@ del({
     { { "n", "i", "v" }, "<C-s>" },
     { "n", "<leader>fn" },
     { "n", "<leader>cf" },
-    { "n", "<leader>ff" },
-    { "n", "<leader>fF" },
 })
 
 map.n({
@@ -53,7 +51,6 @@ map.n({
     { "<leader><CR>", function() vim.system({ "open-term-here" }) end, "open-term-here" },
     { "<leader>lc", "<cmd>LspConfig<cr>", "lsp-config" },
     { "<leader>cl", function() Snacks.picker.lsp_config() end, "lsp-info" },
-    -- { "<C-a>", "ggVG", "select-all" },
     { "<leader>tw", function() ToggleWordWrap() end, "toggle-word-wrap" },
     { "<leader>tc", function() ToggleColorizer() end, "toggle-colorizer" },
     { "<M-l>", "zl", "scroll-right-one-character" },
@@ -68,8 +65,6 @@ map.n({
     { "<PageDown>", "<Nop>", "nop" },
     { "<Home>", "<Nop>", "nop" },
     { "<End>", "<Nop>", "nop" },
-    { "<leader>ff", LazyVim.pick("files", { root = false }), "Find Files (Root Dir)" },
-    { "<leader>fF", LazyVim.pick("files"), "Find Files" },
 })
 
 map.i({
@@ -103,11 +98,10 @@ end
 function ToggleColorizer() vim.cmd("ColorizerToggle") end
 
 if vim.g.neovide then
-    vim.keymap.set("v", "<sc-c>", '"+y', { desc = "paste" })
+    vim.keymap.set("v", "<sc-c>", '"+y', { desc = "copy" })
     vim.keymap.set("n", "<sc-v>", 'l"+p', { desc = "paste" })
     vim.keymap.set("v", "<sc-v>", '"+P', { desc = "paste" })
-    vim.keymap.set({ "c", "t" }, "<S-C-V>", "<C-R>+", { desc = "paste" })
-    vim.keymap.set("t", "<sc-v>", '<C-\\><C-n>"+Pi', { desc = "paste" })
+    vim.keymap.set({ "c", "t", "i" }, "<S-C-V>", "<C-R>+", { desc = "paste" })
 
     local function increase_scale() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1 end
     local function decrease_scale() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1 end
