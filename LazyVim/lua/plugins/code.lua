@@ -142,7 +142,7 @@ return {
                 },
             },
             keymap = {
-                ["<C-k>"] = {},
+                ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
             },
         },
     },

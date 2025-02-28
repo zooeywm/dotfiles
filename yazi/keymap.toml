@@ -131,6 +131,7 @@ keymap = [
     { on = ["g", "c"], run = "cd ~/.config", desc = "Goto ~/.config" },
     { on = ["g", "d"], run = "cd ~/Downloads", desc = "Goto ~/Downloads" },
     { on = ["g", "t"], run = "cd /tmp", desc = "Goto /tmp" },
+    { on = ["g", "T"], run = "cd ~/.local/share/Trash", desc = "Goto ~/.local/share/Trash" },
     { on = ["g", "u"], run = "cd /run/media", desc = "Goto /run/media" },
     { on = ["g", "v"], run = "cd ~/Videos", desc = "Goto ~/Videos" },
     { on = ["g", "p"], run = "cd ~/Pictures", desc = "Goto ~/Pictures" },
@@ -156,7 +157,7 @@ prepend_keymap = [
     { on = ["y", "s"], run = "plugin clipboard" },
     { on = "M", run = "plugin toggle-pane max-preview", desc = "Maximize or restore preview" },
     { on = "H", run = "plugin toggle-pane min-preview", desc = "Hide or show preview" },
-    { on = ["g","i"], run = "plugin lazygit", desc = "Run lazygit" },
+    { on = ["g", "l"], run = "plugin lazygit", desc = "Run lazygit" },
 ]
 
 [tasks]

@@ -53,6 +53,8 @@ map.n({
     { "<leader>cl", function() Snacks.picker.lsp_config() end, "lsp-info" },
     { "<leader>tw", function() ToggleWordWrap() end, "toggle-word-wrap" },
     { "<leader>tc", function() ToggleColorizer() end, "toggle-colorizer" },
+    { "<leader>gn", "<cmd>GitPath<cr>", "copy-file-path-git" },
+    { "yn", "<cmd>Path<cr>", "copy-file-path" },
     { "<M-l>", "zl", "scroll-right-one-character" },
     { "<M-h>", "zh", "scroll-left-one-character" },
     { "<M-L>", "zL", "scroll-left-half-screen" },

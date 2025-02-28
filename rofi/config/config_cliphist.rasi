@@ -17,4 +17,4 @@ configuration {
     }
 }
 
-@theme "/home/zooeywm/.local/share/rofi/themes/rounded-pink-dark.rasi"
+@theme "~/.local/share/rofi/themes/rounded-pink-dark.rasi"

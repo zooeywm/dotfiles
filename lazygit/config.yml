@@ -12,3 +12,5 @@ gui:
       - "⠇"
       - "⠏"
     rate: 50
+git:
+  overrideGpg: true
