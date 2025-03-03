@@ -71,6 +71,12 @@ return {
                                 enable = "always",
                             },
                         },
+                        procMacro = {
+                            ignored = {
+                                "async_trait::async_trait",
+                                "tokio::test",
+                            },
+                        },
                     },
                 },
             },
@@ -78,9 +84,7 @@ return {
         config = function(_, opts)
             --  project_lspconfig 就是`plugins/lsp.lua`的 nvim-lspconfig 的`opts.servers`
             local project_lspconfig = vim.g.project_lspconfig
-            if project_lspconfig ~= nil and project_lspconfig.rust_analyzer ~= nil then
-                opts.server = vim.tbl_deep_extend("force", opts.server, project_lspconfig.rust_analyzer)
-            end
+            if project_lspconfig ~= nil and project_lspconfig.rust_analyzer ~= nil then opts.server = vim.tbl_deep_extend("force", opts.server, project_lspconfig.rust_analyzer) end
 
             vim.g.rustaceanvim = opts
         end,

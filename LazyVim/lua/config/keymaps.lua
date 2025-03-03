@@ -88,6 +88,7 @@ map.v({
     { "n", "<Nop>", "nop" },
     { "N", "<Nop>", "nop" },
     { "v", "0o$h", "exclude-end" },
+    { "u", "<Nop>", "nop" },
 })
 
 function ToggleWordWrap()

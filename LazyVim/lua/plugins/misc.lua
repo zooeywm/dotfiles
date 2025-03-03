@@ -61,7 +61,7 @@ return {
             { "<leader>gs", false },
             { "<leader>gS", false },
             { "<leader>gd", false },
-            { "<leader>gf", false },
+            -- { "<leader>gf", false },
         },
         ---@type snacks.Config
         opts = {
@@ -86,5 +86,27 @@ return {
             "nvim-telescope/telescope.nvim",
         },
         cmd = "Nerdy",
+    },
+    {
+        "nvim-telescope/telescope.nvim",
+        keys = {
+            { "<leader><space>", false },
+            { "<leader>fF", false },
+        },
+        opts = {
+            pickers = {
+                find_files = {
+                    previewer = false,
+                },
+                git_files = {
+                    previewer = false,
+                },
+                live_grep = {
+                    layout_config = {
+                        preview_width = 0.5,
+                    },
+                },
+            },
+        },
     },
 }

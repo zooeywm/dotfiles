@@ -148,7 +148,11 @@ preloaders = [
     # Empty file
     # { mime = "inode/empty", run = "empty" },
 ]
-prepend_fetchers = [{ id = "mime-ext", name = "*", run = "mime-ext", prio = "high" }]
+prepend_fetchers = [
+    { id = "mime-ext", name = "*", run = "mime-ext", prio = "high" },
+    { id = "git", name = "*", run = "git", prio = "normal" },
+    { id = "git", name = "*/", run = "git", prio = "normal" },
+]
 prepend_previewers = [{ name = "*.md", run = "mdcat" }]
 prepend_spotters = [{ name = "*", run = "file-extra-metadata" }]
 previewers = [

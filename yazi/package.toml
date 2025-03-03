@@ -1,72 +1,77 @@
 [[plugin.deps]]
+use = "DreamMaoMao/searchjump"
+rev = "df6ee75"
 hash = "b82022e48c23a2c8d0879b7bc46990a0"
-rev  = "df6ee75"
-use  = "DreamMaoMao/searchjump"
 
 [[plugin.deps]]
+use = "Rolv-Apneseth/starship"
+rev = "6c639b4"
 hash = "5614c46d5de76623c283d415bfac8025"
-rev  = "6c639b4"
-use  = "Rolv-Apneseth/starship"
 
 [[plugin.deps]]
-hash = "af11685de39c366ec1137fcbccacdbff"
-rev  = "5186af7"
-use  = "yazi-rs/plugins:jump-to-char"
+use = "yazi-rs/plugins:jump-to-char"
+rev = "3d0c7c6"
+hash = "a670c03eb3760812e044a24f94cedc55"
 
 [[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "ce6fb75"
 hash = "ed6c185514109d7c5463f609282b220c"
-rev  = "ce6fb75"
-use  = "ndtoan96/ouch"
 
 [[plugin.deps]]
-hash = "f28138c2e11e87962b66d583fef724c3"
-rev  = "5186af7"
-use  = "yazi-rs/plugins:chmod"
+use = "yazi-rs/plugins:chmod"
+rev = "3d0c7c6"
+hash = "2f1053f89d1a301a648ab181d0948e38"
 
 [[plugin.deps]]
+use = "GrzegorzKozub/mdcat"
+rev = "d3d5089"
 hash = "40c20e6c1085d1f45309b9f148bf4f6e"
-rev  = "d3d5089"
-use  = "GrzegorzKozub/mdcat"
 
 [[plugin.deps]]
+use = "yazi-rs/plugins:diff"
+rev = "3d0c7c6"
 hash = "7a08e303167d5b655c06da6d570f0333"
-rev  = "5186af7"
-use  = "yazi-rs/plugins:diff"
 
 [[plugin.deps]]
+use = "pirafrank/what-size"
+rev = "b23e3a4"
 hash = "98e5f5af3efd3ba8bc2db0720187cc83"
-rev  = "b23e3a4"
-use  = "pirafrank/what-size"
 
 [[plugin.deps]]
+use = "DreamMaoMao/clipboard"
+rev = "93b73d4"
 hash = "3af52f1d5ba79a7dd9cbc1d2918feab5"
-rev  = "93b73d4"
-use  = "DreamMaoMao/clipboard"
 
 [[plugin.deps]]
+use = "boydaihungst/file-extra-metadata"
+rev = "0946fb5"
 hash = "50c990af44695f49627d50409e7fde88"
-rev  = "0946fb5"
-use  = "boydaihungst/file-extra-metadata"
 
 [[plugin.deps]]
+use = "TD-Sky/sudo"
+rev = "af70636"
 hash = "a94dcbe9266512806c677138e8591ddb"
-rev  = "af70636"
-use  = "TD-Sky/sudo"
 
 [[plugin.deps]]
-hash = "2391805528b59d562a51f9b33f4a8236"
-rev  = "5186af7"
-use  = "yazi-rs/plugins:toggle-pane"
+use = "yazi-rs/plugins:toggle-pane"
+rev = "3d0c7c6"
+hash = "812fd49667ab6823250f0411f8cf793a"
 
 [[plugin.deps]]
+use = "Lil-Dank/lazygit"
+rev = "9f924e3"
 hash = "2b0c33928986f126d5c5a4cac31a6b46"
-rev  = "9f924e3"
-use  = "Lil-Dank/lazygit"
 
 [[plugin.deps]]
-hash = "b03f3d80d26b6d7bb490b1380e9cb754"
-rev  = "5186af7"
-use  = "yazi-rs/plugins:mime-ext"
+use = "yazi-rs/plugins:mime-ext"
+rev = "3d0c7c6"
+hash = "1f9fc0e55ff859a32e793833403ee7bd"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "3d0c7c6"
+hash = "771f18427fb75fb19990ce602bb322f4"
 
 [flavor]
 deps = []
