@@ -112,11 +112,11 @@ return {
         event = "LspAttach",
         keys = {
             -- 跳转
-            { "gD", "<cmd>Lspsaga goto_type_definition<cr>", desc = "Goto Type Definition" },
-            { "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Goto Definition" },
-            { "gi", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
-            { "gR", "<cmd>Telescope lsp_references<cr>", desc = "References" },
-            { "gr", "<cmd>Lspsaga finder ref<cr>", desc = "Saga References" },
+            { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+            { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+            { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+            { "gi", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+            { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
             { "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", desc = "Prev Diagnostic" },
             { "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next Diagnostic" },
             {

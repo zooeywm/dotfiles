@@ -3,7 +3,7 @@ local act = wezterm.action
 
 return {
     enable_wayland = true,
-    enable_scroll_bar = false,
+    enable_scroll_bar = true,
     font = wezterm.font_with_fallback({
         "JetBrainsMono Nerd Font", -- 代码 <内置>
         -- "FiraCode Nerd Font", -- 炫酷图标
@@ -25,14 +25,16 @@ return {
         top = 0,
         bottom = 0,
     },
-    default_prog = { "/bin/zsh", "-l" },
     exit_behavior = "Close",
     hide_tab_bar_if_only_one_tab = true,
+    scrollback_lines = 10000,
     keys = {
         { key = "t", mods = "CTRL", action = wezterm.action.SpawnWindow },
         -- { key = "u", mods = "ALT", action = wezterm.action.QuickSelectArgs({ patterns = { ".*" } }) },
         { key = "y", mods = "ALT", action = act.ScrollByLine(-1) },
         { key = "e", mods = "ALT", action = act.ScrollByLine(1) },
+        { key = "k", mods = "ALT|SHIFT", action = act.ScrollByLine(-1) },
+        { key = "j", mods = "ALT|SHIFT", action = act.ScrollByLine(1) },
         { key = "u", mods = "ALT", action = act.ScrollByLine(-10) },
         { key = "d", mods = "ALT", action = act.ScrollByLine(10) },
         { key = "g", mods = "ALT", action = act.ScrollToTop },
