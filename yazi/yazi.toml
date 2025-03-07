@@ -134,6 +134,7 @@ fetchers = [
     { id = "mime", name = "*", run = "mime", prio = "high" },
 ]
 preloaders = [
+    { name = "~/sshfs/**", run = "noop" },
     # Image
     { mime = "image/svg", run = "magick" },
     { mime = "image/{avif,hei?,jxl,xml}", run = "magick" },

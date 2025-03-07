@@ -63,10 +63,9 @@ return {
             { "<leader>gd", false },
             -- { "<leader>gf", false },
         },
-        ---@type snacks.Config
-        opts = {
-            scroll = { enabled = false },
-            styles = {
+        opts = function(_, opts)
+            opts.scroll = { enabled = false }
+            opts.styles = {
                 input = {
                     relative = "cursor",
                     row = 1,
@@ -75,9 +74,15 @@ return {
                         i_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "1", expr = true },
                     },
                 },
-            },
-            image = { enabled = true },
-        },
+            }
+            opts.image = { enabled = true }
+            table.insert(opts.dashboard.preset.keys, 2, {
+                icon = "",
+                key = "F",
+                desc = "Find Files (cwd)",
+                action = "<leader>fF",
+            })
+        end,
     },
     {
         "2kabhishek/nerdy.nvim",
@@ -89,10 +94,6 @@ return {
     },
     {
         "nvim-telescope/telescope.nvim",
-        keys = {
-            { "<leader><space>", false },
-            { "<leader>fF", false },
-        },
         opts = {
             pickers = {
                 find_files = {

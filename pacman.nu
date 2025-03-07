@@ -49,6 +49,8 @@ const MANIFEST = {
     cargo-flamegraph: "绘制火焰图及cargo配套插件",
     clang: { packages: ["clang", "llvm"], desc: "C/C++工具链" },
     slint-lsp: { manager: "cargo", desc: "slint lsp" },
+    plocate: "locate的并行版本",
+    pacfiles: { manager: "cargo", desc: "pacfiles is a pacman -F alternative that runs blazingly fast" },
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] },
     typst: { packages: ["typst", "tinymist", "typstyle"], },
     tree-sitter-cli: "安装tree-sitter解析器",

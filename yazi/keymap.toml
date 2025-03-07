@@ -156,6 +156,7 @@ keymap = [
     { on = "M", run = "plugin toggle-pane max-preview", desc = "Maximize or restore preview" },
     { on = "H", run = "plugin toggle-pane min-preview", desc = "Hide or show preview" },
     { on = ["g", "l"], run = "plugin lazygit", desc = "Run lazygit" },
+    { on = ["g", "r"], run = 'shell -- ya emit cd "$(git rev-parse --show-toplevel)"', desc = "Cd back to git root" },
 ]
 
 

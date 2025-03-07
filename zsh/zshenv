@@ -7,6 +7,7 @@ export XDG_DATA_HOME=~/.local/share
 export XDG_STATE_HOME=~/.local/state
 
 # Rust
+export RUST_BACKTRACE=1
 export RUSTUP_DIST_SERVER='https://rsproxy.cn'         # affect `rustup update`
 export RUSTUP_UPDATE_ROOT='https://rsproxy.cn/rustup'  # affect `rustup self-update`
 export RUSTC_WRAPPER=/usr/bin/sccache
