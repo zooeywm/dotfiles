@@ -320,6 +320,6 @@ _cache-eval mise activate zsh
 _source-existent ~zdot/local.zsh
 _source-existent ~zdot/p10k.zsh
 
-if [[ -f "$HOME/.bash_completion" ]]; then
-    source "$HOME/.bash_completion"
+if [[ -f "$HOME/.zsh_completion" ]]; then
+    source "$HOME/.zsh_completion"
 fi

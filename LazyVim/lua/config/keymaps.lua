@@ -104,7 +104,8 @@ if vim.g.neovide then
     vim.keymap.set("v", "<sc-c>", '"+y', { desc = "copy" })
     vim.keymap.set("n", "<sc-v>", 'l"+p', { desc = "paste" })
     vim.keymap.set("v", "<sc-v>", '"+P', { desc = "paste" })
-    vim.keymap.set({ "c", "t", "i" }, "<S-C-V>", "<C-R>+", { desc = "paste" })
+    vim.keymap.set({ "c", "i" }, "<sc-v>", "<C-R>+", { desc = "paste" })
+    vim.keymap.set({ "t" }, "<sc-v>", [[<C-\><C-N>"+pa]], { desc = "paste from clipboard in terminal mode" })
 
     local function increase_scale() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1 end
     local function decrease_scale() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1 end

@@ -106,7 +106,7 @@ rules = [
         "edit",
         "reveal",
     ] },
-    { mime = "application/{sharedlib,x-sharedlib,x-pie-executable}", use = [
+    { mime = "application/{sharedlib,x-sharedlib,x-pie-executable,pie-executable}", use = [
         "binutil",
         "reveal",
     ] },
