@@ -1,0 +1,14 @@
+/* ROUNDED THEME FOR ROFI */
+
+* {
+    bg0:    #f3e5b6;
+    bg1:    #ebdbb2;
+    bg2:    #d5c4a1;
+    bg3:    #d79921;
+    fg0:    #3c3836;
+    fg1:    #282828;
+    fg2:    #a89984;
+    fg3:    #928374;
+}
+
+@import "rounded-common.rasi"

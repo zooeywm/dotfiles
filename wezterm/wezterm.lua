@@ -14,7 +14,7 @@ return {
     }),
     font_size = 20.6,
     color_scheme = "GruvboxLight",
-    force_reverse_video_cursor = true, -- 光标反色
+    force_reverse_video_cursor = true,
     max_fps = 120,
     line_height = 1.0,
     -- harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" },

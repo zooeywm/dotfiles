@@ -1,6 +1,6 @@
 ## About
 
-![ShowCase](./showcase.jpg)
+![ShowCase](./showcase.png)
 
 These files are managed by [deploy.nu](./deploy.nu).
 
