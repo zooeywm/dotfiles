@@ -15,7 +15,7 @@ return {
         dependencies = { "kkharji/sqlite.lua" },
         build = function() require("Trans").install() end,
         keys = {
-            { "t", "<cmd>Translate<cr>", mode = { "n", "x" }, desc = " Translate" },
+            { "<leader>T", "<cmd>Translate<cr>", mode = { "n", "x" }, desc = "󰊿 Translate" },
         },
         opts = {
             frontend = {
@@ -37,10 +37,16 @@ return {
         build = "make build_generator",
         keys = {
             {
-                "<leader>us",
+                "<leader>cs",
                 "<cmd>CodeSnap<cr>",
                 mode = { "x" },
                 desc = "Save selected code snapshot into clipboard",
+            },
+            {
+                "<leader>ca",
+                "<cmd>CodeSnapASCII<cr>",
+                mode = { "x" },
+                desc = "Save selected code ASCII snapshot into clipboard",
             },
         },
         opts = {

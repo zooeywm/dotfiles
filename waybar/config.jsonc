@@ -1,10 +1,14 @@
 {
   "layer": "top",
   "position": "top",
-  "spacing": 0,
+  "mode": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "reload_style_on_change": true,
   "height": 50,
   "output": "eDP-1",
-  "modules-left": ["hyprland/submap", "group/motherboard", "tray"],
+  "modules-left": ["hyprland/submap", "group/motherboard", "tray", "mpris"],
   "modules-center": ["hyprland/workspaces", "wlr/taskbar"],
   "modules-right": [
     "network",
@@ -77,11 +81,30 @@
   },
   "hyprland/submap": {
     "format": "<span style=\"italic\">  {}</span>",
-    "tooltip": false
+    "tooltip": false,
+    "min-length": 30,
+    "max-length": 30
   },
   "tray": {
-    "icon-size": 35,
-    "spacing": 10
+    "icon-size": 30,
+    "spacing": 5
+  },
+  "mpris": {
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "{player_icon} {status_icon}<i>{dynamic}</i>",
+
+    "player-icons": {
+      "default": "󰝚 ",
+      "spotify": "<span foreground='#40a02b'>󰓇</span>",
+      "firefox": "<span foreground='#FF7139'></span>",
+      "TelegramDesktop": "<span foreground='#0088CC'></span>"
+    },
+
+    "status-icons": {
+      "paused": "󰏤 "
+    },
+
+    "interval": 1
   },
   "backlight": {
     "format": "{icon} {percent}%",
@@ -102,7 +125,9 @@
       "",
       ""
     ],
-    "tooltip-format": "Brightness: {percent}%"
+    "tooltip-format": "Brightness: {percent}%",
+    "min-length": 6,
+    "max-length": 6
   },
   "group/motherboard": {
     "orientation": "horizontal",
@@ -117,46 +142,53 @@
     "modules": ["pulseaudio#output", "pulseaudio#source"]
   },
   "battery": {
-    "format": "{icon}{capacity}%",
-    "interval": 60,
+    "format": "{icon} {capacity}%",
+    "interval": 1,
     "states": {
-      "warning": 60,
-      "critical": 30
+      "good": 95,
+      "warning": 30,
+      "critical": 20
     },
-    "format-icons": {
-      "charging": ["󰢜 ", "󰂆 ", "󰂇 ", "󰂈 ", "󰢝 ", "󰂉 ", "󰢞 ", "󰂊 ", "󰂋 ", "󰂅 "],
-      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-    },
-    "format-full": "󰁹Full"
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-full": "󰁹Full",
+    "min-length": 6,
+    "max-length": 6
   },
   "bluetooth": {
     // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
     "format-off": "󰂳",
     "format-on": "",
-    "format-disabled": "󰂳 disabled", // an empty format will hide the module
-    "format-connected": "󰂱 {num_connections} ",
+    "format-disabled": "󰂳", // an empty format will hide the module
+    "format-connected": "󰂱 {num_connections}",
+    "format-connected-battery": "{icon} {num_connections}",
+    "format-icons": ["󰥇", "󰤾", "󰤿", "󰥀", "󰥁", "󰥂", "󰥃", "󰥄", "󰥅", "󰥆", "󰥈"],
+
     "tooltip-format": "{controller_alias}\t{controller_address}",
     "tooltip-format-connected": "{id}\n{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}\t{device_battery_percentage}",
     "on-click": "hyprland-scripts toggle-bluetooth-power",
-    "on-click-right": "overskride"
+    "on-click-right": "overskride",
+    "min-length": 2,
+    "max-length": 2
   },
   "clock": {
     "interval": 1,
     "format": " {:%R:%S}",
     "format-alt": " {:%a, %d %b %Y}",
-    "tooltip-format": "<small>{calendar}</small>",
+    "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
       "mode": "month",
       "mode-mon-col": 3,
       "weeks-pos": "left",
       "on-scroll": 1,
       "format": {
-        "months": "<span><b>{}</b></span>",
+        "months": "<span color='#ffead3'><b>{}</b></span>",
         "days": "<span><b>{}</b></span>",
         "weeks": "<span><b>W{}</b></span>",
-        "weekdays": "<span><b>{}</b></span>",
-        "today": "<span><b><u>{}</u></b></span>"
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span  color='#ff6699'><b><u>{}</u></b></span>"
       }
     },
     "actions": {
@@ -179,12 +211,12 @@
       "phone": " ",
       "portable": " ",
       "car": " ",
-      "default": ["", "", "󰕾 ", " "],
+      "default": [" ", " ", "󰕾 ", " "],
       "ignored-sinks": ["Easy Effects Sink"]
     },
     "scroll-step": 1.0,
     // "tooltip-format": "{icon} {desc} | {volume}%",
-    "tooltip-format": "Volume: {volume}%",
+    "tooltip-format": "{icon} {desc}\nVolume: {volume}%",
     "smooth-scrolling-threshold": 1,
     "on-click": "pamixer -t",
     "on-click-right": "pavucontrol"
@@ -203,14 +235,12 @@
   "network": {
     "interval": 1,
     "format": "{ifname}",
-    "format-alt": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
     "format-wifi": "{icon}",
-    "format-ethernet": "󰀂 ",
+    "format-ethernet": "󰈀 ",
     "format-linked": "󰈁",
     "format-disconnected": "󰖪 ",
-    "tooltip-format": "{ipaddr}",
-    "tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
     "tooltip-format-disconnected": "󰌙 Disconnected",
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     "nospacing": 1
@@ -222,17 +252,25 @@
     "format-alt-click": "click",
     "format-alt": "{icon0}{icon1}{icon2}{icon3} 󰍛{usage:>2}%",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
-    "on-click-right": "flatpak run net.nokyan.Resources"
+    "on-click-right": "flatpak run net.nokyan.Resources",
+    "max-length": 5,
+    "min-length": 5
   },
   "memory": {
+    "states": {
+      "medium": 30,
+      "high": 60,
+      "critical": 90
+    },
     "interval": 1,
     "format": "󰾆 {percentage}%",
     "format-alt": "󰾆 {used:0.1f}G",
     "format-alt-click": "click",
     "tooltip": true,
-    "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
+    "tooltip-format": "󰾆 {percentage}%\n󰘚 {used:0.1f}GB/{total:0.1f}GB",
     "on-click-right": "wezterm start btm",
-    "max-length": 10
+    "max-length": 5,
+    "min-length": 5
   },
   "temperature": {
     "critical-threshold": 80,

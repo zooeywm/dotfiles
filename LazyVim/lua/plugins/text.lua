@@ -99,6 +99,8 @@ return {
                 function() require("utils").treesitter.try_exec(require("flash").treesitter) end,
                 desc = "Flash Treesitter",
             },
+            { "s", mode = { "n", "x", "o" }, false },
+            { "S", mode = { "n", "x", "o" }, false },
         },
     },
     {
@@ -108,10 +110,6 @@ return {
             { "q", desc = "Start Recording" },
             { "Q", desc = "Play Recording" },
         },
-    },
-    {
-        "fei6409/log-highlight.nvim",
-        config = function() require("log-highlight").setup({}) end,
     },
     {
         "tzachar/highlight-undo.nvim",

@@ -5,7 +5,6 @@
 local wk = require("which-key")
 wk.add({ "<leader>l", group = "language" })
 wk.add({ "<leader>t", group = "toggle/text-case" })
-
 local map = {
     n = function(mapping)
         for _, m in ipairs(mapping) do
@@ -45,8 +44,8 @@ del({
 })
 
 map.n({
-    { "T", "<cmd>tabNext<cr>", "next-tab" },
-    { "t", "<cmd>tabnext<cr>", "prev-tab" },
+    -- { "T", "<cmd>tabNext<cr>", "next-tab" },
+    -- { "t", "<cmd>tabnext<cr>", "prev-tab" },
     { "<C-s>", "<cmd>SudaWrite<cr>", "sudo-write" },
     { "<leader><CR>", function() vim.system({ "open-term-here" }) end, "open-term-here" },
     { "<leader>lc", "<cmd>LspConfig<cr>", "lsp-config" },
