@@ -12,7 +12,7 @@ return {
         "Noto Serif Grantha", -- 古印度文
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
-    font_size = 20.8,
+    font_size = 20.6,
     color_scheme = "GruvboxLight",
     force_reverse_video_cursor = true, -- 光标反色
     max_fps = 120,
