@@ -1,16 +1,5 @@
 return {
     {
-        "TD-Sky/neo-rhythm",
-        opts = {
-            range = {
-                start = { 7, 0 },
-                ending = { 18, 30 },
-            },
-            day = function() vim.o.background = "dark" end,
-            night = function() vim.o.background = "dark" end,
-        },
-    },
-    {
         "folke/noice.nvim",
         opts = {
             routes = {

@@ -40,11 +40,11 @@ require("lazy").setup({
                 "gzip",
                 "tarPlugin",
                 "tohtml",
-                "tutor",
+                -- "tutor",
                 "matchparen",
                 "zipPlugin",
             },
         },
     },
 })
-vim.cmd.colorscheme("catppuccin-macchiato")
+-- vim.cmd.colorscheme("gruvbox")

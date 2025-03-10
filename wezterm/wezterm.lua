@@ -1,9 +1,8 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
-
 return {
     enable_wayland = true,
-    enable_scroll_bar = true,
+    enable_scroll_bar = false,
     font = wezterm.font_with_fallback({
         "JetBrainsMono Nerd Font", -- 代码 <内置>
         -- "FiraCode Nerd Font", -- 炫酷图标
@@ -13,12 +12,12 @@ return {
         "Noto Serif Grantha", -- 古印度文
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
-    font_size = 20,
-    color_scheme = "GitHub Dark",
+    font_size = 20.8,
+    color_scheme = "GruvboxLight",
     force_reverse_video_cursor = true, -- 光标反色
     max_fps = 120,
     line_height = 1.0,
-    harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" },
+    -- harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" },
     window_padding = {
         left = 0,
         right = 0,

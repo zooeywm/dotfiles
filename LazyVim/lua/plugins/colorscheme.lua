@@ -61,6 +61,35 @@ return {
                         mantle = "#11111a",
                         crust = "#191926",
                     },
+                    latte = {
+                        -- custom everforest light hard port
+                        rosewater = "#a43b35",
+                        flamingo = "#da3537",
+                        pink = "#d332a1",
+                        mauve = "#aa3685",
+                        red = "#ff3532",
+                        maroon = "#de3631",
+                        peach = "#f36c0b",
+                        yellow = "#bd8800",
+                        green = "#596600",
+                        teal = "#287e5e",
+                        sky = "#52b1c7",
+                        sapphire = "#3fb4b8",
+                        blue = "#317da7",
+                        lavender = "#474155",
+                        text = "#4d4742",
+                        subtext1 = "#5b5549",
+                        subtext0 = "#6d6655",
+                        overlay2 = "#786d5a",
+                        overlay1 = "#8c7c62",
+                        overlay0 = "#a18d66",
+                        surface2 = "#c9bea5",
+                        surface1 = "#d8d3ba",
+                        surface0 = "#e8e2c8",
+                        base = "#fbf1c7",
+                        mantle = "#e1dab5",
+                        crust = "#bdc0a0",
+                    },
                 },
                 integrations = {
                     telescope = {
@@ -72,10 +101,11 @@ return {
             })
         end,
     },
+    { "ellisonleao/gruvbox.nvim" },
     {
         "LazyVim/LazyVim",
         opts = {
-            colorscheme = "catppuccin-macchiato",
+            colorscheme = "catppuccin-latte",
         },
     },
 }
