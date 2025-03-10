@@ -8,7 +8,7 @@ return {
         },
         opts = {
             options = {
-                always_show_bufferline = true,
+                always_show_bufferline = false,
                 show_buffer_close_icons = false,
             },
         },
