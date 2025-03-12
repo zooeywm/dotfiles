@@ -97,6 +97,14 @@ return {
                         style = "nvchad",
                     },
                     blink_cmp = true,
+                    diffview = true,
+                    noice = true,
+                    snacks = {
+                        enabled = true,
+                        indent_scope_color = "teal", -- catppuccin color (eg. `lavender`) Default: text
+                    },
+                    sandwich = true,
+                    which_key = true,
                 },
             })
         end,

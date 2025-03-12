@@ -88,6 +88,7 @@ return {
                 desc = "Find Files (cwd)",
                 action = "<leader>fF",
             })
+            opts.indent.animate = { duration = { step = 20, total = 300 } }
         end,
     },
     {

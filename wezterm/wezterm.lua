@@ -14,6 +14,7 @@ return {
     }),
     font_size = 20.6,
     color_scheme = "GruvboxLight",
+    -- color_scheme = "rose-pine-dawn",
     force_reverse_video_cursor = true,
     max_fps = 120,
     line_height = 1.0,
