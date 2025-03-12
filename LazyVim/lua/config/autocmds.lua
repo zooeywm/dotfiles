@@ -34,3 +34,7 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function(_) vim.b.focus_disable = vim.tbl_contains(ignore_filetypes, vim.bo.filetype) end,
     desc = "Disable focus autoresize for FileType",
 })
+
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function() vim.cmd("ColorizerAttachToBuffer") end,
+})

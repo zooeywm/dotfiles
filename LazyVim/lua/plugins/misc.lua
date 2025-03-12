@@ -89,7 +89,7 @@ return {
                 action = "<leader>fF",
             })
             opts.indent.animate = { duration = { step = 20, total = 300 } }
-            opts.words.debounce = 0
+            opts.words.enabled = false
         end,
     },
     {
