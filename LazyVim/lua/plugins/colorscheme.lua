@@ -5,7 +5,7 @@ return {
             vim.g.gruvbox_material_backgroud = "hard"
             vim.g.gruvbox_material_current_word = "underline"
             vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
-            vim.g.gruvbox_material_visual = "green background"
+            vim.g.gruvbox_material_visual = "blue background"
             vim.g.gruvbox_material_enable_bold = 1
             vim.g.gruvbox_material_menu_selection_background = "aqua"
             vim.g.gruvbox_material_diagnostic_text_highlight = 1
