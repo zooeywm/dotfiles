@@ -106,6 +106,7 @@ return {
                     show_on_x_blocked_trigger_characters = { "'", '"', "(", "{", "=" },
                 },
                 menu = {
+                    border = "rounded",
                     draw = {
                         columns = {
                             { "kind_icon" },
@@ -122,7 +123,7 @@ return {
                         },
                     },
                     min_width = 30,
-                    max_height = 15,
+                    max_height = 20,
                 },
                 documentation = {
                     auto_show = true,

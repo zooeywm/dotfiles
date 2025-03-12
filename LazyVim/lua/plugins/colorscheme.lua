@@ -1,118 +1,33 @@
 return {
     {
-        "catppuccin/nvim",
-        lazy = true,
-        name = "catppuccin",
+        "sainnhe/gruvbox-material",
         config = function()
-            require("catppuccin").setup({
-                highlight_overrides = {
-                    all = function(colors)
-                        return {
-                            CurSearch = { bg = colors.sky },
-                            IncSearch = { bg = colors.sky },
-                            CursorLineNr = { fg = colors.blue, style = { "bold" } },
-                            DashboardFooter = { fg = colors.overlay0 },
-                            TreesitterContextBottom = { style = {} },
-                            WinSeparator = { fg = colors.overlay0, style = { "bold" } },
-                            ["@markup.italic"] = { fg = colors.blue, style = { "italic" } },
-                            ["@markup.strong"] = { fg = colors.blue, style = { "bold" } },
-                            Headline = { style = { "bold" } },
-                            Headline1 = { fg = colors.blue, style = { "bold" } },
-                            Headline2 = { fg = colors.pink, style = { "bold" } },
-                            Headline3 = { fg = colors.lavender, style = { "bold" } },
-                            Headline4 = { fg = colors.green, style = { "bold" } },
-                            Headline5 = { fg = colors.peach, style = { "bold" } },
-                            Headline6 = { fg = colors.flamingo, style = { "bold" } },
-                            rainbow1 = { fg = colors.blue, style = { "bold" } },
-                            rainbow2 = { fg = colors.pink, style = { "bold" } },
-                            rainbow3 = { fg = colors.lavender, style = { "bold" } },
-                            rainbow4 = { fg = colors.green, style = { "bold" } },
-                            rainbow5 = { fg = colors.peach, style = { "bold" } },
-                            rainbow6 = { fg = colors.flamingo, style = { "bold" } },
-                        }
-                    end,
-                },
-                color_overrides = {
-                    macchiato = {
-                        rosewater = "#F5B8AB",
-                        flamingo = "#F29D9D",
-                        pink = "#AD6FF7",
-                        mauve = "#FF8F40",
-                        red = "#E66767",
-                        maroon = "#EB788B",
-                        peach = "#FAB770",
-                        yellow = "#FACA64",
-                        green = "#70CF67",
-                        teal = "#4CD4BD",
-                        sky = "#61BDFF",
-                        sapphire = "#4BA8FA",
-                        blue = "#00BFFF",
-                        lavender = "#00BBCC",
-                        text = "#C1C9E6",
-                        subtext1 = "#A3AAC2",
-                        subtext0 = "#8E94AB",
-                        overlay2 = "#7D8296",
-                        overlay1 = "#676B80",
-                        overlay0 = "#464957",
-                        surface2 = "#3A3D4A",
-                        surface1 = "#2F313D",
-                        surface0 = "#1D1E29",
-                        base = "#0b0b12",
-                        mantle = "#11111a",
-                        crust = "#191926",
-                    },
-                    latte = {
-                        -- custom everforest light hard port
-                        rosewater = "#a43b35",
-                        flamingo = "#da3537",
-                        pink = "#d332a1",
-                        mauve = "#aa3685",
-                        red = "#ff3532",
-                        maroon = "#de3631",
-                        peach = "#f36c0b",
-                        yellow = "#bd8800",
-                        green = "#596600",
-                        teal = "#287e5e",
-                        sky = "#52b1c7",
-                        sapphire = "#3fb4b8",
-                        blue = "#317da7",
-                        lavender = "#474155",
-                        text = "#4d4742",
-                        subtext1 = "#5b5549",
-                        subtext0 = "#6d6655",
-                        overlay2 = "#786d5a",
-                        overlay1 = "#8c7c62",
-                        overlay0 = "#a18d66",
-                        surface2 = "#c9bea5",
-                        surface1 = "#d8d3ba",
-                        surface0 = "#e8e2c8",
-                        base = "#fbf1c7",
-                        mantle = "#e1dab5",
-                        crust = "#bdc0a0",
-                    },
-                },
-                integrations = {
-                    telescope = {
-                        enabled = true,
-                        style = "nvchad",
-                    },
-                    blink_cmp = true,
-                    diffview = true,
-                    noice = true,
-                    snacks = {
-                        enabled = true,
-                        indent_scope_color = "teal", -- catppuccin color (eg. `lavender`) Default: text
-                    },
-                    sandwich = true,
-                    which_key = true,
-                },
-            })
+            vim.g.gruvbox_material_backgroud = "hard"
+            vim.g.gruvbox_material_current_word = "underline"
+            vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
+            vim.g.gruvbox_material_visual = "green background"
+            vim.g.gruvbox_material_enable_bold = 1
+            vim.g.gruvbox_material_menu_selection_background = "aqua"
+            vim.g.gruvbox_material_diagnostic_text_highlight = 1
+            vim.g.gruvbox_material_inlay_hints_background = "none" --[[ or dimmed ]]
+            vim.cmd.colorscheme("gruvbox-material")
+            -- Colors are applied automatically based on user-defined highlight groups.
+            -- There is no default value.
+            vim.cmd.highlight("IndentLine guifg=#808080")
+            -- Current indent line highlight
+            vim.cmd.highlight("IndentLineCurrent guifg=#FF6347")
+            local config = vim.fn["gruvbox_material#get_configuration"]()
+            local palette = vim.fn["gruvbox_material#get_palette"](config.background, config.foreground, config.colors_override)
+            local set_hl = vim.fn["gruvbox_material#highlight"]
+
+            set_hl("Search", palette.none, palette.bg_visual_yellow)
+            set_hl("IncSearch", palette.none, palette.bg_visual_red)
         end,
     },
     {
         "LazyVim/LazyVim",
         opts = {
-            colorscheme = "catppuccin-latte",
+            colorscheme = "gruvbox-material",
         },
     },
 }

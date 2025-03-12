@@ -43,8 +43,8 @@ echo -e <strings>
 # 解除登录失败三次之锁定
 faillock --reset --user <name>
 
-# 列印系统字体
-wezterm ls-fonts --list-system
+# List system fonts
+fc-list : family | bat
 
 # 搜寻字符的支持字体
 wezterm ls-fonts --text <string>

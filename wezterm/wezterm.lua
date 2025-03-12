@@ -4,20 +4,26 @@ return {
     enable_wayland = true,
     enable_scroll_bar = false,
     font = wezterm.font_with_fallback({
-        "JetBrainsMono Nerd Font", -- 代码 <内置>
-        -- "FiraCode Nerd Font", -- 炫酷图标
-        "Noto Sans CJK SC", -- 汉字
+        -- "Hack Nerd Font Mono",
+        -- 1 l I
+        --     - ~
+        --     0 o
+        -- "VictorMono Nerd Font",
+        "JetBrainsMonoNL NF SemiBold",
+        -- "ComicShannsMono Nerd Font Mono",
+        "FiraCode Nerd Font",
+        "Noto Sans CJK SC",
         "DejaVu Sans Mono",
         "Noto Sans Symbols2",
         "Noto Serif Grantha", -- 古印度文
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
-    font_size = 20.6,
+    font_size = 20,
     color_scheme = "GruvboxLight",
     -- color_scheme = "rose-pine-dawn",
     force_reverse_video_cursor = true,
     max_fps = 120,
-    line_height = 1.0,
+    line_height = 1.05,
     -- harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" },
     window_padding = {
         left = 0,
