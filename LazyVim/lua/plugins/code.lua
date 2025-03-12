@@ -59,9 +59,7 @@ return {
         config = function(_, opts)
             local ft = require("guard.filetype")
             for lang, opt in pairs(opts) do
-                ft(lang):fmt(opt):fmt({
-                    fn = function() vim.cmd("PanguAll") end,
-                })
+                ft(lang):fmt(opt)
             end
             vim.g.guard_config = {
                 fmt_on_save = false,
