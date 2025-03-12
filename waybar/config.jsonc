@@ -235,7 +235,7 @@
   "network": {
     "interval": 1,
     "format": "{ifname}",
-    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
+    "format-alt": "<span foreground='#83a598'> {bandwidthDownBytes}</span> <span foreground='#f57c00'> {bandwidthUpBytes}</span>",
     "format-wifi": "{icon}",
     "format-ethernet": "󰈀 ",
     "format-linked": "󰈁",
@@ -253,8 +253,8 @@
     "format-alt": "{icon0}{icon1}{icon2}{icon3} 󰍛{usage:>2}%",
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
     "on-click-right": "flatpak run net.nokyan.Resources",
-    "max-length": 5,
-    "min-length": 5
+    "max-length": 6,
+    "min-length": 6
   },
   "memory": {
     "states": {

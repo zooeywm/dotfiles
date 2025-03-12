@@ -50,11 +50,18 @@ return {
                 args = { "+nightly", "--edition", "2024", "--emit", "stdout" },
                 stdin = true,
             },
+            qml = {
+                cmd = "qmlformat",
+                fname = true,
+                stdin = true,
+            },
         },
         config = function(_, opts)
             local ft = require("guard.filetype")
             for lang, opt in pairs(opts) do
-                ft(lang):fmt(opt)
+                ft(lang):fmt(opt):fmt({
+                    fn = function() vim.cmd("PanguAll") end,
+                })
             end
             vim.g.guard_config = {
                 fmt_on_save = false,

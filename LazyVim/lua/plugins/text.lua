@@ -118,4 +118,7 @@ return {
             duration = 100,
         },
     },
+    {
+        "hotoo/pangu.vim",
+    },
 }
