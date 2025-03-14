@@ -18,4 +18,5 @@ vim.cmd([[
     highlight IncSearch guibg=#04a5e5 guifg=#dce0e8
     highlight Search guibg=#e5c890 guifg=#232634
     highlight HighlightUndo guibg=#eed49f guifg=#232634
+    highlight CursorWord guifg=#3674B5
 ]])

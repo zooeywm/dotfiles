@@ -122,4 +122,8 @@ return {
         "hotoo/pangu.vim",
         config = function() vim.g.pangu_rule_date = 1 end,
     },
+    {
+        "nvimdev/cwordmini.nvim",
+        config = true,
+    },
 }
