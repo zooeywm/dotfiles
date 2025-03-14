@@ -95,7 +95,7 @@ const MANIFEST = {
     dunst: "Notify channel",
     satty: { manager: "paru", desc: "Screen cut editor" },
     hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] },
-    rofi-wayland: "Menu",
+    rofi: "Menu",
 
     # clients
     zen-browser: "Browser using the firefox core vertical label bar",
