@@ -73,5 +73,10 @@ use = "yazi-rs/plugins:git"
 rev = "cb6165b"
 hash = "ee5fa7e64db72d6b10c2315de97c9cc7"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:vcs-files"
+rev = "cb6165b"
+hash = "5e85dd0baca18119f4d712d81b09eb7c"
+
 [flavor]
 deps = []
