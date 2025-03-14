@@ -18,7 +18,7 @@ return {
         "Noto Serif Grantha", -- 古印度文
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
-    font_size = 20,
+    font_size = 18,
     color_scheme = "GruvboxLight",
     force_reverse_video_cursor = false,
     colors = {
