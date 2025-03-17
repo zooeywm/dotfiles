@@ -24,7 +24,13 @@ return {
             },
             ["c,cpp"] = "clang-format",
             go = "gofmt",
-            ["vue,json,javascript,typescript,xml,yaml,html,css,scss,less,astro,graphql,markdown"] = "prettier",
+            ["json,jsonc,json5,javascript,typescript,css,graphql"] = {
+                cmd = "biome",
+                args = { "format", "--write", "--indent-style=space" },
+                fname = true,
+                stdin = false,
+            },
+            ["vue,xml,yaml,html,astro,markdown,scss,less"] = "prettier",
             cs = {
                 cmd = "dotnet-csharpier",
                 args = { "--write-stdout" },

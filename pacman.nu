@@ -41,6 +41,7 @@ const MANIFEST = {
     yaml-language-server: { manager: "npm" },
     volar: { manager: "npm", packages: ["@vue/language-server"] },
     prettier: { manager: "npm", packages: ["prettier", "@prettier/plugin-xml"], desc: "前端格式化器" },
+    biome: "前端格式化器"
     mise: "管理语言工具链",
     bash-language-server: { manager: "npm" },
     mlc: { manager: "cargo", desc: "markdown linter" },
