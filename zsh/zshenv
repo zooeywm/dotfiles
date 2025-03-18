@@ -42,6 +42,7 @@ export MANROFFOPT='-c'
 export MOLD_JOBS=1
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive  # see https://nixos.wiki/wiki/Locales
+export NINJA_STATUS=$'\e[35m[%f/%t]\e[0m '
 
 ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
