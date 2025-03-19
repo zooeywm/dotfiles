@@ -107,13 +107,23 @@ return {
             --         },
             --     },
             -- },
+            fuzzy = { implementation = "prefer_rust_with_warning" },
             completion = {
+                accept = {
+                    auto_brackets = { enabled = false },
+                },
+                keyword = {
+                    range = "full",
+                },
                 trigger = {
+                    show_on_keyword = true,
                     show_on_x_blocked_trigger_characters = { "'", '"', "(", "{", "=" },
                 },
                 menu = {
                     border = "rounded",
+                    winblend = 10,
                     draw = {
+                        gap = 0,
                         columns = {
                             { "kind_icon" },
                             {
@@ -133,11 +143,15 @@ return {
                 },
                 documentation = {
                     auto_show = true,
-                    update_delay_ms = 0,
+                    update_delay_ms = 50,
                     auto_show_delay_ms = 0,
                     window = {
                         border = "rounded",
                     },
+                },
+                ghost_text = {
+                    enabled = true,
+                    show_without_selection = true,
                 },
                 list = {
                     selection = { preselect = true, auto_insert = true },
