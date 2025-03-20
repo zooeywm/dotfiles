@@ -121,7 +121,7 @@ return {
                 },
                 menu = {
                     border = "rounded",
-                    winblend = 10,
+                    winblend = 15,
                     draw = {
                         gap = 0,
                         columns = {
@@ -147,6 +147,7 @@ return {
                     auto_show_delay_ms = 0,
                     window = {
                         border = "rounded",
+                        winblend = 15,
                     },
                 },
                 ghost_text = {
