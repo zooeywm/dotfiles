@@ -10,7 +10,21 @@ return {
             vim.g.gruvbox_material_menu_selection_background = "aqua"
             vim.g.gruvbox_material_diagnostic_text_highlight = 1
             vim.g.gruvbox_material_inlay_hints_background = "none" --[[ or dimmed ]]
-            vim.cmd.colorscheme("gruvbox-material")
+            -- vim.cmd.colorscheme("gruvbox-material")
+        end,
+    },
+    {
+        "sainnhe/everforest",
+        config = function()
+            -- Optionally configure and load the colorscheme
+            -- directly inside the plugin declaration.
+            vim.g.everforest_enable_italic = 1
+            vim.g.everforest_background = "medium"
+            vim.g.everforest_diagnostic_text_highlight = 0
+            -- Available values:   `'grey'`, `'colored'`, `'highlighted'`
+            vim.g.everforest_diagnostic_virtual_text = "colored"
+            -- Available values:   `'none'`, `'dimmed'`
+            vim.g.everforest_inlay_hints_background = "none"
         end,
     },
     {
