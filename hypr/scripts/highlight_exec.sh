@@ -1,6 +1,6 @@
 #!/bin/bash
 
-hyprctl dispatch "$1"
+hyprctl dispatch "$*"
 
 window_id=$(hyprctl activewindow -j | jq -r '.address')
 

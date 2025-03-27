@@ -10,17 +10,17 @@ if vim.g.neovide then
     vim.g.neovide_window_blurred = false
     vim.g.neovide_floating_shadow = false
     vim.g.neovide_floating_corner_radius = 0.0
-    vim.g.neovide_transparency = 1
+    -- vim.g.neovide_transparency = 1
     vim.g.neovide_normal_opacity = 1
     vim.g.neovide_underline_stroke_scale = 1.3
     vim.g.neovide_refresh_rate = 120
     vim.g.neovide_fullscreen = false
     vim.g.neovide_no_idle = true
 
-    -- vim.g.neovide_cursor_vfx_modes = { "pixiedust", "ripple" }
-    vim.g.neovide_cursor_vfx_mode = "ripple"
+    -- vim.g.neovide_cursor_vfx_mode = { "pixiedust", "ripple" }
+    vim.g.neovide_cursor_vfx_mode = "pixiedust"
     vim.g.neovide_cursor_vfx_opacity = 200
-    vim.g.neovide_cursor_vfx_particle_lifetime = 3
+    vim.g.neovide_cursor_vfx_particle_highlight_lifetime = 0.1
     vim.g.neovide_cursor_vfx_particle_density = 10
     vim.g.neovide_cursor_vfx_particle_phase = 1.5
     vim.g.neovide_cursor_vfx_particle_curl = 0.1
