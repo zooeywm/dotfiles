@@ -125,7 +125,7 @@ keymap = [
     { on = "{", run = "tab_swap -1", desc = "Swap the current tab with the previous tab" },
     { on = "}", run = "tab_swap 1", desc = "Swap the current tab with the next tab" },
 
-    { on = "w", run = "tasks_show", desc = "Show the tasks manager" },
+    { on = "w", run = "tasks:show", desc = "Show the tasks manager" },
 
     { on = ["g", "h"], run = "cd ~", desc = "Goto ~" },
     { on = ["g", "c"], run = "cd ~/.config", desc = "Goto ~/.config" },
@@ -319,7 +319,7 @@ keymap = [
     { on = "<C-c>", run = "close", desc = "Cancel completion" },
     { on = "q", run = "close", desc = "Cancel completion" },
     { on = "<Tab>", run = "close --submit", desc = "Submit the completion" },
-    { on = "<Enter>", run = ["close --submit", "close_input --submit"], desc = "Submit the completion and input" },
+    { on = "<Enter>", run = ["close --submit", "input:close --submit"], desc = "Submit the completion and input" },
 
     { on = "<C-p>", run = "arrow -1", desc = "Move cursor up" },
     { on = "<C-n>", run = "arrow 1", desc = "Move cursor down" },
