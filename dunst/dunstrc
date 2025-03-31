@@ -24,7 +24,7 @@
     show_indicators = yes
     line_height = -3
     icon_position = "left"
-    corner_radius = 15
+    corner_radius = 30
 
     width = 800
 

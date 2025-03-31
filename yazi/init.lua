@@ -10,7 +10,6 @@ require("full-border"):setup({
     type = ui.Border.ROUNDED,
 })
 
--- require("full-border"):setup()
 -- require("githead"):setup()
 
 Status:children_add(function(self)

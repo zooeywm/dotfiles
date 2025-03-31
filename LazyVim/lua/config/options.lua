@@ -101,9 +101,9 @@ local fs_options = {
 
 require("utils").table.force_extend(vim.opt, options, fs_options)
 
-vim.api.nvim_create_autocmd("TermClose", {
-    pattern = "*",
-    callback = function()
-        vim.schedule(function() vim.cmd("e") end)
-    end,
-})
+-- vim.api.nvim_create_autocmd("TermClose", {
+--     pattern = "*",
+--     callback = function()
+--         vim.schedule(function() vim.cmd("e") end)
+--     end,
+-- })

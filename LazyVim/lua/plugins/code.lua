@@ -95,18 +95,24 @@ return {
         "saghen/blink.cmp",
         dependencies = { "xzbdmw/colorful-menu.nvim", "giuxtaposition/blink-cmp-copilot" },
         opts = {
-            -- sources = {
-            --     default = { "copilot" },
-            --     providers = {
-            --         copilot = {
-            --             name = "copilot",
-            --             module = "blink-cmp-copilot",
-            --             kind = "Copilot",
-            --             score_offset = 100,
-            --             async = true,
-            --         },
-            --     },
-            -- },
+            sources = {
+                -- default = { "copilot" },
+                providers = {
+                    -- copilot = {
+                    --     name = "copilot",
+                    --     module = "blink-cmp-copilot",
+                    --     kind = "Copilot",
+                    --     score_offset = 100,
+                    --     async = true,
+                    -- },
+                    buffer = {
+                        opts = {
+                            -- get all buffers, even ones like neo-tree
+                            get_bufnrs = vim.api.nvim_list_bufs,
+                        },
+                    },
+                },
+            },
             fuzzy = { implementation = "prefer_rust_with_warning" },
             completion = {
                 accept = {

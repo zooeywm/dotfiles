@@ -154,7 +154,7 @@ prepend_fetchers = [
     { id = "git", name = "*", run = "git", prio = "normal" },
     { id = "git", name = "*/", run = "git", prio = "normal" },
 ]
-prepend_previewers = [{ name = "*.md", run = "mdcat" }]
+prepend_previewers = [{ name = "*.md", run = "glow" }]
 prepend_spotters = [{ name = "*", run = "file-extra-metadata" }]
 previewers = [
     { name = "*/", run = "folder", sync = true },
