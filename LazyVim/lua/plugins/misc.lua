@@ -81,7 +81,7 @@ return {
                     },
                 },
             }
-            opts.image = { enabled = true }
+            opts.image = { enabled = false }
             table.insert(opts.dashboard.preset.keys, 2, {
                 icon = "",
                 key = "F",
