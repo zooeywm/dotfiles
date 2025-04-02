@@ -39,7 +39,7 @@ compress = [
     { run = 'tar -czvf $1.tar.gz $(realpath --relative-to="$PWD" $1) ', desc = "Tar.gz" },
     { run = 'tar -cvf $1.tar $(realpath --relative-to="$PWD" $1) ', desc = "Tar" },
 ]
-deb = [{ run = 'dpkg-deb -x "$1" "${1%.deb}"', desc = "Extract deb here" }]
+deb = [{ run = 'dpkg-deb -x "$1" "${1%.deb}" && dpkg-deb -e "$1" "${1%.deb}/DEBIAN" ', desc = "Extract deb here" }]
 edit = [{ run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" }]
 extract = [{ run = 'unar "$1"', desc = "Extract here", for = "unix" }]
 images = [{ run = 'swww img $1', desc = "Set as wallpaper" }]
