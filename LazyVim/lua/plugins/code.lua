@@ -24,11 +24,16 @@ return {
             },
             ["c,cpp"] = "clang-format",
             go = "gofmt",
-            ["json,jsonc,json5,javascript,typescript,css,graphql"] = {
+            ["json,jsonc,json5,javascript,typescript,javascriptreact,typescriptreact,css,graphql"] = {
                 cmd = "biome",
-                args = { "format", "--write", "--indent-style=space" },
+                args = { "format", "--indent-style=space", "--stdin-file-path" },
                 fname = true,
-                stdin = false,
+                stdin = true,
+            },
+            kotlin = {
+                cmd = "ktfmt",
+                args = { "--kotlinlang-style", "-" },
+                stdin = true,
             },
             ["vue,xml,yaml,html,astro,markdown,scss,less"] = "prettier",
             cs = {

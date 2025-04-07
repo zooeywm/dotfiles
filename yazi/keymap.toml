@@ -6,9 +6,9 @@
 keymap = [
     { on = ["c", "m"], run = "plugin chmod", desc = "Chmod on selected files" },
     { on = "<C-c>", run = "quit", desc = "Close the current tab, or quit if it is last tab" },
-    { on = "Q", run = "quit --no-cwd-file", desc = "Quit the process without writing cwd-file" },
+    { on = "Q", run = "quit --no-cwd-file", desc = "Quit without writing cwd-file" },
     { on = "q", run = "close", desc = "Exit the program" },
-    { on = "<Esc>", run = "escape", desc = "Exit visual mode, clear selected, or cancel search" },
+    { on = "<Esc>", run = "escape", desc = "Exit visual mode, clear selection, or cancel search" },
 
     { on = "k", run = "arrow -1", desc = "Move cursor up" },
     { on = "j", run = "arrow 1", desc = "Move cursor down" },
@@ -247,7 +247,7 @@ keymap = [
     { on = "I", run = ["move -999", "insert"], desc = "Move to the BOL, and enter insert mode" },
     { on = "A", run = ["move 999", "insert --append"], desc = "Move to the EOL, and enter append mode" },
     { on = "v", run = "visual", desc = "Enter visual mode" },
-    { on = "V", run = ["move -999", "visual", "move 999"], desc = "Enter visual mode and select all" },
+    { on = "V", run = ["move bol", "visual", "move eol"], desc = "Select from BOL to EOL" },
 
     { on = "h", run = "move -1", desc = "Move back a character" },
     { on = "l", run = "move 1", desc = "Move forward a character" },
