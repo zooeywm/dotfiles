@@ -67,6 +67,7 @@ map.n({
     { "<PageDown>", "<Nop>", "nop" },
     { "<Home>", "<Nop>", "nop" },
     { "<End>", "<Nop>", "nop" },
+    { "q:", "<Nop>", "nop" },
     { "#", "*" },
     { "*", "#" },
 })

@@ -6,7 +6,7 @@ if vim.g.neovide then
     vim.g.neovide_scroll_animation_length = 0.3
     vim.g.neovide_scroll_animation_far_lines = 1
     vim.g.terminal_color_4 = "#268bd2"
-    vim.opt.linespace = -2
+    vim.opt.linespace = 0
     vim.g.neovide_window_blurred = false
     vim.g.neovide_floating_shadow = false
     vim.g.neovide_floating_corner_radius = 0.0
@@ -22,7 +22,7 @@ if vim.g.neovide then
     vim.g.neovide_cursor_vfx_opacity = 200
     vim.g.neovide_cursor_vfx_particle_lifetime = 0.5
     vim.g.neovide_cursor_vfx_particle_highlight_lifetime = 0.2
-    vim.g.neovide_cursor_vfx_particle_density = 10
+    vim.g.neovide_cursor_vfx_particle_density = 2
     vim.g.neovide_cursor_vfx_particle_phase = 1.5
     vim.g.neovide_cursor_vfx_particle_curl = 0.1
 
