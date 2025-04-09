@@ -24,8 +24,8 @@ return {
             },
         },
     },
-    {
-        "nvim-focus/focus.nvim",
-        config = true,
-    },
+    -- {
+    --     "nvim-focus/focus.nvim",
+    --     config = true,
+    -- },
 }
