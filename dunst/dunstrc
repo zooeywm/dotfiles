@@ -24,7 +24,7 @@
     show_indicators = yes
     line_height = -3
     icon_position = "left"
-    corner_radius = 20
+    corner_radius = 30
 
     width = 800
 
@@ -33,17 +33,17 @@
     offset = "(0, -3)"
 
 [urgency_low]
-foreground = "#d7d7d7"
-background = "#282828e6"
+background = "#eff1f5e5"
+foreground = "#4c4f69c0"
 timeout = 10
 
 [urgency_normal]
-foreground = "#d7d7d7"
-background = "#282828e6"
+background = "#eff1f5e5"
+foreground = "#4c4f69c0"
 timeout = 10
 
 [urgency_critical]
-background = "#d7d7d7"
-foreground = "#282828e6"
+background = "#eff1f5e5"
+foreground = "#4c4f69c0"
 frame_color = "#fe640bc0"
 timeout = 0

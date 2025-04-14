@@ -30,7 +30,7 @@ return {
     {
         "LazyVim/LazyVim",
         opts = function()
-            vim.o.background = "dark"
+            vim.o.background = "light"
             return {
                 colorscheme = "gruvbox-material",
             }

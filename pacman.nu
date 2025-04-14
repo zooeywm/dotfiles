@@ -123,6 +123,7 @@ const MANIFEST = {
     rsync: "超级复制",
     parallel-disk-usage: "磁盘空间统计",
     yazi: { packages: ["yazi-git", "jq", "ffmpegthumbnailer", "unarchiver"], desc: "终端文件管理器" },
+    resvg: { manager: "paru", desc: "for yazi SVG preview" }
     gparted: "分区 GUI",
     exfatprogs: "exfat 格式化工具",
     conceal: { packages: ["conceal-bin"], manager: "paru", desc: "垃圾回收站" },

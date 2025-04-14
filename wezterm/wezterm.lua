@@ -20,7 +20,7 @@ return {
     }),
     font_size = 20,
     -- color_scheme = "Everforest Light (Gogh)",
-    color_scheme = "Gruvbox dark, medium (base16)",
+    color_scheme = "Gruvbox light, medium (base16)",
     force_reverse_video_cursor = false,
     colors = {
         cursor_bg = "#8ec07c",

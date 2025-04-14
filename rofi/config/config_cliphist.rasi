@@ -17,4 +17,4 @@ configuration {
     }
 }
 
-@theme "~/.local/share/rofi/themes/rounded-blue-dark.rasi"
+@theme "~/.local/share/rofi/themes/rounded-gruvbox.rasi"
