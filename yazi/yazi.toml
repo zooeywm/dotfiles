@@ -176,7 +176,7 @@ previewers = [
     # PDF
     { mime = "application/pdf", run = "pdf" },
     # Archive
-    { mime = "application/{gzip,x-bzip*,xz,zstd}", run = "ouch" },
+    { mime = "application/{gzip,x-bzip*,xz,zstd}", run = 'piper -- bd ls "$1"' },
     { mime = "application/zip", run = "archive" },
     { name = "*.zip", run = "archive" },
     { mime = "application/{tar,7z-compressed,rar,iso9660-image}", run = "archive" },

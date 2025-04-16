@@ -179,6 +179,9 @@ return {
                 max_height = 0.8,
                 default = "ref",
             },
+            lightbulb = {
+                sign = false,
+            },
         },
     },
 }

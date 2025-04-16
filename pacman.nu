@@ -58,7 +58,7 @@ const MANIFEST = {
     uv: "Python package manager written in rust",
     ruff: "python 格式化器",
     basedpyright: { manager: "uv", desc: "python 语言服务器", },
-    ktfmt: { manager: "paru", desc: "kotlin 语言服务器", },
+    # ktfmt: { manager: "paru", desc: "kotlin 语言服务器", },
     hugo: "blog",
     cmake-language-server: "Cmake Language Server",
     strace: "Bin stack trace",
@@ -101,7 +101,7 @@ const MANIFEST = {
 
     # clients
     zen-browser: "Browser using the firefox core vertical label bar",
-    dbeaver: "PostgreSQL 客户端",
+    # dbeaver: "PostgreSQL 客户端",
     sqlitebrowser: "SQLite 客户端",
     wps: { packages: [ "wps-office-cn", "wps-office-mui-zh-cn", ], manager: "paru", desc: "WPS 本体+中文语言包" },
 
@@ -210,6 +210,7 @@ const MANIFEST = {
     clash-verge: "飞越长城",
     openssh: "ssh",
     xh: "Friendly and fast tool for sending HTTP requests"
+    rustscan: "扫描端口"
 
     # show
     asciinema: "录制命令行视频",
@@ -244,7 +245,7 @@ const MANIFEST = {
     cargo-insta: "懒人测试",
 
     # arch
-    nvchecker: "检查包版本",
+    nvrs: { manager: "paru", packages: ["nvrs-bin"], desc: "检查包版本" },
     pacman-contrib: "打包工具箱",
     aurpublish: "打包钩子",
     archlinuxcn-keyring: "",
