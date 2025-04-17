@@ -30,11 +30,11 @@ return {
                 fname = true,
                 stdin = true,
             },
-            kotlin = {
-                cmd = "ktfmt",
-                args = { "--kotlinlang-style", "-" },
-                stdin = true,
-            },
+            -- kotlin = {
+            --     cmd = "ktfmt",
+            --     args = { "--kotlinlang-style", "-" },
+            --     stdin = true,
+            -- },
             ["vue,xml,yaml,html,astro,markdown,scss,less"] = "prettier",
             cs = {
                 cmd = "dotnet-csharpier",

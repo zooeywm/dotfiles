@@ -56,11 +56,12 @@ return {
             has_line_number = true,
         },
     },
+    { "mtdl9/vim-log-highlighting" },
     {
         "norcalli/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup({
-                "*",
+                "!bigfile",
             }, {
                 RRGGBBAA = true, -- #RRGGBBAA hex codes
                 rgb_fn = true, -- CSS rgb() and rgba() functions

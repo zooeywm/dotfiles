@@ -9,7 +9,7 @@ return {
                 "go", "gomod",
                 "python", "ruby", "perl",
                 "bash", "fish", "nu",
-                "c","cpp", "cmake",
+                "c", "cpp", "cmake",
                 "scheme", "haskell",
                 "html", "vue",
                 "css", "scss",
@@ -45,5 +45,4 @@ return {
         build = ":TSUpdate",
         config = true,
     },
-    { "mtdl9/vim-log-highlighting" },
 }
