@@ -24,6 +24,21 @@ return {
             },
         },
     },
+    {
+        "nvim-lualine/lualine.nvim",
+        opts = {
+            options = {
+                theme = "auto", -- 主题（如 "tokyonight"、"catppuccin"）
+                component_separators = { left = "|", right = "|" }, -- 分隔符
+                section_separators = { left = " ", right = "" }, -- 区块分隔符（可选）
+            },
+            sections = {
+                lualine_b = { "branch", "diff", "diagnostics" },
+                lualine_c = { "searchcount", "selectioncount" },
+                lualine_x = { "lsp_status", { "filename", path = 1, shorting_target = 40 }, "encoding", "fileformat", "filetype" },
+            },
+        },
+    },
     -- {
     --     "nvim-focus/focus.nvim",
     --     config = true,

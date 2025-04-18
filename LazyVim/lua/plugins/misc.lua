@@ -61,7 +61,10 @@ return {
         "norcalli/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup({
-                "!bigfile",
+                "css",
+                "less",
+                "javascript",
+                "hyprlang"
             }, {
                 RRGGBBAA = true, -- #RRGGBBAA hex codes
                 rgb_fn = true, -- CSS rgb() and rgba() functions
