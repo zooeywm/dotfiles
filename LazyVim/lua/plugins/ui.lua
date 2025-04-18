@@ -35,7 +35,7 @@ return {
             sections = {
                 lualine_b = { "branch", "diff", "diagnostics" },
                 lualine_c = { "searchcount", "selectioncount" },
-                lualine_x = { "lsp_status", { "filename", path = 1, shorting_target = 40 }, "encoding", "fileformat", "filetype" },
+                lualine_x = { "lsp_status", --[[ { "filename", path = 1, shorting_target = 20 }, ]] "encoding", "fileformat", "filetype" },
             },
         },
     },
