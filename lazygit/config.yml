@@ -1,4 +1,10 @@
 gui:
+  sidePanelWidth: 0.4
+  # expandFocusedSidePanel: true
+  language: en
+  # showNumstatInFilesView: true
+  commitAuthorShortLength: 2
+  border: single
   spinner:
     frames:
       - "⠋"
