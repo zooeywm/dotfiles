@@ -69,6 +69,7 @@ map.n({
     { "<End>",        "<Nop>",                                         "nop" },
     { "q:",           "<Nop>",                                         "nop" },
     { "<Tab>",        "<Nop>",                                         "nop" },
+    { "<C-i>",        "<C-i>",                                         "prev" },
 })
 
 map.i({

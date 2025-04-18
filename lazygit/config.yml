@@ -14,3 +14,5 @@ gui:
     rate: 50
 git:
   overrideGpg: true
+os:
+  shellFunctionsFile: ~/.config/zsh/.zshrc
