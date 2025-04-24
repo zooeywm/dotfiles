@@ -20,12 +20,12 @@ return {
                 -- diagnostics_update_on_event = false,
                 show_tab_indicators = true,
                 show_duplicate_prefix = true,
-                sort_by = function(buffer_a, buffer_b)
-                    -- add custom logic
-                    local modified_a = vim.fn.getftime(buffer_a.path)
-                    local modified_b = vim.fn.getftime(buffer_b.path)
-                    return modified_a > modified_b
-                end,
+                -- sort_by = function(buffer_a, buffer_b)
+                --     -- add custom logic
+                --     local modified_a = vim.fn.getftime(buffer_a.path)
+                --     local modified_b = vim.fn.getftime(buffer_b.path)
+                --     return modified_a > modified_b
+                -- end,
             },
         },
     },

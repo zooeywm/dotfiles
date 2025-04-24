@@ -75,6 +75,29 @@ return {
             vim.g.guard_config = {
                 fmt_on_save = false,
             }
+
+            -- local lint = require("guard.lint")
+            -- -- ft("cpp"):lint("clang-tidy")
+            -- ft("cpp"):lint({
+            --     cmd = "clazy-standalone",
+            --     -- cmd = "clang-tidy",
+            --     fname = true,
+            --     stdin = false,
+            --     parse = lint.from_regex({
+            --         -- source = "clazy-standalone",
+            --         source = "clang-tidy",
+            --         -- regex = ':(%d+):(%d+):%s+(%w+):%s+(.-)%s+%[(.-)%]',
+            --         -- regex = ":(%d+):(%d+):%s+(%w+):%s+(.-)%s+%[(.-)%]",
+            --         regex = ":(%d+):(%d+):%s+(%w+):%s+(.-)%s+%[(.-)%]",
+            --         groups = { "lnum", "col", "severity", "message", "code" },
+            --     }),
+            --     severities = {
+            --         information = lint.severities.info,
+            --         hint = lint.severities.info,
+            --         note = lint.severities.style,
+            --     },
+            -- })
+            -- :lint("codespell")
         end,
     },
     {
