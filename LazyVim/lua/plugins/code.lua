@@ -158,13 +158,7 @@ return {
                     winblend = 15,
                     draw = {
                         gap = 0,
-                        columns = {
-                            { "kind_icon" },
-                            {
-                                "label",
-                                gap = 0,
-                            },
-                        },
+                        columns = { { "kind_icon" }, { "label", gap = 0 } },
                         components = {
                             label = {
                                 text = function(ctx) return require("colorful-menu").blink_components_text(ctx) end,

@@ -10,6 +10,9 @@ return {
             codelens = {
                 enabled = true,
             },
+            document_color = {
+                enabled = true,
+            },
             -- LSP Server Settings
             servers = {
                 lua_ls = {},
@@ -59,6 +62,7 @@ return {
                 name = "DiagnosticSign" .. name
                 vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
             end
+
             if opts.inlay_hints.enabled then
                 LazyVim.lsp.on_supports_method("textDocument/inlayHint", function(_, buffer)
                     if vim.api.nvim_buf_is_valid(buffer) and vim.bo[buffer].buftype == "" and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype) then
@@ -75,6 +79,17 @@ return {
                         callback = vim.lsp.codelens.refresh,
                     })
                 end)
+            end
+
+            if opts.document_color.enabled then
+                LazyVim.lsp.on_supports_method(
+                    "textDocument/documentColor",
+                    function(_, buffer)
+                        vim.lsp.document_color.enable(true, buffer, {
+                            style = "virtual",
+                        })
+                    end
+                )
             end
 
             if vim.g.project_lspconfig ~= nil then
