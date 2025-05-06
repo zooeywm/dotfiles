@@ -54,7 +54,6 @@ map.n({
     { "<leader>tw", function() ToggleWordWrap() end, "Toggle word wrap" },
     { "<leader>tc", function() ToggleColorizer() end, "Toggle colorizer" },
     { "<leader>gn", "<cmd>GitPath<cr>", "Copy file path from git root" },
-    { "yn", "<cmd>Path<cr>", "Copy file path" },
     { "<M-l>", "zl", "Scroll right one character" },
     { "<M-h>", "zh", "Scroll left one character" },
     { "<M-L>", "zL", "Scroll left half screen" },

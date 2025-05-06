@@ -44,7 +44,8 @@
       "showmethekey-gtk",
       "Picture-in-Picture",
       "org.telegram.desktop",
-      "stalonetray"
+      "stalonetray",
+      "com.github.hluk.copyq"
     ]
   },
   "power-profiles-daemon": {

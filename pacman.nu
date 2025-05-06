@@ -87,13 +87,14 @@ const MANIFEST = {
     kalker: { manager: "paru", desc: "Terminal calculator" }
 
     ## wayland
-    wl-clipboard: "剪贴板",
-    cliphist: "剪贴板历史",
+    # wl-clipboard: "剪贴板",
+    # cliphist: "剪贴板历史",
+    clipq: "wayland 剪贴板客户端"
     swww: "Wallpaper engine",
     waybar: "Status bar",
     grim: "Screen cut",
     slurp: "Screen area cut",
-    wf-recorder: "wayland screen recorder",
+    wl-recorder: "wayland screen recorder",
     dunst: "Notify channel",
     satty: { manager: "paru", desc: "Screen cut editor" },
     hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] },

@@ -1,11 +1,11 @@
 #!/bin/sh
-pid_count=$(fuser /usr/bin/wf-recorder 2>/dev/null | wc -w)
+pid_count=$(fuser /usr/bin/wl-screenrec 2>/dev/null | wc -w)
 if [ "$pid_count" -gt 0 ]; then
-	pkill wf-recorder && notify-send "Screen Recording ended."
+	pkill wl-screenrec && notify-send "Screen Recording ended."
 else
 	notify-send "Screen Recording started."
 	if [ "$1" = "area" ]; then
-		exec wf-recorder --audio=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -f ~/Videos/screen-record/vid-$(date +"%Y-%m-%d-%H%M%S").mp4 -g "$(slurp)"
+		exec wl-screenrec --audio --audio-device=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -f ~/Videos/screen-record/vid-$(date +"%Y-%m-%d-%H%M%S").mp4 -g "$(slurp)"
 	elif [ "$1" = "screen" ]; then
 		output=$(hyprctl monitors -j)
 
@@ -13,6 +13,6 @@ else
 		y=$(echo "$output" | jq -r '.[] | select(.focused == true) | .y')
 		width=$(echo "$output" | jq -r '.[] | select(.focused == true) | .width')
 		height=$(echo "$output" | jq -r '.[] | select(.focused == true) | .height')
-		exec wf-recorder --audio=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -f ~/Videos/screen-record/vid-$(date +"%Y-%m-%d-%H%M%S").mp4 -g "$x,$y $width"x"$height"
+		exec wl-screenrec --audio --audio-device=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -f ~/Videos/screen-record/vid-$(date +"%Y-%m-%d-%H%M%S").mp4 -g "$x,$y $width"x"$height"
 	fi
 fi

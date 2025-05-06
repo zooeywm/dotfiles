@@ -32,20 +32,20 @@ def 'main screen' [
 def 'main record-area' [
     --dir (-d): path,
 ] {
-    let recorder_using = ps | where name == 'wf-recorder'
+    let recorder_using = ps | where name == 'wl-screenrec'
     let pid_count = $recorder_using | length
     if $pid_count > 0 {
-        # Kill all processes of wf-recorder
+        # Kill all processes of wl-screenrec
         $recorder_using | get pid | each {|it| kill $it };
         notify-send "Screen Recording ended."
     } else {
         notify-send "Screen Recording started.";
-	    wf-recorder -f ($dir | video-save-path) --audio=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -g (slurp -d)
+	    wl-screenrec -f ($dir | video-save-path) --audio -g (slurp -d)
     }
 }
 
 def 'main test' [] {
-	wf-recorder -f (video-save-path) --audio=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -g (slurp -d)
+	wl-screenrec -f (video-save-path) --audio -g (slurp -d)
 }
 
 # Save path
