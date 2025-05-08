@@ -81,7 +81,7 @@ const MANIFEST = {
     noto-fonts: { packages: [ "noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk" ], desc: "零豆腐块字体" },
     polkit-kde-agent: "Authorization Panel",
     polkit: "Policy kit",
-    bluez: "Blutooth kernel",
+    bluez: "Bluetooth kernel",
     bluez-utils: "Bluetooth cli",
     overskride: { manager: "paru", desc: "Bluetooth GUI" },
     kalker: { manager: "paru", desc: "Terminal calculator" }
@@ -89,12 +89,12 @@ const MANIFEST = {
     ## wayland
     # wl-clipboard: "剪贴板",
     # cliphist: "剪贴板历史",
-    clipq: "wayland 剪贴板客户端"
+    copyq: "wayland 剪贴板客户端"
     swww: "Wallpaper engine",
     waybar: "Status bar",
     grim: "Screen cut",
     slurp: "Screen area cut",
-    wl-recorder: "wayland screen recorder",
+    wl-screenrec: { packages: ["wl-screenrec-git"], desc: "wayland screen recorder" },
     dunst: "Notify channel",
     satty: { manager: "paru", desc: "Screen cut editor" },
     hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "wlroots", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] },
@@ -115,7 +115,7 @@ const MANIFEST = {
     zellij: "终端复用器",
     bash-completion: "bash 补全",
     zsh: { packages: ["zsh", "zsh-completions"], desc: "zsh 及额外补全包" },
-    terminus-font: "Outter terminal font",
+    terminus-font: "Outer terminal font",
     halp: "命令行选项标准化检验",
     aichat: "LLM CLI",
 

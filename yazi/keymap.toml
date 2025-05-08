@@ -41,6 +41,7 @@ keymap = [
     { on = "V", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
 
     { on = "<Tab>", run = "spot", desc = "Spot hovered file" },
+    { on = "`", run = "spot", desc = "Spot hovered file" },
 
     { on = "O", run = "open", desc = "Open selected files" },
     { on = "o", run = "open --interactive", desc = "Open  selected files interactively" },
