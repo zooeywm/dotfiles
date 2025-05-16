@@ -39,9 +39,12 @@ marker_marked   = { fg = "lightcyan", bg = "lightcyan" }
 marker_selected = { fg = "lightyellow", bg = "lightyellow" }
 
 # Tab
-tab_active   = { reversed = true }
-tab_inactive = {}
-tab_width    = 1
+[tabs]
+active   = { fg = "black", bg = "blue", bold = true }
+inactive = { fg = "blue", bg = "black" }
+# Separator
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
 
 # Count
 count_copied   = { fg = "white", bg = "green" }

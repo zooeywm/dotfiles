@@ -1,12 +1,11 @@
 * {
   font-family: JetBrainsMono Nerd Font;
   font-size: 24px;
-  margin: 0px 1px;
 }
 
 window#waybar {
-  background-color: rgba(10, 14, 20, 0.8);
-  color: #b3b1ad;
+  background-color: rgba(251, 241, 199, 0.8);
+  padding: 5px;
 }
 
 #workspaces button {
@@ -16,29 +15,60 @@ window#waybar {
   padding: 0px 5px;
   margin: 0px 2.5px;
   border-radius: 4px;
-  color: #b3b1ad;
+  color: #3c3836;
 }
 
 #workspaces button.active {
-  color: #4d5566;
-  background-color: #c2d94c;
+  color: #fbf1c7;
+  background-color: #b57614;
 }
 
 #workspaces button:hover {
   box-shadow: inherit;
   text-shadow: inherit;
-  color: #4d5566;
-  background-color: #c2d94c;
+  color: #282828;
+  background-color: #d79921;
 }
 
 #workspaces button.urgent {
-  background-color: #ff3333;
-  color: #59c2ff;
+  background-color: #9d0006;
+  color: #fbf1c7;
+}
+
+#submap,
+
+#cpu,
+#memory,
+#temperature,
+#tray,
+#mpris,
+/* #custom-song, */
+#workspaces,
+
+#taskbar,
+
+#network,
+#custom-updates,
+#bluetooth,
+#pulseaudio.output,
+#pulseaudio.source,
+#backlight,
+#battery,
+#power-profiles-daemon,
+#clock,
+#custom-dunst {
+  margin: 0px 4px;
+  color: #3c3836;
+  opacity: 1;
+}
+
+#taskbar.empty {
+  background: transparent;
 }
 
 #power-profiles-daemon.performance {
-  margin-left: -15px;
-  margin-right: 5px;
+  margin-left: -6px;
+  padding-right: 10px;
   color: #076678;
 }
 
@@ -55,7 +85,7 @@ window#waybar {
 }
 
 #memory {
-  color: #a08F40;
+  color: #8f3f71;
 }
 
 #temperature {
@@ -124,14 +154,14 @@ window#waybar {
 tooltip {
   border-radius: 8px;
   padding: 15px;
-  background-color: #030405;
+  background-color: #3c3836;
   opacity: 0.9;
 }
 
 tooltip label {
   font-size: 30px;
   padding: 5px;
-  color: #E6E1CF;
+  color: #fbf1c7;
 }
 
 #submap {

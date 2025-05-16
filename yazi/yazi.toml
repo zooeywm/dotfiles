@@ -42,7 +42,7 @@ compress = [
 deb = [{ run = 'dpkg-deb -x "$1" "${1%.deb}" && dpkg-deb -e "$1" "${1%.deb}/DEBIAN" ', desc = "Extract deb here" }]
 edit = [{ run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" }]
 extract = [{ run = 'unar "$1"', desc = "Extract here", for = "unix" }]
-images = [{ run = 'swww img $1', desc = "Set as wallpaper" }]
+images = [{ run = 'swww img --transition-type=fade --transition-step=255 --transition-duration=1 --transition-fps=120 $1', desc = "Set as wallpaper" }]
 open = [{ run = 'xdg-open "$1"', desc = "Open", for = "linux" }]
 play = [
     { run = 'mpv --force-window "$@"', orphan = true, for = "unix" },

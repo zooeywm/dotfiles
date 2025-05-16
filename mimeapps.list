@@ -22,6 +22,8 @@ x-scheme-handler/chrome=zen-browser.desktop;
 x-scheme-handler/clash=clash-verge.desktop;
 x-scheme-handler/http=zen-browser.desktop;
 x-scheme-handler/https=zen-browser.desktop;
+clash=clash-verge-handler.desktop;
+clash-verge=clash-verge-handler.desktop;
 
 [Default Applications]
 application/json=lvide.desktop;
@@ -88,3 +90,5 @@ x-scheme-handler/slack=slack.desktop;
 x-scheme-handler/terminal=org.wezfurlong.wezterm.desktop;
 x-scheme-handler/tg=org.telegram.desktop.desktop;
 x-scheme-handler/unknown=firefox.desktop;
+clash=clash-verge-handler.desktop
+clash-verge=clash-verge-handler.desktop

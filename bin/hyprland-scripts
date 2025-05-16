@@ -5,52 +5,54 @@ info() {
     xwayland=$(echo $result | jq -r ".xwayland")
     class=$(echo $result | jq -r ".class")
     title=$(echo $result | jq -r ".title")
-	notify-send "Window info:" "xwayland: $xwayland\nclass: $class\ntitle: $title"
+    pid=$(echo $result | jq -r ".pid")
+    fullscreen=$(echo $result | jq -r ".fullscreen")
+    notify-send "Window info:" "xwayland: $xwayland\nclass: $class\ntitle: $title\npid: $pid\nfullscreen: $fullscreen"
 }
 
 toggle_dunst_pause() {
-	if [ "$(dunstctl is-paused)" = "false" ]; then
-		dunstctl set-paused true
-	else
-		dunstctl set-paused false
-	fi
-	pkill -RTMIN+1 waybar
+    if [ "$(dunstctl is-paused)" = "false" ]; then
+        dunstctl set-paused true
+    else
+        dunstctl set-paused false
+    fi
+    pkill -RTMIN+1 waybar
 }
 
 restart_xdph() {
-	sleep 1
-	killall xdg-desktop-portal-hyprland
-	killall xdg-desktop-portal-gnome
-	killall xdg-desktop-portal-kde
-	killall xdg-desktop-portal-lxqt
-	killall xdg-desktop-portal-wlr
-	killall xdg-desktop-portal
-	sleep 1
-	/usr/lib/xdg-desktop-portal-hyprland &
-	sleep 2
-	/usr/lib/xdg-desktop-portal &
+    sleep 1
+    killall xdg-desktop-portal-hyprland
+    killall xdg-desktop-portal-gnome
+    killall xdg-desktop-portal-kde
+    killall xdg-desktop-portal-lxqt
+    killall xdg-desktop-portal-wlr
+    killall xdg-desktop-portal
+    sleep 1
+    /usr/lib/xdg-desktop-portal-hyprland &
+    sleep 2
+    /usr/lib/xdg-desktop-portal &
 }
 
 toggle_bluetooth_power() {
-	if [ "$(bluetoothctl show | grep 'Powered' | awk '{print $2}')" = 'no' ]; then
-		bluetoothctl power on
-	else
-		bluetoothctl power off
-	fi
+    if [ "$(bluetoothctl show | grep 'Powered' | awk '{print $2}')" = 'no' ]; then
+        bluetoothctl power on
+    else
+        bluetoothctl power off
+    fi
 }
 
 case "$1" in
 "info")
-	info
-	;;
+    info
+    ;;
 "toggle-dunst-pause")
-	toggle_dunst_pause
-	;;
+    toggle_dunst_pause
+    ;;
 "restart-xdph")
-	restart_xdph
-	;;
+    restart_xdph
+    ;;
 "toggle-bluetooth-power")
-	toggle_bluetooth_power
-	;;
+    toggle_bluetooth_power
+    ;;
 *) ;;
 esac

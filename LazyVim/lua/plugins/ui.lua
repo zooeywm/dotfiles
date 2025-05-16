@@ -28,7 +28,7 @@ return {
         "nvim-lualine/lualine.nvim",
         opts = {
             options = {
-                theme = "auto", -- 主题（如 "tokyonight"、"catppuccin"）
+                theme = "catppuccin", -- 主题（如 "tokyonight"、"catppuccin"）
                 component_separators = { left = "|", right = "|" }, -- 分隔符
                 section_separators = { left = " ", right = "" }, -- 区块分隔符（可选）
             },
