@@ -1,7 +1,7 @@
 [[plugin.deps]]
 use = "DreamMaoMao/searchjump"
-rev = "afdb098"
-hash = "55bbc93f23b543dee938cf35d18d2bc6"
+rev = "fe884f4"
+hash = "b4c00ef6899a9563af8d577d0bb46998"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
@@ -30,8 +30,8 @@ hash = "3af52f1d5ba79a7dd9cbc1d2918feab5"
 
 [[plugin.deps]]
 use = "boydaihungst/file-extra-metadata"
-rev = "0c061a2"
-hash = "433d4fcb211b823b44bdb00451ef4934"
+rev = "d1d3bbc"
+hash = "6a1fde367290834907064aaaf7d68850"
 
 [[plugin.deps]]
 use = "TD-Sky/sudo"

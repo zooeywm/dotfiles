@@ -1,5 +1,3 @@
--- local utils = require("utils")
-
 return {
     {
         "nvimdev/guard.nvim",
@@ -99,6 +97,19 @@ return {
             -- })
             -- :lint("codespell")
         end,
+    },
+    {
+        "nvim-neotest/neotest",
+        opts = function()
+            return {
+                adapters = {
+                    require("rustaceanvim.neotest"),
+                },
+            }
+        end,
+        keys = {
+            { "<leader>tr", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run File (Neotest)" },
+        },
     },
     {
         "numToStr/Comment.nvim",
