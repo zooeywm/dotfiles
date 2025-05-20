@@ -22,7 +22,7 @@ const MANIFEST = {
 
     # PL
     gdb: "GNU 调试器",
-    neovim-git: "editor",
+    neovim: "editor",
     neovide: "neovim gui",
     lldb: "LLVM 调试器",
     mold: "现代链接器",
@@ -44,7 +44,7 @@ const MANIFEST = {
     biome: "前端格式化器"
     mise: "管理语言工具链",
     bash-language-server: { manager: "npm" },
-    mlc: { manager: "cargo", desc: "markdown linter" },
+    mlc: { manager: "cargo", desc: "markdown link checker" },
     sccache: "编译缓存",
     kondo: "扫除编译产物",
     cargo-flamegraph: "绘制火焰图及 cargo 配套插件",

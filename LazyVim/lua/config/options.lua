@@ -3,7 +3,6 @@
 -- Add any additional options here
 
 vim.g.lazyvim_picker = "snacks"
-vim.g.lazyvim_cmp = "blink.cmp"
 
 local options = {
     -- basic
