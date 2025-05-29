@@ -53,68 +53,46 @@ reveal = [
     { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "linux" },
     { run = '''clear; exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
+terminal-here = [
+    { run = 'wezterm start --cwd "$(dirname "$1")"', desc = "Open Terminal Here", for = "linux" },
+]
 
 [open]
 rules = [
-    { mime = "inode/directory", use = [
-        "open",
-        "compress",
-        "reveal",
-    ] },
-    { mime = "text/html", use = [
-        "open",
+    { mime = "{text/*,inode/empty,*/javascript}", use = [
         "edit",
-        "reveal",
-    ] },
-    { mime = "text/*", use = [
-        "edit",
-        "open",
-        "reveal",
-    ] },
-    { mime = "image/*", use = [
-        "open",
-        "images",
-        "reveal",
-    ] },
-    { mime = "{audio,video}/*", use = [
-        "play",
-        "open",
-        "reveal",
-    ] },
-    { mime = "inode/empty", use = [
-        "edit",
-        "open",
-        "reveal",
-    ] },
-    { mime = "application/{,g}zip", use = [
-        "extract",
-        "reveal",
-    ] },
-    { name = "*.zip", use = [
-        "extract",
-        "reveal",
-    ] },
-    { mime = "application/{tar,bzip*,7z-compressed,xz,rar}", use = [
-        "extract",
-        "reveal",
     ] },
     { mime = "application/{json,ndjson}", use = [
         "edit",
-        "reveal",
     ] },
-    { mime = "*/javascript", use = [
-        "edit",
+    { mime = "image/*", use = [
+        "images",
+    ] },
+    { mime = "inode/directory", use = [
+        "terminal-here",
         "reveal",
+        "compress",
+    ] },
+    { mime = "{audio,video}/*", use = [
+        "play",
+    ] },
+    { mime = "application/{,g}zip", use = [
+        "extract",
+    ] },
+    { name = "*.zip", use = [
+        "extract",
+    ] },
+    { mime = "application/{tar,bzip*,7z-compressed,xz,rar}", use = [
+        "extract",
     ] },
     { mime = "application/{sharedlib,x-sharedlib,x-pie-executable,pie-executable}", use = [
         "binutil",
-        "reveal",
     ] },
     { mime = "application/{vnd.debian.binary-package,debian.binary-package}", use = [
         "deb",
-        "reveal",
     ] },
     { name = "*", use = [
+        "terminal-here",
         "reveal",
         "open",
     ] },

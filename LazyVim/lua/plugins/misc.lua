@@ -64,7 +64,7 @@ return {
                 "css",
                 "less",
                 "javascript",
-                "hyprlang"
+                "hyprlang",
             }, {
                 RRGGBBAA = true, -- #RRGGBBAA hex codes
                 rgb_fn = true, -- CSS rgb() and rgba() functions
@@ -86,12 +86,13 @@ return {
             { "<leader>gd", false },
             { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files (cwd)" },
             { "<leader>fF", function() Snacks.picker.files({ cwd = require("lazyvim.util").root.get() }) end, desc = "Find Files (Root Dir)" },
-            { "<leader>sg", function() Snacks.picker.grep({ cwd = require("lazyvim.util").root.get() }) end, desc = "Grep (Root Dir)" },
-            { "<leader>sG", function() Snacks.picker.grep() end, desc = "Grep (cwd)" },
+            { "<leader>sg", function() Snacks.picker.grep({ cwd = require("lazyvim.util").root.get() }) end, desc = "Grep (cwd)" },
+            { "<leader>sG", function() Snacks.picker.grep() end, desc = "Grep (Root dir)" },
             -- { "<leader>gf", false },
         },
         opts = function(_, opts)
             opts.scroll = { enabled = false }
+            opts.image = { enabled = true }
             opts.styles = {
                 input = {
                     relative = "cursor",
@@ -102,7 +103,6 @@ return {
                     },
                 },
             }
-            opts.image = { enabled = false }
             table.insert(opts.dashboard.preset.keys, 2, {
                 icon = "",
                 key = "F",

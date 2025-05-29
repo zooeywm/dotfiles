@@ -4,7 +4,7 @@
 
 local wk = require("which-key")
 wk.add({ "<leader>l", group = "language" })
-wk.add({ "<leader>t", group = "toggle/text-case/test" })
+wk.add({ "<leader>tt", group = "text-case" })
 local map = {
     n = function(mapping)
         for _, m in ipairs(mapping) do

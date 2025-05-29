@@ -60,6 +60,22 @@ keymap = [
         if [[ -f $1 ]]; then
             xs < $1
         fi' """], desc = "Copy file content" },
+    { on = ["y", "g"], run = ["escape --visual", """
+        shell '
+        target="${1:-.}"
+        if [[ -f $target ]]; then
+            cd "$(dirname $target)"
+            target="$(basename $target)"
+        elif [ -d $target ]; then
+            cd $target
+        fi
+        git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [ $? -ne 0 ] || [ -z "$git_root" ]; then
+            notify-send "Error：The current directory is not in the Git repository"
+            exit 1
+        fi
+        relative_path=$(realpath --relative-to=$git_root $target)
+        echo $relative_path | xs ' """], desc = "Copy file git path" },
     { on = "x", run = "yank --cut", desc = "Cut selected files" },
     { on = "X", run = "unyank", desc = "Cancel the yank status of files" },
     { on = ["p", "p"], run = "paste", desc = "Paste the files" },

@@ -59,7 +59,7 @@ const MANIFEST = {
     ruff: "python 格式化器",
     basedpyright: { manager: "uv", desc: "python 语言服务器", },
     # ktfmt: { manager: "paru", desc: "kotlin 语言服务器", },
-    hugo: "blog",
+    # hugo: "blog",
     cmake-language-server: "Cmake Language Server",
     strace: "Bin stack trace",
     qt6-languageserver: "qt6 languageserver"
@@ -127,7 +127,7 @@ const MANIFEST = {
     resvg: { manager: "paru", desc: "for yazi SVG preview" }
     gparted: "分区 GUI",
     exfatprogs: "exfat 格式化工具",
-    conceal: { packages: ["conceal-bin"], manager: "paru", desc: "垃圾回收站" },
+    # conceal: { packages: ["conceal-bin"], manager: "paru", desc: "垃圾回收站" },
 
     # utility
     man: { packages: ["man-db", "man-pages"], desc: "手册" },
