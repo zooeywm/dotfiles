@@ -2,7 +2,7 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
-[manager]
+[mgr]
 keymap = [
     { on = ["c", "m"], run = "plugin chmod", desc = "Chmod on selected files" },
     { on = "<C-c>", run = "quit", desc = "Close the current tab, or quit if it is last tab" },
