@@ -6,9 +6,7 @@ return {
         keys = {
             { "<leader>cp", "<cmd>MarkdownPreviewToggle<CR>", ft = "markdown", desc = "markdown-preview" },
         },
-        config = function()
-            vim.g.mkdp_auto_start = 1
-        end,
+        config = function() vim.g.mkdp_auto_start = 1 end,
     },
     {
         "lervag/vimtex",
@@ -40,9 +38,7 @@ return {
             require("render-markdown").setup(opts)
             Snacks.toggle({
                 name = "Render Markdown",
-                get = function()
-                    return require("render-markdown.state").enabled
-                end,
+                get = function() return require("render-markdown.state").enabled end,
                 set = function(enabled)
                     local m = require("render-markdown")
                     if enabled then
@@ -53,5 +49,12 @@ return {
                 end,
             }):map("<leader>um")
         end,
+    },
+    {
+        "chomosuke/typst-preview.nvim",
+        ft = "typst",
+        keys = {
+            { "<leader>cp", "<cmd>TypstPreview<CR>", ft = "typst", desc = "typst-preview" },
+        },
     },
 }

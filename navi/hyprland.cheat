@@ -1,0 +1,15 @@
+% hyprland
+
+$kb_options: echo -e "caps:swapescape\nnone"
+# Set Switch Caps and Esc key
+hyprctl -r keyword "input:kb_options" <kb_options>
+
+$kb_enabled: echo -e "true\nfalse"
+# Enable/Disable integrated keyboard
+hyprctl keyword "device[at-translated-set-2-keyboard]:enabled" <kb_enabled>
+
+# Set keyboard repeat rate
+hyprctl -r keyword "input:repeat_rate" <repeat_rate>
+
+# Set keyboard repeat delay
+hyprctl -r keyword "input:repeat_delay" <repeat_delay>

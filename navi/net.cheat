@@ -13,7 +13,7 @@ $ N-Y: printf '"no"\n"yes"'
 # 以冒号分割，打印附近wifi的列表
 nmcli --terse device wifi
 
-# 连接wifi
+# 连接 wifi
 nmcli device wifi connect <ssid> password <password>
 
 # 遗忘网络连接

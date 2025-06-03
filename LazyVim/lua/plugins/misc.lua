@@ -111,6 +111,22 @@ return {
             })
             opts.indent.animate = { duration = { step = 20, total = 300 } }
             opts.words.enabled = false
+            -- zen
+            opts.zen = {
+                toggles = {
+                    dim = false,
+                    git_signs = true,
+                },
+            }
+            -- styles
+            opts.styles = {
+                zen = {
+                    backdrop = {
+                        transparent = false,
+                        blend = 99,
+                    },
+                },
+            }
         end,
     },
     {

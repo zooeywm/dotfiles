@@ -28,6 +28,9 @@ require("lazy").setup({
         { import = "plugins" },
         { import = "plugins.lang" },
     },
+    rocks = {
+        enabled = false,
+    },
     defaults = {
         lazy = false,
         version = false,

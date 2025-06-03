@@ -1,3 +1,5 @@
+local LazyVim = require("lazyvim.util")
+local utils = require("utils")
 return {
     {
         "akinsho/bufferline.nvim",
@@ -73,6 +75,43 @@ return {
                         vim.cmd("edit " .. file)
                     end
                 end,
+            },
+        },
+    },
+    {
+        "MagicDuck/grug-far.nvim",
+        keys = {
+            {
+                "gS",
+                function()
+                    local grug = require("grug-far")
+                    grug.open({
+                        engine = "astgrep",
+                        transient = true,
+                        prefills = {
+                            filesFilter = utils.path.filename(utils.vim.current_buffer_path()),
+                        },
+                        visualSelectionUsage = "operate-within-range",
+                    })
+                end,
+                mode = { "n", "v" },
+                desc = "Search and Replace AST",
+            },
+            {
+                "gs",
+                function()
+                    local grug = require("grug-far")
+                    grug.open({
+                        engine = "ripgrep",
+                        transient = true,
+                        prefills = {
+                            filesFilter = utils.path.filename(utils.vim.current_buffer_path()),
+                        },
+                        visualSelectionUsage = "operate-within-range",
+                    })
+                end,
+                mode = { "n", "v" },
+                desc = "Search and Replace ripgrep",
             },
         },
     },

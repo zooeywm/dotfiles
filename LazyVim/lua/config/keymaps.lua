@@ -51,7 +51,6 @@ map.n({
     { "<leader>lc", "<cmd>LspConfig<cr>", "Lsp config" },
     { "<leader>lp", "<cmd>PanguAll<cr>", "Pangu all" },
     { "<leader>cl", function() Snacks.picker.lsp_config() end, "Lsp info" },
-    { "<leader>tw", function() ToggleWordWrap() end, "Toggle word wrap" },
     { "<leader>tc", function() ToggleColorizer() end, "Toggle colorizer" },
     { "<leader>gn", "<cmd>GitPath<cr>", "Copy file path from git root" },
     { "<M-l>", "zl", "Scroll right one character" },
@@ -70,7 +69,7 @@ map.n({
     { "<Tab>", "<Nop>", "nop" },
     { "<C-i>", "<C-i>", "prev" },
     { "<leader>bf", "<cmd>terminal tail -f %<cr>", "Tail current file" },
-    { "<leader>ll", function() vim.notify("12333123") end, "Tail current file" },
+    -- { "<leader>ll", function() vim.notify("12333123") end, "Test notify" },
 })
 
 map.i({
@@ -82,10 +81,10 @@ map.i({
     { "<C-l>", "<Right>", "move-right" },
     { "<C-k>", "<Up>", "move-down" },
     { "<C-j>", "<Down>", "move-up" },
-    { "<C-a>", "<C-o>^", "move-up" },
-    { "<C-e>", "<C-o>$", "move-up" },
-    { "<C-d>", "<C-o>dl", "move-up" },
-    { "<C-u>", "<ESC>^C", "move-up" },
+    { "<C-a>", "<C-o>^", "move-to-front" },
+    { "<C-e>", "<C-o>$", "move-to-end" },
+    { "<C-d>", "<C-o>dl", "delete-right" },
+    { "<C-u>", "<ESC>^C", "delete-line" },
 })
 
 map.v({
@@ -94,13 +93,6 @@ map.v({
     { "v", "0o$h", "exclude-end" },
     { "u", "<Nop>", "nop" },
 })
-
-function ToggleWordWrap()
-    ---@diagnostic disable-next-line: undefined-field
-    local wrap = vim.opt.wrap:get()
-    vim.opt.wrap = not wrap
-    print("Word wrap " .. (wrap and "disabled" or "enabled"))
-end
 
 function ToggleColorizer() vim.cmd("ColorizerToggle") end
 

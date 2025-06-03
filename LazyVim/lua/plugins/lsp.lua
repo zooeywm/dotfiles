@@ -3,6 +3,9 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = { "saghen/blink.cmp" },
         event = "LazyFile",
+        keys = {
+            { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", ft = { "cpp", "c" }, desc = "Switch Source/Header (C/C++)" },
+        },
         opts = {
             inlay_hints = {
                 enabled = false,
@@ -31,9 +34,6 @@ return {
                 },
                 nushell = {},
                 clangd = {
-                    keys = {
-                        { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
-                    },
                     root_dir = function(fname)
                         return require("lspconfig.util").root_pattern("Makefile", "configure.ac", "configure.in", "config.h.in", "meson.build", "meson_options.txt", "build.ninja")(fname)
                             or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname)
