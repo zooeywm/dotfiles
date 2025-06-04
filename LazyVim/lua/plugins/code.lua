@@ -156,7 +156,7 @@ return {
             fuzzy = { implementation = "prefer_rust_with_warning" },
             completion = {
                 accept = {
-                    auto_brackets = { enabled = false },
+                    auto_brackets = { enabled = true },
                 },
                 keyword = {
                     range = "full",

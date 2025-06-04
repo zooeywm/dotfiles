@@ -29,13 +29,24 @@ return {
         opts = {
             options = {
                 theme = "catppuccin", -- 主题（如 "tokyonight"、"catppuccin"）
-                component_separators = { left = "|", right = "|" }, -- 分隔符
-                section_separators = { left = " ", right = "" }, -- 区块分隔符（可选）
+                component_separators = { left = "", right = "" }, -- 细圆润分隔符（组件间）
+                section_separators = { left = "", right = "" }, -- 粗圆润分隔符（区块间）
+                -- component_separators = { left = "", right = "" },
+                -- section_separators = { left = "", right = "" },
             },
             sections = {
+                lualine_a = { "mode" },
                 lualine_b = { "branch", "diff", "diagnostics" },
-                lualine_c = { "searchcount", "selectioncount" },
-                lualine_x = { "lsp_status", --[[ { "filename", path = 1, shorting_target = 20 }, ]] "encoding", "fileformat", "filetype" },
+                lualine_c = { { "searchcount", maxcount = 9999, timeout = 1000 }, "selectioncount" },
+                lualine_x = {
+                    "lsp_status",
+                    -- { "filename", path = 1, shorting_target = 20 },
+                    -- "encoding",
+                    -- "fileformat",
+                    "filetype",
+                },
+                lualine_y = {},
+                lualine_z = { "progress" },
             },
         },
     },

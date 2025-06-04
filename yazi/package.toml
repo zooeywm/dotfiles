@@ -5,8 +5,8 @@ hash = "b4c00ef6899a9563af8d577d0bb46998"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
-rev = "428d43a"
-hash = "73b1c5d91575dea1a49c66302860797"
+rev = "6a0f3f7"
+hash = "d5a74d95c2e8194ac352c5e10e81e64f"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
@@ -67,11 +67,6 @@ hash = "70898957e9e4c1ca291ff26e8fdc434"
 use = "yazi-rs/plugins:full-border"
 rev = "63f9650"
 hash = "3996fc74044bc44144b323686f887e1"
-
-[[plugin.deps]]
-use = "Reledia/glow"
-rev = "2da96e3"
-hash = "f9ee1436e3b853508d87f7d49dce56e6"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"

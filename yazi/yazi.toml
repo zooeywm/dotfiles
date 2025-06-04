@@ -25,7 +25,7 @@ max_height      = 2000
 max_width       = 3200
 sixel_fraction  = 20
 tab_size        = 2
-ueberzug_offset = [0, 0, 0, 0]
+ueberzug_offset = [10, 3, -0.5, -0.5]
 ueberzug_scale  = 1
 wrap            = "no"
 
@@ -133,7 +133,7 @@ prepend_fetchers = [
     { id = "git", name = "*", run = "git", prio = "normal" },
     { id = "git", name = "*/", run = "git", prio = "normal" },
 ]
-prepend_previewers = [{ name = "*.md", run = "glow" }]
+# prepend_previewers = [{ name = "*.md", run = "mdcat" }]
 prepend_spotters = [{ name = "*", run = "file-extra-metadata" }]
 previewers = [
     { name = "*/", run = "folder" },

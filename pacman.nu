@@ -56,9 +56,6 @@ const MANIFEST = {
     uv: "Python package manager written in rust",
     ruff: "python 格式化器",
     basedpyright: { manager: "uv", desc: "python 语言服务器", },
-    # ktfmt: { manager: "paru", desc: "kotlin 语言服务器", },
-    # hugo: "blog",
-    cmake-language-server: "Cmake Language Server",
     strace: "Bin stack trace",
     qt6-languageserver: "qt6 languageserver"
     astro-ls: {
@@ -121,7 +118,7 @@ const MANIFEST = {
     eza: "高级 ls",
     rsync: "超级复制",
     parallel-disk-usage: "磁盘空间统计",
-    yazi: { packages: ["yazi-git", "jq", "ffmpegthumbnailer", "unarchiver"], desc: "终端文件管理器" },
+    yazi: { packages: ["yazi-git", "jq", "ffmpegthumbnailer", "unarchiver", "ueberzugpp"], desc: "终端文件管理器" },
     resvg: { manager: "paru", desc: "for yazi SVG preview" }
     gparted: "分区 GUI",
     exfatprogs: "exfat 格式化工具",
