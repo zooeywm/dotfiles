@@ -24,11 +24,6 @@ rev = "63f9650"
 hash = "47865a70cade14a0b9b6bc6a54f16bdb"
 
 [[plugin.deps]]
-use = "DreamMaoMao/clipboard"
-rev = "93b73d4"
-hash = "3af52f1d5ba79a7dd9cbc1d2918feab5"
-
-[[plugin.deps]]
 use = "boydaihungst/file-extra-metadata"
 rev = "ec035d6"
 hash = "b23b7db6beb2854a689c648a38843f8c"
@@ -72,6 +67,11 @@ hash = "3996fc74044bc44144b323686f887e1"
 use = "yazi-rs/plugins:piper"
 rev = "63f9650"
 hash = "2bdc137505b8d9a0cc867a57d0e99b01"
+
+[[plugin.deps]]
+use = "zooeywm/wl-clipboard"
+rev = "318938d"
+hash = "51ff959c3c26cb3889589a0f8d394f14"
 
 [flavor]
 deps = []
