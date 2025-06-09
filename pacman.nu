@@ -238,6 +238,7 @@ const MANIFEST = {
         desc: "检查工作空间未使用的 pub 项",
     },
     cargo-insta: "懒人测试",
+    cargo-bloat: "查看依赖的空间占用情况",
 
     # arch
     nvrs: { manager: "paru", packages: ["nvrs-bin"], desc: "检查包版本" },
