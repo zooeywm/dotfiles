@@ -12,6 +12,7 @@ const MANIFEST = {
     QEMU: { packages: ["qemu-full"], },
     ventoy: "制作镜像盘",
     podman: "容器运行时",
+    buildah: "批量删除外部镜像"
 
     # kernel
     mkinitcpio-firmware: { manager: "paru", desc: "get rid of the annoying 'WARNING: Possibly missing firmware for module:' messages" },
@@ -100,6 +101,7 @@ const MANIFEST = {
     # dbeaver: "PostgreSQL 客户端",
     sqlitebrowser: "SQLite 客户端",
     wps: { packages: [ "wps-office-cn", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" },
+    # wps: { packages: [ "wps-office-cn", "wps-office-mui-zh-cn" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" },
 
     # shell
     nushell: "结构化 shell",
@@ -123,6 +125,7 @@ const MANIFEST = {
     gparted: "分区 GUI",
     exfatprogs: "exfat 格式化工具",
     # conceal: { packages: ["conceal-bin"], manager: "paru", desc: "垃圾回收站" },
+    squashfs-tools: "高压缩率只读文件系统"
 
     # utility
     man: { packages: ["man-db", "man-pages"], desc: "手册" },

@@ -25,7 +25,7 @@ def main [] {
     | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
     # | pf Templates -t ~
     | pfs [
-        starship.toml fish nushell dunst presenterm
+        starship.toml fish nushell dunst presenterm fontconfig
         # hypr 
         LazyVim neovide wezterm kitty zellij yazi git git-cliff
         gitui lazygit zathura mpv gdb pip.conf macchina paru mimeapps.list
