@@ -14,8 +14,11 @@ def main [] {
     | pf bashrc ~/.bashrc
     | pf rofi/config ~/.config/rofi
     | pf rofi/themes ~/.local/share/rofi/themes
-    | pf gtk/gtk-3.0 ~/.config/gtk-3.0
-    | pf gtk/gtk-4.0 ~/.config/gtk-4.0
+    # hard-link on
+    # | pf gtk/gtk-3.0 ~/.config/gtk-3.0
+    # | pf gtk/gtk-4.0 ~/.config/gtk-4.0
+    # | pf Xresources ~/.Xresources
+    # hard-link off
     | pf bin -t ~/.local
     | pf cargo ~/.cargo
     | pf fcitx5/config ~/.config/fcitx5
@@ -25,10 +28,10 @@ def main [] {
     | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
     # | pf Templates -t ~
     | pfs [
-        starship.toml fish nushell dunst presenterm fontconfig
-        # hypr 
+        starship.toml fish nushell dunst presenterm
+        # hard-link: hypr fontconfig mimeapps.list
         LazyVim neovide wezterm kitty zellij yazi git git-cliff
-        gitui lazygit zathura mpv gdb pip.conf macchina paru mimeapps.list
+        gitui lazygit zathura mpv gdb pip.conf macchina paru 
         mise atuin uv
     ] ~/.config
     | pfs [memo applications] ~/.local/share

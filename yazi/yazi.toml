@@ -92,9 +92,10 @@ rules = [
         "deb",
     ] },
     { name = "*", use = [
-        "terminal-here",
-        "reveal",
         "open",
+        "terminal-here",
+        "edit",
+        "reveal",
     ] },
 ]
 
@@ -154,11 +155,12 @@ previewers = [
     # PDF
     { mime = "application/pdf", run = "pdf" },
     # Archive
-    { mime = "application/{gzip,x-bzip*,xz,zstd}", run = 'piper -- bd ls "$1"' },
+    { mime = "application/{gzip,x-bzip*,xz,zstd}", run = 'piper -- zcat "$1" | tar -tvf - | sed "s/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *[^ ]* *//" | less' },
     { mime = "application/zip", run = "archive" },
     { name = "*.zip", run = "archive" },
     { mime = "application/{tar,7z-compressed,rar,iso9660-image}", run = "archive" },
-    { mime = "application/{debian*-package,redhat-package-manager,rpm,android.package-archive}", run = "archive" },
+    { mime = "application/{redhat-package-manager,rpm,android.package-archive}", run = "archive" },
+    { mime = "application/debian*-package", run = 'piper -- dpkg -c "$1" | sed "s/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *[^ ]* *//" | less' },
     { name = "*.{AppImage,appimage}", run = "archive" },
     { mime = "application/{iso9660-image,qemu-disk,ms-wim,apple-diskimage}", run = "archive" },
     { mime = "application/virtualbox-{vhd,vhdx}", run = "archive" },
