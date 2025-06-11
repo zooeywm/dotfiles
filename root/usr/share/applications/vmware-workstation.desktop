@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=VMware Workstation
 Comment=Run and manage virtual machines
-Exec=env GDK_SCALE=2 /usr/bin/vmware %U
+Exec=env GDK_SCALE=1 /usr/bin/vmware %U
 Terminal=false
 Type=Application
 Icon=vmware-workstation

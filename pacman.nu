@@ -247,7 +247,8 @@ const MANIFEST = {
     nvrs: { manager: "paru", packages: ["nvrs-bin"], desc: "检查包版本" },
     pacman-contrib: "打包工具箱",
     aurpublish: "打包钩子",
-    archlinuxcn-keyring: "",
+    archlinuxcn-keyring: "archlinuxcn-keyring",
+    alhp-keyrings: { manager: "paru", packages: ["alhp-keyring", "alhp-mirrorlist"], desc: "alhp-keyrings" },
 
     # amd
     mesa-vdpau: "Gpu video accelerator",
