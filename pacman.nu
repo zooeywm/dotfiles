@@ -35,7 +35,10 @@ const MANIFEST = {
     cargo-binutils: { manager: "cargo", desc: "Rust 二进制工具" },
     lua-language-server: "lua language server",
     stylua: "lua 格式化器",
-    taplo-cli: "toml 语言工具",
+    uv: "Python package manager written in rust",
+    tombi: { manager: "uv", desc: "toml 语言工具" },
+    basedpyright: { manager: "uv", desc: "python 语言服务器" },
+    # taplo-cli: "toml 语言工具",
     shfmt: "bash/zsh 格式化器",
     gopls: "Go 语言服务器",
     yaml-language-server: { manager: "npm" },
@@ -54,9 +57,7 @@ const MANIFEST = {
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] },
     typst: { packages: ["typst", "tinymist", "typstyle"], },
     tree-sitter-cli: "安装 tree-sitter 解析器",
-    uv: "Python package manager written in rust",
     ruff: "python 格式化器",
-    basedpyright: { manager: "uv", desc: "python 语言服务器", },
     strace: "Bin stack trace",
     qt6-languageserver: "qt6 languageserver"
     astro-ls: {
@@ -206,7 +207,7 @@ const MANIFEST = {
     traceroute: "路由显形",
     lsof: "监测端口",
     # v2raya: "飞越长城",
-    clash-verge: "飞越长城",
+    clash-verge-rev: "飞越长城",
     openssh: "ssh",
     xh: "Friendly and fast tool for sending HTTP requests"
     rustscan: "扫描端口"
@@ -247,7 +248,7 @@ const MANIFEST = {
     nvrs: { manager: "paru", packages: ["nvrs-bin"], desc: "检查包版本" },
     pacman-contrib: "打包工具箱",
     aurpublish: "打包钩子",
-    archlinuxcn-keyring: "archlinuxcn-keyring",
+    # archlinuxcn-keyring: "archlinuxcn-keyring",
     alhp-keyrings: { manager: "paru", packages: ["alhp-keyring", "alhp-mirrorlist"], desc: "alhp-keyrings" },
 
     # amd

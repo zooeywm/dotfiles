@@ -2,7 +2,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = { "saghen/blink.cmp" },
-        event = "LazyFile",
+        event = "BufReadPre",
         keys = {
             { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", ft = { "cpp", "c" }, desc = "Switch Source/Header (C/C++)" },
         },
@@ -18,77 +18,31 @@ return {
             },
             -- LSP Server Settings
             servers = {
-                lua_ls = {},
-                texlab = {},
-                taplo = {},
-                gopls = {},
-                ts_ls = {},
-                volar = {},
-                tinymist = {},
-                bashls = {},
-                jsonls = {
-                    filetypes = { "json", "jsonc", "json5" },
-                },
-                slint_lsp = {
-                    root_dir = require("lspconfig").util.root_pattern(),
-                },
-                nushell = {},
-                clangd = {
-                    root_dir = function(fname)
-                        return require("lspconfig.util").root_pattern("Makefile", "configure.ac", "configure.in", "config.h.in", "meson.build", "meson_options.txt", "build.ninja")(fname)
-                            or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname)
-                            or require("lspconfig.util").find_git_ancestor(fname)
-                    end,
-                    capabilities = {
-                        offsetEncoding = { "utf-16" },
-                    },
-                    cmd = {
-                        "clangd",
-                        "--background-index",
-                        "--clang-tidy",
-                        "--header-insertion=iwyu",
-                        "--completion-style=detailed",
-                        "--function-arg-placeholders",
-                        "--fallback-style=llvm",
-                    },
-                    init_options = {
-                        usePlaceholders = true,
-                        completeUnimported = true,
-                        clangdFileStatus = true,
-                    },
-                },
-                basedpyright = {},
-                neocmake = {},
-                hyprls = {},
-                slangd = {
-                    settings = {
-                        predefinedMacros = { "MY_VALUE_MACRO=1" },
-                        inlayHints = {
-                            deducedTypes = true,
-                            parameterNames = true,
-                        },
-                    },
-                },
-                wgsl_analyzer = {},
-                glslls = {},
-                qmlls = {
-                    cmd = { "qmlls6" },
-                },
-                astro = {},
-                cssls = {},
+                "lua_ls",
+                "texlab",
+                "tombi",
+                "gopls",
+                "ts_ls",
+                "volar",
+                "tinymist",
+                "bashls",
+                "jsonls",
+                "slint_lsp",
+                "nushell",
+                "clangd",
+                "basedpyright",
+                "neocmake",
+                "hyprls",
+                "qmlls",
+                "astro",
+                "cssls",
             },
-        },
-        setup = {
-            clangd = function(_, opts)
-                local clangd_ext_opts = LazyVim.opts("clangd_extensions.nvim")
-                require("clangd_extensions").setup(vim.tbl_deep_extend("force", clangd_ext_opts or {}, { server = opts }))
-                return false
-            end,
         },
         config = function(_, opts)
             LazyVim.lsp.setup()
 
             if vim.g.project_lspconfig ~= nil then opts.servers = vim.tbl_deep_extend("force", opts.servers, vim.g.project_lspconfig) end
+
             -- 指定诊断日志的图标
             for severity, icon in pairs(opts.diagnostics.signs.text) do
                 local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
@@ -125,31 +79,30 @@ return {
             --     )
             -- end
 
-            if vim.g.project_lspconfig ~= nil then
-                opts.servers = vim.tbl_deep_extend("force", opts.servers, vim.g.project_lspconfig)
-                opts.servers.rust_analyzer = nil
-            end
+            -- if vim.g.project_lspconfig ~= nil then
+            --     opts.servers = vim.tbl_deep_extend("force", opts.servers, vim.g.project_lspconfig)
+            --     opts.servers.rust_analyzer = nil
+            -- end
 
-            -- 指定诊断日志的图标
-            for level, icon in pairs(require("lazyvim.config").icons.diagnostics) do
-                level = "DiagnosticSign" .. level
-                vim.fn.sign_define(level, { text = icon, texthl = level, numhl = "" })
-            end
             -- 配置诊断
             vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-            local capabilities = vim.tbl_deep_extend(
-                "force",
-                vim.lsp.protocol.make_client_capabilities(),
-                require("blink.cmp").get_lsp_capabilities(), -- 令 blink.cmp 连接服务器
-                opts.capabilities or {}
-            )
+            local default_lsp_config = {
+                capabilities = vim.tbl_deep_extend(
+                    "force",
+                    vim.lsp.protocol.make_client_capabilities(),
+                    require("blink.cmp").get_lsp_capabilities(), -- 令 blink.cmp 连接服务器
+                    opts.capabilities or {}
+                ),
+            }
+            vim.lsp.config("*", default_lsp_config)
+            vim.lsp.enable(opts.servers)
 
-            for server, server_opts in pairs(opts.servers) do
-                server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
-                -- 如果语言服务器不支持语义化 token，高亮就会 fallback 到 treesitter
-                require("lspconfig")[server].setup(server_opts)
-            end
+            -- for server, server_opts in pairs(opts.servers) do
+            --     server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
+            --     -- 如果语言服务器不支持语义化 token，高亮就会 fallback 到 treesitter
+            --     require("lspconfig")[server].setup(server_opts)
+            -- end
         end,
     },
     {
@@ -161,10 +114,10 @@ return {
         event = "LspAttach",
         keys = {
             -- 跳转
-            { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
-            { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
-            { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
-            { "gi", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+            { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definitions" },
+            { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declarations" },
+            { "gT", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definitions" },
+            { "gi", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementations" },
             { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
             { "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", desc = "Prev Diagnostic" },
             { "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next Diagnostic" },
