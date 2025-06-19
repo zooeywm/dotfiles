@@ -20,7 +20,7 @@ return {
             servers = {
                 "lua_ls",
                 "texlab",
-                "tombi",
+                "taplo",
                 "gopls",
                 "ts_ls",
                 "volar",

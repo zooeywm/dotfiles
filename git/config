@@ -30,10 +30,15 @@
 [pull]
 	rebase = true
 [merge]
-    conflictStyle = diff3
+    conflictStyle = zdiff3
 [gpg]
 	format = ssh
 [commit]
 	gpgsign = true
 [fetch]
     prune = true
+    all = true
+    showForcedUpdates = true
+    parallel = 5
+[remote "origin"]
+	tagOpt = --tags

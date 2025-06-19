@@ -8,62 +8,68 @@ return {
             { "<leader>lf", "<cmd>Guard fmt<cr>", desc = "异步格式化" },
         },
         opts = {
-            lua = {
-                cmd = "stylua",
-                args = { "--column-width", "200", "--indent-type", "Spaces", "--collapse-simple-statement", "Always", "--sort-requires", "-" },
-                stdin = true,
+            fmt = {
+
+                lua = {
+                    cmd = "stylua",
+                    args = { "--column-width", "200", "--indent-type", "Spaces", "--collapse-simple-statement", "Always", "--sort-requires", "-" },
+                    stdin = true,
+                },
+                python = "ruff",
+                toml = "taplo",
+                sh = {
+                    cmd = "shfmt",
+                    args = { "-i", "4" },
+                    stdin = true,
+                },
+                ["c,cpp"] = "clang-format",
+                go = "gofmt",
+                ["json,jsonc,json5,javascript,typescript,javascriptreact,typescriptreact,css,graphql"] = {
+                    cmd = "biome",
+                    args = { "format", "--indent-style=space", "--stdin-file-path" },
+                    fname = true,
+                    stdin = true,
+                },
+                -- kotlin = {
+                --     cmd = "ktfmt",
+                --     args = { "--kotlinlang-style", "-" },
+                --     stdin = true,
+                -- },
+                ["vue,xml,yaml,html,astro,markdown,scss,less"] = "prettier",
+                cs = {
+                    cmd = "dotnet-csharpier",
+                    args = { "--write-stdout" },
+                },
+                ["jsonc,json5"] = {
+                    cmd = "prettier",
+                    args = { "--trailing-comma", "none", "--stdin-filepath" },
+                    fname = true,
+                    stdin = true,
+                },
+                typst = {
+                    cmd = "typstyle",
+                    stdin = true,
+                },
+                slint = {
+                    cmd = "slint-lsp",
+                    args = { "format" },
+                    stdin = true,
+                    fname = true,
+                },
+                rust = {
+                    cmd = "rustfmt",
+                    -- args = { "+nightly", "--edition", "2024", "--emit", "stdout" },
+                    args = { "--edition", "2024", "--emit", "stdout" },
+                    stdin = true,
+                },
+                qml = {
+                    cmd = "qmlformat",
+                    fname = true,
+                    stdin = true,
+                },
             },
-            python = "ruff",
-            toml = "taplo",
-            sh = {
-                cmd = "shfmt",
-                args = { "-i", "4" },
-                stdin = true,
-            },
-            ["c,cpp"] = "clang-format",
-            go = "gofmt",
-            ["json,jsonc,json5,javascript,typescript,javascriptreact,typescriptreact,css,graphql"] = {
-                cmd = "biome",
-                args = { "format", "--indent-style=space", "--stdin-file-path" },
-                fname = true,
-                stdin = true,
-            },
-            -- kotlin = {
-            --     cmd = "ktfmt",
-            --     args = { "--kotlinlang-style", "-" },
-            --     stdin = true,
-            -- },
-            ["vue,xml,yaml,html,astro,markdown,scss,less"] = "prettier",
-            cs = {
-                cmd = "dotnet-csharpier",
-                args = { "--write-stdout" },
-            },
-            ["jsonc,json5"] = {
-                cmd = "prettier",
-                args = { "--trailing-comma", "none", "--stdin-filepath" },
-                fname = true,
-                stdin = true,
-            },
-            typst = {
-                cmd = "typstyle",
-                stdin = true,
-            },
-            slint = {
-                cmd = "slint-lsp",
-                args = { "format" },
-                stdin = true,
-                fname = true,
-            },
-            rust = {
-                cmd = "rustfmt",
-                -- args = { "+nightly", "--edition", "2024", "--emit", "stdout" },
-                args = { "--edition", "2024", "--emit", "stdout" },
-                stdin = true,
-            },
-            qml = {
-                cmd = "qmlformat",
-                fname = true,
-                stdin = true,
+            lint = {
+                typos = "*",
             },
         },
         config = function(_, opts)
@@ -78,8 +84,8 @@ return {
             -- local lint = require("guard.lint")
             -- -- ft("cpp"):lint("clang-tidy")
             -- ft("cpp"):lint({
-            --     cmd = "clazy-standalone",
-            --     -- cmd = "clang-tidy",
+            --     -- cmd = "clazy-standalone",
+            --     cmd = "clang-tidy",
             --     fname = true,
             --     stdin = false,
             --     parse = lint.from_regex({
