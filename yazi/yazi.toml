@@ -66,6 +66,7 @@ rules = [
         "edit",
     ] },
     { mime = "image/*", use = [
+        "open",
         "images",
     ] },
     { mime = "inode/directory", use = [
