@@ -8,7 +8,7 @@
   "reload_style_on_change": true,
   "height": 50,
   "output": "eDP-1",
-  "modules-left": ["hyprland/submap", "group/motherboard", "tray", "mpris"],
+  "modules-left": ["hyprland/submap", "group/motherboard", "tray"],
   "modules-center": ["hyprland/workspaces", "wlr/taskbar"],
   "modules-right": [
     "network",

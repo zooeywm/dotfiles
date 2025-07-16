@@ -36,9 +36,10 @@
 [commit]
 	gpgsign = true
 [fetch]
-    prune = true
+	prune = true
     all = true
     showForcedUpdates = true
     parallel = 5
+	tags = true
 [remote "origin"]
-	tagOpt = --tags
+	tagopt = --force

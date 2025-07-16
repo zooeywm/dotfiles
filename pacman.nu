@@ -37,7 +37,7 @@ const MANIFEST = {
     stylua: "lua 格式化器",
     uv: "Python package manager written in rust",
     tombi: { manager: "uv", desc: "toml 语言工具" },
-    basedpyright: { manager: "uv", desc: "python 语言服务器" },
+    # basedpyright: { manager: "uv", desc: "python 语言服务器" },
     # taplo-cli: "toml 语言工具",
     shfmt: "bash/zsh 格式化器",
     gopls: "Go 语言服务器",
@@ -67,7 +67,6 @@ const MANIFEST = {
     },
 
     # desktop
-    xdg-user-dirs: "规范目录",
     qt-theme: { packages: ["qt6ct", "qt5ct", "kvantum"] },
     kitty: "kitty",
     wezterm: { packages: ["wezterm-git"], desc: "现代终端模拟器" },
@@ -118,6 +117,7 @@ const MANIFEST = {
     aichat: "LLM CLI",
 
     # filesystem
+    xdg-user-dirs: "规范目录",
     eza: "高级 ls",
     rsync: "超级复制",
     parallel-disk-usage: "磁盘空间统计",
@@ -159,7 +159,6 @@ const MANIFEST = {
     git-cliff: "变更日志生成器",
     gitoxide: "锈化 git",
     git-filter-repo: "过滤 git 项目",
-    serie: "分支树",
 
     # data
     p7zip: "7z",
@@ -170,7 +169,6 @@ const MANIFEST = {
     # media
     imagemagick: "图片瑞士军刀",
     mpv: "看视频",
-    viu: "终端看图",
     yt-dlp: "下载 Youtube 视频",
     dagtoc: { packages: ["dagtoc-bin"], manager: "paru", desc: "操作 PDF 目录" },
     pandoc: { packages: ["pandoc-bin"], desc: "LaTex 渲染器" },
@@ -203,6 +201,7 @@ const MANIFEST = {
 
     # network
     networkmanager: { packages: [ "networkmanager", "stalonetray", "network-manager-applet"] },
+    inetutils: "telnet",
     gping: "图形化 ping",
     traceroute: "路由显形",
     lsof: "监测端口",

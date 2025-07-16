@@ -23,7 +23,7 @@ function M.vim.current_buffer_path() return vim.api.nvim_buf_get_name(0) end
 function M.path.filename(path) return string.match(path, "([^/]+)/?$") end
 
 -- 判断字符串末尾是否匹配指定模式
-function M.string.ends_with(str, pat) return str:sub(-#pat) == pat end
+function M.string.ends_with(str, pat) return str:sub(- #pat) == pat end
 
 -- 检测缓冲区是否有treesitter解析器，是则执行所传入函数
 function M.treesitter.try_exec(f)
