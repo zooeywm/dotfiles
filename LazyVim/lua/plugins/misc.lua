@@ -67,10 +67,10 @@ return {
                 "hyprlang",
             }, {
                 RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                rgb_fn = true,   -- CSS rgb() and rgba() functions
+                hsl_fn = true,   -- CSS hsl() and hsla() functions
+                css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
             })
         end,
     },
@@ -84,10 +84,10 @@ return {
             { "<leader>gs", false },
             { "<leader>gS", false },
             { "<leader>gd", false },
-            { "<leader>fF", function() Snacks.picker.files() end, desc = "Find Files (cwd)" },
+            { "<leader>fF", function() Snacks.picker.files() end,                                             desc = "Find Files (cwd)" },
             { "<leader>ff", function() Snacks.picker.files({ cwd = require("lazyvim.util").root.get() }) end, desc = "Find Files (Root Dir)" },
-            { "<leader>sg", function() Snacks.picker.grep({ cwd = require("lazyvim.util").root.get() }) end, desc = "Grep (cwd)" },
-            { "<leader>sG", function() Snacks.picker.grep() end, desc = "Grep (Root dir)" },
+            { "<leader>sg", function() Snacks.picker.grep({ cwd = require("lazyvim.util").root.get() }) end,  desc = "Grep (cwd)" },
+            { "<leader>sG", function() Snacks.picker.grep() end,                                              desc = "Grep (Root dir)" },
             -- { "<leader>gf", false },
         },
         opts = function(_, opts)
