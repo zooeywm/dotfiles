@@ -95,6 +95,8 @@ const MANIFEST = {
     satty: { manager: "paru", desc: "Screen cut editor" },
     hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] },
     rofi: "Menu",
+    # https://github.com/casualsnek/waydroid_script
+    waydroid: { packages: [ "lzip", "waydroid" ]}
 
     # clients
     zen-browser: "Browser using the firefox core vertical label bar",
