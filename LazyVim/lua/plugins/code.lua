@@ -144,6 +144,9 @@ return {
             sources = {
                 default = { "copilot" },
                 providers = {
+                    lsp = {
+                        fallbacks = {},
+                    },
                     copilot = {
                         name = "copilot",
                         module = "blink-cmp-copilot",

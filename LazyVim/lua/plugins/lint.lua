@@ -4,7 +4,7 @@ return {
         opts = {
             events = { "BufNewFile", "BufReadPre", "BufWritePost", "BufReadPost", "InsertLeave" },
             linters_by_ft = {
-                cpp = { --[[ "clazy", ]] --[[ "cppcheck" ]] },
+                cpp = { --[[ "clazy", ]] "cppcheck" },
                 bash = "bash",
                 ["*"] = { "codespell", "typos" },
             },
