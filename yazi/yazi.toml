@@ -80,7 +80,7 @@ rules = [
     { mime = "application/{,g}zip", use = [
         "extract",
     ] },
-    { name = "*.zip", use = [
+    { url = "*.zip", use = [
         "extract",
     ] },
     { mime = "application/{tar,bzip*,7z-compressed,xz,rar}", use = [
@@ -92,7 +92,7 @@ rules = [
     { mime = "application/{vnd.debian.binary-package,debian.binary-package}", use = [
         "deb",
     ] },
-    { name = "*", use = [
+    { url = "*", use = [
         "open",
         "terminal-here",
         "edit",
@@ -111,10 +111,10 @@ suppress_preload = false
 [plugin]
 fetchers = [
     # Mimetype
-    { id = "mime", name = "*", run = "mime", prio = "high" },
+    { id = "mime", url = "*", run = "mime", prio = "high" },
 ]
 preloaders = [
-    { name = "~/sshfs/**", run = "noop" },
+    { url = "~/sshfs/**", run = "noop" },
     # Image
     { mime = "image/svg", run = "magick" },
     { mime = "image/{avif,hei?,jxl}", run = "magick" },
@@ -131,14 +131,14 @@ preloaders = [
     # { mime = "inode/empty", run = "empty" },
 ]
 prepend_fetchers = [
-    { id = "mime-ext", name = "*", run = "mime-ext", prio = "high" },
-    { id = "git", name = "*", run = "git", prio = "normal" },
-    { id = "git", name = "*/", run = "git", prio = "normal" },
+    { id = "mime-ext", url = "*", run = "mime-ext", prio = "high" },
+    { id = "git", url = "*", run = "git", prio = "normal" },
+    { id = "git", url = "*/", run = "git", prio = "normal" },
 ]
-# prepend_previewers = [{ name = "*.md", run = "mdcat" }]
-prepend_spotters = [{ name = "*", run = "file-extra-metadata" }]
+# prepend_previewers = [{ url = "*.md", run = "mdcat" }]
+prepend_spotters = [{ url = "*", run = "file-extra-metadata" }]
 previewers = [
-    { name = "*/", run = "folder" },
+    { url = "*/", run = "folder" },
     # Code
     { mime = "text/*", run = "code" },
     { mime = "application/{mbox,javascript,wine-extension-ini}", run = "code" },
@@ -158,22 +158,22 @@ previewers = [
     # Archive
     { mime = "application/{gzip,x-bzip*,xz,zstd}", run = 'piper -- zcat "$1" | tar -tvf - | sed "s/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *[^ ]* *//" | less' },
     { mime = "application/zip", run = "archive" },
-    { name = "*.zip", run = "archive" },
+    { url = "*.zip", run = "archive" },
     { mime = "application/{tar,7z-compressed,rar,iso9660-image}", run = "archive" },
     { mime = "application/{redhat-package-manager,rpm,android.package-archive}", run = "archive" },
     { mime = "application/debian*-package", run = 'piper -- dpkg -c "$1" | sed "s/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *[^ ]* *//" | less' },
-    { name = "*.{AppImage,appimage}", run = "archive" },
+    { url = "*.{AppImage,appimage}", run = "archive" },
     { mime = "application/{iso9660-image,qemu-disk,ms-wim,apple-diskimage}", run = "archive" },
     { mime = "application/virtualbox-{vhd,vhdx}", run = "archive" },
-    { name = "*.{img,fat,ext,ext2,ext3,ext4,squashfs,ntfs,hfs,hfsx}", run = "archive" },
+    { url = "*.{img,fat,ext,ext2,ext3,ext4,squashfs,ntfs,hfs,hfsx}", run = "archive" },
     # Font
     { mime = "font/*", run = "font" },
     { mime = "application/ms-opentype", run = "font" },
     # Fallback
-    { name = "*", run = "file" },
+    { url = "*", run = "file" },
 ]
 spotters = [
-    { name = "*/", run = "folder" },
+    { url = "*/", run = "folder" },
     # Code
     { mime = "text/*", run = "code" },
     { mime = "*/{xml,javascript,wine-extension-ini}", run = "code" },
@@ -183,7 +183,7 @@ spotters = [
     # Video
     { mime = "video/*", run = "video" },
     # Fallback
-    { name = "*", run = "file" },
+    { url = "*", run = "file" },
 ]
 
 [input]
