@@ -36,7 +36,7 @@ const MANIFEST = {
     lua-language-server: "lua language server",
     stylua: "lua 格式化器",
     uv: "Python package manager written in rust",
-    tombi: { manager: "uv", desc: "toml 语言工具" },
+    tombi: "toml 语言工具",
     # basedpyright: { manager: "uv", desc: "python 语言服务器" },
     # taplo-cli: "toml 语言工具",
     shfmt: "bash/zsh 格式化器",
@@ -153,6 +153,8 @@ const MANIFEST = {
     pueue: "守护大任务",
     hexyl: "hex 查看器",
     libtree: "程序的库依赖树视图",
+    cyme: "usb 设备查看"
+    qpwgraph: "音频设备拓扑图"
 
     # git
     # gitui: "git TUI",

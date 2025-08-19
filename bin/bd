@@ -70,7 +70,7 @@ def "main rar" [item: string] {
 }
 
 # 压缩至 squashfs + zstd
-def "main squashfs" [item: string] {Add commentMore actions
+def "main squashfs" [item: string] {
     let basename = $item | path basename
     mksquashfs $item $"($basename).squashfs" -xattrs -comp zstd -Xcompression-level 22 -b 1M
 }
@@ -83,10 +83,10 @@ def "main x" [...archives: string] {
                 bsdtar -xvf $archive
             },
             '7z' => { 7za x $archive },
-            'rar' => { unrar-free x $archive },
+            'rar' => { unrar x $archive },
             'deb' => { ar x $archive },
             'squashfs' => {
-                let stem = $archive | path parse | get stemAdd commentMore actions
+                let stem = $archive | path parse | get stem
                 unsquashfs -dest $stem $archive
             }
         }
@@ -101,5 +101,9 @@ def "main ls" [archive: string] {
         },
         'rar' => { bsdtar -tf $archive | tac | tree -C --fromfile },
         'deb' => { ar t $archive },
+        'squashfs' => {
+            let stem = $archive | path parse | get stem
+            unsquashfs -dest $stem -ls $archive | tree -C --fromfile
+        },
     }
 }

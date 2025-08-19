@@ -45,3 +45,6 @@ $ opt-b: printf '\n-b'
 git worktree remove <opt-f> <worktree-path>
 $ opt-f: printf '\n--force'
 $ worktree-path: git worktree list --- --column 1
+
+# 最小化拉取
+git clone --depth=1 --sparse --filter=blob:none <url>

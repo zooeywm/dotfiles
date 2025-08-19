@@ -8,7 +8,8 @@ return {
         },
         opts = {
             inlay_hints = {
-                enabled = false,
+                enabled = true,
+                exclude = { "rust" },
             },
             codelens = {
                 enabled = true,
@@ -20,7 +21,7 @@ return {
             servers = {
                 "lua_ls",
                 "texlab",
-                "taplo",
+                "tombi",
                 "gopls",
                 "ts_ls",
                 "volar",
