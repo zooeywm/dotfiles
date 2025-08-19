@@ -37,7 +37,7 @@ return {
             sections = {
                 lualine_a = { "mode" },
                 lualine_b = { "branch", "diff", "diagnostics" },
-                lualine_c = { { "searchcount", maxcount = 9999, timeout = 1000 }, "selectioncount" },
+                lualine_c = { { "searchcount", maxcount = 999999, timeout = 1000 }, "selectioncount" },
                 lualine_x = {
                     "lsp_status",
                     -- { "filename", path = 1, shorting_target = 20 },

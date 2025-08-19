@@ -111,13 +111,14 @@ return {
             { "Q", desc = "Play Recording" },
         },
     },
-    {
-        "tzachar/highlight-undo.nvim",
-        event = "VeryLazy",
-        opts = {
-            duration = 100,
-        },
-    },
+    -- {
+    --     "tzachar/highlight-undo.nvim",
+    --     event = "VeryLazy",
+    --     opts = {
+    --         duration = 50,
+    --         hlgroup = "HighlightUndo",
+    --     },
+    -- },
     {
         "hotoo/pangu.vim",
         config = function() vim.g.pangu_rule_date = 1 end,
