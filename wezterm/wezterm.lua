@@ -15,10 +15,10 @@ return {
         "Noto Sans CJK SC",
         "DejaVu Sans Mono",
         "Noto Sans Symbols2",
-        "Noto Serif Grantha",    -- 古印度文
+        "Noto Serif Grantha", -- 古印度文
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
-    font_size = 20,
+    font_size = 12,
     -- color_scheme = "Everforest Light (Gogh)",
     -- color_scheme = "Gruvbox light, medium (base16)",
     color_scheme = "Ayu Dark (Gogh)",
@@ -41,15 +41,15 @@ return {
     hide_tab_bar_if_only_one_tab = true,
     scrollback_lines = 10000,
     keys = {
-        { key = "t", mods = "CTRL",      action = wezterm.action.SpawnWindow },
+        { key = "t", mods = "CTRL", action = wezterm.action.SpawnWindow },
         -- { key = "u", mods = "ALT", action = wezterm.action.QuickSelectArgs({ patterns = { ".*" } }) },
-        { key = "y", mods = "ALT",       action = act.ScrollByLine(-1) },
-        { key = "e", mods = "ALT",       action = act.ScrollByLine(1) },
+        { key = "y", mods = "ALT", action = act.ScrollByLine(-1) },
+        { key = "e", mods = "ALT", action = act.ScrollByLine(1) },
         { key = "k", mods = "ALT|SHIFT", action = act.ScrollByLine(-1) },
         { key = "j", mods = "ALT|SHIFT", action = act.ScrollByLine(1) },
-        { key = "u", mods = "ALT",       action = act.ScrollByLine(-10) },
-        { key = "d", mods = "ALT",       action = act.ScrollByLine(10) },
-        { key = "g", mods = "ALT",       action = act.ScrollToTop },
+        { key = "u", mods = "ALT", action = act.ScrollByLine(-10) },
+        { key = "d", mods = "ALT", action = act.ScrollByLine(10) },
+        { key = "g", mods = "ALT", action = act.ScrollToTop },
         { key = "g", mods = "ALT|SHIFT", action = act.ScrollToBottom },
         { key = "u", mods = "ALT|SHIFT", action = wezterm.action.ActivateCopyMode },
         {
@@ -69,9 +69,13 @@ return {
             }),
         },
         {
-            key = 'K',
-            mods = 'CTRL|SHIFT',
-            action = act.ClearScrollback 'ScrollbackAndViewport',
+            key = "K",
+            mods = "CTRL|SHIFT",
+            action = act.ClearScrollback("ScrollbackAndViewport"),
         },
+        { key = "{", mods = "SHIFT|ALT", action = act.MoveTabRelative(-1) },
+        { key = "}", mods = "SHIFT|ALT", action = act.MoveTabRelative(1) },
+        { key = "-", mods = "ALT", action = act.ActivateTabRelative(-1) },
+        { key = "=", mods = "ALT", action = act.ActivateTabRelative(1) },
     },
 }

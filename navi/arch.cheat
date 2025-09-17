@@ -1,5 +1,7 @@
 % arch
+
 $ local-package: pacman -Qq
+$ file: fd -c='always' -H -E='.git' -I --type file .
 $ clock-freq: echo -e "1.60GHz\n3.80GHz" | awk '{print $NF}'
 
 ; 包查询 -Q/F

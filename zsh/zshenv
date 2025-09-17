@@ -44,6 +44,9 @@ export MOLD_JOBS=1
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive  # see https://nixos.wiki/wiki/Locales
 export NINJA_STATUS=$'\e[35m[%f/%t]\e[0m '
 
+# Repo
+export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
+
 ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
 # executable files path

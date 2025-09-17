@@ -10,27 +10,6 @@ return {
             },
         },
     },
-    {
-        "JuanZoran/Trans.nvim",
-        dependencies = { "kkharji/sqlite.lua" },
-        build = function() require("Trans").install() end,
-        keys = {
-            { "<leader>T", "<cmd>Translate<cr>", mode = { "n", "x" }, desc = "󰊿 Translate" },
-        },
-        opts = {
-            frontend = {
-                default = {
-                    animation = {
-                        open = "fold",
-                        close = "fold",
-                    },
-                },
-                hover = {
-                    width = 80,
-                },
-            },
-        },
-    },
     { "lambdalisue/suda.vim" },
     {
         "mistricky/codesnap.nvim",

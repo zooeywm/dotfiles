@@ -3,6 +3,7 @@ local utils = require("utils")
 return {
     {
         "akinsho/bufferline.nvim",
+        dependencies = { "catppuccin/nvim" },
         keys = {
             { "<leader>bj", "<cmd>BufferLinePick<cr>", desc = "Jump" },
             { "<leader>bl", "<cmd>BufferLineCloseRight<cr>", desc = "Close all at right" },
@@ -28,6 +29,10 @@ return {
                 sort_by = "insert_after_current",
             },
         },
+        init = function()
+            local bufline = require("catppuccin.groups.integrations.bufferline")
+            bufline.get = bufline.get_theme
+        end,
     },
     {
         "mbbill/undotree",

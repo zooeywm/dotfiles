@@ -43,3 +43,5 @@
 	tags = true
 [remote "origin"]
 	tagopt = --force
+[color]
+	ui = auto
