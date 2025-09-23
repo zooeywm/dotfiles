@@ -7,4 +7,5 @@ return {
     { "nvim-neo-tree/neo-tree.nvim", enabled = false },
     { "lukas-reineke/indent-blankline.nvim", enabled = false },
     { "nvim-mini/mini.indentscope", enabled = false },
+    { "rafamadriz/friendly-snippets", enabled = false },
 }

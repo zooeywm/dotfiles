@@ -49,7 +49,6 @@ const MANIFEST = {
     bash-language-server: { manager: "npm" },
     sccache: "编译缓存",
     kondo: "扫除编译产物",
-    cargo-flamegraph: "绘制火焰图及 cargo 配套插件",
     clang: { packages: ["clang", "llvm"], desc: "C/C++工具链" },
     slint-lsp: { manager: "cargo", desc: "slint lsp" },
     plocate: "locate 的并行版本",
@@ -102,7 +101,7 @@ const MANIFEST = {
     zen-browser: "Browser using the firefox core vertical label bar",
     # dbeaver: "PostgreSQL 客户端",
     sqlitebrowser: "SQLite 客户端",
-    wps: { packages: [ "wps-office-cn", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" },
+    wps: { packages: [ "wps-office-cn-bwrap", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" },
     # wps: { packages: [ "wps-office-cn", "wps-office-mui-zh-cn" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" },
 
     # shell
@@ -169,6 +168,7 @@ const MANIFEST = {
     unrar: "解压 RAR",
     zip: { packages: ["zip", "unzip"] },
     qbittorrent: "下载种子",
+    dufs: "文件服务器",
 
     # media
     imagemagick: "图片瑞士军刀",
@@ -234,9 +234,9 @@ const MANIFEST = {
     cargo-audit: { packages: ["cargo-audit", "cargo-auditable"], desc: "审计" },
     cargo-depgraph: "依赖图",
     cargo-update: "更新 cargo 安装的应用",
-    cargo-cache: { manager: "cargo", desc: "管理缓存" },
+    cargo-cache: "管理缓存",
     cargo-zigbuild: "无痛链接指定版本 glibc",
-    cargo-wizard: { manager: "cargo", desc: "编译配置" },
+    cargo-wizard: "编译配置",
     cargo-binstall: "下载 crate 的二进制",
     cargo-get: { manager: "cargo", desc: "读取 Cargo.toml 信息" },
     cargo-workspace-unused-pub: {

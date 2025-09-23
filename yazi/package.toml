@@ -30,7 +30,7 @@ hash = "e65cd1dea5feb9ca58c33b870ca3070"
 
 [[plugin.deps]]
 use = "TD-Sky/sudo"
-rev = "f35afcb"
+rev = "8148f91"
 hash = "5db5b16dc96e971f0560a31999271065"
 
 [[plugin.deps]]
@@ -72,6 +72,11 @@ hash = "a20327710c3a8d37ee0972128dcb6a31"
 use = "zooeywm/wl-clipboard"
 rev = "318938d"
 hash = "51ff959c3c26cb3889589a0f8d394f14"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:types"
+rev = "d1c8baa"
+hash = "1e047e1b13b5e3fc6ab1f5d0d04a14e2"
 
 [flavor]
 deps = []

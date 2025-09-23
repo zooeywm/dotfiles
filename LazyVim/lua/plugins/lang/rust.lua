@@ -59,6 +59,9 @@ return {
                             },
                             workspace = false,
                         },
+                        cachePriming = {
+                            enable = false,
+                        },
                         checkOnSave = true,
                         inlayHints = {
                             typeHints = {

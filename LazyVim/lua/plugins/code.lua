@@ -44,10 +44,7 @@ return {
                 fname = true,
                 stdin = true,
             },
-            typst = {
-                cmd = "typstyle",
-                stdin = true,
-            },
+            typst = "typstyle",
             slint = {
                 cmd = "slint-lsp",
                 args = { "format" },
@@ -135,6 +132,9 @@ return {
         "saghen/blink.cmp",
         dependencies = { "xzbdmw/colorful-menu.nvim", "giuxtaposition/blink-cmp-copilot" },
         opts = {
+            snippets = {
+                preset = "luasnip",
+            },
             sources = {
                 default = { "copilot" },
                 providers = {
@@ -215,5 +215,21 @@ return {
                 ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
             },
         },
+    },
+    {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*",
+        keys = {
+            { "<C-l>", "<Plug>luasnip-next-choice", mode = { "i", "s" } },
+            { "<C-h>", "<Plug>luasnip-prev-choice", mode = { "i", "s" } },
+        },
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load({
+                paths = { vim.fn.stdpath("config") .. "/snippets" },
+            })
+
+            local luasnip = require("luasnip")
+            luasnip.add_snippets("rust", require("plugins.snippets.rust"))
+        end,
     },
 }
