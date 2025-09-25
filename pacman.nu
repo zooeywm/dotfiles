@@ -2,29 +2,29 @@
 
 const MANIFEST = {
     # 社交
-    QQ: { packages: ["linuxqq-nt-bwrap"], manager: "paru" },
-    telegram: { packages: ["telegram-desktop"], },
-    wechat: { packages: ["wechat"], manager: "paru", },
-    wemeet: { packages: ["wemeet-bin"], manager: "paru", },
-    feishu: { packages: ["feishu-bin"], manager: "paru", },
+    telegram-desktop: "telegram",
+    thunderbird: "电子邮件客户端",
+    QQ: { packages: ["linuxqq-nt-bwrap"], manager: "paru", desc: "QQ（沙盒）" },
+    wechat: { packages: ["wechat-universal-bwrap"], manager: "paru", desc: "微信（沙盒）" },
+    wemeet: { packages: ["wemeet-bin"], manager: "paru", desc: "腾讯会议（沙盒）" },
+    feishu: { packages: ["feishu-portable"], manager: "paru", desc: "飞书（沙盒）" },
 
     # OS
-    QEMU: { packages: ["qemu-full"], },
+    qemu-full: "QEMU",
     ventoy: "制作镜像盘",
     podman: "容器运行时",
     buildah: "批量删除外部镜像"
 
     # kernel
-    mkinitcpio-firmware: { manager: "paru", desc: "get rid of the annoying 'WARNING: Possibly missing firmware for module:' messages" },
-    sof-firmware: "Audio card firmware",
     linux-headers: "内核头文件",
+    sof-firmware: "Audio card firmware",
+    # vulkan-intel: "vulkan 的 intel 驱动",
+    mkinitcpio-firmware: { manager: "paru", desc: "get rid of the annoying 'WARNING: Possibly missing firmware for module:' messages" },
     pipewire: { packages: [ "pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2" ], desc: "音频系统" },
     chrony: "Time sync daemon",
 
     # PL
     gdb: "GNU 调试器",
-    neovim: "editor",
-    neovide: "neovim gui",
     lldb: "LLVM 调试器",
     mold: "现代链接器",
     rust-script: "rust 脚本解释器",
@@ -35,43 +35,40 @@ const MANIFEST = {
     cargo-binutils: { manager: "cargo", desc: "Rust 二进制工具" },
     lua-language-server: "lua language server",
     stylua: "lua 格式化器",
-    uv: "Python package manager written in rust",
     tombi: "toml 语言工具",
-    # basedpyright: { manager: "uv", desc: "python 语言服务器" },
-    # taplo-cli: "toml 语言工具",
     shfmt: "bash/zsh 格式化器",
     gopls: "Go 语言服务器",
     yaml-language-server: { manager: "npm" },
+    vscode-json-language-server: { manager: "npm", packages: ["vscode-langservers-extracted"] },
     volar: { manager: "npm", packages: ["@vue/language-server"] },
-    prettier: { manager: "npm", packages: ["prettier", "@prettier/plugin-xml"], desc: "前端格式化器" },
     biome: "前端格式化器"
+    prettier: { manager: "npm", packages: ["prettier", "@prettier/plugin-xml"], desc: "前端格式化器" },
     mise: "管理语言工具链",
     bash-language-server: { manager: "npm" },
     sccache: "编译缓存",
     kondo: "扫除编译产物",
     clang: { packages: ["clang", "llvm"], desc: "C/C++工具链" },
-    slint-lsp: { manager: "cargo", desc: "slint lsp" },
-    plocate: "locate 的并行版本",
-    pacfiles: { manager: "cargo", desc: "pacfiles is a pacman -F alternative that runs blazingly fast" },
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] },
     typst: { packages: ["typst", "tinymist", "typstyle"], },
     tree-sitter-cli: "安装 tree-sitter 解析器",
+    uv: "Python package manager written in rust",
     ruff: "python 格式化器",
+    basedpyright: { manager: "uv", desc: "python 语言服务器" },
     strace: "Bin stack trace",
-    qt6-languageserver: "qt6 languageserver"
-    astro-ls: {
-        manager: "npm",
-        packages: ["@astrojs/language-server"]
-        desc: "AstroJS 的语言服务器",
-    },
+    astro-ls: { manager: "npm", packages: ["@astrojs/language-server"] desc: "AstroJS 的语言服务器", },
+    qt6-languageserver: "qt6 languageserver",
+    slint-lsp-bin: { manager: "paru", desc: "slint lsp" },
 
     # desktop
     qt-theme: { packages: ["qt6ct", "qt5ct", "kvantum"] },
-    kitty: "kitty",
     wezterm: { packages: ["wezterm-git"], desc: "现代终端模拟器" },
+    sddm: "会话管理器",
     dolphin: { packages: ["dolphin", "ffmpegthumbs", "kdegraphics-thumbnailers"], desc: "KDE 文件管理器" },
     spectacle: "KDE 截图",
     fcitx: { packages: ["fcitx5-im", "fcitx5-chinese-addons", "fcitx5-pinyin-zhwiki"], desc: "小企鹅输入法" },
+    zen-browser: "Browser using the firefox core vertical label bar",
+    # dbeaver: "PostgreSQL 客户端",
+    sqlitebrowser: "SQLite 客户端",
     nerd-fonts: "书呆子字体",
     noto-fonts: { packages: [ "noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk" ], desc: "零豆腐块字体" },
     polkit-kde-agent: "Authorization Panel",
@@ -79,12 +76,12 @@ const MANIFEST = {
     bluez: "Bluetooth kernel",
     bluez-utils: "Bluetooth cli",
     overskride: { manager: "paru", desc: "Bluetooth GUI" },
-    kalker: { manager: "paru", desc: "Terminal calculator" }
+    kalker: { manager: "paru", desc: "Terminal calculator" },
+    wps: { packages: [ "wps-office-cn-bwrap", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" },
 
     ## wayland
-    # wl-clipboard: "剪贴板",
-    # cliphist: "剪贴板历史",
-    copyq: "wayland 剪贴板客户端"
+    wl-clipboard: "剪贴板",
+    cliphist: "剪贴板历史",
     swww: "Wallpaper engine",
     waybar: "Status bar",
     grim: "Screen cut",
@@ -95,14 +92,7 @@ const MANIFEST = {
     hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] },
     rofi: "Menu",
     # https://github.com/casualsnek/waydroid_script
-    waydroid: { packages: [ "lzip", "waydroid" ]}
-
-    # clients
-    zen-browser: "Browser using the firefox core vertical label bar",
-    # dbeaver: "PostgreSQL 客户端",
-    sqlitebrowser: "SQLite 客户端",
-    wps: { packages: [ "wps-office-cn-bwrap", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" },
-    # wps: { packages: [ "wps-office-cn", "wps-office-mui-zh-cn" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" },
+    waydroid: { packages: [ "lzip", "waydroid" ]},
 
     # shell
     nushell: "结构化 shell",
@@ -113,9 +103,6 @@ const MANIFEST = {
     zellij: "终端复用器",
     bash-completion: "bash 补全",
     zsh: { packages: ["zsh", "zsh-completions"], desc: "zsh 及额外补全包" },
-    terminus-font: "Outer terminal font",
-    halp: "命令行选项标准化检验",
-    aichat: "LLM CLI",
 
     # filesystem
     xdg-user-dirs: "规范目录",
@@ -123,11 +110,11 @@ const MANIFEST = {
     rsync: "超级复制",
     parallel-disk-usage: "磁盘空间统计",
     yazi: { packages: ["yazi-git", "jq", "ffmpegthumbnailer", "unarchiver", "ueberzugpp"], desc: "终端文件管理器" },
-    resvg: { manager: "paru", desc: "for yazi SVG preview" }
+    resvg: { manager: "paru", desc: "for yazi SVG preview" },
     gparted: "分区 GUI",
     exfatprogs: "exfat 格式化工具",
     # conceal: { packages: ["conceal-bin"], manager: "paru", desc: "垃圾回收站" },
-    squashfs-tools: "高压缩率只读文件系统"
+    squashfs-tools: "高压缩率只读文件系统",
 
     # utility
     man: { packages: ["man-db", "man-pages"], desc: "手册" },
@@ -152,11 +139,14 @@ const MANIFEST = {
     pueue: "守护大任务",
     hexyl: "hex 查看器",
     libtree: "程序的库依赖树视图",
-    cyme: "usb 设备查看"
-    qpwgraph: "音频设备拓扑图"
+    halp: "命令行选项标准化检验",
+    terminus-font: "Outer terminal font",
+    aichat: "LLM CLI",
+    neovim: "editor",
+    neovide: "neovim gui",
+    plocate: "locate 的并行版本",
 
     # git
-    # gitui: "git TUI",
     lazygit: "git TUI",
     difftastic: "语言 diff",
     git-cliff: "变更日志生成器",
@@ -164,7 +154,7 @@ const MANIFEST = {
     git-filter-repo: "过滤 git 项目",
 
     # data
-    p7zip: "7z",
+    7zip: "7z",
     unrar: "解压 RAR",
     zip: { packages: ["zip", "unzip"] },
     qbittorrent: "下载种子",
@@ -183,11 +173,13 @@ const MANIFEST = {
     zathura: { packages: ["zathura", "zathura-pdf-mupdf"], desc: "PDF 阅读器" },
     webp-pixbuf-loader: "GDK 的 webp 支持",
     inkscape: "操作矢量图",
+    poppler: "`pdftoppm -png`将PDF转成图片",
+    viu: "终端看图",
 
     # language
     pot-translation: "一站式翻译",
     didyoumean: { packages: ["didyoumean-bin"], manager: "paru", desc: "纠正英文单词" },
-    # pdf2zh: { manager: "uv", desc: "智能布局留存翻译PDF" },
+    pdf2zh: { manager: "uv", desc: "智能布局留存翻译 PDF" },
 
     # monitor
     acpi: "电池信息",
@@ -202,6 +194,8 @@ const MANIFEST = {
     erdtree: "体积伴随文件树",
     macchina: "系统信息",
     udisk: { packages: ["udisks2", "udiskie"], desc: "Usb device auto mount" },
+    cyme: "usb 设备查看"
+    qpwgraph: "音频设备拓扑图"
 
     # network
     networkmanager: { packages: [ "networkmanager", "stalonetray", "network-manager-applet"] },
@@ -210,22 +204,18 @@ const MANIFEST = {
     traceroute: "路由显形",
     lsof: "监测端口",
     # v2raya: "飞越长城",
-    clash-verge-rev: "飞越长城",
+    flclash-bin: { manager: "paru", desc: "飞越长城" },
     openssh: "ssh",
-    xh: "Friendly and fast tool for sending HTTP requests"
-    rustscan: "扫描端口"
+    xh: "Friendly and fast tool for sending HTTP requests",
+    rustscan: "扫描端口",
 
     # show
     asciinema: "录制命令行视频",
-    # screenkey: "按键回显",
+    screenkey: "按键回显",
     obs-studio: "流录制",
 
     # cargo
-    cargo-generate: "项目模板",
-    cargo-shear: {
-        manager: "cargo",
-        desc: "检查无用依赖",
-    },
+    cargo-shear: { manager: "cargo", desc: "检查无用依赖" },
     cargo-msrv: "最旧可用 rustc 版本",
     cargo-expand: "展开宏",
     cargo-edit: "编辑依赖",
@@ -245,14 +235,15 @@ const MANIFEST = {
         desc: "检查工作空间未使用的 pub 项",
     },
     cargo-insta: "懒人测试",
+    cargo-autoinherit: { manager: "cargo", desc: "一键收束工作空间下的依赖" },
     cargo-bloat: "查看依赖的空间占用情况",
 
     # arch
     nvrs: { manager: "paru", packages: ["nvrs-bin"], desc: "检查包版本" },
     pacman-contrib: "打包工具箱",
     aurpublish: "打包钩子",
-    # archlinuxcn-keyring: "archlinuxcn-keyring",
     alhp-keyrings: { manager: "paru", packages: ["alhp-keyring", "alhp-mirrorlist"], desc: "alhp-keyrings" },
+    pacfiles: "pacfiles is a pacman -F alternative that runs blazingly fast",
 
     # amd
     mesa-vdpau: "Gpu video accelerator",
@@ -260,10 +251,11 @@ const MANIFEST = {
     xf86-video-amdgpu: "AMD GPU video accelerator",
 
     # misc
-    vmware-workstation: { manager: "paru", desc: "vmware workstation" }
+    vmware-workstation: { manager: "paru", desc: "vmware workstation" },
     v4l2loopback-dkms: "Virtual camera with screen",
-    rclone: "Net Drive Synchronization"
-    libfido2: "ssh-agent dependency"
+    rclone: "Net Drive Synchronization",
+    libfido2: "ssh-agent dependency",
+    genact: "Linux领域大神",
 }
 
 def main [] {

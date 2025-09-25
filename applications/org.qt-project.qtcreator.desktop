@@ -1,11 +1,18 @@
 [Desktop Entry]
-Type=Application
-Exec= sh -c 'env QT_SCALE_FACTOR=2 "$HOME/Qt/Tools/QtCreator/bin/qtcreator" %F'
-
-Name=Qt Creator
+Categories=Development;IDE;Qt;
+Comment=
+Exec=env QT_SCALE_FACTOR=1 $HOME/Qt/Tools/QtCreator/bin/qtcreator
 GenericName=The IDE of choice for Qt development.
 Icon=QtProject-qtcreator
+MimeType=text/x-c++src;text/x-c++hdr;text/x-xsrc;application/x-designer;application/vnd.qt.qmakeprofile;application/vnd.qt.xml.resource;text/x-qml;text/x-qt.qml;text/x-qt.qbs;
+Name=Qt Creator
+NoDisplay=false
+Path=
+PrefersNonDefaultGPU=false
+StartupNotify=true
 StartupWMClass=qtcreator
 Terminal=false
-Categories=Development;IDE;Qt;
-MimeType=text/x-c++src;text/x-c++hdr;text/x-xsrc;application/x-designer;application/vnd.qt.qmakeprofile;application/vnd.qt.xml.resource;text/x-qml;text/x-qt.qml;text/x-qt.qbs;
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=

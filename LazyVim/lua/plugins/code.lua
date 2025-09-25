@@ -219,10 +219,27 @@ return {
     {
         "L3MON4D3/LuaSnip",
         version = "v2.*",
-        keys = {
-            { "<C-l>", "<Plug>luasnip-next-choice", mode = { "i", "s" } },
-            { "<C-h>", "<Plug>luasnip-prev-choice", mode = { "i", "s" } },
-        },
+        keys = function()
+            local ls = require("luasnip")
+            return {
+                { "<Tab>", function() ls.jump(1) end, mode = { "i", "s" } },
+                { "<S-Tab>", function() ls.jump(-1) end, mode = { "i", "s" } },
+                {
+                    "<C-l>",
+                    function()
+                        if ls.choice_active() then ls.change_choice(1) end
+                    end,
+                    mode = { "i", "s" },
+                },
+                {
+                    "<C-h>",
+                    function()
+                        if ls.choice_active() then ls.change_choice(-1) end
+                    end,
+                    mode = { "i", "s" },
+                },
+            }
+        end,
         config = function()
             require("luasnip.loaders.from_vscode").lazy_load({
                 paths = { vim.fn.stdpath("config") .. "/snippets" },
@@ -230,6 +247,7 @@ return {
 
             local luasnip = require("luasnip")
             luasnip.add_snippets("rust", require("plugins.snippets.rust"))
+            luasnip.add_snippets("cpp", require("plugins.snippets.qt"))
         end,
     },
 }
