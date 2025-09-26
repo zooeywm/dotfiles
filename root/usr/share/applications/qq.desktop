@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=QQ
-Exec=env GDK_SCALE=2 /opt/QQ/start.sh %U
-Terminal=false
-Type=Application
-Icon=qq
-StartupWMClass=QQ
-Categories=Network;
-Comment=QQ
