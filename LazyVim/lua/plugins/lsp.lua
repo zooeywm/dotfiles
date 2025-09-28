@@ -42,8 +42,6 @@ return {
         config = function(_, opts)
             LazyVim.lsp.setup()
 
-            if vim.g.project_lspconfig ~= nil then opts.servers = vim.tbl_deep_extend("force", opts.servers, vim.g.project_lspconfig) end
-
             -- 指定诊断日志的图标
             for severity, icon in pairs(opts.diagnostics.signs.text) do
                 local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
@@ -115,31 +113,10 @@ return {
         event = "LspAttach",
         keys = {
             -- 跳转
-            { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definitions" },
-            { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declarations" },
-            { "gT", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definitions" },
-            { "gi", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementations" },
-            { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
             { "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", desc = "Prev Diagnostic" },
             { "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next Diagnostic" },
-            {
-                "[e",
-                function()
-                    require("lspsaga.diagnostic"):goto_prev({
-                        severity = vim.diagnostic.severity.ERROR,
-                    })
-                end,
-                desc = "Prev Error",
-            },
-            {
-                "]e",
-                function()
-                    require("lspsaga.diagnostic"):goto_next({
-                        severity = vim.diagnostic.severity.ERROR,
-                    })
-                end,
-                desc = "Next Error",
-            },
+            { "[e", function() require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Prev Error" },
+            { "]e", function() require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Next Error" },
             -- 审视
             { "<S-k>", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover" },
             { "<leader>ld", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "Line Diagnostics" },
@@ -151,15 +128,6 @@ return {
                 "<leader>la",
                 "<cmd>Lspsaga code_action<cr>",
                 desc = "Code Action",
-            },
-            {
-                "<leader>lA",
-                function()
-                    vim.lsp.buf.code_action({
-                        context = { only = { "source" }, diagnostics = {} },
-                    })
-                end,
-                desc = "Source Action",
             },
             { "<leader>ls", "<cmd>Lspsaga outline<cr>", desc = "Outline" },
             { "<leader>li", "<cmd>Lspsaga incoming_calls<cr>", desc = "Incoming calls tree" },

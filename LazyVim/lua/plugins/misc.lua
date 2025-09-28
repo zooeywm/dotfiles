@@ -46,10 +46,10 @@ return {
                 "hyprlang",
             }, {
                 RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true,   -- CSS rgb() and rgba() functions
-                hsl_fn = true,   -- CSS hsl() and hsla() functions
-                css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                rgb_fn = true, -- CSS rgb() and rgba() functions
+                hsl_fn = true, -- CSS hsl() and hsla() functions
+                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
             })
         end,
     },
@@ -63,11 +63,13 @@ return {
             { "<leader>gs", false },
             { "<leader>gS", false },
             { "<leader>gd", false },
-            -- { "<leader>fF", function() Snacks.picker.files() end,                                             desc = "Find Files (cwd)" },
-            -- { "<leader>ff", function() Snacks.picker.files({ cwd = require("lazyvim.util").root.get() }) end, desc = "Find Files (Root Dir)" },
-            -- { "<leader>sg", function() Snacks.picker.grep({ cwd = require("lazyvim.util").root.get() }) end,  desc = "Grep (cwd)" },
-            -- { "<leader>sG", function() Snacks.picker.grep() end,                                              desc = "Grep (Root dir)" },
-            -- { "<leader>gf", false },
+
+            -- LSP
+            { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definitions" },
+            { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+            { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declarations" },
+            { "gT", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definitions" },
+            { "gi", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementations" },
         },
         opts = function(_, opts)
             opts.scroll = { enabled = false }
@@ -107,31 +109,5 @@ return {
                 },
             }
         end,
-    },
-    {
-        "2kabhishek/nerdy.nvim",
-        dependencies = {
-            "stevearc/dressing.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
-        cmd = "Nerdy",
-    },
-    {
-        "nvim-telescope/telescope.nvim",
-        opts = {
-            pickers = {
-                find_files = {
-                    previewer = false,
-                },
-                git_files = {
-                    previewer = false,
-                },
-                live_grep = {
-                    layout_config = {
-                        preview_width = 0.5,
-                    },
-                },
-            },
-        },
     },
 }

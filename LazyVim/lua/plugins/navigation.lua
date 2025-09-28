@@ -1,4 +1,3 @@
-local LazyVim = require("lazyvim.util")
 local utils = require("utils")
 return {
     {
@@ -17,7 +16,7 @@ return {
                 show_buffer_close_icons = false,
                 tab_size = 1,
                 max_name_length = 18,
-                separator_style = "slope",
+                -- separator_style = "slope",
                 color_icons = true,
                 -- diagnostics = false,
                 -- diagnostics_update_on_event = false,
@@ -29,10 +28,6 @@ return {
                 sort_by = "insert_after_current",
             },
         },
-        init = function()
-            local bufline = require("catppuccin.groups.integrations.bufferline")
-            bufline.get = bufline.get_theme
-        end,
     },
     {
         "mbbill/undotree",
@@ -40,26 +35,6 @@ return {
             { "<leader>uu", "<cmd>UndotreeToggle<cr>", desc = "Toggle Undotree" },
         },
         config = function() vim.g.undotree_WindowLayout = 4 end,
-    },
-    {
-        "crusj/bookmarks.nvim",
-        keys = {
-            { "<leader>B", remap = true, desc = "Bookmarks" },
-            { "<leader>m", remap = true, desc = "Make bookmark" },
-            { "<leader>sB", "<cmd>Telescope bookmarks<CR>", desc = "Bookmarks" },
-        },
-        branch = "main",
-        dependencies = { "nvim-web-devicons" },
-        opts = {
-            keymap = {
-                toggle = "<leader>B",
-                add = "<leader>m",
-            },
-        },
-        config = function(_, opts)
-            require("bookmarks").setup(opts)
-            require("telescope").load_extension("bookmarks")
-        end,
     },
     {
         "mikavilpas/yazi.nvim",
@@ -87,22 +62,6 @@ return {
         "MagicDuck/grug-far.nvim",
         keys = {
             {
-                "gS",
-                function()
-                    local grug = require("grug-far")
-                    grug.open({
-                        engine = "astgrep",
-                        transient = true,
-                        prefills = {
-                            filesFilter = utils.path.filename(utils.vim.current_buffer_path()),
-                        },
-                        visualSelectionUsage = "operate-within-range",
-                    })
-                end,
-                mode = { "n", "v" },
-                desc = "Search and Replace AST",
-            },
-            {
                 "gs",
                 function()
                     local grug = require("grug-far")
@@ -117,6 +76,23 @@ return {
                 end,
                 mode = { "n", "v" },
                 desc = "Search and Replace ripgrep",
+            },
+            {
+                "<leader>sA",
+                function()
+                    local grug = require("grug-far")
+
+                    local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+                    grug.open({
+                        engine = "astgrep",
+                        transient = true,
+                        prefills = {
+                            filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+                        },
+                    })
+                end,
+                mode = { "n", "v" },
+                desc = "Search and Replace AST",
             },
         },
     },
