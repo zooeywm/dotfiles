@@ -78,4 +78,18 @@ return {
         { key = "-", mods = "ALT", action = act.ActivateTabRelative(-1) },
         { key = "=", mods = "ALT", action = act.ActivateTabRelative(1) },
     },
+    mouse_bindings = {
+        -- 鼠标滚轮每次上滚一行
+        {
+            event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+            mods = "NONE",
+            action = wezterm.action.ScrollByLine(-1),
+        },
+        -- 鼠标滚轮每次下滚一行
+        {
+            event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+            mods = "NONE",
+            action = wezterm.action.ScrollByLine(1),
+        },
+    },
 }

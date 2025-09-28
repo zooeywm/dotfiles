@@ -258,19 +258,19 @@ const MANIFEST = {
     genact: "Linux领域大神",
 }
 
+def run-cmd [cmd: list<string>] {
+    print ("" | fill --character "=" --width (term size | get columns))
+    print ($"(ansi green)>>> (ansi reset)($cmd | str join ' ')" + "\n")
+    ^$cmd.0 ...($cmd | skip 1)
+}
+
 def main [] {
     let manifest = $MANIFEST
         | items {|k, v|
             if ($v | describe) == 'string' {
-                {
-                    name: $k,
-                    desc: $v,
-                }
+                { name: $k, desc: $v }
             } else {
-                {
-                    name: $k,
-                    ...$v
-                }
+                { name: $k, ...$v }
             }
         }
 
@@ -288,45 +288,47 @@ def main [] {
         npm: [],
         uv: [],
     }
+
     for it in $manifest {
         let packages = $it.packages? | default [$it.name]
         let mgr = $it.manager? | default 'pacman'
-
         let subtbl = $tbl | get $mgr | append $packages
         $tbl = $tbl | upsert $mgr $subtbl
     }
 
     try {
         if $paru != null {
-            paru -Sy --needed ...$tbl.pacman ...$tbl.paru
+            run-cmd [paru -Sy --needed ...$tbl.pacman ...$tbl.paru]
         } else {
-            pacman -Sy --needed ...$tbl.pacman
+            run-cmd [pacman -Sy --needed ...$tbl.pacman]
         }
     }
 
     try {
-        if $npm != null {
-            npm install -g ...$tbl.npm
+        if $npm != null and ($tbl.npm | is-empty) == false {
+            run-cmd [$npm "install" "-g" ...$tbl.npm]
         }
     }
 
     try {
-        if $cargo_bin != null {
-            cargo binstall ...$tbl.cargo
+        if $cargo_bin != null and ($tbl.cargo | is-empty) == false {
+            run-cmd [$cargo_bin ...$tbl.cargo]
         }
     }
 
     if $cargo != null {
         for p in $tbl.'cargo:src' {
             try {
-                cargo install --git $p
+                run-cmd [$cargo "install" "--git" $p]
             }
         }
     }
 
-    try {
-        if $uv != null {
-            uv tool install ...$tbl.uv
+    if $uv != null {
+        for p in $tbl.uv {
+            try {
+                run-cmd [$uv "tool" "install" $p]
+            }
         }
     }
 }
