@@ -175,6 +175,7 @@ const MANIFEST = {
     inkscape: "操作矢量图"
     poppler: "`pdftoppm -png`将PDF转成图片"
     viu: "终端看图"
+    netease-cloud-music: { packages: ["netease-cloud-music-portable"], manager: "paru", desc: "网易云音乐（沙盒）" }
 
     # language
     pot-translation: "一站式翻译"
