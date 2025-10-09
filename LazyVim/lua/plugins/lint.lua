@@ -4,7 +4,10 @@ return {
         opts = {
             events = { "BufNewFile", "BufReadPre", "BufWritePost", "BufReadPost", "InsertLeave" },
             linters_by_ft = {
-                cpp = { --[[ "clazy", ]] "cppcheck" },
+                cpp = { --[[ "clazy", ]]
+                    "cppcheck",
+                    "clangtidy",
+                },
                 bash = "bash",
                 ["*"] = { "codespell", "typos" },
             },
@@ -26,10 +29,7 @@ return {
             end
 
             local spell_ignore = {
-                condition = function(d)
-                    return string.find(d.message, "INVOKABLE", 1, true) or
-                        string.find(d.message, "requestor", 1, true)
-                end,
+                condition = function(d) return string.find(d.message, "INVOKABLE", 1, true) or string.find(d.message, "requestor", 1, true) end,
             }
 
             local filters = {
