@@ -24,11 +24,6 @@ rev = "d1c8baa"
 hash = "82376c3381ae915fd799d40f4dd4c6cd"
 
 [[plugin.deps]]
-use = "boydaihungst/file-extra-metadata"
-rev = "116a460"
-hash = "e65cd1dea5feb9ca58c33b870ca3070"
-
-[[plugin.deps]]
 use = "TD-Sky/sudo"
 rev = "8148f91"
 hash = "5db5b16dc96e971f0560a31999271065"

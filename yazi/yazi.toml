@@ -30,94 +30,65 @@ wrap            = "no"
 
 [opener]
 binutil = [
-    { run = "strip --only-keep-debug $1 -o $1.debug && strip $1", desc = "strip" },
-    { run = "aarch64-linux-gnu-strip --only-keep-debug $1 -o $1.debug && aarch64-linux-gnu-strip $1", desc = "aarch64-strip" },
+    { run = "strip --only-keep-debug %s1 -o %s1.debug && strip %s1", desc = "strip" },
+    { run = "aarch64-linux-gnu-strip --only-keep-debug %s1 -o %s1.debug && aarch64-linux-gnu-strip %s1", desc = "aarch64-strip" },
 ]
 compress = [
-    { run = "cd $1 && zip -r $1.zip $(realpath --relative-to=$PWD $1) ", desc = "Zip" },
-    { run = 'tar -czvf $1.tar.gz $(realpath --relative-to="$PWD" $1) ', desc = "Tar.gz" },
-    { run = 'tar -cvf $1.tar $(realpath --relative-to="$PWD" $1) ', desc = "Tar" },
+    { run = "cd %s1 && zip -r %s1.zip $(realpath --relative-to=$PWD %s1)", desc = "Zip" },
+    { run = "tar -czvf %s1.tar.gz $(realpath --relative-to=$PWD %s1)", desc = "Tar.gz" },
+    { run = "tar -cvf %s1.tar $(realpath --relative-to=$PWD %s1)", desc = "Tar" },
 ]
 deb = [
-    { run = 'dpkg-deb -x "$1" "${1%.deb}" && dpkg-deb -e "$1" "${1%.deb}/DEBIAN" ', desc = "Extract deb here" },
+    { run = "dpkg-deb -x %s1 ${1%.deb} && dpkg-deb -e %s1 ${1%.deb}/DEBIAN", desc = "Extract deb here" },
+]
+download = [
+    { run = "ya emit download --open %S", desc = "Download and open" },
+    { run = "ya emit download %S", desc = "Download" },
 ]
 edit = [
-    { run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
-    { run = "code %*", orphan = true, desc = "code", for = "windows" },
-    { run = "code -w %*", block = true, desc = "code (block)", for = "windows" },
+    { run = "${EDITOR:-vi} %s", desc = "$EDITOR", for = "unix", block = true },
+    { run = "code %s", desc = "code", for = "windows", orphan = true },
+    { run = "code -w %s", desc = "code (block)", for = "windows", block = true },
 ]
 extract = [
-    { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
-    { run = "ya pub extract --list %*", desc = "Extract here", for = "windows" },
+    { run = "ya pub extract --list %s", desc = "Extract here" },
 ]
 images = [
-    { run = "swww img --transition-type=fade --transition-step=255 --transition-duration=1 --transition-fps=120 $1", desc = "Set as wallpaper" },
+    { run = "swww img --transition-type=fade --transition-step=255 --transition-duration=1 --transition-fps=120 %s1", desc = "Set as wallpaper" },
+]
+media = [
+    { run = "mediainfo %s1; echo 'Press enter to exit'; read _", block = true, desc = "Show media info", for = "unix" },
+    { run = "mediainfo %s1 & pause", block = true, desc = "Show media info", for = "windows" },
 ]
 open = [
-    { run = 'xdg-open "$1"', desc = "Open", for = "linux" },
-    { run = 'open "$@"', desc = "Open", for = "macos" },
-    { run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
-]
-play = [
-    { run = 'xdg-open "$1"', desc = "Play", for = "linux" },
-    { run = 'open "$@"', desc = "Play", for = "macos" },
-    { run = 'start "" "%1"', orphan = true, desc = "Play", for = "windows" },
-    { run = 'termux-open "$1"', desc = "Play", for = "android" },
-    { run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
-    { run = 'mediainfo "%1" & pause', block = true, desc = "Show media info", for = "windows" },
+    { run = "xdg-open %s1", desc = "Open", for = "linux" },
+    { run = "open %s1", desc = "Open", for = "macos" },
+    { run = 'start "" %s1', orphan = true, desc = "Open", for = "windows" },
+    { run = "termux-open %s1", desc = "Open", for = "android" },
 ]
 reveal = [
-    { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "linux" },
-    { run = 'open -R "$1"', desc = "Reveal", for = "macos" },
-    { run = 'explorer /select,"%1"', orphan = true, desc = "Reveal", for = "windows" },
-    { run = 'termux-open "$(dirname "$1")"', desc = "Reveal", for = "android" },
-    { run = '''clear; exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+    { run = "xdg-open %d1", desc = "Reveal", for = "linux" },
+    { run = "open -R %s1", desc = "Reveal", for = "macos" },
+    { run = "explorer /select,%s1", orphan = true, desc = "Reveal", for = "windows" },
+    { run = "termux-open %d1", desc = "Reveal", for = "android" },
+    { run = "'clear; exiftool %s1; echo 'Press enter to exit'; read _'", block = true, desc = "Show EXIF", for = "unix" },
 ]
 terminal-here = [
-    { run = 'wezterm start --cwd "$(dirname "$1")"', desc = "Open Terminal Here", for = "linux" },
+    { run = "wezterm start --cwd %d1", desc = "Open Terminal Here", for = "linux" },
 ]
 
 [open]
 rules = [
-    { mime = "{text/*,inode/empty,*/javascript}", use = [
-        "edit",
-    ] },
-    { mime = "application/{json,ndjson}", use = [
-        "edit",
-    ] },
-    { mime = "image/*", use = [
-        "open",
-        "images",
-    ] },
-    { mime = "inode/directory", use = [
-        "terminal-here",
-        "reveal",
-        "compress",
-    ] },
-    { mime = "{audio,video}/*", use = [
-        "play",
-    ] },
-    { mime = "application/{,g}zip", use = [
-        "extract",
-    ] },
-    { url = "*.zip", use = [
-        "extract",
-    ] },
-    { mime = "application/{tar,bzip*,7z-compressed,xz,rar}", use = [
-        "extract",
-    ] },
-    { mime = "application/{sharedlib,x-sharedlib,x-pie-executable,pie-executable}", use = [
-        "binutil",
-    ] },
-    { mime = "application/{vnd.debian.binary-package,debian.binary-package}", use = [
-        "deb",
-    ] },
-    { url = "*", use = [
-        "open",
-        "terminal-here",
-        "edit",
-        "reveal",
-    ] },
+    { mime = "{text/*,inode/empty,*/javascript}", use = ["edit"] },
+    { mime = "application/{json,ndjson}", use = ["edit"] },
+    { mime = "image/*", use = ["images"] },
+    { mime = "{audio,video,image}/*", use = ["media"] },
+    { mime = "application/{gzip,zip,tar,bzip*,7z*,xz,rar,zstd,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract"] },
+    { mime = "application/{*sharedlib,*executable}", use = ["binutil"] },
+    { mime = "application/{*debian.binary-package}", use = ["deb"] },
+    { mime = "vfs/*", use = "download" },
+    { url = "*/", use = ["compress", "terminal-here", "reveal"] },
+    { url = "*", use = ["open", "terminal-here", "edit", "reveal"] },
 ]
 
 [tasks]
@@ -131,8 +102,8 @@ suppress_preload = false
 [plugin]
 fetchers = [
     # Mimetype
-    { id = "mime", url = "*", run = "mime", prio = "high" },
-    { id = "git", url = "*", run = "git" },
+    { id = "mime", url = "*/", run = "mime.dir", prio = "high" },
+    { id = "mime", url = "*", run = "mime.file", prio = "high" },
     { id = "git", url = "*/", run = "git" },
 ]
 preloaders = [
@@ -152,21 +123,12 @@ preloaders = [
     # Empty file
     # { mime = "inode/empty", run = "empty" },
 ]
-prepend_fetchers = [
-    { id = "mime-ext", url = "*", run = "mime-ext", prio = "high" },
-    { id = "git", url = "*", run = "git", prio = "normal" },
-    { id = "git", url = "*/", run = "git", prio = "normal" },
-]
 # prepend_previewers = [{ url = "*.md", run = "mdcat" }]
-prepend_spotters = [{ url = "*", run = "file-extra-metadata" }]
 previewers = [
     { url = "*/", run = "folder" },
     # Code
     { mime = "text/*", run = "code" },
     { mime = "application/{mbox,javascript,wine-extension-ini}", run = "code" },
-    { mime = "*/xml", run = "code" },
-    { mime = "*/javascript", run = "code" },
-    { mime = "*/wine-extension-ini", run = "code" },
     # JSON
     { mime = "application/{json,ndjson}", run = "json" },
     # Image
@@ -183,12 +145,17 @@ previewers = [
     { mime = "application/{redhat-package-manager,rpm,android.package-archive}", run = "archive" },
     { mime = "application/debian*-package", run = 'piper -- dpkg -c "$1" | sed "s/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *[^ ]* *//" | less' },
     { url = "*.{AppImage,appimage}", run = "archive" },
+    # Virtual Disk / Disk Image 
     { mime = "application/{iso9660-image,qemu-disk,ms-wim,apple-diskimage}", run = "archive" },
     { mime = "application/virtualbox-{vhd,vhdx}", run = "archive" },
     { url = "*.{img,fat,ext,ext2,ext3,ext4,squashfs,ntfs,hfs,hfsx}", run = "archive" },
     # Font
     { mime = "font/*", run = "font" },
     { mime = "application/ms-opentype", run = "font" },
+    # Virtual file system
+    { mime = "vfs/*", run = "vfs" },
+    # Empty file
+    { mime = "inode/empty", run = "empty" },
     # Fallback
     { url = "*", run = "file" },
 ]
@@ -202,6 +169,7 @@ spotters = [
     { mime = "image/*", run = "image" },
     # Video
     { mime = "video/*", run = "video" },
+    { mime = "vfs/*", run = "vfs" },
     # Fallback
     { url = "*", run = "file" },
 ]
