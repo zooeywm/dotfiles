@@ -1,0 +1,17 @@
+[general]
+live_config_reload = true
+
+[window]
+blur    = true
+opacity = 0.7
+
+[scrolling]
+history    = 100000
+multiplier = 1
+
+[font]
+normal = { family = "JetBrainsMonoNL Nerd Font", style = "Regular" }
+size   = 13.0
+
+[mouse]
+hide_when_typing = true

@@ -29,7 +29,7 @@ def main [] {
     # | pf Templates -t ~
     | pfs [
         starship.toml fish nushell dunst presenterm
-        LazyVim neovide wezterm kitty zellij yazi git git-cliff
+        LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
         gitui lazygit zathura mpv gdb pip.conf macchina paru 
         mise atuin uv
     ] ~/.config
