@@ -105,6 +105,8 @@ fetchers = [
     { id = "mime", url = "*/", run = "mime.dir", prio = "high" },
     { id = "mime", url = "*", run = "mime.file", prio = "high" },
     { id = "git", url = "*/", run = "git" },
+    { url = "~/sshfs/**", id = "mime", run = "noop" },
+    { url = "~/sshfs/**", id = "git", run = "noop" },
 ]
 preloaders = [
     { url = "~/sshfs/**", run = "noop" },
