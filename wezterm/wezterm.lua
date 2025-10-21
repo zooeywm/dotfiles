@@ -77,6 +77,14 @@ return {
         { key = "}", mods = "SHIFT|ALT", action = act.MoveTabRelative(1) },
         { key = "-", mods = "ALT", action = act.ActivateTabRelative(-1) },
         { key = "=", mods = "ALT", action = act.ActivateTabRelative(1) },
+        { key = "V", mods = "SHIFT|ALT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+        { key = "B", mods = "SHIFT|ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+        { key = "H", mods = "SHIFT|ALT", action = wezterm.action.ActivatePaneDirection("Left") },
+        { key = "L", mods = "SHIFT|ALT", action = wezterm.action.ActivatePaneDirection("Right") },
+        { key = "J", mods = "SHIFT|ALT", action = wezterm.action.ActivatePaneDirection("Down") },
+        { key = "K", mods = "SHIFT|ALT", action = wezterm.action.ActivatePaneDirection("Up") },
+        -- { key = "UpArrow", mods = "CTRL|SHIFT", action = wezterm.action.ActivatePaneDirection("Up") },
+        -- { key = "DownArrow", mods = "CTRL|SHIFT", action = wezterm.action.ActivatePaneDirection("Down") },
     },
     mouse_bindings = {
         -- 鼠标滚轮每次上滚一行
