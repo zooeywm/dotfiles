@@ -1,23 +1,26 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
+
 return {
     enable_wayland = true,
     enable_scroll_bar = false,
     font = wezterm.font_with_fallback({
-        -- "Hack Nerd Font Mono",
         -- 1 l I
         --     - ~
         --     0 o
-        -- "VictorMono Nerd Font",
-        "JetBrainsMonoNL NF SemiBold",
-        -- "ComicShannsMono Nerd Font Mono",
-        "FiraCode Nerd Font",
+        "JetBrainsMono NF SemiBold",
         "Noto Sans CJK SC",
         "DejaVu Sans Mono",
         "Noto Sans Symbols2",
         "Noto Serif Grantha", -- 古印度文
         "Noto Sans Gujarati UI", -- 古吉拉特文
     }),
+
+    -- -> <- <<- ->> <<= =>> => <=> __ <= >= ___ ____ ==
+    -- === *** || ## ### #### #### !! ?? ... <> >>> >> << <<<
+    -- :: ::: ;; ;;; {} [] ++ +++ -- ---
+
+    -- harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" },
     font_size = 12,
     -- color_scheme = "Everforest Light (Gogh)",
     -- color_scheme = "Gruvbox light, medium (base16)",
@@ -30,7 +33,6 @@ return {
     },
     max_fps = 120,
     line_height = 1.05,
-    -- harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" },
     window_padding = {
         left = 0,
         right = 0,
@@ -83,6 +85,9 @@ return {
         { key = "L", mods = "SHIFT|ALT", action = wezterm.action.ActivatePaneDirection("Right") },
         { key = "J", mods = "SHIFT|ALT", action = wezterm.action.ActivatePaneDirection("Down") },
         { key = "K", mods = "SHIFT|ALT", action = wezterm.action.ActivatePaneDirection("Up") },
+        { key = "W", mods = "SHIFT|ALT", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
+        { key = "S", mods = "SHIFT|ALT", action = act.PaneSelect({ alphabet = "1234567890abcdefghijklmnopqrstuvwxyz" }) },
+        { key = "F", mods = "SHIFT|ALT", action = wezterm.action.TogglePaneZoomState },
         -- { key = "UpArrow", mods = "CTRL|SHIFT", action = wezterm.action.ActivatePaneDirection("Up") },
         -- { key = "DownArrow", mods = "CTRL|SHIFT", action = wezterm.action.ActivatePaneDirection("Down") },
     },
