@@ -72,12 +72,12 @@ terminal-here = [{ run = "wezterm start --cwd %d1", desc = "Open Terminal Here",
 [open]
 rules = [
   # Folder
-  { url = "*/", use = ["compress", "terminal-here", "reveal"] },
-  # All files
-  { url = "*", use = ["open", "terminal-here", "edit", "reveal"] },
+  { url = "*/", use = ["reveal", "compress", "terminal-here"] },
   # Text
   { mime = "{text/*,inode/empty,*/javascript}", use = ["edit"] },
   { mime = "application/{json,ndjson}", use = ["edit"] },
+  # All files
+  { url = "*", use = ["open", "terminal-here", "edit", "reveal"] },
   # Image 
   { mime = "image/*", use = ["images"] },
   # Media
