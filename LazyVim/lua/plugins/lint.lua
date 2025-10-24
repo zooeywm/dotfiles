@@ -14,16 +14,16 @@ return {
         },
         cmd = function()
             local lint = require("lint")
-            local util = require("lint.util")
+            local lint_util = require("lint.util")
 
-            local function wrap_linter(linter, severity, filter_rules)
-                return util.wrap(linter, function(diagnostic)
-                    diagnostic.severity = severity
+            local function wrap_linter(linter, filter_rules)
+                return lint_util.wrap(linter, function(diagnostic)
                     for _, rule in ipairs(filter_rules) do
                         if rule.condition(diagnostic) then
                             return nil -- 过滤掉匹配的诊断
                         end
                     end
+
                     return diagnostic
                 end)
             end
@@ -49,8 +49,12 @@ return {
             }
 
             for linter_name, rules in pairs(filters) do
-                lint.linters[linter_name] = wrap_linter(lint.linters[linter_name], vim.diagnostic.severity.WARN, rules)
+                lint.linters[linter_name] = wrap_linter(lint.linters[linter_name], rules)
             end
+            lint.linters.clangtidy = lint_util.wrap(lint.linters.clangtidy, function(diagnostic)
+                if diagnostic.severity == vim.diagnostic.severity.HINT then return nil end
+                return diagnostic
+            end)
         end,
     },
 }
