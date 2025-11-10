@@ -10,6 +10,32 @@ return {
             },
         },
     },
+    {
+        "JuanZoran/Trans.nvim",
+        dependencies = { "kkharji/sqlite.lua" },
+        build = function()
+            require("Trans").install()
+            local trans = vim.fn.stdpath("data") .. "/lazy/Trans.nvim"
+            os.execute(string.format([[sqlite3 %s/ultimate.db 'select word from stardict' > %s/neovim.dict]], trans, trans))
+            vim.notify("gen dict", vim.log.levels.INFO)
+        end,
+        keys = {
+            { "gl", "<cmd>Translate<cr>", mode = { "n", "x" }, desc = "翻译" },
+        },
+        opts = {
+            frontend = {
+                default = {
+                    animation = {
+                        open = "fold",
+                        close = "fold",
+                    },
+                },
+                hover = {
+                    width = 80,
+                },
+            },
+        },
+    },
     { "lambdalisue/suda.vim" },
     {
         "mistricky/codesnap.nvim",
@@ -63,6 +89,9 @@ return {
             { "<leader>gs", false },
             { "<leader>gS", false },
             { "<leader>gd", false },
+
+            { "<leader>ft", function() Snacks.terminal() end, desc = "Terminal (cwd)" },
+            { "<leader>fT", function() Snacks.terminal(nil, { cwd = LazyVim.root.get() }) end, desc = "Terminal (Root Dir)" },
 
             -- LSP
             { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definitions" },

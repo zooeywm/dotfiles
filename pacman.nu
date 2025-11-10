@@ -27,6 +27,7 @@ const MANIFEST = {
     gdb: "GNU 调试器"
     lldb: "LLVM 调试器"
     mold: "现代链接器"
+    wild: "rust 链接器"
     rust-script: "rust 脚本解释器"
     rustup: "管理 rust 工具链"
     tokei: "统计代码"
@@ -80,7 +81,7 @@ const MANIFEST = {
     wps: { packages: [ "wps-office-cn-bwrap", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" }
 
     ## wayland
-    wl-clipboard: "剪贴板"
+    wl-clipboard-rs: { manager: "paru", desc: "Wayland Clipboard" }
     cliphist: "剪贴板历史"
     swww: "Wallpaper engine"
     waybar: "Status bar"
@@ -173,7 +174,7 @@ const MANIFEST = {
     zathura: { packages: ["zathura", "zathura-pdf-mupdf"], desc: "PDF 阅读器" }
     webp-pixbuf-loader: "GDK 的 webp 支持"
     inkscape: "操作矢量图"
-    poppler: "`pdftoppm -png`将PDF转成图片"
+    poppler: "`pdftoppm -png`将 PDF 转成图片"
     viu: "终端看图"
     netease-cloud-music: { packages: ["netease-cloud-music-portable"], manager: "paru", desc: "网易云音乐（沙盒）" }
 
@@ -256,7 +257,7 @@ const MANIFEST = {
     v4l2loopback-dkms: "Virtual camera with screen"
     rclone: "Net Drive Synchronization"
     libfido2: "ssh-agent dependency"
-    genact: "Linux领域大神"
+    genact: "Linux 领域大神"
 }
 
 def run-cmd [cmd: list<string>] {

@@ -41,11 +41,8 @@ return {
         dependencies = { "nvim-lua/plenary.nvim" },
         event = "VeryLazy",
         keys = {
-            {
-                "<leader>e",
-                function() require("yazi").yazi() end,
-                desc = "Open the file manager",
-            },
+            { "<leader>e", function() require("yazi").yazi() end, desc = "Open the file manager (cwd)" },
+            { "<leader>E", function() require("yazi").yazi({}, LazyVim.root.get()) end, desc = "Open the file manager (Root Dir)" },
         },
         opts = {
             open_for_directories = true,
@@ -94,6 +91,13 @@ return {
                 mode = { "n", "v" },
                 desc = "Search and Replace AST",
             },
+        },
+    },
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        keys = {
+            { "<leader>e", false },
+            { "<leader>E", false },
         },
     },
 }

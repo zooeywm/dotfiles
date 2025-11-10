@@ -25,8 +25,8 @@ hash = "82376c3381ae915fd799d40f4dd4c6cd"
 
 [[plugin.deps]]
 use = "TD-Sky/sudo"
-rev = "8148f91"
-hash = "5db5b16dc96e971f0560a31999271065"
+rev = "86205aa"
+hash = "9628b660afb192d32f2ea5f6634d3e72"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
@@ -42,11 +42,6 @@ hash = "ee71543790f0ce3951161045a3787abd"
 use = "yazi-rs/plugins:mime-ext"
 rev = "8f1d971"
 hash = "4c49c446328c4553a4ccab7facc10b21"
-
-[[plugin.deps]]
-use = "yazi-rs/plugins:git"
-rev = "8f1d971"
-hash = "3cce60031b27cbce80b50f68ca319c0a"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
@@ -72,6 +67,16 @@ hash = "51ff959c3c26cb3889589a0f8d394f14"
 use = "yazi-rs/plugins:types"
 rev = "8f1d971"
 hash = "1e047e1b13b5e3fc6ab1f5d0d04a14e2"
+
+[[plugin.deps]]
+use = "lpnh/fr"
+rev = "a60466e"
+hash = "ae6f2fb9ea03527e3a367a9faf2690ac"
+
+[[plugin.deps]]
+use = "simla33/ucp"
+rev = "58fbaa5"
+hash = "9c2b6ecb56e967e0ccce8406faf4f84d"
 
 [flavor]
 deps = []

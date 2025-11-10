@@ -65,9 +65,13 @@ return {
         },
         config = function(_, opts)
             local ft = require("guard.filetype")
+
             for lang, opt in pairs(opts) do
-                ft(lang):fmt(opt)
+                local f = ft(lang):fmt(opt)
+
+                if vim.g.project_config ~= nil and vim.g.project_config.guard_on_fmt ~= nil then vim.g.project_config.guard_on_fmt(lang, f) end
             end
+
             vim.g.guard_config = {
                 fmt_on_save = false,
             }
@@ -130,22 +134,40 @@ return {
     },
     {
         "saghen/blink.cmp",
-        dependencies = { "xzbdmw/colorful-menu.nvim", "giuxtaposition/blink-cmp-copilot" },
+        dependencies = {
+            "xzbdmw/colorful-menu.nvim",
+            { "bydlw98/blink-cmp-env", lazy = true },
+            { "mikavilpas/blink-ripgrep.nvim", lazy = true },
+            -- { "Kaiser-Yang/blink-cmp-dictionary", dependencies = { "nvim-lua/plenary.nvim" }, lazy = true },
+            "giuxtaposition/blink-cmp-copilot",
+        },
         opts = {
             snippets = {
                 preset = "luasnip",
             },
             sources = {
-                default = { "copilot" },
+                default = function()
+                    local default = { "lsp", "copilot", "path", "snippets", "buffer", "ripgrep" }
+                    if vim.tbl_contains({ "bash", "sh", "zsh", "nu" }, vim.bo.ft) then table.insert(default, "env") end
+                    return default
+                end,
                 providers = {
                     lsp = {
                         fallbacks = {},
+                        score_offset = 2,
+                    },
+                    snippets = {
+                        score_offset = 1,
+                        fallbacks = {},
+                    },
+                    path = {
+                        score_offset = 1,
                     },
                     copilot = {
                         name = "copilot",
                         module = "blink-cmp-copilot",
                         kind = "Copilot",
-                        score_offset = 100,
+                        score_offset = 2,
                         async = true,
                     },
                     buffer = {
@@ -153,6 +175,56 @@ return {
                             -- get all buffers, even ones like neo-tree
                             get_bufnrs = vim.api.nvim_list_bufs,
                         },
+                        score_offset = 1,
+                        fallbacks = {},
+                    },
+                    ripgrep = {
+                        module = "blink-ripgrep",
+                        name = "Ripgrep",
+                        min_keyword_length = 5,
+                        ---@module "blink-ripgrep"
+                        ---@type blink-ripgrep.Options
+                        opts = {
+                            prefix_min_len = 5,
+                            backend = {
+                                context_size = 5,
+                                ripgrep = {
+                                    max_filesize = "1M",
+                                    search_casing = "--smart-case",
+                                },
+                            },
+                        },
+                        score_offset = 1,
+                    },
+                    -- dictionary = {
+                    --     min_keyword_length = 4,
+                    --     name = "Dict",
+                    --     module = "blink-cmp-dictionary",
+                    --     ---@module "blink-cmp-dictionary"
+                    --     ---@type blink-cmp-dictionary.Options
+                    --     opts = {
+                    --         dictionary_files = {
+                    --             vim.fn.stdpath("data") .. "/lazy/Trans.nvim/neovim.dict",
+                    --         },
+                    --         get_documentation = function(item)
+                    --             return {
+                    --                 get_command = "sqlite3",
+                    --                 get_command_args = {
+                    --                     vim.fn.stdpath("data") .. "/lazy/Trans.nvim/ultimate.db",
+                    --                     "select translation from stardict where word = '" .. item .. "';",
+                    --                 },
+                    --                 ---@diagnostic disable-next-line: redefined-local
+                    --                 resolve_documentation = function(output) return output end,
+                    --             }
+                    --         end,
+                    --     },
+                    --     score_offset = 0,
+                    -- },
+                    env = {
+                        name = "Env",
+                        module = "blink-cmp-env",
+                        opts = {},
+                        score_offset = 1,
                     },
                 },
             },
