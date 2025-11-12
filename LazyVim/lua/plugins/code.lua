@@ -167,7 +167,7 @@ return {
                         name = "copilot",
                         module = "blink-cmp-copilot",
                         kind = "Copilot",
-                        score_offset = 2,
+                        score_offset = 3,
                         async = true,
                     },
                     buffer = {

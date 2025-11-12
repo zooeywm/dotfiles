@@ -1,3 +1,4 @@
+local animate = require("snacks.animate")
 return {
     {
         "TD-Sky/fcitx.nvim",
@@ -99,9 +100,9 @@ return {
             { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declarations" },
             { "gT", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definitions" },
             { "gi", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementations" },
+            { "<leader>fe", function() Snacks.explorer.open() end, desc = "File Tree" },
         },
         opts = function(_, opts)
-            opts.scroll = { enabled = false }
             opts.image = { enabled = true }
             opts.styles = {
                 input = {
@@ -135,6 +136,13 @@ return {
                         transparent = false,
                         blend = 99,
                     },
+                },
+            }
+            opts.scroll = {
+                enabled = false,
+                animate = {
+                    duration = { step = 10, total = 60 },
+                    easing = "linear",
                 },
             }
         end,
