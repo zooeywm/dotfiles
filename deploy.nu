@@ -31,7 +31,7 @@ def main [] {
         starship.toml fish nushell dunst presenterm
         LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
         gitui lazygit zathura mpv gdb pip.conf macchina paru 
-        mise atuin uv
+        mise atuin uv jj
     ] ~/.config
     | pfs [
         hypr fontconfig mimeapps.list
