@@ -74,6 +74,7 @@ return {
 
             vim.g.guard_config = {
                 fmt_on_save = false,
+                always_on_save = true,
             }
 
             -- local lint = require("guard.lint")

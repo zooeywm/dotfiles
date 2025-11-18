@@ -112,6 +112,7 @@ alias -g :h='--help 2>&1 | bat -pl help'
 alias cls='printf "\033c"'
 # alias g='gitui -d "$(git rev-parse --show-toplevel)"'
 alias g='lazygit'
+alias j='lazyjj'
 # podman 伪装 docker 从而使用 lazydocker
 alias docker='podman'
 alias docker-compose='podman-compose'
