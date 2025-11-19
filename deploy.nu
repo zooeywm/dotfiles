@@ -26,11 +26,12 @@ def main [] {
     | pf waybar/style.less ~/.config/waybar/style.css
     | pf waybar/latte.css ~/.config/waybar/latte.css
     | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
+    | pf kde ~/.config
     # | pf Templates -t ~
     | pfs [
         starship.toml fish nushell dunst presenterm
         LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
-        gitui lazygit zathura mpv gdb pip.conf macchina paru 
+        gitui lazygit zathura mpv gdb pip.conf macchina paru
         mise atuin uv jj
     ] ~/.config
     | pfs [
