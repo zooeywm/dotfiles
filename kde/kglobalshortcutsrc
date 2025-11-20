@@ -110,7 +110,7 @@ Switch to Screen to the Left=none,,Switch to Screen to the Left
 Switch to Screen to the Right=none,,Switch to Screen to the Right
 Toggle Night Color=none,none,Suspend/Resume Night Light
 Toggle Window Raise/Lower=none,,Toggle Window Raise/Lower
-ToggleCurrentThumbnail=,Meta+Ctrl+T,Toggle Thumbnail for Current Window
+ToggleCurrentThumbnail=none,Meta+Ctrl+T,Toggle Thumbnail for Current Window
 ToggleMouseClick=Meta+*,Meta+*,Toggle Mouse Click Animation
 TrackMouse=none,none,Track mouse
 Walk Through Windows=Meta+Tab\tAlt+Tab,Meta+Tab\tAlt+Tab,Walk Through Windows
@@ -273,7 +273,7 @@ _launch=none
 ShowOSD=Meta+P\tDisplay
 
 [services][org.kde.spectacle.desktop]
-ActiveWindowScreenShot=
+ActiveWindowScreenShot=none
 CurrentMonitorScreenShot=Meta+S
 FullScreenScreenShot=none
 RecordRegion=Meta+R
