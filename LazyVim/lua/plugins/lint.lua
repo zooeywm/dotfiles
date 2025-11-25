@@ -51,10 +51,10 @@ return {
             for linter_name, rules in pairs(filters) do
                 lint.linters[linter_name] = wrap_linter(lint.linters[linter_name], rules)
             end
-            -- lint.linters.clangtidy = lint_util.wrap(lint.linters.clangtidy, function(diagnostic)
-            --     if diagnostic.severity == vim.diagnostic.severity.HINT then return nil end
-            --     return diagnostic
-            -- end)
+            lint.linters.clangtidy = lint_util.wrap(lint.linters.clangtidy, function(diagnostic)
+                if diagnostic.severity == vim.diagnostic.severity.HINT then return nil end
+                return diagnostic
+            end)
         end,
     },
 }

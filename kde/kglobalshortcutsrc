@@ -121,7 +121,7 @@ Walk Through Windows of Current Application=Meta+`\tAlt+`,Meta+`\tAlt+`,Walk Thr
 Walk Through Windows of Current Application (Reverse)=Meta+~\tAlt+~,Meta+~\tAlt+~,Walk Through Windows of Current Application (Reverse)
 Walk Through Windows of Current Application Alternative=none,none,Walk Through Windows of Current Application Alternative
 Walk Through Windows of Current Application Alternative (Reverse)=none,none,Walk Through Windows of Current Application Alternative (Reverse)
-Window Above Other Windows=none,,Keep Window Above Others
+Window Above Other Windows=Meta+P,,Keep Window Above Others
 Window Below Other Windows=none,,Keep Window Below Others
 Window Close=Alt+F4\tMeta+Shift+C,Alt+F4,Close Window
 Window Custom Quick Tile Bottom=none,,Custom Quick Tile Window to the Bottom
@@ -132,10 +132,10 @@ Window Fullscreen=Meta+F,,Make Window Fullscreen
 Window Grow Horizontal=none,,Expand Window Horizontally
 Window Grow Vertical=none,,Expand Window Vertically
 Window Lower=none,,Lower Window
-Window Maximize=Meta+Up\tMeta+PgUp,Meta+PgUp,Maximize Window
+Window Maximize=Meta+Up,Meta+PgUp,Maximize Window
 Window Maximize Horizontal=none,,Maximize Window Horizontally
 Window Maximize Vertical=none,,Maximize Window Vertically
-Window Minimize=Meta+Down\tMeta+PgDown,Meta+PgDown,Minimize Window
+Window Minimize=Meta+Down,Meta+PgDown,Minimize Window
 Window Move=none,,Move Window
 Window Move Center=none,,Move Window to the Center
 Window No Border=none,,Toggle Window Titlebar and Frame
@@ -266,11 +266,17 @@ switch to next activity=none,,Switch to Next Activity
 switch to previous activity=none,,Switch to Previous Activity
 toggle do not disturb=none,,Toggle do not disturb
 
+[services][net.local.curl.desktop]
+_launch=Ctrl+Alt+O
+
 [services][org.kde.dolphin.x11.desktop]
 _launch=none
 
 [services][org.kde.kscreen.desktop]
-ShowOSD=Meta+P\tDisplay
+ShowOSD=Display
+
+[services][org.kde.plasma-systemmonitor.desktop]
+_launch=Ctrl+Shift+Esc\tMeta+Esc
 
 [services][org.kde.spectacle.desktop]
 ActiveWindowScreenShot=none
@@ -290,7 +296,7 @@ ToggleTouchpad=Meta+Ctrl+Touchpad Toggle\tTouchpad Toggle\tMeta+Ctrl+Zenkaku Han
 _launch=Meta+T
 
 [services][wechat-universal.desktop]
-_launch=Alt+E
+_launch=Alt+Shift+E
 
 [wacomtablet]
 Map to fullscreen=Meta+Ctrl+F,Meta+Ctrl+F,Map to fullscreen

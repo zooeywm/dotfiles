@@ -155,6 +155,7 @@ const MANIFEST = {
     git-filter-repo: "过滤 git 项目"
     jujutsu: "新一代 VCS"
     lazyjj: "jujutsu TUI"
+    gitlogue: "git 重现动画"
 
     # data
     7zip: "7z"
