@@ -71,25 +71,24 @@ terminal-here = [{ run = "wezterm start --cwd %d1", desc = "Open Terminal Here",
 
 [open]
 rules = [
-  # Folder
-  { url = "*/", use = ["reveal", "compress", "terminal-here"] },
   # Text
-  { mime = "{text/*,inode/empty,*/javascript}", use = ["edit"] },
-  { mime = "application/{json,ndjson}", use = ["edit"] },
-  # All files
-  { url = "*", use = ["open", "terminal-here", "edit", "reveal"] },
+  { mime = "{text/*,inode/empty,*/javascript},application/{json,ndjson}", use = ["edit", "open", "reveal", "terminal-here"] },
   # Image 
-  { mime = "image/*", use = ["images"] },
+  { mime = "image/*", use = ["images", "open", "reveal", "terminal-here"] },
   # Media
-  { mime = "{audio,video,image}/*", use = ["media"] },
+  { mime = "{audio,video,image}/*", use = ["media", "open", "reveal", "terminal-here"] },
   # Archive
-  { mime = "application/{gzip,zip,tar,bzip*,7z*,xz,rar,zstd,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract"] },
+  { mime = "application/{gzip,zip,tar,bzip*,7z*,xz,rar,zstd,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract", "open", "reveal", "terminal-here"] },
   # Binary
-  { mime = "application/{*sharedlib,*executable}", use = ["binutil"] },
+  { mime = "application/{*sharedlib,*executable}", use = ["binutil", "open", "reveal", "terminal-here"] },
   # Debian package
-  { mime = "application/{*debian.binary-package}", use = ["deb"] },
+  { mime = "application/{*debian.binary-package}", use = ["deb", "open", "reveal", "terminal-here"] },
   # Virtual file system
   { mime = "vfs/*", use = "download" },
+  # Folder
+  { url = "*/", use = ["reveal", "compress", "terminal-here"] },
+  # Fallback
+  { url = "*", use = ["open", "terminal-here", "edit", "reveal"] },
 ]
 
 [tasks]

@@ -6,6 +6,7 @@ use std/iter
 def main [] {
     []
     | pf shell ~/.config/shell
+    | pf clangd ~/.config/clangd
     | pf navi ~/.local/share/navi/cheats
     | pf memo ~/.local/share/memo
     | pf zsh/zshenv ~/.zshenv
