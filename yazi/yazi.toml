@@ -72,7 +72,7 @@ terminal-here = [{ run = "wezterm start --cwd %d1", desc = "Open Terminal Here",
 [open]
 rules = [
   # Text
-  { mime = "{text/*,inode/empty,*/javascript},application/{json,ndjson}", use = ["edit", "open", "reveal", "terminal-here"] },
+  { mime = "{{text/*,inode/empty,*/javascript},application/{json,ndjson}}", use = ["edit", "open", "reveal", "terminal-here"] },
   # Image 
   { mime = "image/*", use = ["images", "open", "reveal", "terminal-here"] },
   # Media
