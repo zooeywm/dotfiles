@@ -1,0 +1,2 @@
+# 查询显示器 edid 进而计算显示协议 HDMI DP
+sudo edid-decode /sys/class/drm/card1-HDMI-A-1/edid
