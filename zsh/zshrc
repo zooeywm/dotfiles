@@ -315,7 +315,7 @@ _cache-eval atuin init zsh --disable-up-arrow
 # _cache-eval starship init zsh
 # _cache-eval mcfly init zsh
 _cache-eval navi widget zsh
-_cache-eval mise activate zsh
+eval "$(mise activate zsh)"
 # eval "$(fnm env --node-dist-mirror 'https://npmmirror.com/mirrors/node' --use-on-cd)" # Different every time
 
 _source-existent ~zdot/local.zsh
