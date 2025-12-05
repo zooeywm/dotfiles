@@ -47,6 +47,9 @@ export NINJA_STATUS=$'\e[35m[%f/%t]\e[0m '
 # Repo
 export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
 
+eval "$(ssh-agent)" >> /dev/null 2>&1
+ssh-add ~/.ssh/id_ed25519 >> /dev/null 2>&1
+
 ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
 # executable files path

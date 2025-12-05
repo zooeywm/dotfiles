@@ -53,8 +53,8 @@ reveal = [
 ]
 extract = [{ run = "ya pub extract --list %s", desc = "Extract here" }]
 download = [
-  { run = "ya emit download --open %S", desc = "Download and open" },
   { run = "ya emit download %S", desc = "Download" },
+  { run = "ya emit download --open %S", desc = "Download and open" },
 ]
 binutil = [
   { run = "strip --only-keep-debug %s1 -o %s1.debug && strip %s1", desc = "strip" },

@@ -1,0 +1,4 @@
+% ssh
+
+# 上传 ssh 公钥到服务器
+ssh-copy-id -i <path-to-public-key> <user>@<ip>
