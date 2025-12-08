@@ -266,11 +266,17 @@ switch to next activity=none,,Switch to Next Activity
 switch to previous activity=none,,Switch to Previous Activity
 toggle do not disturb=none,,Toggle do not disturb
 
+[services][kitty.desktop]
+_launch=Meta+T
+
 [services][net.local.curl.desktop]
 _launch=Ctrl+Alt+O
 
 [services][org.kde.dolphin.x11.desktop]
 _launch=none
+
+[services][org.kde.krunner.desktop]
+_launch=Alt+F2\tAlt+Space\tSearch
 
 [services][org.kde.kscreen.desktop]
 ShowOSD=Display
@@ -291,9 +297,6 @@ _launch=none
 
 [services][org.kde.touchpadshortcuts.desktop]
 ToggleTouchpad=Meta+Ctrl+Touchpad Toggle\tTouchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku
-
-[services][org.wezfurlong.wezterm.desktop]
-_launch=Meta+T
 
 [services][wechat-universal.desktop]
 _launch=Alt+Shift+E
