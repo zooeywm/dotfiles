@@ -22,11 +22,16 @@ return {
             },
             ["c,cpp"] = "clang-format",
             go = "gofmt",
-            ["json,jsonc,json5,javascript,typescript,javascriptreact,typescriptreact,css,graphql"] = {
+            ["json,jsonc,json5,css"] = {
                 cmd = "biome",
                 args = { "format", "--indent-style=space", "--stdin-file-path" },
                 fname = true,
                 stdin = true,
+            },
+            ["javascript,typescript,javascriptreact,typescriptreact,css"] = {
+                cmd = "oxfmt",
+                fname = true,
+                stdin = false,
             },
             -- kotlin = {
             --     cmd = "ktfmt",
@@ -38,12 +43,12 @@ return {
                 cmd = "dotnet-csharpier",
                 args = { "--write-stdout" },
             },
-            ["jsonc,json5"] = {
-                cmd = "prettier",
-                args = { "--trailing-comma", "none", "--stdin-filepath" },
-                fname = true,
-                stdin = true,
-            },
+            -- ["jsonc,json5"] = {
+            --     cmd = "prettier",
+            --     args = { "--trailing-comma", "none", "--stdin-filepath" },
+            --     fname = true,
+            --     stdin = true,
+            -- },
             typst = "typstyle",
             slint = {
                 cmd = "slint-lsp",

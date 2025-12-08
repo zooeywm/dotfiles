@@ -50,7 +50,8 @@ const MANIFEST = {
     kondo: "扫除编译产物"
     clang: { packages: ["clang", "llvm"], desc: "C/C++工具链" }
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] }
-    typst: { packages: ["typst", "tinymist", "typstyle"], }
+    oxfmt: { manager: "npm", packages: ["oxfmt"] }
+    typst: { packages: ["typst", "tinymist", "typstyle"] }
     tree-sitter-cli: "安装 tree-sitter 解析器"
     uv: "Python package manager written in rust"
     ruff: "python 格式化器"
