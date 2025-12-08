@@ -30,7 +30,7 @@ def main [] {
     | pf kde ~/.config
     # | pf Templates -t ~
     | pfs [
-        starship.toml fish nushell dunst presenterm
+        starship.toml fish nushell dunst presenterm niri
         LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
         gitui lazygit zathura mpv gdb pip.conf macchina paru
         mise atuin uv jj
