@@ -94,7 +94,7 @@ const MANIFEST = {
     hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] }
     rofi: "Menu"
     # https://github.com/casualsnek/waydroid_script
-    waydroid: { packages: [ "lzip", "waydroid" ]}
+    # waydroid: { packages: [ "lzip", "waydroid" ]}
 
     # shell
     nushell: "结构化 shell"
@@ -180,7 +180,6 @@ const MANIFEST = {
     inkscape: "操作矢量图"
     poppler: "`pdftoppm -png`将 PDF 转成图片"
     viu: "终端看图"
-    netease-cloud-music: { packages: ["netease-cloud-music-portable"], manager: "paru", desc: "网易云音乐（沙盒）" }
 
     # language
     pot-translation: "一站式翻译"
@@ -252,7 +251,6 @@ const MANIFEST = {
     pacfiles: "pacfiles is a pacman -F alternative that runs blazingly fast"
 
     # amd
-    mesa-vdpau: "Gpu video accelerator"
     amd-ucode: "AMD CPU driver"
     xf86-video-amdgpu: "AMD GPU video accelerator"
 
