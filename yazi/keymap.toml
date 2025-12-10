@@ -43,10 +43,10 @@ keymap = [
   { on = "<Tab>", run = "spot", desc = "Spot hovered file" },
   { on = "`", run = "spot", desc = "Spot hovered file" },
 
-  { on = "O", run = "open", desc = "Open selected files" },
+  { on = "O", run = "shell 'kitty @ launch --type=window --cwd %d1'", desc = "Kitty Window Here" },
   { on = "o", run = "open --interactive", desc = "Open  selected files interactively" },
   { on = "e", run = "shell 'xdg-open .'", desc = "Look up in file manager" },
-  { on = "<S-e>", run = """shell 'dragon-drop -x -i -T "$1"' """, desc = "Drag and drop" },
+  { on = "<S-e>", run = "shell 'dragon-drop -x -i -T %1' ", desc = "Drag and drop" },
   { on = "<Enter>", run = "open --hovered", desc = "Always open the hovered file regardless of the selection state." },
   { on = "<S-Enter>", run = "open --interactive", desc = "Open selected files interactively" },
   { on = ["y", "y"], run = "plugin ucp copy notify", desc = "Copy" },
