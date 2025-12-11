@@ -19,15 +19,16 @@ from kitty.config import cached_values_for
 from kitty.key_encoding import EventType
 from kitty.typing_compat import KeyEventType, ScreenSize
 
-NON_SPACE_PATTERN = re.compile(r"\S+")
-SPACE_PATTERN = re.compile(r"\s+")
-SPACE_PATTERN_END = re.compile(r"\s+$")
-SPACE_PATTERN_START = re.compile(r"^\s+")
+NON_SPACE_PATTERN = re.compile(r"\S+", re.UNICODE)
+SPACE_PATTERN = re.compile(r"\s+", re.UNICODE)
+SPACE_PATTERN_END = re.compile(r"\s+$", re.UNICODE)
+SPACE_PATTERN_START = re.compile(r"^\s+", re.UNICODE)
 
-NON_ALPHANUM_PATTERN = re.compile(r"[^\w\d]+")
-NON_ALPHANUM_PATTERN_END = re.compile(r"[^\w\d]+$")
-NON_ALPHANUM_PATTERN_START = re.compile(r"^[^\w\d]+")
-ALPHANUM_PATTERN = re.compile(r"[\w\d]+")
+NON_ALPHANUM_PATTERN = re.compile(r"[^\w]+", re.UNICODE)
+NON_ALPHANUM_PATTERN_END = re.compile(r"[^\w]+$", re.UNICODE)
+NON_ALPHANUM_PATTERN_START = re.compile(r"^[^\w]+", re.UNICODE)
+ALPHANUM_PATTERN = re.compile(r"[\w]+", re.UNICODE)
+
 
 
 def call_remote_control(args: list[str]) -> None:
