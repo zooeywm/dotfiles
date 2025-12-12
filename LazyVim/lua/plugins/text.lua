@@ -101,21 +101,13 @@ return {
         keys = { { "U", mode = { "n", "x", "o" }, function() require("flash-zh").jump({ chinese_only = false }) end, desc = "Flash Jump" } },
     },
     {
-        "chrisgrieser/nvim-recorder",
-        event = "RecordingEnter",
-        keys = {
-            { "q", desc = "Start Recording" },
-            { "Q", desc = "Play Recording" },
+        "tzachar/highlight-undo.nvim",
+        event = "VeryLazy",
+        opts = {
+            duration = 50,
+            hlgroup = "HighlightUndo",
         },
     },
-    -- {
-    --     "tzachar/highlight-undo.nvim",
-    --     event = "VeryLazy",
-    --     opts = {
-    --         duration = 50,
-    --         hlgroup = "HighlightUndo",
-    --     },
-    -- },
     {
         "hotoo/pangu.vim",
         config = function() vim.g.pangu_rule_date = 1 end,
