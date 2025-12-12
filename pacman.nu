@@ -147,6 +147,7 @@ const MANIFEST = {
     neovim: "editor"
     neovide: "neovim gui"
     plocate: "locate 的并行版本"
+    ripdrag: { packages: ["ripdrag-git"], desc: "准备拖拽" }
 
     # git
     lazygit: "git TUI"
