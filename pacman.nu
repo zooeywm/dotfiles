@@ -146,6 +146,7 @@ const MANIFEST = {
     aichat: "LLM CLI"
     neovim: "editor"
     neovide: "neovim gui"
+    zed: "Zed Editor"
     plocate: "locate 的并行版本"
     ripdrag: { packages: ["ripdrag-git"], desc: "准备拖拽" }
 
