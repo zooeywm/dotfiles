@@ -35,8 +35,8 @@ hash = "8a7c58225816a163a6e8730c0adafbc8"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
-rev = "8f37dc5"
-hash = "ee71543790f0ce3951161045a3787abd"
+rev = "699712a"
+hash = "14f96284461507db0f384da0eeebe432"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"

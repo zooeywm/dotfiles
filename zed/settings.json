@@ -7,13 +7,23 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_edit_predictions": false,
   "agent": {
+    "default_profile": "ask",
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "provider": "deepseek",
+      "model": "deepseek-chat"
     },
     "model_parameters": []
   },
+  "agent_servers": {
+    "OpenCode": {
+      "type": "custom",
+      "command": "opencode",
+      "args": ["acp"]
+    }
+  },
+  "disable_ai": false,
   "vim_mode": true,
   "icon_theme": "Zed (Default)",
   "ui_font_size": 25.0,
@@ -34,7 +44,8 @@
         },
         "check": {
           "command": "clippy",
-          "extraArgs": [ "--no-deps" ]
+          "extraArgs": ["--no-deps"]
+          // "workspace": false
         },
         "cachePriming": {
           "enable": false
@@ -68,13 +79,6 @@
           }
         }
       }
-    }
-  },
-  "agent_servers": {
-    "OpenCode": {
-      "type": "custom",
-      "command": "opencode",
-      "args": ["acp"]
     }
   }
 }

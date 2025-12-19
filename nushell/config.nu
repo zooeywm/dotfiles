@@ -20,7 +20,7 @@ source $"($nu.cache-dir)/atuin.nu"
 
 # FUNCTION #
 
-def zd [] {
+def --env zd [] {
     let p = fd -c 'always' -H -I -E '.git' . | fzf --ansi --cycle
     if ($p | path type) == 'dir' {
         z $p

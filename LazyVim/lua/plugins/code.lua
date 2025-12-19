@@ -59,7 +59,7 @@ return {
             rust = {
                 cmd = "rustfmt",
                 -- args = { "+nightly", "--edition", "2024", "--emit", "stdout" },
-                args = { "--edition", "2024", "--emit", "stdout" },
+                args = { "+nightly", "--edition", "2024", "--emit", "stdout" },
                 stdin = true,
             },
             qml = {
