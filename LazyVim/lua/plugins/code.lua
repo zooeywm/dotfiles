@@ -22,13 +22,7 @@ return {
             },
             ["c,cpp"] = "clang-format",
             go = "gofmt",
-            ["json,jsonc,json5,css"] = {
-                cmd = "biome",
-                args = { "format", "--indent-style=space", "--stdin-file-path" },
-                fname = true,
-                stdin = true,
-            },
-            ["javascript,typescript,javascriptreact,typescriptreact,css"] = {
+            ["javascript,typescript,javascriptreact,typescriptreact,css,json,jsonc,json5,markdown,vue,html,yaml"]  = {
                 cmd = "oxfmt",
                 fname = true,
                 stdin = false,
@@ -38,7 +32,7 @@ return {
             --     args = { "--kotlinlang-style", "-" },
             --     stdin = true,
             -- },
-            ["vue,xml,yaml,html,astro,markdown,scss,less"] = "prettier",
+            ["xml,astro,scss,less"] = "prettier",
             cs = {
                 cmd = "dotnet-csharpier",
                 args = { "--write-stdout" },

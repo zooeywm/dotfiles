@@ -23,7 +23,7 @@ rofi-wayland      = "Menu"
 kitty               = "kitty"
 nerd-fonts          = ""
 noto-fonts.packages = ["noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk"]
-terminus-font       = "Outter terminal font"
+terminus-font       = "Outer terminal font"
 
 [shell]
 bash-completion = ""
@@ -39,7 +39,7 @@ zsh.packages    = ["zsh", "zsh-autosuggestions", "zsh-syntax-highlighting", "zsh
 [git]
 delta           = { packages = ["git-delta"], desc = "Advanced diff" }
 git-cliff       = "Changelog generator"
-git-filter-repo = "Advanced git cleanner"
+git-filter-repo = "Advanced git cleaner"
 gitui           = "git TUI"
 stgit           = { manager = "paru", packages = ["stgit", "xmlto"], desc = "Git ui" }
 
@@ -68,13 +68,13 @@ pipewire = { packages = ["pipewire", "wireplumber", "pipewire-pulse", "pipewire-
 [language]
 nvchecker       = "PKGBUILD nvchecker"
 pacman-contrib  = "PKGBUILD pacman-contrib"
-pot-translation = "Translater"
+pottranslation = "Translator"
 python-pip      = ""
 
 [monitor]
 bottom                      = "Advanced top"
 brightnessctl               = "Adjust lightness"
-duf                         = "Calculate partion size"
+duf                         = "Calculate partaion size"
 erdtree                     = "Tree with size"
 macchina                    = "System info"
 mkinitcpio-firmware.manager = "paru"
@@ -85,7 +85,7 @@ pulsemixer                  = "Volume panel tui"
 [network]
 clash-verge    = { packages = ["clash-verge", "clash-meta"], manager = "paru" }
 gping          = "Ping with tui"
-lsof           = "Get file opend port"
+lsof           = "Get file opened port"
 networkmanager = ""
 openssh        = "ssh"
 traceroute     = "Trace route"
@@ -154,7 +154,7 @@ slint_lsp = { manager = "cargo", desc = "slint lsp" }
 [system]
 acpi        = "Battery info"
 bandwhich   = "Monitor network bandwidth"
-bluez       = "Blutooth kernel"
+bluez       = "Bluetooth kernel"
 bluez-utils = "Bluetooth cli"
 ntp         = "Time sync daemon"
 polkit      = "Policy kit"
@@ -170,8 +170,8 @@ xf86-video-amdgpu = "AMD GPU video accelerator"
 [misc]
 QQ                         = { packages = ["linuxqq"], manager = "paru" }
 asciinema                  = "shell recorder"
-bat                        = "Advaned cat"
-cargo-get                  = { manager = "cargo", desc = "toml extrator" }
+bat                        = "Advanced cat"
+cargo-get                  = { manager = "cargo", desc = "toml extractor" }
 choose                     = "Advanced cut"
 conceal                    = { packages = ["conceal-bin"], manager = "paru", desc = "Recycle bin" }
 dbeaver                    = "PostgreSQL client"
