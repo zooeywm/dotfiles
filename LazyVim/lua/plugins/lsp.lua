@@ -129,14 +129,14 @@ return {
         },
         event = "LspAttach",
         keys = {
-            -- -- 跳转
-            -- { "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", desc = "Prev Diagnostic" },
-            -- { "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next Diagnostic" },
-            -- { "[e", function() require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Prev Error" },
-            -- { "]e", function() require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Next Error" },
+            -- 跳转
+            { "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", desc = "Prev Diagnostic" },
+            { "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next Diagnostic" },
+            { "[e", function() require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Prev Error" },
+            { "]e", function() require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Next Error" },
             -- 审视
             { "<S-k>", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover" },
-            -- { "<leader>ld", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "Line Diagnostics" },
+            { "<leader>ld", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "Line Diagnostics" },
             { "<leader>lI", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
             -- 更改
             { "<leader>lr", "<cmd>Lspsaga rename<cr>", desc = "Rename" },
