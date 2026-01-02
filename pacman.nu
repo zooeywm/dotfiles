@@ -73,6 +73,7 @@ const MANIFEST = {
     sqlitebrowser: "SQLite 客户端"
     nerd-fonts: "书呆子字体"
     noto-fonts: { packages: [ "noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk" ], desc: "零豆腐块字体" }
+    wqy-zenhei: "文泉驿雅黑"
     polkit-kde-agent: "Authorization Panel"
     polkit: "Policy kit"
     bluez: "Bluetooth kernel"
@@ -80,21 +81,6 @@ const MANIFEST = {
     overskride: { manager: "paru", desc: "Bluetooth GUI" }
     kalker: { manager: "paru", desc: "Terminal calculator" }
     wps: { packages: [ "wps-office-cn-bwrap", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" }
-
-    ## wayland
-    wl-clipboard-rs: { manager: "paru", desc: "Wayland Clipboard" }
-    cliphist: "剪贴板历史"
-    swww: "Wallpaper engine"
-    waybar: "Status bar"
-    grim: "Screen cut"
-    slurp: "Screen area cut"
-    wl-screenrec: { packages: ["wl-screenrec-git"], desc: "wayland screen recorder" }
-    dunst: "Notify channel"
-    satty: { manager: "paru", desc: "Screen cut editor" }
-    hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] }
-    rofi: "Menu"
-    # https://github.com/casualsnek/waydroid_script
-    # waydroid: { packages: [ "lzip", "waydroid" ]}
 
     # shell
     nushell: "结构化 shell"
@@ -193,7 +179,6 @@ const MANIFEST = {
     bandwhich: "监测网络带宽"
     bottom: "高级 top"
     light: "调节亮度"
-    brightnessctl: "Adjust lightness"
     pamixer: "调节音量"
     procs: "查看进程"
     wiremix: "音量面板"
@@ -262,6 +247,31 @@ const MANIFEST = {
     rclone: "Net Drive Synchronization"
     libfido2: "ssh-agent dependency"
     genact: "Linux 领域大神"
+
+    # niri
+    niri: "卷轴桌面"
+    xwayland-satellite: "新一代wayland到X11的适配器"
+    fuzzel: "软件启动器"
+    libnotify: "通知"
+    mako: "通知回显"
+    swaylock-effects: "锁屏"
+    swayidle: "后台定时任务"
+    blueman: "蓝牙面板"
+    satty: "编辑图片"
+    alsa-ucm-conf: "ALSA接线图"
+    alsa-firmware: "ALSA固件"
+    brightnessctl: "亮度调节"
+    swww: "壁纸上屏"
+    cliphist: "剪贴板历史"
+    wl-clipboard-rs: { manager: "paru", desc: "Wayland Clipboard" }
+    waybar: "Status bar"
+    grim: "Screen cut"
+    slurp: "Screen area cut"
+    wl-screenrec: { packages: ["wl-screenrec-git"], desc: "wayland screen recorder" }
+    hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] }
+    rofi: "Menu"
+    # https://github.com/casualsnek/waydroid_script
+    # waydroid: { packages: [ "lzip", "waydroid" ]}
 }
 
 def run-cmd [cmd: list<string>] {

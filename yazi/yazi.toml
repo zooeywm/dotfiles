@@ -165,7 +165,7 @@ previewers = [
   # PDF
   { mime = "application/pdf", run = "pdf" },
   # Archive
-  { url = "*.{rar,tar,tar.gz,tar.xz,tar.zst,tar.bz2,zip,7z,squashfs}", run = 'piper -- bd ls "$1"' },
+  { url = "*.{rar,tar,tar.gz,tar.xz,tar.zst,tar.bz2,zip,7z,squashfs,a}", run = 'piper -- bd ls "$1"' },
   { mime = "application/iso9660-image", run = "archive" },
   { mime = "application/{redhat-package-manager,rpm,android.package-archive}", run = "archive" },
   { mime = "application/debian*-package", run = 'piper -- dpkg -c "$1" | sed "s/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *[^ ]* *//" | less' },

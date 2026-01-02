@@ -31,7 +31,7 @@ def main [] {
     | pf kde/kwalletrc ~/.config/kwalletrc
     # | pf Templates -t ~
     | pfs [
-        starship.toml fish nushell dunst presenterm niri
+        starship.toml fish nushell dunst presenterm niri mako swaylock
         LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
         gitui lazygit zathura mpv gdb pip.conf macchina paru
         mise atuin uv jj zed opencode
