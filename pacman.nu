@@ -253,7 +253,6 @@ const MANIFEST = {
     xwayland-satellite: "新一代wayland到X11的适配器"
     fuzzel: "软件启动器"
     libnotify: "通知"
-    mako: "通知回显"
     swaylock-effects: "锁屏"
     swayidle: "后台定时任务"
     blueman: "蓝牙面板"
