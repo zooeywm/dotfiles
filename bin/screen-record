@@ -1,18 +1,72 @@
 #!/bin/sh
-pid_count=$(fuser /usr/bin/wl-screenrec 2>/dev/null | wc -w)
-if [ "$pid_count" -gt 0 ]; then
-	pkill wl-screenrec && notify-send "Screen Recording ended."
-else
-	notify-send "Screen Recording started."
-	if [ "$1" = "area" ]; then
-		exec wl-screenrec --audio --audio-device=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -f ~/Videos/screen-record/vid-$(date +"%Y-%m-%d-%H%M%S").mp4 -g "$(slurp)"
-	elif [ "$1" = "screen" ]; then
-		output=$(hyprctl monitors -j)
 
-		x=$(echo "$output" | jq -r '.[] | select(.focused == true) | .x')
-		y=$(echo "$output" | jq -r '.[] | select(.focused == true) | .y')
-		width=$(echo "$output" | jq -r '.[] | select(.focused == true) | .width')
-		height=$(echo "$output" | jq -r '.[] | select(.focused == true) | .height')
-		exec wl-screenrec --audio --audio-device=alsa_output.pci-0000_63_00.6.analog-stereo.monitor -f ~/Videos/screen-record/vid-$(date +"%Y-%m-%d-%H%M%S").mp4 -g "$x,$y $width"x"$height"
-	fi
+set -eu
+AUDIO_DEV="alsa_output.pci-0000_63_00.6.analog-stereo.monitor"
+OUTDIR="$HOME/Videos/Screencasts"
+OUTFILE="$OUTDIR/vid-$(date +"%Y-%m-%d-%H%M%S").mp4"
+mkdir -p "$OUTDIR"
+
+pid_count=$(fuser /usr/bin/wl-screenrec 2>/dev/null | wc -w)
+
+if [ "$pid_count" -gt 0 ]; then
+    pkill wl-screenrec
+    notify-send "Screen Recording ended."
+    exit 0
 fi
+
+get_geometry_hyprland() {
+    hyprctl monitors -j 2>/dev/null | jq -r '
+		.[] | select(.focused == true) |
+		"\(.x),\(.y) \(.width)x\(.height)"
+	'
+}
+
+get_geometry_niri() {
+    niri msg focused-output 2>/dev/null | awk '
+        /Logical position:/ {
+            split($3, a, ",")
+            x = a[1]
+            y = $4
+        }
+        /Logical size:/ {
+            split($3, b, "x")
+            w = b[1]
+            h = b[2]
+            print x "," y " " w "x" h
+            exit
+        }
+    '
+}
+
+# 获取 geometry
+if geometry=$(get_geometry_hyprland) && [ -n "$geometry" ]; then
+    :
+elif geometry=$(get_geometry_niri) && [ -n "$geometry" ]; then
+    :
+else
+    notify-send "Screen Recording failed" "Unable to detect monitor geometry"
+    exit 1
+fi
+
+notify-send "Start recording"
+
+case "${1:-}" in
+area)
+    exec wl-screenrec \
+        --audio \
+        --audio-device="$AUDIO_DEV" \
+        -f "$OUTFILE" \
+        -g "$(slurp)"
+    ;;
+screen | "")
+    exec wl-screenrec \
+        --audio \
+        --audio-device="$AUDIO_DEV" \
+        -f "$OUTFILE" \
+        -g "$geometry"
+    ;;
+*)
+    notify-send "Unknown mode" "$1"
+    exit 1
+    ;;
+esac

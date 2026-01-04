@@ -4,10 +4,17 @@
 // https://yalter.github.io/niri/Configuration:-Introduction
 
 environment {
-    LC_MESSAGES "zh_CN.UTF-8"
+    LC_MESSAGES "en_US.UTF-8"
     // NOTE: https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
     XMODIFIERS "@im=fcitx"
     JAVA_TOOL_OPTIONS "-Dsun.java2d.uiScale=2" // 高分屏用
+    QT_AUTO_SCREEN_SCALE_FACTOR "0"
+    QT_QPA_PLATFORM "wayland;xcb"
+    QT_ENABLE_HIGHDPI_SCALING "1"
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+    SDL_VIDEODRIVER "wayland"
+    CLUTTER_BACKEND "wayland"
+    MOZ_ENABLE_WAYLAND "1"
 }
 
 input {
@@ -21,33 +28,34 @@ input {
         dwt
         natural-scroll
     }
-    warp-mouse-to-focus mode="center-xy"
-    workspace-auto-back-and-forth
+    // warp-mouse-to-focus
+    // workspace-auto-back-and-forth
     mod-key "Super"
+}
+
+output "HDMI-A-1" {
+    // off
+    mode "2560x1440@60"
+    position x=0 y=0
+    scale 1
+    transform "normal"
+    hot-corners {
+        off
+    }
+    // variable-refresh-rate
 }
 
 output "eDP-1" {
     mode "2880x1800@120"
     scale 1.5
     transform "normal"
-    position x=0 y=0
     focus-at-startup
-    hot-corners {
-        top-left
-    }
     variable-refresh-rate
-}
-
-output "HDMI-A-1" {
-    // off
-    mode "1920x1080@100"
-    scale 1
-    transform "normal"
     hot-corners {
         off
     }
-    variable-refresh-rate
 }
+
 
 layout {
     gaps 10
@@ -87,6 +95,7 @@ layout {
 
 spawn-at-startup "waybar"
 spawn-at-startup "swww-daemon"
+spawn-at-startup "wpround"
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 spawn-at-startup "mako"
 spawn-at-startup "fcitx5"
@@ -104,32 +113,15 @@ prefer-no-csd
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
-// https://yalter.github.io/niri/Configuration:-Window-Rules
-
-
-window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="blueman-manager"
-    match app-id="com.gabm.satty"
-    match app-id="com.follow.clash"
-    match app-id="xwaylandvideobridge"
-    open-floating true
-}
-
-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
-    draw-border-with-background false
-}
-
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+T repeat=false hotkey-overlay-title="Open kitty Terminal" { spawn "kitty"; }
+    Mod+V repeat=false hotkey-overlay-title="Open Copyq" { spawn-sh "copyq toggle"; }
+    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn-sh "fuzzel -D yes"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
-    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+    // Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
@@ -144,9 +136,9 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
-    Mod+O repeat=false { toggle-overview; }
+    Mod+Tab repeat=false { toggle-overview; }
 
-    Mod+Q repeat=false { close-window; }
+    Mod+Shift+C repeat=false { close-window; }
 
     Mod+H         { focus-column-left; }
     Mod+J         { focus-window-down; }
@@ -172,8 +164,12 @@ binds {
 
     Mod+Down               { focus-workspace-down; }
     Mod+Up                 { focus-workspace-up; }
+    Mod+U                  { focus-workspace-down; }
+    Mod+I                  { focus-workspace-up; }
     Mod+Shift+Down         { move-column-to-workspace-down; }
     Mod+Shift+Up           { move-column-to-workspace-up; }
+    Mod+Shift+U            { move-column-to-workspace-down; }
+    Mod+Shift+I            { move-column-to-workspace-up; }  
 
     Mod+Alt+Down { move-workspace-down; }
     Mod+Alt+Up   { move-workspace-up; }
@@ -193,8 +189,8 @@ binds {
     Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
     Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
+    Mod+1 { focus-workspace "main"; }
+    Mod+2 { focus-workspace "chat"; }
     Mod+3 { focus-workspace 3; }
     Mod+4 { focus-workspace 4; }
     Mod+5 { focus-workspace 5; }
@@ -202,8 +198,8 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Mod+Ctrl+1 { move-column-to-workspace 1; }
-    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+1 { move-column-to-workspace "main"; }
+    Mod+Ctrl+2 { move-column-to-workspace "chat"; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
     Mod+Ctrl+4 { move-column-to-workspace 4; }
     Mod+Ctrl+5 { move-column-to-workspace 5; }
@@ -218,10 +214,9 @@ binds {
     Mod+Comma  { consume-window-into-column; }
     Mod+Period { expel-window-from-column; }
 
-    Mod+R { switch-preset-column-width; }
-    Mod+Shift+R { switch-preset-window-height; }
-    Mod+Ctrl+R { reset-window-height; }
-    Mod+F { maximize-column; }
+    // Mod+R { switch-preset-column-width; }
+    // Mod+Shift+R { reset-window-height; }
+    Mod+F repeat=false { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
 
     Mod+Ctrl+F { expand-column-to-available-width; }
@@ -236,23 +231,69 @@ binds {
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
 
-    Mod+Space       { toggle-window-floating; }
-    Mod+Shift+Space { switch-focus-between-floating-and-tiling; }
+    Mod+Space repeat=false       { toggle-window-floating; }
+    Mod+Shift+Space repeat=false { switch-focus-between-floating-and-tiling; }
 
-    Mod+W { toggle-column-tabbed-display; }
+    // Mod+W repeat=false { toggle-column-tabbed-display; }
 
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Mod+X { spawn-sh "zworld area"; }
+    Mod+S { screenshot-screen; }
+    Mod+W { screenshot-window; }
+    Mod+Shift+X { spawn-sh "screen-record area"; }
+    Mod+Shift+S { spawn-sh "screen-record screen"; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E { quit; }
+    Mod+Shift+Q { quit; }
+    Mod+Shift+D hotkey-overlay-title="Info a window" { spawn-sh "notify-send \"$(niri msg pick-window)\""; }
 
     Mod+Shift+P { power-off-monitors; }
 
+    Alt+Ctrl+O { spawn-sh "curl -X=POST 'http://localhost:60828/translate' -d \"$(wl-paste -n)\""; }
+    Alt+Ctrl+Q { spawn-sh "grim -g \"$(slurp)\" ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && curl \"127.0.0.1:60828/ocr_recognize?screenshot=false\""; }
+
+    Mod+Alt+H { spawn-sh "makoctl restore"; }
+    Mod+M { spawn-sh "makoctl dismiss"; }
+    Mod+Shift+M { spawn-sh "makoctl mode -t do-not-disturb"; }
+
     Mod+F1 { spawn-sh "pkill fcitx5 || fcitx5"; } // 重启输入法以解决弹不出来的问题
     Mod+F2 { spawn-sh "pkill waybar || true && waybar"; } // 重启waybar
-    Mod+F3 { spawn-sh "wl-paste | satty -f -"; } // 编辑刚刚的截图
+    Mod+F3 { spawn-sh "wl-paste | satty -f -"; } // Edit last screenshot
+}
+
+workspace "main"
+workspace "chat"
+
+window-rule {
+    match app-id=r#"zen-browser$"# title="^Picture-in-Picture$"
+    match app-id="blueman-manager"
+    match app-id="com.gabm.satty"
+    match app-id="com.follow.clash"
+    match app-id="xwaylandvideobridge"
+    match app-id="pot"
+    match app-id="com.github.hluk.copyq"
+    match app-id="wechat" title="图片和视频"
+    match app-id="QQ" title="图片查看器"
+    match app-id="Feishu" title="图片"
+
+
+    default-window-height { proportion 0.75; }
+    default-column-width { proportion 0.75; }
+    open-floating true
+}
+
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+    draw-border-with-background false
+}
+
+window-rule {
+    match at-startup=true
+    match app-id="wechat"
+    match app-id="Feishu"
+    match app-id="QQ"
+
+    // open-on-workspace "chat"
 }
