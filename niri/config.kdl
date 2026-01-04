@@ -5,6 +5,19 @@
 //
 // Using https://danklinux.com/docs/getting-started
 
+workspace "main" {
+    open-on-output "eDP-1"
+}
+workspace "browser" {
+    open-on-output "HDMI-A-1"
+}
+workspace "misc" {
+    open-on-output "eDP-1"
+}
+workspace "chat" {
+    open-on-output "eDP-1"
+}
+
 environment {
     LC_MESSAGES "en_US.UTF-8"
     // NOTE: https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
@@ -122,6 +135,8 @@ overview {
 }
 
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+spawn-at-startup "bash" "-c" "QT_SCALE_FACTOR=2 wechat-universal &"
+spawn-at-startup "zen"
 // spawn-at-startup "waybar"
 // spawn-at-startup "swww-daemon"
 // spawn-at-startup "wpround"
@@ -229,6 +244,27 @@ window-rule {
     match app-id=r#"org.quickshell$"#
     open-floating true
 }
+
+window-rule {
+    match app-id="wechat"
+    match app-id="Feishu"
+    match app-id="QQ"
+
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="xwaylandvideobridge"
+    match app-id="com.follow.clash"
+
+    open-on-workspace "misc"
+}
+
+window-rule {
+    match app-id="zen-browser"
+    open-on-workspace "browser"
+}
+
 debug {
     honor-xdg-activation-with-invalid-serial
 }

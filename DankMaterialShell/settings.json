@@ -241,7 +241,7 @@
   "osdIdleInhibitorEnabled": true,
   "osdMicMuteEnabled": true,
   "osdCapsLockEnabled": true,
-  "osdPowerProfileEnabled": false,
+  "osdPowerProfileEnabled": true,
   "osdAudioOutputEnabled": true,
   "powerActionConfirm": true,
   "powerActionHoldDuration": 0.5,
@@ -306,6 +306,10 @@
         },
         {
           "id": "systemTray",
+          "enabled": true
+        },
+        {
+          "id": "capsLockIndicator",
           "enabled": true
         }
       ],
