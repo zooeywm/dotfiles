@@ -54,7 +54,7 @@ config-notification {
 
 output "HDMI-A-1" {
     // off
-    mode "2560x1440@60"
+    mode "2560x1440@120"
     position x=0 y=0
     scale 1
     transform "normal"
@@ -220,6 +220,17 @@ window-rule {
     match app-id=r#"^org\.gnome\.Nautilus$"#
     match app-id=r#"^steam$"#
     match app-id=r#"^xdg-desktop-portal$"#
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="zoom"
+    match app-id=r#"zen-browser$"# title="^Picture-in-Picture$"
+    match app-id="com.gabm.satty"
+    match app-id="com.follow.clash"
+    match app-id="xwaylandvideobridge"
+    match app-id="pot"
+    match app-id="wechat" title="图片和视频"
+    match app-id="QQ" title="图片查看器"
+    match app-id="Feishu" title="图片"
+    match app-id=r#"org.quickshell$"#
     open-floating true
 }
 window-rule {
@@ -232,17 +243,7 @@ window-rule {
 }
 window-rule {
     match is-active=false
-    opacity 0.9
-}
-window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="zoom"
-    open-floating true
-}
-// Open dms windows as floating by default
-window-rule {
-    match app-id=r#"org.quickshell$"#
-    open-floating true
+    opacity 0.95
 }
 
 window-rule {

@@ -288,7 +288,10 @@
       "enabled": true,
       "position": 0,
       "screenPreferences": [
-        "all"
+        {
+          "name": "eDP-1",
+          "model": "0x419F"
+        }
       ],
       "showOnLastDisplay": true,
       "leftWidgets": [
@@ -381,7 +384,7 @@
       "widgetOutlineColor": "primary",
       "widgetOutlineOpacity": 0.2,
       "widgetOutlineThickness": 1,
-      "fontScale": 1,
+      "fontScale": 1.2,
       "autoHide": false,
       "autoHideDelay": 250,
       "openOnOverview": false,
