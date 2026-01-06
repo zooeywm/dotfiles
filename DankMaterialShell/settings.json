@@ -4,12 +4,12 @@
   "matugenScheme": "scheme-tonal-spot",
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
-  "popupTransparency": 1,
+  "popupTransparency": 0.9,
   "dockTransparency": 1,
-  "widgetBackgroundColor": "sch",
-  "widgetColorMode": "default",
+  "widgetBackgroundColor": "sth",
+  "widgetColorMode": "colorful",
   "cornerRadius": 12,
-  "use24HourClock": true,
+  "use24HourClock": false,
   "showSeconds": true,
   "useFahrenheit": false,
   "nightModeEnabled": false,
@@ -196,7 +196,7 @@
   "notepadTransparencyOverride": 0.98,
   "notepadLastCustomTransparency": 0.98,
   "soundsEnabled": true,
-  "useSystemSoundTheme": false,
+  "useSystemSoundTheme": true,
   "soundNewNotification": true,
   "soundVolumeChanged": true,
   "soundPluggedIn": true,
@@ -448,31 +448,35 @@
           "enabled": true
         },
         {
+          "id": "separator",
+          "enabled": true
+        },
+        {
           "id": "capsLockIndicator",
           "enabled": true
         },
         {
           "id": "cpuUsage",
-          "enabled": true,
-          "minimumWidth": true
+          "enabled": true
         },
         {
           "id": "memUsage",
-          "enabled": true,
-          "minimumWidth": true,
-          "showSwap": false
+          "enabled": true
         },
         {
           "id": "cpuTemp",
-          "enabled": true,
-          "minimumWidth": true
+          "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
         }
       ],
       "centerWidgets": [
         {
           "id": "music",
           "enabled": true,
-          "mediaSize": 1
+          "mediaSize": 2
         },
         {
           "id": "weather",
@@ -494,7 +498,8 @@
         },
         {
           "id": "clock",
-          "enabled": true
+          "enabled": true,
+          "clockCompactMode": false
         },
         {
           "id": "notificationButton",
@@ -524,7 +529,7 @@
       "widgetOutlineOpacity": 0.2,
       "widgetOutlineThickness": 1,
       "fontScale": 1.2,
-      "autoHide": true,
+      "autoHide": false,
       "autoHideDelay": 250,
       "openOnOverview": false,
       "visible": true,
