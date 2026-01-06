@@ -19,12 +19,12 @@ sudo cpupower frequency-set -d <clock-freq>
 # cpupower specified clock frequency
 sudo cpupower frequency-set -f <clock-freq>
 
-# list and find system desktop application
-ls /usr/share/applications
-# list and find user desktop application
-ls ~/.local/share/applications
-# list and find flatpak desktop application
-ls /var/lib/flatpak/exports/share/applications
+# goto system desktop application dir
+cd /usr/share/applications
+# goto user desktop application dir
+cd ~/.local/share/applications
+# goto flatpak desktop application dir
+cd /var/lib/flatpak/exports/share/applications
 
 # reload hwdb and udev rules to apply key update
 sudo systemd-hwdb update && sudo udevadm trigger

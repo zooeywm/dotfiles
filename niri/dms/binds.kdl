@@ -4,7 +4,7 @@ binds {
     Mod+Tab repeat=false { toggle-overview; }
 
     // === Application Launchers ===
-    Mod+T repeat=false hotkey-overlay-title="Open Kitty Terminal" { spawn-sh "kitty"; }
+    Mod+T hotkey-overlay-title="Open Kitty Terminal" { spawn-sh "kitty"; }
     Mod+V hotkey-overlay-title="Clipboard Manager" {
         spawn-sh "dms ipc call clipboard toggle";
     }
@@ -14,7 +14,7 @@ binds {
     Mod+M hotkey-overlay-title="Task Manager" {
         spawn-sh "dms ipc call processlist focusOrToggle";
     }
-    Mod+I hotkey-overlay-title="Settings" {
+    Mod+Comma hotkey-overlay-title="Settings" {
         spawn-sh "dms ipc call settings focusOrToggle";
     }
     // Mod+Y hotkey-overlay-title="Browse Wallpapers" {
@@ -62,20 +62,20 @@ binds {
     Mod+Shift+F { fullscreen-window; }
     Mod+Space { toggle-window-floating; }
     Mod+Shift+Space { switch-focus-between-floating-and-tiling; }
-    // Mod+W { toggle-column-tabbed-display; }
+    Mod+Shift+T { toggle-column-tabbed-display; }
 
     // === Focus Navigation ===
     Mod+Left  { focus-column-left; }
     Mod+Right { focus-column-right; }
     Mod+H     { focus-column-left; }
-    // Mod+J     { focus-window-down; }
-    // Mod+K     { focus-window-up; }
+    Mod+U     { focus-window-down; }
+    Mod+I     { focus-window-up; }
     Mod+L     { focus-column-right; }
 
     // === Window Movement ===
     Mod+Shift+H     { move-column-left; }
-    // Mod+Shift+J     { move-window-down; }
-    // Mod+Shift+K     { move-window-up; }
+    Mod+Shift+U     { move-window-down; }
+    Mod+Shift+I     { move-window-up; }
     Mod+Shift+L     { move-column-right; }
 
     // === Column Navigation ===
@@ -86,8 +86,8 @@ binds {
 
     // === Monitor Navigation ===
     Mod+Ctrl+H     { focus-monitor-left; }
-    // Mod+Ctrl+J     { focus-monitor-down; }
-    // Mod+Ctrl+K     { focus-monitor-up; }
+    Mod+Ctrl+U     { focus-monitor-down; }
+    Mod+Ctrl+I     { focus-monitor-up; }
     Mod+Ctrl+L     { focus-monitor-right; }
 
     // === Move to Monitor ===
@@ -97,12 +97,10 @@ binds {
     Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
     // === Workspace Navigation ===
-    Mod+Down           { focus-workspace-down; }
-    Mod+Up             { focus-workspace-up; }
-    Mod+J              { focus-workspace-down; }
-    Mod+K              { focus-workspace-up; }
-    // Mod+Shift+Down      { move-column-to-workspace-down; }
-    // Mod+Shift+Up        { move-column-to-workspace-up; }
+    Mod+Down            { focus-workspace-down; }
+    Mod+Up              { focus-workspace-up; }
+    Mod+J               { focus-workspace-down; }
+    Mod+K               { focus-workspace-up; }
     Mod+Shift+J         { move-column-to-workspace-down; }
     Mod+Shift+K         { move-column-to-workspace-up; }
 
@@ -154,8 +152,8 @@ binds {
     Mod+Period { expel-window-from-column; }
 
     // === Sizing & Layout ===
-    // Mod+R { switch-preset-column-width; }
-    // Mod+Shift+R { switch-preset-window-height; }
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
     Mod+Shift+0 { reset-window-height; }
     // Mod+Ctrl+F { expand-column-to-available-width; }
     Mod+C { center-column; }
@@ -177,7 +175,7 @@ binds {
     Mod+Shift+S { spawn-sh "screen-record screen"; }
 
     // === System Controls ===
-    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Mod+Escape { toggle-keyboard-shortcuts-inhibit; }
     Mod+Shift+P { power-off-monitors; }
 
     // === Misc ===
@@ -186,4 +184,5 @@ binds {
     Alt+Ctrl+Q { spawn-sh "grim -g \"$(slurp)\" ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && curl \"127.0.0.1:60828/ocr_recognize?screenshot=false\""; }
     Mod+F2 { spawn-sh "dms restart"; }
     Mod+F3 { spawn-sh "wl-paste | satty -f -"; } // Edit last screenshot
+    Mod+O { toggle-window-rule-opacity; }
 }

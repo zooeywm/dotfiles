@@ -1,0 +1,120 @@
+window-rule {
+    open-focused true
+    geometry-corner-radius 12
+    clip-to-geometry true
+    tiled-state true
+    draw-border-with-background false
+    opacity 0.95
+}
+window-rule {
+    open-focused false
+
+    match app-id="wechat"
+    match app-id="QQ"
+    match app-id="Feishu"
+
+    exclude title="图片和视频"
+    exclude title="图片查看器"
+    exclude title="图片"
+}
+window-rule {
+    opacity 0.9
+
+    match is-active=false
+}
+window-rule {
+    open-floating false
+
+    default-column-width { proportion 0.5; }
+    match app-id=r#"^gnome-control-center$"#
+    match app-id=r#"^pavucontrol$"#
+    match app-id=r#"^nm-connection-editor$"#
+}
+window-rule {
+    open-floating true
+
+    match app-id=r#"^gnome-calculator$"#
+    match app-id=r#"^galculator$"#
+    match app-id=r#"^blueman-manager$"#
+    match app-id=r#"^org\.gnome\.Nautilus$"#
+    match app-id=r#"^steam$"#
+    match app-id=r#"^xdg-desktop-portal$"#
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="zoom"
+    match app-id="zen-browser" title="^Picture-in-Picture$"
+    match app-id="com.gabm.satty"
+    match app-id="xwaylandvideobridge"
+    match app-id="pot"
+    match app-id="wechat" title="图片和视频"
+    match app-id="QQ" title="图片查看器"
+    match app-id="Feishu" title="图片"
+    match app-id=r#"org.quickshell$"#
+    match app-id="wemeetapp"
+    match app-id="bssh"
+    match app-id="bvnc"
+    match app-id="avahi-discover"
+    match app-id="Meeting"
+    match app-id="hyprland-share-picker"
+    match app-id="tlpui"
+}
+window-rule {
+    default-column-width { proportion 0.75; }
+    default-window-height { proportion 0.75; }
+
+    match app-id=r#"^gnome-calculator$"#
+    match app-id=r#"^galculator$"#
+    match app-id=r#"^blueman-manager$"#
+    match app-id=r#"^org\.gnome\.Nautilus$"#
+    match app-id=r#"^steam$"#
+    match app-id=r#"^xdg-desktop-portal$"#
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="zoom"
+    match app-id="zen-browser" title="^Picture-in-Picture$"
+    match app-id="com.gabm.satty"
+    match app-id="pot"
+    match app-id="wechat" title="图片和视频"
+    match app-id="QQ" title="图片查看器"
+    match app-id="Feishu" title="图片"
+    match app-id=r#"org.quickshell$"#
+    match app-id="wemeetapp"
+    match app-id="bssh"
+    match app-id="bvnc"
+    match app-id="avahi-discover"
+}
+window-rule {
+    open-on-workspace "chat"
+
+    match app-id="wechat"
+    match app-id="Feishu"
+    match app-id="QQ"
+}
+window-rule {
+    open-on-workspace "misc"
+
+    match app-id="xwaylandvideobridge"
+    match app-id="com.follow.clash"
+    match app-id="SPlayer"
+    exclude title="SPlayer - 桌面歌词"
+}
+window-rule {
+    open-maximized true
+    open-on-workspace "browser"
+
+    match app-id="zen-browser"
+}
+window-rule {
+    open-on-workspace "browser"
+
+    match app-id="one.alynx.showmethekey"
+}
+window-rule {
+    open-floating true
+    open-on-workspace "browser"
+    default-floating-position x=2 y=2 relative-to="bottom-right"
+    focus-ring {
+        off
+    }
+
+    match app-id="SPlayer" title="SPlayer - 桌面歌词"
+    match app-id="showmethekey-gtk" title="Floating Window - Show Me The Key"
+}

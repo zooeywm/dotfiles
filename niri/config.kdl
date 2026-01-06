@@ -41,10 +41,7 @@ input {
     touchpad {
         tap
         dwt
-        // natural-scroll
     }
-    // warp-mouse-to-focus
-    // workspace-auto-back-and-forth
     mod-key "Super"
 }
 
@@ -52,28 +49,6 @@ config-notification {
     disable-failed
 }
 
-output "HDMI-A-1" {
-    // off
-    mode "2560x1440@120"
-    position x=0 y=0
-    scale 1
-    transform "normal"
-    hot-corners {
-        off
-    }
-    // variable-refresh-rate
-}
-
-output "eDP-1" {
-    mode "2880x1800@120"
-    scale 1.5
-    transform "normal"
-    focus-at-startup
-    variable-refresh-rate
-    hot-corners {
-        off
-    }
-}
 
 gestures {
     hot-corners {
@@ -81,35 +56,10 @@ gestures {
     }
 }
 
-layout {
-    center-focused-column "never"
-    always-center-single-column false
-
-    preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66666
-        proportion 1.0
-    }
-
-    preset-window-heights {
-        proportion 0.33333
-        proportion 0.66666
-        proportion 1.0
-    }
-    default-column-width { proportion 0.5; }
-
-    tab-indicator {
-        width 4
-        gap 8
-        length total-proportion=1.0
-        position "top"
-        place-within-column
-    }
-
-    struts {
-    }
+xwayland-satellite {
+    path "/usr/bin/xwayland-satellite"
 }
+
 layer-rule {
     match namespace="^quickshell$"
     place-within-backdrop true
@@ -120,20 +70,19 @@ overview {
     }
 }
 
+switch-events {
+    lid-close { spawn "notify-send" "The laptop lid is closed!"; }
+    lid-open { spawn "notify-send" "The laptop lid is open!"; }
+    tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
+    tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
+}
+
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "bash" "-c" "QT_SCALE_FACTOR=2 wechat-universal &"
 spawn-at-startup "zen"
 spawn-at-startup "/opt/SPlayer/SPlayer"
+spawn-at-startup "showmethekey-gtk"
 spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri & /usr/lib/xdg-desktop-portal-kde"
-// spawn-at-startup "waybar"
-// spawn-at-startup "swww-daemon"
-// spawn-at-startup "wpround"
-// spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
-// spawn-at-startup "fcitx5"
-// spawn-at-startup "~/.config/niri/scripts/swayidle.sh"
-// spawn-sh-at-startup "wl-paste -t text --watch cliphist store -max-items 300"
-// spawn-sh-at-startup "wl-paste -t image --watch cliphist store -max-items 30"
-// spawn-at-startup "kitty"
 
 hotkey-overlay {
     skip-at-startup
@@ -142,6 +91,12 @@ hotkey-overlay {
 prefer-no-csd
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+cursor {
+    xcursor-theme "Breeze_Light"
+    xcursor-size 48
+    hide-after-inactive-ms 1000
+}
 
 animations {
     workspace-switch {
@@ -176,115 +131,6 @@ animations {
     }
 }
 
-window-rule {
-    open-focused true
-}
-window-rule {
-    open-focused false
-    match app-id="wechat"
-    match app-id="QQ"
-    match app-id="Feishu"
-
-    exclude title="图片和视频"
-    exclude title="图片查看器"
-    exclude title="图片"
-}
-window-rule {
-    match is-active=false
-    opacity 0.95
-}
-window-rule {
-    clip-to-geometry true
-    match app-id=r#"^org\.gnome\."#
-    draw-border-with-background false
-    geometry-corner-radius 12
-}
-window-rule {
-    open-floating false
-    default-column-width { proportion 0.5; }
-    match app-id=r#"^gnome-control-center$"#
-    match app-id=r#"^pavucontrol$"#
-    match app-id=r#"^nm-connection-editor$"#
-}
-window-rule {
-    open-floating true
-    match app-id=r#"^gnome-calculator$"#
-    match app-id=r#"^galculator$"#
-    match app-id=r#"^blueman-manager$"#
-    match app-id=r#"^org\.gnome\.Nautilus$"#
-    match app-id=r#"^steam$"#
-    match app-id=r#"^xdg-desktop-portal$"#
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="zoom"
-    match app-id="zen-browser" title="^Picture-in-Picture$"
-    match app-id="com.gabm.satty"
-    match app-id="xwaylandvideobridge"
-    match app-id="pot"
-    match app-id="wechat" title="图片和视频"
-    match app-id="QQ" title="图片查看器"
-    match app-id="Feishu" title="图片"
-    match app-id=r#"org.quickshell$"#
-    match app-id="wemeetapp"
-    match app-id="bssh"
-    match app-id="bvnc"
-    match app-id="avahi-discover"
-    match app-id="Meeting"
-    match app-id="hyprland-share-picker"
-    match app-id="tlpui"
-}
-window-rule {
-    default-column-width { proportion 0.75; }
-    default-window-height { proportion 0.75; }
-    match app-id=r#"^gnome-calculator$"#
-    match app-id=r#"^galculator$"#
-    match app-id=r#"^blueman-manager$"#
-    match app-id=r#"^org\.gnome\.Nautilus$"#
-    match app-id=r#"^steam$"#
-    match app-id=r#"^xdg-desktop-portal$"#
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="zoom"
-    match app-id="zen-browser" title="^Picture-in-Picture$"
-    match app-id="com.gabm.satty"
-    match app-id="pot"
-    match app-id="wechat" title="图片和视频"
-    match app-id="QQ" title="图片查看器"
-    match app-id="Feishu" title="图片"
-    match app-id=r#"org.quickshell$"#
-    match app-id="wemeetapp"
-    match app-id="bssh"
-    match app-id="bvnc"
-    match app-id="avahi-discover"
-}
-window-rule {
-    open-on-workspace "chat"
-    match app-id="wechat"
-    match app-id="Feishu"
-    match app-id="QQ"
-}
-window-rule {
-    open-on-workspace "misc"
-    match app-id="xwaylandvideobridge"
-    match app-id="com.follow.clash"
-    match app-id="SPlayer"
-    exclude title="SPlayer - 桌面歌词"
-}
-window-rule {
-    open-maximized true
-    open-on-workspace "browser"
-    match app-id="zen-browser"
-}
-// Splayer
-window-rule {
-    open-floating true
-    open-on-workspace "browser"
-    default-floating-position x=10 y=10 relative-to="bottom-right"
-    focus-ring {
-        off
-    }
-
-    match app-id="SPlayer" title="SPlayer - 桌面歌词"
-}
-
 debug {
     honor-xdg-activation-with-invalid-serial
 }
@@ -293,9 +139,7 @@ debug {
 recent-windows {
     binds {
         Alt+Tab         { next-window scope="output"; }
-        // Alt+Shift+Tab   { previous-window scope="output"; }
         Alt+grave       { next-window filter="app-id"; }
-        // Alt+Shift+grave { previous-window filter="app-id"; }
     }
 }
 
@@ -304,3 +148,5 @@ include "dms/colors.kdl"
 include "dms/layout.kdl"
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
+include "dms/window-rule.kdl"
+include "dms/outputs.kdl"

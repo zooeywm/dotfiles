@@ -1,0 +1,22 @@
+output "HDMI-A-1" {
+    // off
+    mode "2560x1440@120"
+    position x=0 y=0
+    scale 1
+    transform "normal"
+    hot-corners {
+        off
+    }
+    // variable-refresh-rate
+}
+
+output "eDP-1" {
+    mode "2880x1800@120"
+    scale 1.5
+    transform "normal"
+    focus-at-startup
+    variable-refresh-rate
+    hot-corners {
+        off
+    }
+}
