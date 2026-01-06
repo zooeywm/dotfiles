@@ -55,7 +55,7 @@ binds {
     }
 
     // === Window Management ===
-    Mod+Shift+C repeat=false { close-window; }
+    Mod+Q repeat=false { close-window; }
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
     Mod+Space { toggle-window-floating; }
@@ -66,14 +66,14 @@ binds {
     Mod+Left  { focus-column-left; }
     Mod+Right { focus-column-right; }
     Mod+H     { focus-column-left; }
-    Mod+J     { focus-window-down; }
-    Mod+K     { focus-window-up; }
+    // Mod+J     { focus-window-down; }
+    // Mod+K     { focus-window-up; }
     Mod+L     { focus-column-right; }
 
     // === Window Movement ===
     Mod+Shift+H     { move-column-left; }
-    Mod+Shift+J     { move-window-down; }
-    Mod+Shift+K     { move-window-up; }
+    // Mod+Shift+J     { move-window-down; }
+    // Mod+Shift+K     { move-window-up; }
     Mod+Shift+L     { move-column-right; }
 
     // === Column Navigation ===
@@ -84,8 +84,8 @@ binds {
 
     // === Monitor Navigation ===
     Mod+Ctrl+H     { focus-monitor-left; }
-    Mod+Ctrl+J     { focus-monitor-down; }
-    Mod+Ctrl+K     { focus-monitor-up; }
+    // Mod+Ctrl+J     { focus-monitor-down; }
+    // Mod+Ctrl+K     { focus-monitor-up; }
     Mod+Ctrl+L     { focus-monitor-right; }
 
     // === Move to Monitor ===
@@ -97,16 +97,16 @@ binds {
     // === Workspace Navigation ===
     Mod+Down           { focus-workspace-down; }
     Mod+Up             { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
-    Mod+Shift+Down      { move-column-to-workspace-down; }
-    Mod+Shift+Up        { move-column-to-workspace-up; }
-    Mod+Shift+U         { move-column-to-workspace-down; }
-    Mod+Shift+I         { move-column-to-workspace-up; }
+    Mod+J              { focus-workspace-down; }
+    Mod+K              { focus-workspace-up; }
+    // Mod+Shift+Down      { move-column-to-workspace-down; }
+    // Mod+Shift+Up        { move-column-to-workspace-up; }
+    Mod+Shift+J         { move-column-to-workspace-down; }
+    Mod+Shift+K         { move-column-to-workspace-up; }
 
     // === Move Workspaces ===
-    Mod+Ctrl+U         { move-workspace-down; }
-    Mod+Ctrl+I         { move-workspace-up; }
+    Mod+Ctrl+J         { move-workspace-down; }
+    Mod+Ctrl+K         { move-workspace-up; }
 
     // === Mouse Wheel Navigation ===
     Mod+WheelScrollDown      { focus-workspace-down; }

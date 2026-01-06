@@ -208,7 +208,6 @@ window-rule {
     match app-id=r#"^gnome-control-center$"#
     match app-id=r#"^pavucontrol$"#
     match app-id=r#"^nm-connection-editor$"#
-    match app-id="SPlayer" title="SPlayer - 桌面歌词"
 }
 window-rule {
     open-maximized true
@@ -234,6 +233,35 @@ window-rule {
     match app-id="Feishu" title="图片"
     match app-id=r#"org.quickshell$"#
     match app-id="wemeetapp"
+    match app-id="SPlayer" title="SPlayer - 桌面歌词"
+    match app-id="bssh"
+    match app-id="bvnc"
+    match app-id="avahi-discover"
+}
+window-rule {
+    default-column-width { proportion 0.75; }
+    default-window-height { proportion 0.75; }
+    match app-id=r#"^gnome-calculator$"#
+    match app-id=r#"^galculator$"#
+    match app-id=r#"^blueman-manager$"#
+    match app-id=r#"^org\.gnome\.Nautilus$"#
+    match app-id=r#"^steam$"#
+    match app-id=r#"^xdg-desktop-portal$"#
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="zoom"
+    match app-id="zen-browser" title="^Picture-in-Picture$"
+    match app-id="com.gabm.satty"
+    match app-id="com.follow.clash"
+    match app-id="xwaylandvideobridge"
+    match app-id="pot"
+    match app-id="wechat" title="图片和视频"
+    match app-id="QQ" title="图片查看器"
+    match app-id="Feishu" title="图片"
+    match app-id=r#"org.quickshell$"#
+    match app-id="wemeetapp"
+    match app-id="bssh"
+    match app-id="bvnc"
+    match app-id="avahi-discover"
 }
 window-rule {
     open-on-workspace "chat"
