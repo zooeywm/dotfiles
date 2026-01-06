@@ -323,31 +323,25 @@
           "mediaSize": 1
         },
         {
-          "id": "clock",
-          "enabled": true,
-          "clockCompactMode": false
-        },
-        {
           "id": "weather",
           "enabled": true
         }
       ],
       "rightWidgets": [
         {
-          "id": "clipboard",
+          "id": "network_speed_monitor",
           "enabled": true
         },
         {
           "id": "cpuUsage",
-          "enabled": true,
-          "minimumWidth": true
+          "enabled": true
         },
         {
           "id": "memUsage",
           "enabled": true
         },
         {
-          "id": "notificationButton",
+          "id": "systemUpdate",
           "enabled": true
         },
         {
@@ -355,14 +349,15 @@
           "enabled": true
         },
         {
-          "id": "controlCenterButton",
-          "enabled": true,
-          "showNetworkIcon": true,
-          "showBluetoothIcon": true,
-          "showAudioIcon": true
+          "id": "clock",
+          "enabled": true
         },
         {
-          "id": "systemUpdate",
+          "id": "notificationButton",
+          "enabled": true
+        },
+        {
+          "id": "controlCenterButton",
           "enabled": true
         }
       ],

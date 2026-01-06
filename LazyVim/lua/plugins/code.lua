@@ -133,52 +133,94 @@ return {
         },
     },
     {
+        "milanglacier/minuet-ai.nvim",
+        config = function()
+            require("minuet").setup({
+                provider = "openai_fim_compatible",
+                provider_options = {
+                    openai_fim_compatible = {
+                        api_key = "DEEPSEEK_API_KEY",
+                        name = "deepseek",
+                        optional = {
+                            max_tokens = 256,
+                            top_p = 0.9,
+                        },
+                    },
+                },
+            })
+        end,
+    },
+    {
         "saghen/blink.cmp",
         dependencies = {
             "xzbdmw/colorful-menu.nvim",
             { "bydlw98/blink-cmp-env", lazy = true },
             { "mikavilpas/blink-ripgrep.nvim", lazy = true },
-            -- { "Kaiser-Yang/blink-cmp-dictionary", dependencies = { "nvim-lua/plenary.nvim" }, lazy = true },
-            "giuxtaposition/blink-cmp-copilot",
+            { "Kaiser-Yang/blink-cmp-dictionary", dependencies = { "nvim-lua/plenary.nvim" }, lazy = true },
+            -- "giuxtaposition/blink-cmp-copilot",
         },
         opts = {
             snippets = {
                 preset = "luasnip",
             },
             sources = {
-                default = function()
-                    local default = { "lsp", "copilot", "path", "snippets", "buffer", "ripgrep" }
-                    if vim.tbl_contains({ "bash", "sh", "zsh", "nu" }, vim.bo.ft) then table.insert(default, "env") end
-                    return default
-                end,
+                default = {
+                    "lsp",
+                    "path",
+                    "snippets",
+                    "buffer",
+                    "ripgrep",
+                    "dictionary",
+                    "env",
+                    "cmdline",
+                    "minuet",
+                    -- "copilot",
+                },
+                per_filetype = {
+                    sql = { "dadbod" },
+                    -- optionally inherit from the `default` sources
+                    lua = { inherit_defaults = true, "lazydev" },
+                    bash = { "env" },
+                    sh = { "env" },
+                    zsh = { "env" },
+                    nu = { "env" },
+                },
                 providers = {
+                    minuet = {
+                        name = "minuet",
+                        module = "minuet.blink",
+                        async = true,
+                        -- Should match minuet.config.request_timeout * 1000,
+                        -- since minuet.config.request_timeout is in seconds
+                        timeout_ms = 10000,
+                        score_offset = 100, -- Gives minuet higher priority among suggestions
+                    },
                     lsp = {
-                        fallbacks = {},
-                        score_offset = 2,
+                        timeout_ms = 10000,
+                        score_offset = 200,
                     },
                     snippets = {
-                        score_offset = 1,
-                        fallbacks = {},
+                        score_offset = 90,
                     },
                     path = {
-                        score_offset = 1,
+                        score_offset = 80,
                     },
-                    copilot = {
-                        name = "copilot",
-                        module = "blink-cmp-copilot",
-                        kind = "Copilot",
-                        score_offset = 3,
-                        async = true,
+                    env = {
+                        name = "Env",
+                        module = "blink-cmp-env",
+                        opts = {},
+                        score_offset = 90,
                     },
                     buffer = {
                         opts = {
                             -- get all buffers, even ones like neo-tree
                             get_bufnrs = vim.api.nvim_list_bufs,
                         },
-                        score_offset = 1,
-                        fallbacks = {},
+                        score_offset = 0,
                     },
                     ripgrep = {
+                        timeout_ms = 10000,
+                        async = true,
                         module = "blink-ripgrep",
                         name = "Ripgrep",
                         min_keyword_length = 5,
@@ -194,44 +236,55 @@ return {
                                 },
                             },
                         },
-                        score_offset = 1,
+                        score_offset = -50,
                     },
-                    -- dictionary = {
-                    --     min_keyword_length = 4,
-                    --     name = "Dict",
-                    --     module = "blink-cmp-dictionary",
-                    --     ---@module "blink-cmp-dictionary"
-                    --     ---@type blink-cmp-dictionary.Options
-                    --     opts = {
-                    --         dictionary_files = {
-                    --             vim.fn.stdpath("data") .. "/lazy/Trans.nvim/neovim.dict",
-                    --         },
-                    --         get_documentation = function(item)
-                    --             return {
-                    --                 get_command = "sqlite3",
-                    --                 get_command_args = {
-                    --                     vim.fn.stdpath("data") .. "/lazy/Trans.nvim/ultimate.db",
-                    --                     "select translation from stardict where word = '" .. item .. "';",
-                    --                 },
-                    --                 ---@diagnostic disable-next-line: redefined-local
-                    --                 resolve_documentation = function(output) return output end,
-                    --             }
-                    --         end,
-                    --     },
-                    --     score_offset = 0,
+                    dictionary = {
+                        timeout_ms = 10000,
+                        async = true,
+                        min_keyword_length = 4,
+                        name = "Dict",
+                        module = "blink-cmp-dictionary",
+                        ---@module "blink-cmp-dictionary"
+                        ---@type blink-cmp-dictionary.Options
+                        opts = {
+                            dictionary_files = {
+                                vim.fn.stdpath("data") .. "/lazy/Trans.nvim/neovim.dict",
+                            },
+                            get_documentation = function(item)
+                                return {
+                                    get_command = "sqlite3",
+                                    get_command_args = {
+                                        vim.fn.stdpath("data") .. "/lazy/Trans.nvim/ultimate.db",
+                                        "select translation from stardict where word = '" .. item .. "';",
+                                    },
+                                    ---@diagnostic disable-next-line: redefined-local
+                                    resolve_documentation = function(output) return output end,
+                                }
+                            end,
+                        },
+                        score_offset = -100,
+                    },
+                    -- copilot = {
+                    --     timeout_ms = 10000,
+                    --     name = "copilot",
+                    --     module = "blink-cmp-copilot",
+                    --     kind = "Copilot",
+                    --     score_offset = 200,
+                    --     async = true,
                     -- },
-                    env = {
-                        name = "Env",
-                        module = "blink-cmp-env",
-                        opts = {},
-                        score_offset = 1,
-                    },
                 },
             },
-            fuzzy = { implementation = "prefer_rust_with_warning" },
+            fuzzy = {
+                implementation = "prefer_rust_with_warning",
+                sorts = {
+                    "score", -- Primary sort: by fuzzy matching score
+                    "sort_text", -- Secondary sort: by sortText field if scores are equal
+                    "label", -- Tertiary sort: by label if still tied
+                },
+            },
             completion = {
                 accept = {
-                    auto_brackets = { enabled = true },
+                    auto_brackets = { enabled = false },
                 },
                 keyword = {
                     range = "full",
@@ -245,7 +298,7 @@ return {
                     winblend = 15,
                     draw = {
                         gap = 0,
-                        columns = { { "kind_icon" }, { "label", gap = 0 } },
+                        columns = { { "kind_icon" }, { "label", "label_description", "kind", "source_name", gap = 1 } },
                         components = {
                             label = {
                                 text = function(ctx) return require("colorful-menu").blink_components_text(ctx) end,
@@ -284,7 +337,10 @@ return {
                 },
             },
             keymap = {
-                ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
+                ["<C-k>"] = { "show" },
+                ["<Tab>"] = { "accept" },
+                ["<M-y>"] = { function(cmp) cmp.scroll_documentation_up(1) end },
+                ["<M-e>"] = { function(cmp) cmp.scroll_documentation_down(1) end },
             },
         },
     },
