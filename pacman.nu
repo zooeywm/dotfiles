@@ -6,7 +6,7 @@ const MANIFEST = {
     thunderbird: "电子邮件客户端"
     QQ: { packages: ["linuxqq-nt-bwrap"], manager: "paru", desc: "QQ（沙盒）" }
     wechat: { packages: ["wechat-universal-bwrap"], manager: "paru", desc: "微信（沙盒）" }
-    wemeet: { packages: ["wemeet-bin"], manager: "paru", desc: "腾讯会议（沙盒）" }
+    wemeet: { packages: ["wemeet-wayland-screenshare-git"], manager: "paru", desc: "腾讯会议（沙盒）" }
     feishu: { packages: ["feishu-portable"], manager: "paru", desc: "飞书（沙盒）" }
 
     # OS
@@ -271,6 +271,10 @@ const MANIFEST = {
     slurp: "Screen area cut"
     wl-screenrec: { packages: ["wl-screenrec-git"], desc: "wayland screen recorder" }
     hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] }
+    xdg-desktop-portal-gnome: ""
+    xdg-desktop-portal-gtk: ""
+    qt6-multimedia-ffmpeg: ""
+    cava: ""
     rofi: "Menu"
     tlp: { packages: ["tlp", "tlp-ui"], desc: "Battery Manager" }
     # https://github.com/casualsnek/waydroid_script

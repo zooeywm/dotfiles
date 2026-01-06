@@ -4,54 +4,56 @@ binds {
     Mod+Tab repeat=false { toggle-overview; }
 
     // === Application Launchers ===
-    Mod+T repeat=false hotkey-overlay-title="Open Kitty Terminal" { spawn "kitty"; }
+    Mod+T repeat=false hotkey-overlay-title="Open Kitty Terminal" { spawn-sh "kitty"; }
     Mod+V hotkey-overlay-title="Clipboard Manager" {
-        spawn "dms" "ipc" "call" "clipboard" "toggle";
+        spawn-sh "dms ipc call clipboard toggle";
     }
     Mod+D hotkey-overlay-title="Application Launcher" {
-        spawn "dms" "ipc" "call" "spotlight" "toggle";
+        spawn-sh "dms ipc call spotlight toggle";
     }
     Mod+M hotkey-overlay-title="Task Manager" {
-        spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
+        spawn-sh "dms ipc call processlist focusOrToggle";
     }
-    Mod+Comma hotkey-overlay-title="Settings" {
-        spawn "dms" "ipc" "call" "settings" "focusOrToggle";
+    Mod+I hotkey-overlay-title="Settings" {
+        spawn-sh "dms ipc call settings focusOrToggle";
     }
-    Mod+Y hotkey-overlay-title="Browse Wallpapers" {
-        spawn "dms" "ipc" "call" "dankdash" "wallpaper";
-    }
-    Mod+N hotkey-overlay-title="Notification Center" { spawn "dms" "ipc" "call" "notifications" "toggle"; }
-    Mod+Shift+N hotkey-overlay-title="Notepad" { spawn "dms" "ipc" "call" "notepad" "toggle"; }
+    // Mod+Y hotkey-overlay-title="Browse Wallpapers" {
+    //     spawn-sh "dms ipc call dankdash wallpaper";
+    // }
+    Mod+Shift+N hotkey-overlay-title="Notification Center" { spawn-sh "dms ipc call notifications toggle"; }
+    Mod+N hotkey-overlay-title="Notepad" { spawn-sh "dms ipc call notepad toggle"; }
 
     // === Security ===
     Mod+Alt+L hotkey-overlay-title="Lock Screen" {
-        spawn "dms" "ipc" "call" "lock" "lock";
+        spawn-sh "dms ipc call lock lock";
     }
-    Mod+Shift+E { quit; }
+    Mod+Shift+E { 
+        spawn-sh "dms ipc call powermenu open"
+    }
     Ctrl+Shift+Escape hotkey-overlay-title="Task Manager" {
-        spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
+        spawn-sh "dms ipc call processlist focusOrToggle";
     }
 
     // === Audio Controls ===
     XF86AudioRaiseVolume allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "increment" "3";
+        spawn-sh "dms ipc call audio increment 3";
     }
     XF86AudioLowerVolume allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "decrement" "3";
+        spawn-sh "dms ipc call audio decrement 3";
     }
     XF86AudioMute allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "mute";
+        spawn-sh "dms ipc call audio mute";
     }
     XF86AudioMicMute allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "micmute";
+        spawn-sh "dms ipc call audio micmute";
     }
 
     // === Brightness Controls ===
     XF86MonBrightnessUp allow-when-locked=true {
-       spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
+       spawn-sh "dms ipc call brightness increment 5 \"\"";
     }
     XF86MonBrightnessDown allow-when-locked=true {
-       spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
+       spawn-sh "dms ipc call brightness decrement 5 \"\"";
     }
 
     // === Window Management ===
@@ -166,9 +168,9 @@ binds {
     Mod+Shift+Equal { set-window-height "+10%"; }
 
     // === ScreenShots ===
-    Mod+X { spawn-sh "zworld area"; }
-    Mod+S { screenshot-screen; }
-    Mod+W { screenshot-window; }
+    Mod+X { spawn-sh "dms ipc call niri screenshot && wl-paste | satty -f -"; }
+    Mod+S { spawn-sh "dms ipc call niri screenshotScreen && wl-paste | satty -f -"; }
+    Mod+W { spawn-sh "dms ipc call niri screenshotWindow && wl-paste | satty -f -"; }
 
     // === ScreenRecords ===
     Mod+Shift+X { spawn-sh "screen-record area"; }
@@ -182,5 +184,6 @@ binds {
     Mod+Shift+D hotkey-overlay-title="Info a window" { spawn-sh "notify-send \"Window\" \"$(niri msg pick-window)\""; }
     Alt+Ctrl+O { spawn-sh "curl -X=POST 'http://localhost:60828/translate' -d \"$(wl-paste -n)\""; }
     Alt+Ctrl+Q { spawn-sh "grim -g \"$(slurp)\" ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && curl \"127.0.0.1:60828/ocr_recognize?screenshot=false\""; }
+    Mod+F2 { spawn-sh "dms restart"; }
     Mod+F3 { spawn-sh "wl-paste | satty -f -"; } // Edit last screenshot
 }

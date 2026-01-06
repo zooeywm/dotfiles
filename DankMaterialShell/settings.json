@@ -329,31 +329,35 @@
           "enabled": true
         },
         {
+          "id": "separator",
+          "enabled": true
+        },
+        {
           "id": "capsLockIndicator",
           "enabled": true
         },
         {
           "id": "cpuUsage",
-          "enabled": true,
-          "minimumWidth": true
+          "enabled": true
         },
         {
           "id": "memUsage",
-          "enabled": true,
-          "minimumWidth": true,
-          "showSwap": false
+          "enabled": true
         },
         {
           "id": "cpuTemp",
-          "enabled": true,
-          "minimumWidth": true
+          "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
         }
       ],
       "centerWidgets": [
         {
           "id": "music",
           "enabled": true,
-          "mediaSize": 1
+          "mediaSize": 0
         },
         {
           "id": "weather",
@@ -375,7 +379,8 @@
         },
         {
           "id": "clock",
-          "enabled": true
+          "enabled": true,
+          "clockCompactMode": false
         },
         {
           "id": "notificationButton",

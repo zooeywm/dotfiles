@@ -109,19 +109,6 @@ layout {
 
     struts {
     }
-
-    focus-ring {
-        off
-    }
-    border {
-        off
-    }
-    shadow {
-        off
-    }
-    insert-hint {
-        off
-    }
 }
 layer-rule {
     match namespace="^quickshell$"
@@ -136,7 +123,8 @@ overview {
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "bash" "-c" "QT_SCALE_FACTOR=2 wechat-universal &"
 spawn-at-startup "zen"
-spawn-at-startup "splayer"
+spawn-at-startup "/opt/SPlayer/SPlayer"
+spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri & /usr/lib/xdg-desktop-portal-kde"
 // spawn-at-startup "waybar"
 // spawn-at-startup "swww-daemon"
 // spawn-at-startup "wpround"
@@ -145,7 +133,6 @@ spawn-at-startup "splayer"
 // spawn-at-startup "~/.config/niri/scripts/swayidle.sh"
 // spawn-sh-at-startup "wl-paste -t text --watch cliphist store -max-items 300"
 // spawn-sh-at-startup "wl-paste -t image --watch cliphist store -max-items 30"
-// spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri & /usr/lib/xdg-desktop-portal-kde"
 // spawn-at-startup "kitty"
 
 hotkey-overlay {
@@ -193,6 +180,16 @@ window-rule {
     open-focused true
 }
 window-rule {
+    open-focused false
+    match app-id="wechat"
+    match app-id="QQ"
+    match app-id="Feishu"
+
+    exclude title="图片和视频"
+    exclude title="图片查看器"
+    exclude title="图片"
+}
+window-rule {
     match is-active=false
     opacity 0.95
 }
@@ -210,10 +207,6 @@ window-rule {
     match app-id=r#"^nm-connection-editor$"#
 }
 window-rule {
-    open-maximized true
-    match app-id="zen-browser"
-}
-window-rule {
     open-floating true
     match app-id=r#"^gnome-calculator$"#
     match app-id=r#"^galculator$"#
@@ -225,7 +218,6 @@ window-rule {
     match app-id="zoom"
     match app-id="zen-browser" title="^Picture-in-Picture$"
     match app-id="com.gabm.satty"
-    match app-id="com.follow.clash"
     match app-id="xwaylandvideobridge"
     match app-id="pot"
     match app-id="wechat" title="图片和视频"
@@ -233,10 +225,11 @@ window-rule {
     match app-id="Feishu" title="图片"
     match app-id=r#"org.quickshell$"#
     match app-id="wemeetapp"
-    match app-id="SPlayer" title="SPlayer - 桌面歌词"
     match app-id="bssh"
     match app-id="bvnc"
     match app-id="avahi-discover"
+    match app-id="Meeting"
+    match app-id="hyprland-share-picker"
 }
 window-rule {
     default-column-width { proportion 0.75; }
@@ -251,8 +244,6 @@ window-rule {
     match app-id="zoom"
     match app-id="zen-browser" title="^Picture-in-Picture$"
     match app-id="com.gabm.satty"
-    match app-id="com.follow.clash"
-    match app-id="xwaylandvideobridge"
     match app-id="pot"
     match app-id="wechat" title="图片和视频"
     match app-id="QQ" title="图片查看器"
@@ -274,14 +265,22 @@ window-rule {
     match app-id="xwaylandvideobridge"
     match app-id="com.follow.clash"
     match app-id="SPlayer"
+    exclude title="SPlayer - 桌面歌词"
 }
 window-rule {
+    open-maximized true
     open-on-workspace "browser"
     match app-id="zen-browser"
-    match app-id="SPlayer" title="SPlayer - 桌面歌词"
 }
+// Splayer
 window-rule {
+    open-floating true
+    open-on-workspace "browser"
     default-floating-position x=10 y=10 relative-to="bottom-right"
+    focus-ring {
+        off
+    }
+
     match app-id="SPlayer" title="SPlayer - 桌面歌词"
 }
 
