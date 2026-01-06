@@ -260,15 +260,19 @@ const MANIFEST = {
     alsa-ucm-conf: "ALSA接线图"
     alsa-firmware: "ALSA固件"
     brightnessctl: "亮度调节"
-    swww: "壁纸上屏"
+    awww: "壁纸上屏"
     cliphist: "剪贴板历史"
-    wl-clipboard-rs: { manager: "paru", desc: "Wayland Clipboard" }
+    matugen: "材料设计颜色生成"
+    dgop: "资源信息监控"
+    dms-shell: { manager: "paru", packages: ["dms-shell-bin"], desc: "极致 quickshell" }
+    wl-clipboard: "Wayland Clipboard"
     waybar: "Status bar"
     grim: "Screen cut"
     slurp: "Screen area cut"
     wl-screenrec: { packages: ["wl-screenrec-git"], desc: "wayland screen recorder" }
     hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] }
     rofi: "Menu"
+    tlp: { packages: ["tlp", "tlp-ui"], desc: "Battery Manager" }
     # https://github.com/casualsnek/waydroid_script
     # waydroid: { packages: [ "lzip", "waydroid" ]}
 }

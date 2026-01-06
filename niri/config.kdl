@@ -82,7 +82,6 @@ gestures {
 }
 
 layout {
-    background-color "transparent"
     center-focused-column "never"
     always-center-single-column false
 
@@ -100,13 +99,6 @@ layout {
     }
     default-column-width { proportion 0.5; }
 
-    focus-ring {
-        width 1
-        active-color "#7fc8ff"
-        inactive-color "#505050"
-        urgent-color "#9b0000"
-    }
-
     tab-indicator {
         width 4
         gap 8
@@ -115,13 +107,20 @@ layout {
         place-within-column
     }
 
-    shadow {
-        softness 30
-        spread 5
-        offset x=0 y=5
-        color "#0007"
-    }
     struts {
+    }
+
+    focus-ring {
+        off
+    }
+    border {
+        off
+    }
+    shadow {
+        off
+    }
+    insert-hint {
+        off
     }
 }
 layer-rule {
@@ -137,6 +136,7 @@ overview {
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "bash" "-c" "QT_SCALE_FACTOR=2 wechat-universal &"
 spawn-at-startup "zen"
+spawn-at-startup "splayer"
 // spawn-at-startup "waybar"
 // spawn-at-startup "swww-daemon"
 // spawn-at-startup "wpround"
@@ -188,32 +188,34 @@ animations {
         spring damping-ratio=0.85 stiffness=800 epsilon=0.0001
     }
 }
-// Window rules let you adjust behavior for individual windows.
-// Find more information on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
+
 window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
+    open-focused true
 }
 window-rule {
+    match is-active=false
+    opacity 0.95
+}
+window-rule {
+    clip-to-geometry true
     match app-id=r#"^org\.gnome\."#
     draw-border-with-background false
     geometry-corner-radius 12
-    clip-to-geometry true
 }
 window-rule {
+    open-floating false
+    default-column-width { proportion 0.5; }
     match app-id=r#"^gnome-control-center$"#
     match app-id=r#"^pavucontrol$"#
     match app-id=r#"^nm-connection-editor$"#
-    default-column-width { proportion 0.5; }
-    open-floating false
+    match app-id="SPlayer" title="SPlayer - 桌面歌词"
 }
 window-rule {
+    open-maximized true
+    match app-id="zen-browser"
+}
+window-rule {
+    open-floating true
     match app-id=r#"^gnome-calculator$"#
     match app-id=r#"^galculator$"#
     match app-id=r#"^blueman-manager$"#
@@ -222,7 +224,7 @@ window-rule {
     match app-id=r#"^xdg-desktop-portal$"#
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id="zoom"
-    match app-id=r#"zen-browser$"# title="^Picture-in-Picture$"
+    match app-id="zen-browser" title="^Picture-in-Picture$"
     match app-id="com.gabm.satty"
     match app-id="com.follow.clash"
     match app-id="xwaylandvideobridge"
@@ -231,39 +233,28 @@ window-rule {
     match app-id="QQ" title="图片查看器"
     match app-id="Feishu" title="图片"
     match app-id=r#"org.quickshell$"#
-    open-floating true
+    match app-id="wemeetapp"
 }
 window-rule {
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    match app-id="Alacritty"
-    match app-id="zen"
-    match app-id="com.mitchellh.ghostty"
-    match app-id="kitty"
-    draw-border-with-background false
-}
-window-rule {
-    match is-active=false
-    opacity 0.95
-}
-
-window-rule {
+    open-on-workspace "chat"
     match app-id="wechat"
     match app-id="Feishu"
     match app-id="QQ"
-
-    open-on-workspace "chat"
 }
-
 window-rule {
+    open-on-workspace "misc"
     match app-id="xwaylandvideobridge"
     match app-id="com.follow.clash"
-
-    open-on-workspace "misc"
+    match app-id="SPlayer"
 }
-
 window-rule {
-    match app-id="zen-browser"
     open-on-workspace "browser"
+    match app-id="zen-browser"
+    match app-id="SPlayer" title="SPlayer - 桌面歌词"
+}
+window-rule {
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+    match app-id="SPlayer" title="SPlayer - 桌面歌词"
 }
 
 debug {

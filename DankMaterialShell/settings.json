@@ -304,7 +304,7 @@
           "enabled": true
         },
         {
-          "id": "focusedWindow",
+          "id": "separator",
           "enabled": true
         },
         {
@@ -314,6 +314,22 @@
         {
           "id": "capsLockIndicator",
           "enabled": true
+        },
+        {
+          "id": "cpuUsage",
+          "enabled": true,
+          "minimumWidth": true
+        },
+        {
+          "id": "memUsage",
+          "enabled": true,
+          "minimumWidth": true,
+          "showSwap": false
+        },
+        {
+          "id": "cpuTemp",
+          "enabled": true,
+          "minimumWidth": true
         }
       ],
       "centerWidgets": [
@@ -330,14 +346,6 @@
       "rightWidgets": [
         {
           "id": "network_speed_monitor",
-          "enabled": true
-        },
-        {
-          "id": "cpuUsage",
-          "enabled": true
-        },
-        {
-          "id": "memUsage",
           "enabled": true
         },
         {
