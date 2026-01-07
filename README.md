@@ -1,5 +1,7 @@
 ## About
 
+My dotfiles for Arch Linux
+
 These files are managed by [deploy.nu](./deploy.nu).
 
 Distribute the files to specified locations in file system via:
@@ -22,15 +24,11 @@ $ sudo ./deploy.nu root
 
 ### Desktop
 
-- Windows manager: [Hyprland](https://hyprland.org)
-
-- Application launcher: [rofi-wayland](https://archlinux.org/packages/?name=rofi-wayland)
-
-- Status bar: [waybar](https://github.com/Alexays/Waybar)
+- Windows manager: [niri](https://github.com/YaLTeR/niri) + [dms](https://danklinux.com/)
 
 ### Terminal
 
-- Terminal emulator: [wezterm](https://github.com/wezterm/wezterm)
+- Terminal emulator: [kitty](https://sw.kovidgoyal.net/kitty/)
 
 - Terminal file manager: [yazi](https://yazi-rs.github.io)
 

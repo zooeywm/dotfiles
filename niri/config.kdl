@@ -18,6 +18,13 @@ workspace "chat" {
     open-on-output "eDP-1"
 }
 
+layout {
+    preset-window-heights {
+        proportion 0.5
+        proportion 1.0
+    }
+}
+
 environment {
     LC_MESSAGES "en_US.UTF-8"
     // NOTE: https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
@@ -138,8 +145,8 @@ debug {
 // Override to disable super+tab
 recent-windows {
     binds {
-        Alt+Tab         { next-window scope="output"; }
-        Alt+grave       { next-window filter="app-id"; }
+        Alt+Tab   { next-window scope="output"; }
+        Alt+grave { next-window filter="app-id"; }
     }
 }
 
