@@ -160,15 +160,15 @@ binds {
     Mod+Ctrl+C { center-visible-columns; }
 
     // === Manual Sizing ===
-    Mod+Minus { set-column-width "-10%"; }
-    Mod+Equal { set-column-width "+10%"; }
-    Mod+Shift+Minus { set-window-height "-10%"; }
-    Mod+Shift+Equal { set-window-height "+10%"; }
+    Mod+Minus { set-column-width "-2%"; }
+    Mod+Equal { set-column-width "+2%"; }
+    Mod+Shift+Minus { set-window-height "-2%"; }
+    Mod+Shift+Equal { set-window-height "+2%"; }
 
     // === ScreenShots ===
-    Mod+X { spawn-sh "dms ipc call niri screenshot && wl-paste | satty -f -"; }
-    Mod+S { spawn-sh "dms ipc call niri screenshotScreen && wl-paste | satty -f -"; }
-    Mod+W { spawn-sh "dms ipc call niri screenshotWindow && wl-paste | satty -f -"; }
+    Mod+X { spawn-sh "niri msg action screenshot --show-pointer false"; }
+    Mod+S { spawn-sh "niri msg action screenshot-screen --show-pointer false"; }
+    Mod+W { spawn-sh "niri msg action screenshot-window"; }
 
     // === ScreenRecords ===
     Mod+Shift+X { spawn-sh "screen-record area"; }
@@ -184,5 +184,6 @@ binds {
     Alt+Ctrl+Q { spawn-sh "grim -g \"$(slurp)\" ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && curl \"127.0.0.1:60828/ocr_recognize?screenshot=false\""; }
     Mod+F2 { spawn-sh "dms restart"; }
     Mod+F3 { spawn-sh "wl-paste | satty -f -"; } // Edit last screenshot
+    Mod+P { spawn-sh "dms color pick"; }
     Mod+O { toggle-window-rule-opacity; }
 }

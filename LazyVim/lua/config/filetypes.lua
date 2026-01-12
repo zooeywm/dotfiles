@@ -7,6 +7,7 @@ vim.filetype.add({
         mdx = "markdown",
         d2 = "d2",
         json = "jsonc",
+        lox = "lox",
     },
     pattern = {
         [".*/hypr/.*.conf"] = "hyprlang",

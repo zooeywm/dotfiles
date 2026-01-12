@@ -121,7 +121,7 @@ return {
                 local U = require("Comment.utils")
                 local filetype = vim.bo.filetype
 
-                if filetype == "slint" then
+                if filetype == "slint" or filetype == "lox" then
                     local commentstring = "// %s"
                     if ctx.ctype == U.ctype.linewise then
                         return commentstring
@@ -193,7 +193,7 @@ return {
                         -- Should match minuet.config.request_timeout * 1000,
                         -- since minuet.config.request_timeout is in seconds
                         timeout_ms = 10000,
-                        score_offset = 100, -- Gives minuet higher priority among suggestions
+                        score_offset = 300, -- Gives minuet higher priority among suggestions
                     },
                     lsp = {
                         timeout_ms = 10000,
@@ -338,7 +338,6 @@ return {
             },
             keymap = {
                 ["<C-k>"] = { "show" },
-                ["<Tab>"] = { "accept" },
                 ["<M-y>"] = { function(cmp) cmp.scroll_documentation_up(1) end },
                 ["<M-e>"] = { function(cmp) cmp.scroll_documentation_down(1) end },
             },

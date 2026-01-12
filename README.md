@@ -38,27 +38,27 @@ $ sudo ./deploy.nu root
 
 ## Introduction To Some Directories
 
-[*root*](./root) - Root dotfiles.
+[_root_](./root) - Root dotfiles.
 
-[*LazyVim*](./LazyVim) - Lazyvim config.
+[_LazyVim_](./LazyVim) - Lazyvim config.
 
-[*shell*](./shell) - Holds the common configuration of **bash** and **zsh**.
+[_shell_](./shell) - Holds the common configuration of **bash** and **zsh**.
 
-[*navi*](./navi) - The self-made cheat sheets of [navi](https://github.com/denisidoro/navi).
+[_navi_](./navi) - The self-made cheat sheets of [navi](https://github.com/denisidoro/navi).
 
-[*scripts*](./scripts) - The shell scripts. Most of them are written in [nushell](https://www.nushell.sh).
+[_scripts_](./scripts) - The shell scripts. Most of them are written in [nushell](https://www.nushell.sh).
 
-[*memo*](./memo) - The memos of my memo tool `scripts/mm`.
+[_memo_](./memo) - The memos of my memo tool `scripts/mm`.
 
-[*atuin*](./atuin) - ✨ Magical shell history [atuin](https://github.com/atuinsh/atuin).
+[_atuin_](./atuin) - ✨ Magical shell history [atuin](https://github.com/atuinsh/atuin).
 
-[*bin*](./bin) - Bin utils.
+[_bin_](./bin) - Bin utils.
 
-[*dunst*](./dunst) - Lightweight and customizable notification daemon [dunst](https://github.com/dunst-project/dunst).
+[_dunst_](./dunst) - Lightweight and customizable notification daemon [dunst](https://github.com/dunst-project/dunst).
 
-[*mise*](./mise) - Dev tools, env vars, task runner [mise](https://github.com/jdx/mise).
+[_mise_](./mise) - Dev tools, env vars, task runner [mise](https://github.com/jdx/mise).
 
-[*uv*](./uv) - An extremely fast Python package and project manager, written in Rust. [uv](https://github.com/astral-sh/uv).
+[_uv_](./uv) - An extremely fast Python package and project manager, written in Rust. [uv](https://github.com/astral-sh/uv).
 
 ## Favorite Applications
 

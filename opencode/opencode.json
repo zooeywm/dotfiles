@@ -7,4 +7,30 @@
     "doom_loop": "ask",
     "external_directory": "deny"
   },
+  "mcp": {
+    "web-reader": {
+      "type": "remote",
+      "url": "https://open.bigmodel.cn/api/mcp/web_reader/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:ZAI_API_KEY}"
+      }
+    },
+    "web-search-prime": {
+      "type": "remote",
+      "url": "https://open.bigmodel.cn/api/mcp/web_search_prime/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:ZAI_API_KEY}"
+      }
+    },
+    "zread": {
+      "type": "remote",
+      "url": "https://open.bigmodel.cn/api/mcp/zread/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:ZAI_API_KEY}"
+      }
+    }
+  },
+  "plugin": [
+    "oh-my-opencode"
+  ]
 }

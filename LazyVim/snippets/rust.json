@@ -21,7 +21,7 @@
       "    }",
       "}"
     ],
-    "description": "Self { feild: Some(_), ..self }"
+    "description": "Self { field: Some(_), ..self }"
   },
   "getter": {
     "prefix": "getter",
@@ -82,7 +82,7 @@
   "assert-matches": {
     "prefix": "assertmatches",
     "body": ["assert!(matches!($1,$2));"],
-    "description": "assert the given expression matches the parttern"
+    "description": "assert the given expression matches the pattern"
   },
   "let-else": {
     "prefix": "letelse",

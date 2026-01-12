@@ -189,7 +189,11 @@ def link [
         }
     } else if not (is-linked $srcp $dest) {
         log info $"($src) => ($dest)"
-        ln -s $srcp $dest
+        try {
+            ln -s $srcp $dest
+        } catch {|err|
+            log error "link failed"
+        }
     }
 }
 

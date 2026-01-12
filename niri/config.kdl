@@ -89,7 +89,7 @@ spawn-at-startup "bash" "-c" "QT_SCALE_FACTOR=2 wechat-universal &"
 spawn-at-startup "zen"
 spawn-at-startup "/opt/SPlayer/SPlayer"
 spawn-at-startup "showmethekey-gtk"
-spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri & /usr/lib/xdg-desktop-portal-kde"
+spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri & /usr/lib/xdg-desktop-portal-hyprland"
 
 hotkey-overlay {
     skip-at-startup
@@ -97,7 +97,7 @@ hotkey-overlay {
 
 prefer-no-csd
 
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H_%M_%S.png"
 
 cursor {
     xcursor-theme "Breeze_Light"

@@ -65,3 +65,6 @@ path=(
     ~/repos/others/depot_tools
     ~/go/bin
 )
+
+# bun completions
+[ -s "/home/zooeywm/.bun/_bun" ] && source "/home/zooeywm/.bun/_bun"
