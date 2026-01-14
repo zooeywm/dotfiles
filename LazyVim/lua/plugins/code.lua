@@ -132,24 +132,24 @@ return {
             end,
         },
     },
-    {
-        "milanglacier/minuet-ai.nvim",
-        config = function()
-            require("minuet").setup({
-                provider = "openai_fim_compatible",
-                provider_options = {
-                    openai_fim_compatible = {
-                        api_key = "DEEPSEEK_API_KEY",
-                        name = "deepseek",
-                        optional = {
-                            max_tokens = 256,
-                            top_p = 0.9,
-                        },
-                    },
-                },
-            })
-        end,
-    },
+    -- {
+    --     "milanglacier/minuet-ai.nvim",
+    --     config = function()
+    --         require("minuet").setup({
+    --             provider = "openai_fim_compatible",
+    --             provider_options = {
+    --                 openai_fim_compatible = {
+    --                     api_key = "DEEPSEEK_API_KEY",
+    --                     name = "deepseek",
+    --                     optional = {
+    --                         max_tokens = 256,
+    --                         top_p = 0.9,
+    --                     },
+    --                 },
+    --             },
+    --         })
+    --     end,
+    -- },
     {
         "saghen/blink.cmp",
         dependencies = {
@@ -173,7 +173,7 @@ return {
                     "dictionary",
                     "env",
                     "cmdline",
-                    "minuet",
+                    -- "minuet",
                     -- "copilot",
                 },
                 per_filetype = {
@@ -186,15 +186,15 @@ return {
                     nu = { "env" },
                 },
                 providers = {
-                    minuet = {
-                        name = "minuet",
-                        module = "minuet.blink",
-                        async = true,
-                        -- Should match minuet.config.request_timeout * 1000,
-                        -- since minuet.config.request_timeout is in seconds
-                        timeout_ms = 10000,
-                        score_offset = 300, -- Gives minuet higher priority among suggestions
-                    },
+                    -- minuet = {
+                    --     name = "minuet",
+                    --     module = "minuet.blink",
+                    --     async = true,
+                    --     -- Should match minuet.config.request_timeout * 1000,
+                    --     -- since minuet.config.request_timeout is in seconds
+                    --     timeout_ms = 10000,
+                    --     score_offset = 300, -- Gives minuet higher priority among suggestions
+                    -- },
                     lsp = {
                         timeout_ms = 10000,
                         score_offset = 200,
@@ -387,5 +387,23 @@ return {
             luasnip.add_snippets("rust", require("plugins.snippets.rust"))
             luasnip.add_snippets("cpp", require("plugins.snippets.qt"))
         end,
+    },
+    {
+        "Mythos-404/xmake.nvim",
+        version = "^3",
+        lazy = true,
+        event = "BufReadPost",
+        opts = {
+            on_save = {
+                -- Reload project information
+                reload_project_info = true,
+                -- Configuration for generating `compile_commands.json`
+                lsp_compile_commands = {
+                    enable = false,
+                    -- Directory name (relative path) for output file
+                    output_dir = "build",
+                },
+            },
+        },
     },
 }

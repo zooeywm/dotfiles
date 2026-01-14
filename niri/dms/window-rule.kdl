@@ -96,7 +96,7 @@ window-rule {
     match app-id="xwaylandvideobridge"
     match app-id="com.follow.clash"
     match app-id="SPlayer"
-    exclude title="SPlayer - 桌面歌词"
+    exclude app-id="SPlayer" title="SPlayer - 桌面歌词"
 }
 window-rule {
     open-maximized true
