@@ -1,3 +1,11 @@
+[alias]
+b  = "build"
+br  = "build -r"
+c  = "check"
+t  = "test"
+r  = "run"
+rr = "run --release"
+
 [env]
 RUST_BACKTRACE     = "0"
 RUST_LIB_BACKTRACE = "0"
@@ -6,8 +14,8 @@ RUST_LIB_BACKTRACE = "0"
 debug           = "line-tables-only"
 split-debuginfo = "unpacked"
 
-[profile.dev.package."*"]
-debug = false
+  [profile.dev.package."*"]
+  debug = false
 
 [profile.bench]
 debug           = "line-tables-only"
@@ -29,6 +37,9 @@ rustc-wrapper = "/usr/bin/sccache"
 [net]
 git-fetch-with-cli = true
 
+[registries.crates-io]
+protocol = "sparse" 
+
 [source]
 crates-io      = { replace-with = "rsproxy-sparse" }
 rsproxy-sparse = { registry = "sparse+https://rsproxy.cn/index/" }
@@ -36,3 +47,6 @@ rsproxy-sparse = { registry = "sparse+https://rsproxy.cn/index/" }
 [target.x86_64-unknown-linux-gnu]
 linker    = "clang"
 rustflags = ["-C", "link-arg=--ld-path=wild"]
+
+[cache]
+auto-clean-frequency = "7 day"
