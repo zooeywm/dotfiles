@@ -42,7 +42,7 @@ environment {
 input {
     keyboard {
         numlock
-        repeat-delay 130
+        repeat-delay 140
         repeat-rate 100
     }
     touchpad {
@@ -157,3 +157,5 @@ include "dms/alttab.kdl"
 include "dms/binds.kdl"
 include "dms/window-rule.kdl"
 include "dms/outputs.kdl"
+
+include "dms/cursor.kdl"

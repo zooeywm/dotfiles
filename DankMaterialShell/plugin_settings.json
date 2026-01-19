@@ -1,0 +1,12 @@
+{
+  "dankBatteryAlerts": {
+    "enabled": true,
+    "criticalThreshold": 10
+  },
+  "dankDesktopWeather": {
+    "enabled": true
+  },
+  "niriWindows": {
+    "enabled": true
+  }
+}

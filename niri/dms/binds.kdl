@@ -99,10 +99,10 @@ binds {
     Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
     // === Workspace Navigation ===
-    Mod+Down            { focus-workspace-down; }
-    Mod+Up              { focus-workspace-up; }
-    Mod+J               { focus-workspace-down; }
-    Mod+K               { focus-workspace-up; }
+    Mod+Down            { focus-window-or-workspace-down; }
+    Mod+Up              { focus-window-or-workspace-up; }
+    Mod+J               { focus-window-or-workspace-down; }
+    Mod+K               { focus-window-or-workspace-up; }
     Mod+Shift+J         { move-column-to-workspace-down; }
     Mod+Shift+K         { move-column-to-workspace-up; }
 
@@ -111,8 +111,8 @@ binds {
     Mod+Ctrl+K         { move-workspace-up; }
 
     // === Mouse Wheel Navigation ===
-    Mod+WheelScrollDown      { focus-workspace-down; }
-    Mod+WheelScrollUp        { focus-workspace-up; }
+    Mod+WheelScrollDown      { focus-window-or-workspace-down; }
+    Mod+WheelScrollUp        { focus-window-or-workspace-up; }
     Mod+Ctrl+WheelScrollDown { move-column-to-workspace-down; }
     Mod+Ctrl+WheelScrollUp   { move-column-to-workspace-up; }
 

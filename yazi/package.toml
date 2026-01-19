@@ -10,17 +10,17 @@ hash = "e519d894e94ded741e06aae4d4775981"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "57f1863"
+rev = "56971d0"
 hash = "ce67445ebb1bf3d97b8e44f50904b2c5"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "57f1863"
+rev = "56971d0"
 hash = "8da0b15a97b5dfd13941d1ecc617ac7c"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "57f1863"
+rev = "56971d0"
 hash = "492e4757f332e29f982556bf507e043c"
 
 [[plugin.deps]]
@@ -30,7 +30,7 @@ hash = "9628b660afb192d32f2ea5f6634d3e72"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "57f1863"
+rev = "56971d0"
 hash = "8a7c58225816a163a6e8730c0adafbc8"
 
 [[plugin.deps]]
@@ -40,23 +40,23 @@ hash = "ab2e66065a94cca4886b303518e44bd8"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "57f1863"
+rev = "56971d0"
 hash = "8feba12bf57a4607cd05992c254713f3"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "57f1863"
+rev = "56971d0"
 hash = "5cfd9b2bd3f8ec4e3245e3426a967f82"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "57f1863"
+rev = "56971d0"
 hash = "3996fc74044bc44144b323686f887e1"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "57f1863"
-hash = "954922c883778c19c4a2dad5be08787f"
+rev = "56971d0"
+hash = "76ea4ff62db6ebe62e4653c2de95cbd"
 
 [[plugin.deps]]
 use = "zooeywm/wl-clipboard"
@@ -65,7 +65,7 @@ hash = "51ff959c3c26cb3889589a0f8d394f14"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:types"
-rev = "57f1863"
+rev = "56971d0"
 hash = "daf9e3d12688cf855fce665839efcd6d"
 
 [[plugin.deps]]
