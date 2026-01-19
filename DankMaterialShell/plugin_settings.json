@@ -8,5 +8,13 @@
   },
   "niriWindows": {
     "enabled": true
+  },
+  "dankPomodoroTimer": {
+    "enabled": true
+  },
+  "calculator": {
+    "enabled": true,
+    "trigger": "=",
+    "noTrigger": true
   }
 }

@@ -66,7 +66,7 @@ compress = [
   { run = "tar -cvf %s1.tar $(realpath --relative-to=$PWD %s1)", desc = "Tar" },
 ]
 deb = [{ run = "dpkg-deb -x %s1 ${1%.deb} && dpkg-deb -e %s1 ${1%.deb}/DEBIAN", desc = "Extract deb here" }]
-images = [{ run = "swww img --transition-type=fade --transition-step=255 --transition-duration=1 --transition-fps=120 %s1", desc = "Set as wallpaper" }]
+# images = [{ run = "swww img --transition-type=fade --transition-step=255 --transition-duration=1 --transition-fps=120 %s1", desc = "Set as wallpaper" }]
 terminal-here = [
   { run = "kitty @ launch --type=tab --cwd %d1", desc = "Kitty Tab Here", for = "linux" },
   { run = "kitty @ launch --type=window --cwd %d1", desc = "Kitty Window Here", for = "linux" },

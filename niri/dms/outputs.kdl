@@ -2,9 +2,8 @@
 
 output "eDP-1" {
     mode "2880x1800@120.000"
-    scale 1.5
+    scale 1.25
     position x=2560 y=0
-    variable-refresh-rate on-demand=true
 }
 
 output "HDMI-A-1" {

@@ -59,6 +59,7 @@ window-rule {
     match app-id="tlpui"
     match title="飞书会议"
     match title="Emoji Selector"
+    match app-id="io.github.fizzyizzy05.binary"
 }
 window-rule {
     default-column-width { proportion 0.75; }
@@ -100,12 +101,13 @@ window-rule {
     match app-id="SPlayer"
     exclude app-id="SPlayer" title="SPlayer - 桌面歌词"
 }
-window-rule {
-    open-maximized true
-    open-on-workspace "browser"
-
-    match app-id="zen-browser"
-}
+// window-rule {
+//     open-maximized true
+//
+//     match at-startup=true
+//     open-on-workspace "browser"
+//     match app-id="zen-browser"
+// }
 window-rule {
     open-on-workspace "browser"
 

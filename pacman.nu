@@ -277,6 +277,7 @@ const MANIFEST = {
     cava: ""
     rofi: "Menu"
     tlp: { packages: ["tlp", "tlp-ui"], desc: "Battery Manager" }
+    binary: "Binary Calculator"
     # https://github.com/casualsnek/waydroid_script
     # waydroid: { packages: [ "lzip", "waydroid" ]}
 }
