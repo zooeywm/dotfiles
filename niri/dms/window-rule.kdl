@@ -58,6 +58,7 @@ window-rule {
     match app-id="hyprland-share-picker"
     match app-id="tlpui"
     match title="飞书会议"
+    match title="Emoji Selector"
 }
 window-rule {
     default-column-width { proportion 0.75; }
@@ -82,6 +83,7 @@ window-rule {
     match app-id="bssh"
     match app-id="bvnc"
     match app-id="avahi-discover"
+    match title="Emoji Selector"
 }
 window-rule {
     open-on-workspace "chat"

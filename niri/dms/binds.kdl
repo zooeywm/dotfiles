@@ -151,7 +151,7 @@ binds {
     // === Column Management ===
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
-    Mod+Period { expel-window-from-column; }
+    // Mod+Period { expel-window-from-column; }
 
     // === Sizing & Layout ===
     Mod+R { switch-preset-column-width; }
@@ -188,4 +188,5 @@ binds {
     Mod+F3 { spawn-sh "wl-paste | satty -f -"; } // Edit last screenshot
     Mod+P { spawn-sh "dms color pick"; }
     Mod+O { toggle-window-rule-opacity; }
+    Mod+Period { spawn-sh "plasma-emojier"; }
 }

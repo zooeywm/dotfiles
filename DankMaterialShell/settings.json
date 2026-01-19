@@ -230,8 +230,8 @@
   "vpnLastConnected": "b89eeb3a-31d3-46fe-8471-463ca1de2c88",
   "iconTheme": "System Default",
   "cursorSettings": {
-    "theme": "System Default",
-    "size": 24,
+    "theme": "Breeze_Light",
+    "size": 42,
     "niri": {
       "hideWhenTyping": false,
       "hideAfterInactiveMs": 0

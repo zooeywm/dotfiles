@@ -102,7 +102,6 @@ screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H_%M_%S.png"
 cursor {
     xcursor-theme "Breeze_Light"
     xcursor-size 48
-    hide-after-inactive-ms 1000
 }
 
 animations {
