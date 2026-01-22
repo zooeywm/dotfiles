@@ -76,7 +76,7 @@ terminal-here = [
 rules = [
   # Text
   { mime = "{{text/*,inode/empty,*/javascript},application/{json,ndjson}}", use = ["edit", "open", "reveal", "terminal-here"] },
-  # Image 
+  # Image
   { mime = "image/*", use = ["images", "open", "reveal", "terminal-here"] },
   # Media
   { mime = "{audio,video,image}/*", use = ["media", "open", "reveal", "terminal-here"] },
@@ -170,7 +170,7 @@ previewers = [
   { mime = "application/{redhat-package-manager,rpm,android.package-archive}", run = "archive" },
   { mime = "application/debian*-package", run = 'piper -- dpkg -c "$1" | sed "s/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *[^ ]* *//" | less' },
   { url = "*.{AppImage,appimage}", run = "archive" },
-  # Virtual Disk / Disk Image 
+  # Virtual Disk / Disk Image
   { mime = "application/{iso9660-image,qemu-disk,ms-wim,apple-diskimage}", run = "archive" },
   { mime = "application/virtualbox-{vhd,vhdx}", run = "archive" },
   { url = "*.{img,fat,ext,ext2,ext3,ext4,squashfs,ntfs,hfs,hfsx}", run = "archive" },

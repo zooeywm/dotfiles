@@ -62,7 +62,8 @@ binds {
     Mod+Shift+F { fullscreen-window; }
     Mod+Space { toggle-window-floating; }
     Mod+Shift+Space { switch-focus-between-floating-and-tiling; }
-    Mod+Shift+T { toggle-column-tabbed-display; }
+    // Means group
+    Mod+G { toggle-column-tabbed-display; }
 
     // === Focus Navigation ===
     Mod+Left  { focus-column-left; }

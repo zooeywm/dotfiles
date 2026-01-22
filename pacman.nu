@@ -80,7 +80,7 @@ const MANIFEST = {
     bluez-utils: "Bluetooth cli"
     overskride: { manager: "paru", desc: "Bluetooth GUI" }
     kalker: { manager: "paru", desc: "Terminal calculator" }
-    wps: { packages: [ "wps-office-cn-bwrap", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" }
+    # wps: { packages: [ "wps-office-cn-bwrap", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" }
 
     # shell
     nushell: "结构化 shell"
@@ -168,6 +168,7 @@ const MANIFEST = {
     inkscape: "操作矢量图"
     poppler: "`pdftoppm -png`将 PDF 转成图片"
     viu: "终端看图"
+    doxx: "docx TUI",
 
     # language
     pot-translation: "一站式翻译"
