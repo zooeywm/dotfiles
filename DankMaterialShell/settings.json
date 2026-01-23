@@ -471,7 +471,7 @@
         {
           "id": "music",
           "enabled": true,
-          "mediaSize": 0
+          "mediaSize": 1
         },
         {
           "id": "weather",

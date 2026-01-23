@@ -14,7 +14,7 @@ binds {
     Mod+M hotkey-overlay-title="Task Manager" {
         spawn-sh "dms ipc call processlist focusOrToggle";
     }
-    Mod+Comma hotkey-overlay-title="Settings" {
+    Mod+I hotkey-overlay-title="Settings" {
         spawn-sh "dms ipc call settings focusOrToggle";
     }
     // Mod+Y hotkey-overlay-title="Browse Wallpapers" {
@@ -69,16 +69,12 @@ binds {
     Mod+Left  { focus-column-left; }
     Mod+Right { focus-column-right; }
     Mod+H     { focus-column-left; }
+    Mod+L     { focus-column-right; }
     Mod+A     { focus-column-first; }
     Mod+E     { focus-column-last; }
-    Mod+U     { focus-window-down; }
-    Mod+I     { focus-window-up; }
-    Mod+L     { focus-column-right; }
 
     // === Window Movement ===
     Mod+Shift+H     { move-column-left; }
-    Mod+Shift+U     { move-window-down; }
-    Mod+Shift+I     { move-window-up; }
     Mod+Shift+L     { move-column-right; }
 
     // === Column Navigation ===
@@ -89,8 +85,8 @@ binds {
 
     // === Monitor Navigation ===
     Mod+Ctrl+H     { focus-monitor-left; }
-    Mod+Ctrl+U     { focus-monitor-down; }
-    Mod+Ctrl+I     { focus-monitor-up; }
+    Mod+Ctrl+J     { focus-monitor-down; }
+    Mod+Ctrl+K     { focus-monitor-up; }
     Mod+Ctrl+L     { focus-monitor-right; }
 
     // === Move to Monitor ===
@@ -108,8 +104,8 @@ binds {
     Mod+Shift+K         { move-column-to-workspace-up; }
 
     // === Move Workspaces ===
-    Mod+Ctrl+J         { move-workspace-down; }
-    Mod+Ctrl+K         { move-workspace-up; }
+    // Mod+Ctrl+J         { move-workspace-down; }
+    // Mod+Ctrl+K         { move-workspace-up; }
 
     // === Mouse Wheel Navigation ===
     Mod+WheelScrollDown      { focus-window-or-workspace-down; }
@@ -152,7 +148,7 @@ binds {
     // === Column Management ===
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
-    // Mod+Period { expel-window-from-column; }
+    // Mod+Comma { expel-window-from-column; }
 
     // === Sizing & Layout ===
     Mod+R { switch-preset-column-width; }

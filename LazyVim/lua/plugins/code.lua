@@ -195,21 +195,29 @@ return {
                     --     timeout_ms = 10000,
                     --     score_offset = 300, -- Gives minuet higher priority among suggestions
                     -- },
+                    -- copilot = {
+                    --     timeout_ms = 10000,
+                    --     name = "copilot",
+                    --     module = "blink-cmp-copilot",
+                    --     kind = "Copilot",
+                    --     score_offset = 500,
+                    --     async = true,
+                    -- },
+                    env = {
+                        name = "Env",
+                        module = "blink-cmp-env",
+                        opts = {},
+                        score_offset = 400,
+                    },
+                    path = {
+                        score_offset = 300,
+                    },
                     lsp = {
                         timeout_ms = 10000,
                         score_offset = 200,
                     },
                     snippets = {
-                        score_offset = 90,
-                    },
-                    path = {
-                        score_offset = 80,
-                    },
-                    env = {
-                        name = "Env",
-                        module = "blink-cmp-env",
-                        opts = {},
-                        score_offset = 90,
+                        score_offset = 100,
                     },
                     buffer = {
                         opts = {
@@ -264,14 +272,6 @@ return {
                         },
                         score_offset = -100,
                     },
-                    -- copilot = {
-                    --     timeout_ms = 10000,
-                    --     name = "copilot",
-                    --     module = "blink-cmp-copilot",
-                    --     kind = "Copilot",
-                    --     score_offset = 200,
-                    --     async = true,
-                    -- },
                 },
             },
             fuzzy = {
