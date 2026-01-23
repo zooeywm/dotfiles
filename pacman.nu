@@ -191,7 +191,7 @@ const MANIFEST = {
     qpwgraph: "音频设备拓扑图"
 
     # network
-    networkmanager: { packages: [ "networkmanager", "stalonetray", "network-manager-applet"] }
+    # networkmanager: { packages: [ "networkmanager", "stalonetray", "network-manager-applet"] }
     inetutils: "telnet"
     gping: "图形化 ping"
     traceroute: "路由显形"
