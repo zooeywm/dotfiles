@@ -602,51 +602,7 @@
   "systemMonitorVariants": [],
   "desktopWidgetPositions": {},
   "desktopWidgetGridSettings": {},
-  "desktopWidgetInstances": [
-    {
-      "id": "dw_1768788509321_fkoe90z21",
-      "widgetType": "dankDesktopWeather",
-      "name": "Dank Desktop Weather",
-      "enabled": true,
-      "config": {
-        "displayPreferences": [
-          {
-            "name": "HDMI-A-1",
-            "model": "Q27G2S"
-          }
-        ],
-        "showOnOverlay": false,
-        "showOnOverview": false,
-        "showOnOverviewOnly": false,
-        "clickThrough": false,
-        "syncPositionAcrossScreens": false,
-        "viewMode": "detailed",
-        "showPressure": true,
-        "showHourlyForecast": true,
-        "backgroundOpacity": 80
-      },
-      "positions": {
-        "HDMI-A-1": {
-          "width": 472.578125,
-          "height": 469.4921875,
-          "x": 2060.21484375,
-          "y": 956.1640625
-        },
-        "eDP-1": {
-          "width": 462.7109375,
-          "height": 490.328125,
-          "x": 1438.22265625,
-          "y": 692.62890625
-        },
-        "_synced": {
-          "x": 0.8050654093424481,
-          "y": 0.6638601345486111,
-          "width": 472.578125,
-          "height": 469.4921875
-        }
-      }
-    }
-  ],
+  "desktopWidgetInstances": [],
   "desktopWidgetGroups": [],
   "builtInPluginSettings": {
     "dms_settings_search": {
