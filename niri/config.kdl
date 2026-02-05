@@ -52,7 +52,7 @@ environment {
 input {
     keyboard {
         numlock
-        repeat-delay 140
+        repeat-delay 150
         repeat-rate 100
     }
     touchpad {

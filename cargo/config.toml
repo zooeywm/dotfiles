@@ -48,5 +48,5 @@ rsproxy-sparse = { registry = "sparse+https://rsproxy.cn/index/" }
 linker    = "clang"
 rustflags = ["-C", "link-arg=--ld-path=wild"]
 
-[cache]
-auto-clean-frequency = "7 day"
+# [cache]
+# auto-clean-frequency = "7 day"
