@@ -25,11 +25,14 @@ window-rule {
 }
 window-rule {
     open-floating false
-
     default-column-width { proportion 0.5; }
+
     match app-id=r#"^gnome-control-center$"#
     match app-id=r#"^pavucontrol$"#
     match app-id=r#"^nm-connection-editor$"#
+    match app-id="DesktopEditors"
+    match app-id=r#"^Xdg-desktop-portal-.+$"#
+    match app-id=r#"^xdg-desktop-portal-.+$"#
 }
 window-rule {
     open-floating true
@@ -39,7 +42,6 @@ window-rule {
     match app-id=r#"^blueman-manager$"#
     match app-id=r#"^org\.gnome\.Nautilus$"#
     match app-id=r#"^steam$"#
-    match app-id=r#"^xdg-desktop-portal$"#
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id="zoom"
     match app-id="zen-browser" title="^Picture-in-Picture$"
@@ -70,7 +72,6 @@ window-rule {
     match app-id=r#"^blueman-manager$"#
     match app-id=r#"^org\.gnome\.Nautilus$"#
     match app-id=r#"^steam$"#
-    match app-id=r#"^xdg-desktop-portal$"#
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id="zoom"
     match app-id="zen-browser" title="^Picture-in-Picture$"

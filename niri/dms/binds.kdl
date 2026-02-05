@@ -5,6 +5,7 @@ binds {
 
     // === Application Launchers ===
     Mod+T hotkey-overlay-title="Open Kitty Terminal" { spawn-sh "kitty"; }
+    Mod+Return hotkey-overlay-title="Open Wezterm Terminal" { spawn-sh "wezterm-gui"; }
     Mod+V hotkey-overlay-title="Clipboard Manager" {
         spawn-sh "dms ipc call clipboard toggle";
     }
@@ -181,6 +182,7 @@ binds {
     Mod+Shift+D hotkey-overlay-title="Info a window" { spawn-sh "notify-send \"Window\" \"$(niri msg pick-window)\""; }
     Alt+Ctrl+O { spawn-sh "curl -X=POST 'http://localhost:60828/translate' -d \"$(wl-paste -n)\""; }
     Alt+Ctrl+Q { spawn-sh "grim -g \"$(slurp)\" ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && curl \"127.0.0.1:60828/ocr_recognize?screenshot=false\""; }
+    Mod+F1 { spawn-sh "pkill fcitx5 || fcitx5"; } // 重启输入法以解决弹不出来的问题
     Mod+F2 { spawn-sh "dms restart"; }
     Mod+F3 { spawn-sh "wl-paste | satty -f -"; } // Edit last screenshot
     Mod+P { spawn-sh "dms color pick"; }
