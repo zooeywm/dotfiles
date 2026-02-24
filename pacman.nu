@@ -11,7 +11,7 @@ const MANIFEST = {
 
     # OS
     qemu-full: "QEMU"
-    ventoy: "制作镜像盘"
+    ventoy-bin: { manager: "paru", desc: "制作镜像盘" }
     podman: "容器运行时"
     buildah: "批量删除外部镜像"
 
@@ -261,7 +261,7 @@ const MANIFEST = {
     alsa-ucm-conf: "ALSA接线图"
     alsa-firmware: "ALSA固件"
     brightnessctl: "亮度调节"
-    awww: "壁纸上屏"
+    swww: "壁纸上屏"
     cliphist: "剪贴板历史"
     matugen: "材料设计颜色生成"
     dgop: "资源信息监控"
@@ -277,7 +277,7 @@ const MANIFEST = {
     qt6-multimedia-ffmpeg: ""
     cava: ""
     rofi: "Menu"
-    tlp: { packages: ["tlp", "tlp-ui"], desc: "Battery Manager" }
+    tlp: { packages: ["tlp", "tlpui"], desc: "Battery Manager" }
     binary: "Binary Calculator"
     # https://github.com/casualsnek/waydroid_script
     # waydroid: { packages: [ "lzip", "waydroid" ]}

@@ -6,5 +6,4 @@
 cursor {
     xcursor-theme "Breeze_Light"
     xcursor-size 42
-    hide-when-typing true
 }

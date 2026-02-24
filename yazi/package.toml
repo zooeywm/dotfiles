@@ -10,18 +10,18 @@ hash = "e519d894e94ded741e06aae4d4775981"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "230b9c6"
-hash = "ce67445ebb1bf3d97b8e44f50904b2c5"
+rev = "b224ddf"
+hash = "7a4b4237223aaa94e589d1c01a23542a"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "230b9c6"
-hash = "8da0b15a97b5dfd13941d1ecc617ac7c"
+rev = "b224ddf"
+hash = "815dd20e682dec52bb92864037fa5f53"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "230b9c6"
-hash = "2f08b8249b57737e7257298a3b2a2edc"
+rev = "b224ddf"
+hash = "8b1af6b5a69797ee951f2a80ce570818"
 
 [[plugin.deps]]
 use = "TD-Sky/sudo"
@@ -30,8 +30,8 @@ hash = "9628b660afb192d32f2ea5f6634d3e72"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "230b9c6"
-hash = "8a7c58225816a163a6e8730c0adafbc8"
+rev = "b224ddf"
+hash = "4c0260feb50ea2437380690ffc241da7"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
@@ -40,23 +40,23 @@ hash = "ab2e66065a94cca4886b303518e44bd8"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "230b9c6"
-hash = "7b7dc677b58371da6fc63e4fcd134651"
+rev = "b224ddf"
+hash = "8b177921e50732b2c8e9d71aa5956270"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "230b9c6"
-hash = "f69e4737c2fb8ceec58a2950faf13c46"
+rev = "b224ddf"
+hash = "f6e6a829c6dc6c900a75bebe422a5c33"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "230b9c6"
-hash = "3996fc74044bc44144b323686f887e1"
+rev = "b224ddf"
+hash = "6fa6a05a81c98dd000fbca3cca6e9682"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "230b9c6"
-hash = "25aee698dd1081001008ce0cb1cc4da3"
+rev = "b224ddf"
+hash = "384464b6df8cb807425c521f8cd790f3"
 
 [[plugin.deps]]
 use = "zooeywm/wl-clipboard"
@@ -65,8 +65,8 @@ hash = "51ff959c3c26cb3889589a0f8d394f14"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:types"
-rev = "230b9c6"
-hash = "83b5b82b595c39a660bf2b170987e5e7"
+rev = "b224ddf"
+hash = "4161cfa043b5ba3341d82c6869007b41"
 
 [[plugin.deps]]
 use = "lpnh/fr"

@@ -29,7 +29,7 @@ return {
             end
 
             local spell_ignore = {
-                condition = function(d) return string.find(d.message, "INVOKABLE", 1, true) or string.find(d.message, "requestor", 1, true) end,
+                condition = function(d) return string.find(d.message, "INVOKABLE", 1, true) or string.find(d.message, "requestor", 1, true) or string.find(d.message, "ratatui", 1, true) end,
             }
 
             local filters = {
