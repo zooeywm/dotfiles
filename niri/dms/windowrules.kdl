@@ -1,127 +1,222 @@
-window-rule {
-    open-focused true
-    geometry-corner-radius 12
-    clip-to-geometry true
-    tiled-state true
-    draw-border-with-background false
-    // opacity 1.0
-}
-window-rule {
-    open-focused false
+// DMS Window Rules - Managed by DankMaterialShell
+// Do not edit manually - changes may be overwritten
 
-    match app-id="wechat"
-    match app-id="QQ"
-    match app-id="Feishu"
-    match app-id="SPlayer" title="SPlayer - 桌面歌词"
-
-    exclude title="图片和视频"
-    exclude title="图片查看器"
-    exclude title="图片"
-}
+// @id=wr_1771906118288128711 @name=Emoji Picker
 window-rule {
-    // opacity 0.97
-
-    match is-active=false
-}
-window-rule {
-    open-floating false
-    default-column-width { proportion 0.5; }
-
-    match app-id=r#"^gnome-control-center$"#
-    match app-id=r#"^pavucontrol$"#
-    match app-id=r#"^nm-connection-editor$"#
-    match app-id="DesktopEditors"
-    match app-id=r#"^Xdg-desktop-portal-.+$"#
-    match app-id=r#"^xdg-desktop-portal-.+$"#
-    match app-id="xwaylandvideobridge"
-}
-window-rule {
+    match app-id="^org.kde.plasma.emojier$"
     open-floating true
-
-    match app-id=r#"^gnome-calculator$"#
-    match app-id=r#"^galculator$"#
-    match app-id=r#"^blueman-manager$"#
-    match app-id=r#"^org\.gnome\.Nautilus$"#
-    match app-id=r#"^steam$"#
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="zoom"
-    match app-id="zen-browser" title="^Picture-in-Picture$"
-    match app-id="com.gabm.satty"
-    match app-id="pot"
-    match app-id="wechat" title="图片和视频"
-    match app-id="QQ" title="图片查看器"
-    match app-id="Feishu" title="图片"
-    match app-id=r#"org.quickshell$"#
-    match app-id="wemeetapp"
-    match app-id="bssh"
-    match app-id="bvnc"
-    match app-id="avahi-discover"
-    match app-id="Meeting"
-    match app-id="hyprland-share-picker"
-    match app-id="tlpui"
-    match title="飞书会议"
-    match title="Emoji Selector"
-    match app-id="io.github.fizzyizzy05.binary"
 }
-window-rule {
-    default-column-width { proportion 0.75; }
-    default-window-height { proportion 0.75; }
 
-    match app-id=r#"^gnome-calculator$"#
-    match app-id=r#"^galculator$"#
-    match app-id=r#"^blueman-manager$"#
-    match app-id=r#"^org\.gnome\.Nautilus$"#
-    // match app-id=r#"^steam$"#
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id="zoom"
-    match app-id="zen-browser" title="^Picture-in-Picture$"
-    match app-id="com.gabm.satty"
-    match app-id="pot"
-    match app-id="wechat" title="图片和视频"
-    match app-id="QQ" title="图片查看器"
-    match app-id="Feishu" title="图片"
-    match app-id=r#"org.quickshell$"#
-    match app-id="wemeetapp"
-    match app-id="bssh"
-    match app-id="bvnc"
-    match app-id="avahi-discover"
-    match title="Emoji Selector"
-}
+// @id=wr_1771906446756863639 @name=Wechat
 window-rule {
-    open-on-workspace "chat"
-
-    match app-id="wechat"
-    match app-id="Feishu"
-    match app-id="QQ"
-}
-window-rule {
-    open-on-workspace "misc"
-
-    match app-id="xwaylandvideobridge"
-    match app-id="com.follow.clash"
-    match app-id="SPlayer"
-    exclude app-id="SPlayer" title="SPlayer - 桌面歌词"
-}
-// window-rule {
-//     open-maximized true
-//
-//     match at-startup=true
-//     open-on-workspace "browser"
-//     match app-id="zen-browser"
-// }
-window-rule {
-    open-on-workspace "browser"
-
-    match app-id="one.alynx.showmethekey"
-}
-window-rule {
+    match app-id="^wechat$"
     open-floating true
-    open-on-workspace "browser"
-    default-floating-position x=2 y=2 relative-to="bottom-right"
-    focus-ring {
-        off
-    }
+}
 
-    match app-id="SPlayer" title="SPlayer - 桌面歌词"
-    match app-id="showmethekey-gtk" title="Floating Window - Show Me The Key"
+// @id=wr_1771913289398901954 @name=Feishu
+window-rule {
+    match app-id="^Feishu$"
+    open-floating true
+}
+
+// @id=wr_1771914486804316311 @name=Satty
+window-rule {
+    match app-id="^com.gabm.satty$"
+    open-floating true
+}
+
+// @id=wr_1771914575039020679 @name=QQ
+window-rule {
+    match app-id="^QQ$"
+    open-floating true
+}
+
+// @id=wr_1771914853787583206 @name=Steam
+window-rule {
+    match app-id="^steam$"
+    open-floating true
+}
+
+// @id=wr_1771914888591062042 @name=PrismLauncher
+window-rule {
+    match app-id="^org.prismlauncher.PrismLauncher$"
+    open-floating true
+}
+
+// @id=wr_1771914963299142991 @name=Minecraft
+window-rule {
+    match app-id="^Minecraft.*"
+    open-floating true
+}
+
+// @id=wr_1771915327537568500 @name=Wemeet
+window-rule {
+    match app-id="^wemeetapp$"
+    open-floating true
+}
+
+// @id=wr_1771915463590171470 @name=hyprland-share-picker
+window-rule {
+    match app-id="^hyprland-share-picker$"
+    open-floating true
+}
+
+// @id=wr_1771915632334912837 @name=org.fcitx.fcitx5-config-qt
+window-rule {
+    match app-id="^org.fcitx.fcitx5-config-qt$"
+    open-floating true
+    default-column-width { fixed 1000; }
+    default-window-height { fixed 800; }
+}
+
+// @id=wr_1771915753957743379 @name=org.fcitx.fcitx5-qt6-gui-wrapper
+window-rule {
+    match app-id="^org.fcitx.fcitx5-qt6-gui-wrapper$"
+    open-floating true
+    default-column-width { fixed 1000; }
+    default-window-height { fixed 800; }
+}
+
+// @id=wr_1771915800735287173 @name=zen-browser
+window-rule {
+    match app-id="^zen-browser$"
+    open-floating true
+}
+
+// @id=wr_1771915857829673418 @name=SPlayer
+window-rule {
+    match app-id="^SPlayer$"
+    open-floating true
+}
+
+// @id=wr_1771915954058681818 @name=com.follow.clash
+window-rule {
+    match app-id="^com.follow.clash$"
+    open-floating true
+}
+
+// @id=wr_1771915996452698068 @name=pot
+window-rule {
+    match app-id="^pot$"
+    open-floating true
+}
+
+// @id=wr_1771916049312560532 @name=blueman-manager
+window-rule {
+    match app-id="^blueman-manager$"
+    open-floating true
+}
+
+// @id=wr_1771916152660272358 @name=dev.zed.Zed
+window-rule {
+    match app-id="^dev.zed.Zed$"
+    open-floating true
+}
+
+// @id=wr_1771916239751196566 @name=ToDesk
+window-rule {
+    match app-id="^ToDesk$"
+    open-floating true
+}
+
+// @id=wr_1771916312932434591 @name=org.kde.dolphin
+window-rule {
+    match app-id="^org.kde.dolphin$"
+    open-floating true
+}
+
+// @id=wr_1771916326932106078 @name=dolphin-emu
+window-rule {
+    match app-id="^dolphin-emu$"
+    open-floating true
+}
+
+// @id=wr_1771916356326820856 @name=one.alynx.showmethekey
+window-rule {
+    match app-id="^one.alynx.showmethekey$"
+    open-floating true
+}
+
+// @id=wr_1771916377607478948 @name=showmethekey-gtk
+window-rule {
+    match app-id="^showmethekey-gtk$"
+    open-floating true
+}
+
+// @id=wr_1771916420720557045 @name=io.github.fizzyizzy05.binary
+window-rule {
+    match app-id="^io.github.fizzyizzy05.binary$"
+    open-floating true
+}
+
+// @id=wr_1771916449539285199 @name=org.telegram.desktop
+window-rule {
+    match app-id="^org.telegram.desktop$"
+    open-floating true
+}
+
+// @id=wr_1771916518657030370 @name=bvnc
+window-rule {
+    match app-id="^bvnc$"
+    open-floating true
+}
+
+// @id=wr_1771916538923279175 @name=bssh
+window-rule {
+    match app-id="^bssh$"
+    open-floating true
+}
+
+// @id=wr_1771916561005232546 @name=tlpui
+window-rule {
+    match app-id="^tlpui$"
+    open-floating true
+}
+
+// @id=wr_1771916616027280103 @name=org.quickshell
+window-rule {
+    match app-id="^org.quickshell$"
+    open-floating true
+}
+
+// @id=wr_1771916655843071377 @name=org.qt-project.qtcreator
+window-rule {
+    match app-id="^org.qt-project.qtcreator$"
+    open-floating true
+}
+
+// @id=wr_1771916827420579592 @name=spotify
+window-rule {
+    match app-id="^spotify$"
+    open-floating true
+}
+
+// @id=wr_1771916889022559133 @name=Vmware
+window-rule {
+    match app-id="^Vmware$"
+    open-floating true
+}
+
+// @id=wr_1771917531199926848 @name=cpupower-gui
+window-rule {
+    match app-id="^cpupower-gui$"
+    open-floating true
+}
+
+// @id=wr_1771918135011757552 @name=org.kde.drkonqi.coredump.gui
+window-rule {
+    match app-id="^org.kde.drkonqi.coredump.gui$"
+    open-floating true
+}
+
+// @id=wr_1771918173198653087 @name=org.pulseaudio.pavucontrol
+window-rule {
+    match app-id="^org.pulseaudio.pavucontrol$"
+    open-floating true
+}
+
+// @id=wr_1771918224761366687 @name=kbd-layout-viewer
+window-rule {
+    match app-id="^kbd-layout-viewer$"
+    open-floating true
 }

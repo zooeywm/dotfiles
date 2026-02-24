@@ -4,9 +4,28 @@
   "customThemeFile": "/home/zooeywm/.config/DankMaterialShell/themes/catppuccin/theme.json",
   "registryThemeVariants": {
     "catppuccin": {
-      "flavor": "latte",
-      "accent": "flamingo"
-    }
+      "dark": {
+        "flavor": "latte",
+        "accent": "flamingo"
+      },
+      "light": {
+        "flavor": "latte",
+        "accent": "pink"
+      }
+    },
+    "amoledBlack": {
+      "light": {
+        "flavor": "black-light",
+        "accent": "dark-green"
+      }
+    },
+    "everforest": "hard",
+    "flexoki": "blue",
+    "gruvboxMaterial": "hard",
+    "oxocarbon": "blue",
+    "peaceAndQuiet": "salmon",
+    "petrichor": "pink",
+    "rosePine": "rosePine"
   },
   "matugenScheme": "scheme-tonal-spot",
   "runUserMatugenTemplates": true,

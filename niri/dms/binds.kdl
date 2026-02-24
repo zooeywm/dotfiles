@@ -101,6 +101,8 @@ binds {
     Mod+Up              { focus-window-or-workspace-up; }
     Mod+J               { focus-window-or-workspace-down; }
     Mod+K               { focus-window-or-workspace-up; }
+    Mod+Shift+U         { move-window-to-workspace-down; }
+    Mod+Shift+I         { move-window-to-workspace-up; }
     Mod+Shift+J         { move-window-down-or-to-workspace-down; }
     Mod+Shift+K         { move-window-up-or-to-workspace-up; }
 
