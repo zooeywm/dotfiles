@@ -265,7 +265,7 @@ const MANIFEST = {
     cliphist: "剪贴板历史"
     matugen: "材料设计颜色生成"
     dgop: "资源信息监控"
-    dms-shell: { manager: "paru", packages: ["dms-shell-bin"], desc: "极致 quickshell" }
+    dms-shell: { manager: "paru", packages: ["dms-shell-bin", "cups-pk-helper", "quickshell-git"], desc: "极致 quickshell" }
     wl-clipboard: "Wayland Clipboard"
     waybar: "Status bar"
     grim: "Screen cut"

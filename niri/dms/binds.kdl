@@ -15,7 +15,7 @@ binds {
     Mod+M hotkey-overlay-title="Task Manager" {
         spawn-sh "dms ipc call processlist focusOrToggle";
     }
-    Mod+I hotkey-overlay-title="Settings" {
+    Mod+Comma hotkey-overlay-title="Settings" {
         spawn-sh "dms ipc call settings focusOrToggle";
     }
     // Mod+Y hotkey-overlay-title="Browse Wallpapers" {
@@ -71,8 +71,8 @@ binds {
     Mod+Right { focus-column-right; }
     Mod+H     { focus-column-left; }
     Mod+L     { focus-column-right; }
-    Mod+A     { focus-column-first; }
-    Mod+E     { focus-column-last; }
+    Mod+A     { spawn-sh "feishu"; }
+    Mod+E     { spawn-sh "wechat-universal"; }
 
     // === Window Movement ===
     Mod+Shift+H     { move-column-left; }
@@ -101,6 +101,8 @@ binds {
     Mod+Up              { focus-window-or-workspace-up; }
     Mod+J               { focus-window-or-workspace-down; }
     Mod+K               { focus-window-or-workspace-up; }
+    Mod+U               { focus-workspace-down; }
+    Mod+I               { focus-workspace-up; }
     Mod+Shift+U         { move-window-to-workspace-down; }
     Mod+Shift+I         { move-window-to-workspace-up; }
     Mod+Shift+J         { move-window-down-or-to-workspace-down; }

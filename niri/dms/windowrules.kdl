@@ -220,3 +220,33 @@ window-rule {
     match app-id="^kbd-layout-viewer$"
     open-floating true
 }
+
+// @id=wr_1771925011453869285 @name=MovingClient
+window-rule {
+    match app-id="^MovingClient$"
+    open-floating true
+}
+
+// @id=wr_1771991425141466950 @name=Vmware-netcfg
+window-rule {
+    match app-id="^Vmware-netcfg$"
+    open-floating true
+}
+
+// @id=wr_1772070644672352563 @name=xwaylandvideobridge
+window-rule {
+    match app-id="^xwaylandvideobridge$"
+    open-floating true
+}
+
+// @id=wr_1772079604051916714 @name=parsecd
+window-rule {
+    match app-id="^parsecd$"
+    open-floating true
+}
+
+// @id=wr_1772079610641014530 @name=com.moonlight_stream.Moonlight
+window-rule {
+    match app-id="^com.moonlight_stream.Moonlight$"
+    open-floating true
+}
