@@ -31,12 +31,6 @@ window-rule {
     open-floating true
 }
 
-// @id=wr_1771914853787583206 @name=Steam
-window-rule {
-    match app-id="^steam$"
-    open-floating true
-}
-
 // @id=wr_1771914888591062042 @name=PrismLauncher
 window-rule {
     match app-id="^org.prismlauncher.PrismLauncher$"
@@ -75,12 +69,6 @@ window-rule {
     open-floating true
     default-column-width { fixed 1000; }
     default-window-height { fixed 800; }
-}
-
-// @id=wr_1771915800735287173 @name=zen-browser
-window-rule {
-    match app-id="^zen-browser$"
-    open-floating true
 }
 
 // @id=wr_1771915857829673418 @name=SPlayer
@@ -248,5 +236,23 @@ window-rule {
 // @id=wr_1772079610641014530 @name=com.moonlight_stream.Moonlight
 window-rule {
     match app-id="^com.moonlight_stream.Moonlight$"
+    open-floating true
+}
+
+// @id=wr_1772268352879425059 @name=virt-manager
+window-rule {
+    match app-id="^virt-manager$"
+    open-floating true
+}
+
+// @id=wr_1772271710195393159 @name=remote-viewer
+window-rule {
+    match app-id="^remote-viewer$"
+    open-floating true
+}
+
+// @id=wr_1772416353782673250 @name=steam
+window-rule {
+    match app-id="^steam$"
     open-floating true
 }

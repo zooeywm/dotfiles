@@ -27,7 +27,7 @@ layout {
         width 2
     }
     tab-indicator {
-        hide-when-single-tab
+        // hide-when-single-tab
         width 10
         gap 0
         length total-proportion=1.0
@@ -63,6 +63,7 @@ input {
         dwt
     }
     mod-key "Super"
+    // focus-follows-mouse
 }
 
 config-notification {

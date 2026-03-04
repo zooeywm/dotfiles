@@ -243,7 +243,7 @@ const MANIFEST = {
     xf86-video-amdgpu: "AMD GPU video accelerator"
 
     # misc
-    vmware-workstation: { manager: "paru" desc: "vmware workstation" }
+    # vmware-workstation: { manager: "paru" desc: "vmware workstation" }
     v4l2loopback-dkms: "Virtual camera with screen"
     rclone: "Net Drive Synchronization"
     libfido2: "ssh-agent dependency"
@@ -277,7 +277,7 @@ const MANIFEST = {
     qt6-multimedia-ffmpeg: ""
     cava: ""
     rofi: "Menu"
-    tlp: { packages: ["tlp", "tlpui"], desc: "Battery Manager" }
+    # tlp: { packages: ["tlp", "tlpui"], desc: "Battery Manager" }
     binary: "Binary Calculator"
     # https://github.com/casualsnek/waydroid_script
     # waydroid: { packages: [ "lzip", "waydroid" ]}
