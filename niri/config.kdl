@@ -98,12 +98,8 @@ switch-events {
     tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
 }
 
-// spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
-spawn-at-startup "bash" "-c" "QT_SCALE_FACTOR=2 wechat-universal &"
-// spawn-at-startup "zen"
-spawn-at-startup "/opt/SPlayer/SPlayer"
-// spawn-at-startup "showmethekey-gtk"
 spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri & /usr/lib/xdg-desktop-portal-hyprland"
+spawn-sh-at-startup "udiskie --tray"
 
 hotkey-overlay {
     skip-at-startup

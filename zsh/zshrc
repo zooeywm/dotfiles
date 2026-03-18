@@ -86,7 +86,15 @@ zcomet load hlissner/zsh-autopair
 # Generated Completions #
 #=======================#
 
-smartcache comp mise completion zsh
+# smartcache comp mise completion zsh
+
+mkdir -p ~/.local/share/zsh/site-functions
+fpath=(~/.local/share/zsh/site-functions $fpath)
+
+if [[ ! -f ~/.local/share/zsh/site-functions/_mise ]] || \
+   [[ $(command -v mise) -nt ~/.local/share/zsh/site-functions/_mise ]]; then
+  mise completion zsh > ~/.local/share/zsh/site-functions/_mise
+fi
 # smartcache comp gix completions -s zsh
 # smartcache comp ein completions -s zsh
 

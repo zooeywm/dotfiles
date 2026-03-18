@@ -1,16 +1,16 @@
 {
   "dankBatteryAlerts": {
-    "enabled": true,
+    "enabled": false,
     "criticalThreshold": 10
   },
   "dankDesktopWeather": {
-    "enabled": true
+    "enabled": false
   },
   "niriWindows": {
-    "enabled": true
+    "enabled": false
   },
   "dankPomodoroTimer": {
-    "enabled": true
+    "enabled": false
   },
   "calculator": {
     "enabled": true,

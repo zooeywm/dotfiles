@@ -209,9 +209,9 @@ window-rule {
     open-floating true
 }
 
-// @id=wr_1771925011453869285 @name=MovingClient
+// @id=wr_1771925011453869285 @name=CloudClient
 window-rule {
-    match app-id="^MovingClient$"
+    match app-id="^CloudClient$"
     open-floating true
 }
 

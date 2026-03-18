@@ -48,7 +48,7 @@
   "mangoLayoutBorderSize": -1,
   "use24HourClock": false,
   "showSeconds": true,
-  "padHours12Hour": false,
+  "padHours12Hour": true,
   "useFahrenheit": false,
   "windSpeedUnit": "kmh",
   "nightModeEnabled": false,
@@ -271,8 +271,8 @@
   "browserPickerViewMode": "grid",
   "browserUsageHistory": {
     "zen-browser": {
-      "count": 1,
-      "lastUsed": 1771926793559,
+      "count": 2,
+      "lastUsed": 1772679659757,
       "name": "Zen Browser"
     }
   },
@@ -312,9 +312,9 @@
       "cursorHideTimeout": 0
     }
   },
-  "launcherLogoMode": "apps",
+  "launcherLogoMode": "os",
   "launcherLogoCustomPath": "",
-  "launcherLogoColorOverride": "primary",
+  "launcherLogoColorOverride": "surface",
   "launcherLogoColorInvertOnMode": false,
   "launcherLogoBrightness": 0.5,
   "launcherLogoContrast": 1,
