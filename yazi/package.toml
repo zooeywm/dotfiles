@@ -5,8 +5,8 @@ hash = "4df5f3783cbbfed60466f1aa9bc45b5e"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
-rev = "eca1861"
-hash = "e519d894e94ded741e06aae4d4775981"
+rev = "a837101"
+hash = "635b0feb9215772d22020eb0abf0bb34"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
