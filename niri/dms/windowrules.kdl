@@ -101,12 +101,6 @@ window-rule {
     open-floating true
 }
 
-// @id=wr_1771916239751196566 @name=ToDesk
-window-rule {
-    match app-id="^ToDesk$"
-    open-floating true
-}
-
 // @id=wr_1771916312932434591 @name=org.kde.dolphin
 window-rule {
     match app-id="^org.kde.dolphin$"
@@ -254,5 +248,23 @@ window-rule {
 // @id=wr_1772416353782673250 @name=steam
 window-rule {
     match app-id="^steam$"
+    open-floating true
+}
+
+// @id=wr_1774840848141857901 @name=kitty
+window-rule {
+    match app-id="^kitty$"
+    opacity 0.85
+}
+
+// @id=wr_1774842114598052529 @name=Connector
+window-rule {
+    match app-id="^Connector$"
+    open-floating true
+}
+
+// @id=wr_1775020877077952308 @name=appsamba-test
+window-rule {
+    match app-id="^appsamba-test$"
     open-floating true
 }

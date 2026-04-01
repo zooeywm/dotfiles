@@ -151,6 +151,15 @@ debug {
     honor-xdg-activation-with-invalid-serial
 }
 
+window-rule {
+    background-effect {
+        blur true
+        xray false
+        noise 0.05
+        saturation 3
+    }
+}
+
 // Include dms files
 include "dms/colors.kdl"
 include "dms/layout.kdl"

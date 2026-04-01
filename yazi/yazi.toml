@@ -67,7 +67,7 @@ compress = [
   { run = "dpkg -b %s1 \"${1%/}.deb\"", desc = "Deb" },
 ]
 deb = [{ run = "dpkg-deb -x %s1 ${1%.deb} && dpkg-deb -e %s1 ${1%.deb}/DEBIAN", desc = "Extract deb here" }]
-# images = [{ run = "swww img --transition-type=fade --transition-step=255 --transition-duration=1 --transition-fps=120 %s1", desc = "Set as wallpaper" }]
+wallpaper = [{ run = "awww img --transition-type=fade --transition-step=255 --transition-duration=1 --transition-fps=120 %s1", desc = "Set as wallpaper" }]
 terminal-here = [
   { run = "kitty @ launch --type=tab --cwd %d1", desc = "Kitty Tab Here", for = "linux" },
   { run = "kitty @ launch --type=window --cwd %d1", desc = "Kitty Window Here", for = "linux" },
@@ -77,10 +77,10 @@ terminal-here = [
 rules = [
   # Text
   { mime = "{{text/*,inode/empty,*/javascript},application/{json,ndjson,*-ini}}", use = ["edit", "open", "reveal", "terminal-here"] },
-  # Image
-  { mime = "image/*", use = ["images", "open", "reveal", "terminal-here"] },
-  # Media
-  { mime = "{audio,video,image}/*", use = ["open", "media", "reveal", "terminal-here"] },
+  # Audio
+  { mime = "audio/*", use = ["open", "media", "reveal", "terminal-here"] },
+  # Video Image
+  { mime = "{video,image}/*", use = ["wallpaper", "open", "media", "reveal", "terminal-here"] },
   # Archive
   { mime = "application/{gzip,zip,tar,bzip*,7z*,xz,rar,zstd,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract", "open", "reveal", "terminal-here"] },
   # Binary
