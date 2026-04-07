@@ -252,11 +252,7 @@ const MANIFEST = {
     # niri
     niri: "卷轴桌面"
     xwayland-satellite: "新一代wayland到X11的适配器"
-    fuzzel: "软件启动器"
     libnotify: "通知"
-    swaylock-effects: "锁屏"
-    swayidle: "后台定时任务"
-    blueman: "蓝牙面板"
     satty: "编辑图片"
     alsa-ucm-conf: "ALSA接线图"
     alsa-firmware: "ALSA固件"
@@ -266,7 +262,7 @@ const MANIFEST = {
     matugen: "材料设计颜色生成"
     dgop: "资源信息监控"
     quickshell: ""
-    dms-shell: { manager: "paru", packages: ["dms-shell-bin", "cups-pk-helper"], desc: "极致 quickshell" }
+    dms-shell: { packages: ["dms-shell", "cups-pk-helper"], desc: "极致 quickshell" }
     wl-clipboard: "Wayland Clipboard"
     waybar: "Status bar"
     grim: "Screen cut"

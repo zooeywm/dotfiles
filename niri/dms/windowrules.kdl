@@ -268,3 +268,9 @@ window-rule {
     match app-id="^appsamba-test$"
     open-floating true
 }
+
+// @id=wr_1775528042218620170 @name=qqmusic
+window-rule {
+    match app-id="^qqmusic$"
+    open-floating true
+}
