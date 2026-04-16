@@ -7,11 +7,26 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "edit_predictions": {
+    "mode": "eager"
+  },
+  "agent_servers": {
+    "codex-acp": {
+      "favorite_config_option_values": {
+        "mode": [
+          "full-access"
+        ]
+      },
+      "type": "registry"
+    }
+  },
   "buffer_line_height": "standard",
   "buffer_font_weight": 400.0,
   "show_edit_predictions": false,
   "agent": {
-    "always_allow_tool_actions": true,
+    "tool_permissions": {
+      "default": "allow"
+    },
     "default_profile": "write",
     "default_model": {
       "provider": "Zai",
@@ -20,13 +35,13 @@
     "model_parameters": []
   },
   "disable_ai": false,
-  "vim_mode": true,
+  "vim_mode": false,
   "icon_theme": "Zed (Default)",
   "ui_font_size": 20.0,
   "buffer_font_size": 16.0,
   "theme": {
-    "mode": "dark",
-    "light": "Gruvbox Light",
+    "mode": "light",
+    "light": "One Light",
     "dark": "Ayu Dark"
   },
   "lsp": {

@@ -12,3 +12,9 @@ output "eDP-1" {
     position x=2560 y=240
 }
 
+output "DP-1" {
+    mode "1920x1080@100.000"
+    scale 1
+    position x=4480 y=360
+}
+
