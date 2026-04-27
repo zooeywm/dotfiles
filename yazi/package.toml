@@ -10,17 +10,17 @@ hash = "635b0feb9215772d22020eb0abf0bb34"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "babfd0f"
+rev = "ac82af3"
 hash = "7a4b4237223aaa94e589d1c01a23542a"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "babfd0f"
+rev = "ac82af3"
 hash = "f0c8c378184d5f8abd1b095a443d336d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "babfd0f"
+rev = "ac82af3"
 hash = "8b1af6b5a69797ee951f2a80ce570818"
 
 [[plugin.deps]]
@@ -30,7 +30,7 @@ hash = "9628b660afb192d32f2ea5f6634d3e72"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "babfd0f"
+rev = "ac82af3"
 hash = "4c0260feb50ea2437380690ffc241da7"
 
 [[plugin.deps]]
@@ -40,22 +40,22 @@ hash = "85316b5e9abeae2531d3e5d02a094381"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "babfd0f"
-hash = "31994c9caec5bdcafd994e9b00c632a4"
+rev = "ac82af3"
+hash = "2678c84a0b3a0b22504e918ccaf99011"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "babfd0f"
+rev = "ac82af3"
 hash = "6b141fbed3c74b45558fbc7088c805ee"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "babfd0f"
-hash = "6fa6a05a81c98dd000fbca3cca6e9682"
+rev = "ac82af3"
+hash = "eff8ff12fa4e5f035a10d8aeeb4c258d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "babfd0f"
+rev = "ac82af3"
 hash = "384464b6df8cb807425c521f8cd790f3"
 
 [[plugin.deps]]
@@ -65,7 +65,7 @@ hash = "51ff959c3c26cb3889589a0f8d394f14"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:types"
-rev = "babfd0f"
+rev = "ac82af3"
 hash = "4161cfa043b5ba3341d82c6869007b41"
 
 [[plugin.deps]]

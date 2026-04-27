@@ -5,6 +5,7 @@ binds {
 
     // === Application Launchers ===
     Mod+T hotkey-overlay-title="Open Kitty Terminal" { spawn-sh "kitty"; }
+    // Mod+Shift+T { spawn-sh "alacritty & sleep 0.2; niri msg action consume-or-expel-window-left"; }
     Mod+Return hotkey-overlay-title="Open Wezterm Terminal" { spawn-sh "wezterm-gui"; }
     Mod+V hotkey-overlay-title="Clipboard Manager" {
         spawn-sh "dms ipc call clipboard toggle";

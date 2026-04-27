@@ -29,12 +29,14 @@ def main [] {
     | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
     | pf kde ~/.config
     | pf kde/kwalletrc ~/.config/kwalletrc
+    | pf ssh ~/.ssh
+    | pf codex ~/.codex
     # | pf Templates -t ~
     | pfs [
         starship.toml fish nushell dunst presenterm niri swaylock DankMaterialShell xdg-desktop-portal
         LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
         gitui lazygit zathura mpv gdb pip.conf macchina paru
-        mise atuin uv jj zed opencode
+        mise atuin uv jj zed
     ] ~/.config
     | pfs [
         hypr fontconfig mimeapps.list

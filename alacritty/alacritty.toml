@@ -1,18 +1,23 @@
 [general]
-live_config_reload = true
-ipc_socket         = true
+import = [
+  "~/.config/alacritty/themes/ayu_dark.toml",
+]
+
+[env]
 
 [window]
-opacity       = 1.0
-dynamic_title = true
 
 [scrolling]
 history    = 100000
-multiplier = 1
+multiplier = 2
 
 [font]
-normal = { family = "JetBrainsMonoNL Nerd Font", style = "Regular" }
-size   = 13.0
+size = 12.0
+
+[colors]
+
+[bell]
+duration = 100
 
 [selection]
 save_to_clipboard = true
@@ -28,9 +33,8 @@ bindings = [
   { key = "U", mods = "Alt", action = "ScrollHalfPageUp" },
   { key = "G", mods = "Alt", action = "ScrollToTop" },
   { key = "G", mods = "Alt|Shift", action = "ScrollToBottom" },
-  { key = "X", mods = "Control|Shift", action = "ToggleViMode" },
-  { key = "S", mods = "Control", action = "SearchForward" },
-  { key = "S", mods = "Control|Shift", action = "SearchBackward" },
+  { key = "X", mods = "Alt|Shift", action = "ToggleViMode" },
+  { key = "F", mods = "Alt|Control", action = "SearchForward" },
 ]
 
 [debug]

@@ -3,32 +3,29 @@
 const MANIFEST = {
     # 社交
     telegram-desktop: "telegram"
-    thunderbird: "电子邮件客户端"
-    QQ: { packages: ["linuxqq-nt-bwrap"], manager: "paru", desc: "QQ（沙盒）" }
-    wechat: { packages: ["wechat-universal-bwrap"], manager: "paru", desc: "微信（沙盒）" }
-    wemeet: { packages: ["wemeet-wayland-screenshare-git"], manager: "paru", desc: "腾讯会议（沙盒）" }
-    feishu: { packages: ["feishu-portable"], manager: "paru", desc: "飞书（沙盒）" }
+    QQ: { packages: ["linuxqq-nt-bwrap"], manager: "paru", desc: "QQ (sandbox)" }
+    wechat: { packages: ["wechat-universal-bwrap"], manager: "paru", desc: "WeChat (sandbox)" }
+    wemeet: { packages: ["wemeet-wayland-screenshare-git"], manager: "paru", desc: "WeMeet (sandbox)" }
+    feishu: { packages: ["feishu-portable"], manager: "paru", desc: "Feishu (sandbox)" }
 
     # OS
     qemu-full: "QEMU"
-    ventoy-bin: { manager: "paru", desc: "制作镜像盘" }
-    podman: "容器运行时"
-    buildah: "批量删除外部镜像"
+    ventoy-bin: { manager: "paru", desc: "ventoy" }
+    podman: ""
 
     # kernel
-    linux-headers: "内核头文件"
+    linux-headers: ""
     sof-firmware: "Audio card firmware"
     # vulkan-intel: "vulkan 的 intel 驱动"
     mkinitcpio-firmware: { manager: "paru", desc: "get rid of the annoying 'WARNING: Possibly missing firmware for module:' messages" }
-    pipewire: { packages: [ "pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2" ], desc: "音频系统" }
+    pipewire: { packages: [ "pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2" ], desc: "audio" }
     chrony: "Time sync daemon"
 
     # PL
-    gdb: "GNU 调试器"
-    lldb: "LLVM 调试器"
-    mold: "现代链接器"
-    wild: "rust 链接器"
-    rust-script: "rust 脚本解释器"
+    gdb: "GNU debugger"
+    lldb: "LLVM debugger"
+    mold: "modern linker"
+    wild: "rust linker"
     rustup: "管理 rust 工具链"
     tokei: "统计代码"
     gcc: "GNU 的 C/C++工具链"
@@ -47,7 +44,6 @@ const MANIFEST = {
     mise: "管理语言工具链"
     bash-language-server: { manager: "npm" }
     sccache: "编译缓存"
-    kondo: "扫除编译产物"
     clang: { packages: ["clang", "llvm"], desc: "C/C++工具链" }
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] }
     oxfmt: { manager: "npm", packages: ["oxfmt"] }
@@ -71,20 +67,33 @@ const MANIFEST = {
     zen-browser: "Browser using the firefox core vertical label bar"
     # dbeaver: "PostgreSQL 客户端"
     sqlitebrowser: "SQLite 客户端"
-    nerd-fonts: "书呆子字体"
-    noto-fonts: { packages: [ "noto-fonts", "noto-fonts-emoji", "noto-fonts-extra", "noto-fonts-cjk" ], desc: "零豆腐块字体" }
-    wqy-zenhei: "文泉驿雅黑"
+    nerd-fonts: {
+      packages: [
+        "ttf-jetbrains-mono",
+        "ttf-firacode-nerd",
+        "ttf-nerd-fonts-symbols",
+        "ttf-nerd-fonts-symbols-mono"
+      ],
+      desc: "终端字体（最小集合）"
+    }
+    noto-fonts: {
+      packages: [
+        "noto-fonts",
+        "noto-fonts-cjk",
+        "noto-fonts-emoji"
+      ],
+      desc: "基础字体（拉丁 + CJK + emoji）"
+    }
     polkit-kde-agent: "Authorization Panel"
     polkit: "Policy kit"
     bluez: "Bluetooth kernel"
     bluez-utils: "Bluetooth cli"
-    overskride: { manager: "paru", desc: "Bluetooth GUI" }
+    overskride: "Bluetooth GUI"
     kalker: { manager: "paru", desc: "Terminal calculator" }
-    # wps: { packages: [ "wps-office-cn-bwrap", "wps-office-mui-zh-cn", "ttf-wps-fonts", "wps-office-fonts" ], manager: "paru", desc: "WPS 本体+中文语言包+符号字体+中文常用字体" }
+    libreoffice-fresh-zh-cn: "doc, xml, ppt"
 
     # shell
     nushell: "结构化 shell"
-    # mcfly: "历史命令"
     atuin: "历史命令"
     starship: "装饰提示符"
     zoxide: "瞬移"
@@ -98,10 +107,9 @@ const MANIFEST = {
     rsync: "超级复制"
     parallel-disk-usage: "磁盘空间统计"
     yazi: { packages: ["yazi-git", "jq", "ffmpegthumbnailer", "unarchiver", "ueberzugpp"], desc: "终端文件管理器" }
-    resvg: { manager: "paru", desc: "for yazi SVG preview" }
+    resvg: "for yazi SVG preview"
     gparted: "分区 GUI"
     exfatprogs: "exfat 格式化工具"
-    # conceal: { packages: ["conceal-bin"], manager: "paru", desc: "垃圾回收站" }
     squashfs-tools: "高压缩率只读文件系统"
 
     # utility
@@ -142,9 +150,9 @@ const MANIFEST = {
     git-cliff: "变更日志生成器"
     gitoxide: "锈化 git"
     git-filter-repo: "过滤 git 项目"
-    jujutsu: "新一代 VCS"
-    lazyjj: "jujutsu TUI"
-    gitlogue: "git 重现动画"
+    # jujutsu: "新一代 VCS"
+    # lazyjj: "jujutsu TUI"
+    # gitlogue: "git 重现动画"
 
     # data
     7zip: "7z"
@@ -172,7 +180,6 @@ const MANIFEST = {
 
     # language
     pot-translation: "一站式翻译"
-    didyoumean: { packages: ["didyoumean-bin"], manager: "paru", desc: "纠正英文单词" }
     pdf2zh: { manager: "uv", desc: "智能布局留存翻译 PDF" }
 
     # monitor
@@ -196,8 +203,7 @@ const MANIFEST = {
     gping: "图形化 ping"
     traceroute: "路由显形"
     lsof: "监测端口"
-    # v2raya: "飞越长城"
-    flclash-bin: { manager: "paru", desc: "飞越长城" }
+    flclash: "飞越长城"
     openssh: "ssh"
     xh: "Friendly and fast tool for sending HTTP requests"
     rustscan: "扫描端口"
@@ -205,7 +211,7 @@ const MANIFEST = {
     # show
     asciinema: "录制命令行视频"
     screenkey: "按键回显"
-    obs-studio: "流录制"
+    # obs-studio: "流录制"
 
     # cargo
     cargo-shear: { manager: "cargo", desc: "检查无用依赖" }
@@ -243,7 +249,6 @@ const MANIFEST = {
     xf86-video-amdgpu: "AMD GPU video accelerator"
 
     # misc
-    # vmware-workstation: { manager: "paru" desc: "vmware workstation" }
     v4l2loopback-dkms: "Virtual camera with screen"
     rclone: "Net Drive Synchronization"
     libfido2: "ssh-agent dependency"
@@ -257,24 +262,23 @@ const MANIFEST = {
     alsa-ucm-conf: "ALSA接线图"
     alsa-firmware: "ALSA固件"
     brightnessctl: "亮度调节"
-    awww: "壁纸上屏"
+    # awww: "壁纸上屏"
     cliphist: "剪贴板历史"
     matugen: "材料设计颜色生成"
     dgop: "资源信息监控"
     quickshell: ""
-    dms-shell: { packages: ["dms-shell", "cups-pk-helper"], desc: "极致 quickshell" }
+    dms-shell: { packages: ["dms-shell-niri", "cups-pk-helper"], desc: "极致 quickshell" }
     wl-clipboard: "Wayland Clipboard"
-    waybar: "Status bar"
+    # waybar: "Status bar"
     grim: "Screen cut"
     slurp: "Screen area cut"
-    wl-screenrec: { packages: ["wl-screenrec-git"], desc: "wayland screen recorder" }
-    hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] }
+    wl-screenrec-git: "rust wayland screen recorder"
+    # wf-recorder: "cpp wayland screen recorder"
+    # hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] }
     xdg-desktop-portal-gnome: ""
     xdg-desktop-portal-gtk: ""
     qt6-multimedia-ffmpeg: ""
-    cava: ""
     rofi: "Menu"
-    # tlp: { packages: ["tlp", "tlpui"], desc: "Battery Manager" }
     binary: "Binary Calculator"
     # https://github.com/casualsnek/waydroid_script
     # waydroid: { packages: [ "lzip", "waydroid" ]}

@@ -206,7 +206,8 @@ window-rule {
 // @id=wr_1771925011453869285 @name=CloudClient
 window-rule {
     match app-id="^CloudClient$"
-    open-floating true
+    open-fullscreen false
+    open-maximized-to-edges true
 }
 
 // @id=wr_1771991425141466950 @name=Vmware-netcfg
@@ -251,7 +252,12 @@ window-rule {
     open-floating true
 }
 
-// @id=wr_1774840848141857901 @name=kitty
+// @id=wr_1774840848141857901 @name=alacritty
+window-rule {
+    match app-id="^Alacritty$"
+    opacity 0.85
+}
+
 window-rule {
     match app-id="^kitty$"
     opacity 0.85
