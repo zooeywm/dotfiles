@@ -4,22 +4,6 @@ local act = wezterm.action
 return {
     enable_wayland = true,
     enable_scroll_bar = false,
-    font = wezterm.font_with_fallback({
-        -- 1 l I
-        --     - ~
-        --     0 o
-        "JetBrainsMono NF SemiBold",
-        "Noto Sans CJK SC",
-        "DejaVu Sans Mono",
-        "Noto Sans Symbols2",
-        "Noto Serif Grantha", -- 古印度文
-        "Noto Sans Gujarati UI", -- 古吉拉特文
-    }),
-
-    -- -> <- <<- ->> <<= =>> => <=> __ <= >= ___ ____ ==
-    -- === *** || ## ### #### #### !! ?? ... <> >>> >> << <<<
-    -- :: ::: ;; ;;; {} [] ++ +++ -- ---
-
     -- harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" },
     font_size = 12,
     -- color_scheme = "Everforest Light (Gogh)",

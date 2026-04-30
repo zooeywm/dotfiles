@@ -137,12 +137,12 @@ const MANIFEST = {
     libtree: "程序的库依赖树视图"
     halp: "命令行选项标准化检验"
     terminus-font: "Outer terminal font"
-    aichat: "LLM CLI"
     neovim: "editor"
     neovide: "neovim gui"
     zed: "Zed Editor"
     plocate: "locate 的并行版本"
     ripdrag: { packages: ["ripdrag-git"], desc: "准备拖拽" }
+    d2: "diagram tool"
 
     # git
     lazygit: "git TUI"
