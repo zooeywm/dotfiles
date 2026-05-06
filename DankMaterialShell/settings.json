@@ -5,18 +5,18 @@
   "registryThemeVariants": {
     "catppuccin": {
       "dark": {
-        "flavor": "latte",
-        "accent": "flamingo"
+        "flavor": "mocha",
+        "accent": "rosewater"
       },
       "light": {
         "flavor": "latte",
-        "accent": "pink"
+        "accent": "flamingo"
       }
     },
     "amoledBlack": {
       "light": {
         "flavor": "black-light",
-        "accent": "dark-green"
+        "accent": "white"
       }
     },
     "everforest": "hard",
@@ -30,9 +30,9 @@
   "matugenScheme": "scheme-tonal-spot",
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
-  "popupTransparency": 1,
+  "popupTransparency": 0.65,
   "dockTransparency": 0.51,
-  "widgetBackgroundColor": "s",
+  "widgetBackgroundColor": "sth",
   "widgetColorMode": "colorful",
   "controlCenterTileColorMode": "primary",
   "buttonColorMode": "primary",
@@ -46,15 +46,15 @@
   "mangoLayoutGapsOverride": -1,
   "mangoLayoutRadiusOverride": -1,
   "mangoLayoutBorderSize": -1,
-  "use24HourClock": false,
+  "use24HourClock": true,
   "showSeconds": true,
   "padHours12Hour": true,
   "useFahrenheit": false,
   "windSpeedUnit": "kmh",
   "nightModeEnabled": false,
   "animationSpeed": 1,
-  "customAnimationDuration": 500,
-  "syncComponentAnimationSpeeds": true,
+  "customAnimationDuration": 200,
+  "syncComponentAnimationSpeeds": false,
   "popoutAnimationSpeed": 1,
   "popoutCustomAnimationDuration": 150,
   "modalAnimationSpeed": 1,
@@ -279,12 +279,6 @@
   "greeterEnableFprint": false,
   "greeterEnableU2f": false,
   "greeterWallpaperPath": "",
-  "greeterUse24HourClock": true,
-  "greeterShowSeconds": false,
-  "greeterPadHours12Hour": false,
-  "greeterLockDateFormat": "",
-  "greeterFontFamily": "",
-  "greeterWallpaperFillMode": "",
   "mediaSize": 1,
   "appLauncherViewMode": "list",
   "spotlightModalViewMode": "list",
@@ -318,7 +312,7 @@
   "iconTheme": "System Default",
   "cursorSettings": {
     "theme": "Breeze_Light",
-    "size": 42,
+    "size": 24,
     "niri": {
       "hideWhenTyping": false,
       "hideAfterInactiveMs": 0
@@ -342,7 +336,7 @@
   "fontFamily": "Inter Variable",
   "monoFontFamily": "Fira Code",
   "fontWeight": 400,
-  "fontScale": 1.2,
+  "fontScale": 1,
   "notepadUseMonospace": true,
   "notepadFontFamily": "",
   "notepadFontSize": 14,
@@ -381,6 +375,10 @@
   "qtThemingEnabled": false,
   "syncModeWithPortal": true,
   "terminalsAlwaysDark": false,
+  "muxType": "tmux",
+  "muxUseCustomCommand": false,
+  "muxCustomCommand": "",
+  "muxSessionFilter": "",
   "runDmsMatugenTemplates": true,
   "matugenTemplateGtk": true,
   "matugenTemplateNiri": true,
@@ -394,7 +392,7 @@
   "matugenTemplateVesktop": true,
   "matugenTemplateEquibop": true,
   "matugenTemplateGhostty": true,
-  "matugenTemplateKitty": false,
+  "matugenTemplateKitty": true,
   "matugenTemplateFoot": true,
   "matugenTemplateAlacritty": true,
   "matugenTemplateNeovim": true,
@@ -447,7 +445,7 @@
   "maxFprintTries": 15,
   "enableU2f": false,
   "u2fMode": "or",
-  "lockScreenActiveMonitor": "all",
+  "lockScreenActiveMonitor": "eDP-1",
   "lockScreenInactiveColor": "#000000",
   "lockScreenNotificationMode": 2,
   "hideBrightnessSlider": false,
@@ -545,16 +543,15 @@
       "enabled": true,
       "position": 0,
       "screenPreferences": [
-        "all"
+        {
+          "name": "eDP-1",
+          "model": "0x419F"
+        }
       ],
       "showOnLastDisplay": false,
       "leftWidgets": [
         {
           "id": "launcherButton",
-          "enabled": true
-        },
-        {
-          "id": "workspaceSwitcher",
           "enabled": true
         },
         {
@@ -583,10 +580,6 @@
         },
         {
           "id": "cpuTemp",
-          "enabled": true
-        },
-        {
-          "id": "separator",
           "enabled": true
         }
       ],
@@ -628,23 +621,23 @@
           "enabled": true
         }
       ],
-      "spacing": 4,
-      "innerPadding": 4,
+      "spacing": 0,
+      "innerPadding": 2,
       "bottomGap": 0,
-      "transparency": 0.8,
-      "widgetTransparency": 0.6,
+      "transparency": 0.69,
+      "widgetTransparency": 0,
       "squareCorners": false,
       "noBackground": false,
       "gothCornersEnabled": false,
-      "gothCornerRadiusOverride": false,
+      "gothCornerRadiusOverride": true,
       "gothCornerRadiusValue": 12,
       "borderEnabled": false,
-      "borderColor": "surfaceText",
+      "borderColor": "primary",
       "borderOpacity": 1,
       "borderThickness": 1,
       "widgetOutlineEnabled": false,
-      "widgetOutlineColor": "primary",
-      "widgetOutlineOpacity": 0.2,
+      "widgetOutlineColor": "surfaceText",
+      "widgetOutlineOpacity": 0,
       "widgetOutlineThickness": 1,
       "fontScale": 1.2,
       "autoHide": false,
@@ -654,7 +647,13 @@
       "popupGapsAuto": true,
       "popupGapsManual": 4,
       "maximizeDetection": true,
-      "shadowIntensity": 0
+      "shadowIntensity": 0,
+      "widgetPadding": 1,
+      "maximizeWidgetIcons": false,
+      "scrollYBehavior": "column",
+      "maximizeWidgetText": false,
+      "removeWidgetPadding": false,
+      "iconScale": 1
     }
   ],
   "desktopClockEnabled": false,

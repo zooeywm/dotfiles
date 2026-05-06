@@ -3,7 +3,8 @@
 
 # If you want to dynamically override their content based on dark/light mode, you can specify two different flavors
 # for dark and light modes under `[flavor]`, and do so in those flavors instead.
-"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+
+#:schema https://yazi-rs.github.io/schemas/theme.json
 
 # vim:fileencoding=utf-8:foldmethod=marker
 
@@ -15,14 +16,17 @@ light = ""
 
 # : }}}
 
+# : App {{{
+
+[app]
+overall = {}
+
+# : }}}
+
 # : Manager {{{
 
 [mgr]
 cwd = { fg = "cyan" }
-
-# Hovered
-hovered         = { reversed = true }
-preview_hovered = { underline = true }
 
 # Find
 find_keyword  = { fg = "yellow", bold = true, italic = true, underline = true }

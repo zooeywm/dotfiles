@@ -206,7 +206,6 @@ window-rule {
 // @id=wr_1771925011453869285 @name=CloudClient
 window-rule {
     match app-id="^CloudClient$"
-    open-fullscreen false
     open-maximized-to-edges true
 }
 
@@ -258,6 +257,7 @@ window-rule {
     opacity 0.85
 }
 
+// @id=dms_rule_42 @name=
 window-rule {
     match app-id="^kitty$"
     opacity 0.85
@@ -279,4 +279,10 @@ window-rule {
 window-rule {
     match app-id="^qqmusic$"
     open-floating true
+}
+
+// @id=dms_rule_46 @name=WE-DEBUG-WINDOW
+window-rule {
+    match app-id="WE-DEBUG-WINDOW"
+    open-maximized-to-edges true
 }

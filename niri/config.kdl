@@ -100,6 +100,8 @@ switch-events {
 
 spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri & /usr/lib/xdg-desktop-portal-hyprland"
 spawn-sh-at-startup "udiskie --tray"
+spawn-sh-at-startup "we-layerd run --config ~/.config/we-layerd/config.toml"
+spawn-at-startup "we-gui"
 
 hotkey-overlay {
     skip-at-startup
@@ -151,14 +153,14 @@ debug {
     honor-xdg-activation-with-invalid-serial
 }
 
-window-rule {
-    background-effect {
-        blur true
-        xray false
-        noise 0.05
-        saturation 3
-    }
-}
+// window-rule {
+//     background-effect {
+//         blur true
+//         xray false
+//         noise 0.05
+//         saturation 3
+//     }
+// }
 
 // Include dms files
 include "dms/colors.kdl"
