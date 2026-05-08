@@ -9,6 +9,11 @@ vim.filetype.add({
         json = "jsonc",
         lox = "lox",
     },
+    filename = {
+        justfile = "just",
+        Justfile = "just",
+        JUSTFILE = "just",
+    },
     pattern = {
         [".*/hypr/.*.conf"] = "hyprlang",
         [".*"] = {

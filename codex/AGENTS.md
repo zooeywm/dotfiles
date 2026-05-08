@@ -1,105 +1,65 @@
-# Global Codex Guidance
+# AGENTS.md
 
-## Core Principles
+Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
-- Correctness first. Prefer factual, verifiable, minimal changes.
-- Give the best practical solution, not a list of weak alternatives.
-- Preserve existing architecture, style, naming, and public APIs.
-- Do not rewrite unrelated code.
-- Do not introduce new dependencies unless clearly necessary.
-- If uncertain, state the uncertainty and inspect before changing.
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
 
-## Language
+## 1. Think Before Coding
 
-- Explain to the user in Chinese.
-- Use English for code comments, identifiers, commit messages, logs, and technical names unless the project already uses Chinese.
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
 
-## Workflow
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
 
-Before editing:
-1. Identify the goal and acceptance criteria.
-2. Inspect relevant files before making assumptions.
-3. Prefer small, reviewable patches.
-4. Keep changes inside the current workspace unless explicitly asked.
+## 2. Simplicity First
 
-After editing:
-1. Run the smallest relevant verification.
-2. Report changed files, verification results, and remaining risks.
+**Minimum code that solves the problem. Nothing speculative.**
 
-## Coding Rules
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
 
-- Keep code modular and maintainable.
-- Prefer stable entry points and isolated implementation details.
-- Avoid large files; split new code into modules when it grows too large.
-- Do not add silent fallback behavior during development. Fail loudly when a real error must be fixed.
-- Never leave empty catch blocks, empty except blocks, or ignored errors.
-- Do not swallow errors unless the reason is documented and intentional.
-- Do not reinvent standard functionality; use existing project utilities first.
-- Do not modify formatting-only across unrelated files.
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
-## Shell / Scripts
+## 3. Surgical Changes
 
-- Use `set -euo pipefail` for new Bash scripts.
-- Quote variables.
-- Use `[[ ... ]]` for Bash pattern matching.
-- Prefer explicit checks and clear error messages.
-- Avoid destructive commands unless explicitly requested.
+**Touch only what you must. Clean up only your own mess.**
 
-## C++ / Qt
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
 
-- Follow existing Qt idioms and project conventions.
-- Preserve signal/slot ownership, QML binding behavior, and object lifetime assumptions.
-- Do not replace existing architecture with global state or context properties unless explicitly requested.
-- Be careful with Wayland, EGL, VAAPI, DRM, systemd, packaging, and platform-specific logic.
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
 
-## Rust
+The test: Every changed line should trace directly to the user's request.
 
-- Prefer explicit error handling.
-- Avoid unnecessary `clone`, `unwrap`, and `expect`.
-- Use `cargo check` as the first verification when Rust code changes.
-- Preserve no_std / target / linker assumptions.
+## 4. Goal-Driven Execution
 
-## Packaging / System Integration
+**Define success criteria. Loop until verified.**
 
-- Treat install scripts, postinst/postrm, systemd units, udev rules, desktop files, and distro detection as high-risk.
-- Do not remove compatibility logic for Debian, Ubuntu, UOS, Kylin, x86_64, arm64, ZhaoXin, E2000Q, RK platforms unless explicitly requested.
-- Never install system packages on the host unless explicitly instructed.
-- Prefer containerized tooling when a project already provides it.
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
 
-## Safety
+For multi-step tasks, state a brief plan:
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
 
-Never run without explicit approval:
-- `rm -rf`
-- `git reset --hard`
-- `git clean -fdx`
-- force-push
-- package removal
-- disk formatting / partition commands
-- commands touching production or remote data destructively
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
-Never print secrets, tokens, private keys, or broad environment dumps.
+---
 
-## Verification
-
-Use the smallest relevant check:
-
-- Shell: `bash -n <script>`
-- CMake/C++: build the touched target if a build directory exists
-- Rust: `cargo check`
-- Python: run focused tests or syntax checks
-- QML: verify imports, property names, bindings, and ownership assumptions
-
-If verification cannot be run, explain why.
-
-## Done Means
-
-A task is complete only when:
-
-1. The requested behavior is implemented or the question is answered.
-2. The change is minimal and localized.
-3. Relevant verification was run or the reason is stated.
-4. The final response includes:
-   - what changed,
-   - where it changed,
-   - verification result,
-   - remaining risk if any.
+**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.

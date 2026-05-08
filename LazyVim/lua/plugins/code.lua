@@ -27,22 +27,11 @@ return {
                 fname = true,
                 stdin = false,
             },
-            -- kotlin = {
-            --     cmd = "ktfmt",
-            --     args = { "--kotlinlang-style", "-" },
-            --     stdin = true,
-            -- },
             ["xml,astro,scss,less"] = "prettier",
             cs = {
                 cmd = "dotnet-csharpier",
                 args = { "--write-stdout" },
             },
-            -- ["jsonc,json5"] = {
-            --     cmd = "prettier",
-            --     args = { "--trailing-comma", "none", "--stdin-filepath" },
-            --     fname = true,
-            --     stdin = true,
-            -- },
             typst = "typstyle",
             slint = {
                 cmd = "slint-lsp",
@@ -52,7 +41,6 @@ return {
             },
             rust = {
                 cmd = "rustfmt",
-                -- args = { "+nightly", "--edition", "2024", "--emit", "stdout" },
                 args = { "+nightly", "--edition", "2024", "--emit", "stdout" },
                 stdin = true,
             },
@@ -60,6 +48,18 @@ return {
                 cmd = "qmlformat",
                 fname = true,
                 stdin = true,
+            },
+            just = {
+                cmd = "just",
+                args = { "--fmt" },
+                stdin = false,
+                fname = false,
+            },
+            make = {
+                cmd = "mbake",
+                args = { "format" },
+                fname = true,
+                stdin = false,
             },
         },
         config = function(_, opts)
@@ -75,29 +75,6 @@ return {
                 fmt_on_save = false,
                 always_on_save = true,
             }
-
-            -- local lint = require("guard.lint")
-            -- -- ft("cpp"):lint("clang-tidy")
-            -- ft("cpp"):lint({
-            --     -- cmd = "clazy-standalone",
-            --     cmd = "clang-tidy",
-            --     fname = true,
-            --     stdin = false,
-            --     parse = lint.from_regex({
-            --         -- source = "clazy-standalone",
-            --         source = "clang-tidy",
-            --         -- regex = ':(%d+):(%d+):%s+(%w+):%s+(.-)%s+%[(.-)%]',
-            --         -- regex = ":(%d+):(%d+):%s+(%w+):%s+(.-)%s+%[(.-)%]",
-            --         regex = ":(%d+):(%d+):%s+(%w+):%s+(.-)%s+%[(.-)%]",
-            --         groups = { "lnum", "col", "severity", "message", "code" },
-            --     }),
-            --     severities = {
-            --         information = lint.severities.info,
-            --         hint = lint.severities.info,
-            --         note = lint.severities.style,
-            --     },
-            -- })
-            -- :lint("codespell")
         end,
     },
     {

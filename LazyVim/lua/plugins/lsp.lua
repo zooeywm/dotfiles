@@ -20,6 +20,8 @@ return {
             -- LSP Server Settings
             servers = {
                 "lua_ls",
+                "just",
+                "dockerls",
                 "texlab",
                 "taplo",
                 "gopls",
