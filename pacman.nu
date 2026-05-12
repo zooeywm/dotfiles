@@ -6,7 +6,7 @@ const MANIFEST = {
     QQ: { packages: ["linuxqq-nt-bwrap"], manager: "paru", desc: "QQ (sandbox)" }
     wechat: { packages: ["wechat-universal-bwrap"], manager: "paru", desc: "WeChat (sandbox)" }
     wemeet: { packages: ["wemeet-wayland-screenshare-git"], manager: "paru", desc: "WeMeet (sandbox)" }
-    feishu: { packages: ["feishu-portable"], manager: "paru", desc: "Feishu (sandbox)" }
+    feishu: { packages: ["feishu-bin"], manager: "paru", desc: "Feishu" }
 
     # OS
     qemu-full: "QEMU"

@@ -7,8 +7,8 @@ vsync = true
 normal = [
     # "InconsolataGo Nerd Font",
     # "RecMonoSmCasual Nerd Font",
-    "JetBrainsMono Nerd Font",
-    "FiraCode Nerd Font",
-    "Noto Sans CJK SC",
+    # "JetBrainsMono Nerd Font",
+    # "FiraCode Nerd Font",
+    # "Noto Sans CJK SC",
 ]
 size = 20
