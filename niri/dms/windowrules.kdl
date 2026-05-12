@@ -281,8 +281,8 @@ window-rule {
     open-floating true
 }
 
-// @id=dms_rule_46 @name=WE-DEBUG-WINDOW
+// @id=wr_1778575263168320554 @name=Rule
 window-rule {
-    match app-id="WE-DEBUG-WINDOW"
-    open-maximized-to-edges true
+    match title="图片"
+    open-floating true
 }
