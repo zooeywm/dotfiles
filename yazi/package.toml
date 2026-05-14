@@ -1,7 +1,7 @@
 [[plugin.deps]]
 use = "DreamMaoMao/searchjump"
-rev = "cab627c"
-hash = "4df5f3783cbbfed60466f1aa9bc45b5e"
+rev = "8a1a785"
+hash = "36bf4d772125a51af4ef440c06820e32"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
@@ -10,17 +10,17 @@ hash = "635b0feb9215772d22020eb0abf0bb34"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "1db18bb"
+rev = "5d5c480"
 hash = "7a4b4237223aaa94e589d1c01a23542a"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "1db18bb"
+rev = "5d5c480"
 hash = "f0c8c378184d5f8abd1b095a443d336d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "1db18bb"
+rev = "5d5c480"
 hash = "8b1af6b5a69797ee951f2a80ce570818"
 
 [[plugin.deps]]
@@ -30,7 +30,7 @@ hash = "d390cd2d8b996939a695411b446f58d0"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "1db18bb"
+rev = "5d5c480"
 hash = "9c7987da2d2a2120dac33abb64132004"
 
 [[plugin.deps]]
@@ -40,22 +40,22 @@ hash = "6ea5f37c7f219671ec504cb8311f889d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "1db18bb"
+rev = "5d5c480"
 hash = "2678c84a0b3a0b22504e918ccaf99011"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "1db18bb"
+rev = "5d5c480"
 hash = "6b141fbed3c74b45558fbc7088c805ee"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "1db18bb"
-hash = "eff8ff12fa4e5f035a10d8aeeb4c258d"
+rev = "5d5c480"
+hash = "7b625412411be411153886894d9acaf"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "1db18bb"
+rev = "5d5c480"
 hash = "384464b6df8cb807425c521f8cd790f3"
 
 [[plugin.deps]]
@@ -65,7 +65,7 @@ hash = "51ff959c3c26cb3889589a0f8d394f14"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:types"
-rev = "1db18bb"
+rev = "5d5c480"
 hash = "9105494e98299f392aee95340066da9f"
 
 [[plugin.deps]]
