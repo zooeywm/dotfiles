@@ -27,11 +27,11 @@
     "petrichor": "pink",
     "rosePine": "rosePine"
   },
-  "matugenScheme": "scheme-tonal-spot",
+  "matugenScheme": "scheme-neutral",
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
   "popupTransparency": 0.65,
-  "dockTransparency": 0.51,
+  "dockTransparency": 0.5,
   "widgetBackgroundColor": "sth",
   "widgetColorMode": "colorful",
   "controlCenterTileColorMode": "primary",
@@ -300,7 +300,7 @@
   },
   "appDrawerSectionViewModes": {},
   "niriOverviewOverlayEnabled": true,
-  "dankLauncherV2Size": "compact",
+  "dankLauncherV2Size": "large",
   "dankLauncherV2BorderEnabled": false,
   "dankLauncherV2BorderThickness": 2,
   "dankLauncherV2BorderColor": "primary",
@@ -375,7 +375,7 @@
   "qtThemingEnabled": false,
   "syncModeWithPortal": true,
   "terminalsAlwaysDark": false,
-  "muxType": "tmux",
+  "muxType": "zellij",
   "muxUseCustomCommand": false,
   "muxCustomCommand": "",
   "muxSessionFilter": "",
@@ -402,24 +402,24 @@
   "matugenTemplateVscode": true,
   "matugenTemplateEmacs": true,
   "matugenTemplateZed": true,
-  "showDock": false,
+  "showDock": true,
   "dockAutoHide": false,
   "dockSmartAutoHide": true,
   "dockGroupByApp": true,
   "dockOpenOnOverview": false,
   "dockPosition": 1,
-  "dockSpacing": 4,
-  "dockBottomGap": 0,
+  "dockSpacing": 8,
+  "dockBottomGap": -19,
   "dockMargin": 0,
-  "dockIconSize": 40,
-  "dockIndicatorStyle": "circle",
+  "dockIconSize": 48,
+  "dockIndicatorStyle": "line",
   "dockBorderEnabled": false,
   "dockBorderColor": "surfaceText",
   "dockBorderOpacity": 1,
   "dockBorderThickness": 1,
   "dockIsolateDisplays": false,
-  "dockLauncherEnabled": false,
-  "dockLauncherLogoMode": "apps",
+  "dockLauncherEnabled": true,
+  "dockLauncherLogoMode": "os",
   "dockLauncherLogoCustomPath": "",
   "dockLauncherLogoColorOverride": "",
   "dockLauncherLogoSizeOffset": 0,
@@ -485,7 +485,7 @@
     "restart",
     "hibernate"
   ],
-  "powerMenuDefaultAction": "logout",
+  "powerMenuDefaultAction": "poweroff",
   "powerMenuGridLayout": false,
   "customPowerActionLock": "",
   "customPowerActionLogout": "",
@@ -519,8 +519,8 @@
     ]
   },
   "showOnLastDisplay": {
-    "dock": true,
-    "osd": true,
+    "dock": false,
+    "osd": false,
     "notifications": true,
     "toast": true
   },
@@ -621,10 +621,10 @@
           "enabled": true
         }
       ],
-      "spacing": 0,
-      "innerPadding": 2,
+      "spacing": 4,
+      "innerPadding": 4,
       "bottomGap": 0,
-      "transparency": 0.69,
+      "transparency": 0.5,
       "widgetTransparency": 0,
       "squareCorners": false,
       "noBackground": false,
@@ -639,7 +639,7 @@
       "widgetOutlineColor": "surfaceText",
       "widgetOutlineOpacity": 0,
       "widgetOutlineThickness": 1,
-      "fontScale": 1.2,
+      "fontScale": 1.5,
       "autoHide": false,
       "autoHideDelay": 250,
       "openOnOverview": true,
@@ -653,7 +653,7 @@
       "scrollYBehavior": "column",
       "maximizeWidgetText": false,
       "removeWidgetPadding": false,
-      "iconScale": 1
+      "iconScale": 1.2
     }
   ],
   "desktopClockEnabled": false,
@@ -730,6 +730,12 @@
   "builtInPluginSettings": {
     "dms_settings_search": {
       "trigger": "?"
+    },
+    "dms_notepad": {
+      "enabled": true
+    },
+    "dms_settings": {
+      "enabled": true
     }
   },
   "clipboardEnterToPaste": false,

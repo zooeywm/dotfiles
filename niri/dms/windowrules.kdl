@@ -203,12 +203,6 @@ window-rule {
     open-floating true
 }
 
-// @id=wr_1771925011453869285 @name=CloudClient
-window-rule {
-    match app-id="^CloudClient$"
-    open-maximized-to-edges true
-}
-
 // @id=wr_1771991425141466950 @name=Vmware-netcfg
 window-rule {
     match app-id="^Vmware-netcfg$"
@@ -263,12 +257,6 @@ window-rule {
     opacity 0.85
 }
 
-// @id=wr_1774842114598052529 @name=Connector
-window-rule {
-    match app-id="^Connector$"
-    open-floating true
-}
-
 // @id=wr_1775020877077952308 @name=appsamba-test
 window-rule {
     match app-id="^appsamba-test$"
@@ -284,5 +272,17 @@ window-rule {
 // @id=wr_1778575263168320554 @name=Rule
 window-rule {
     match title="图片"
+    open-floating true
+}
+
+// @id=wr_1779248422213164024 @name=CloudClient
+window-rule {
+    match app-id="^CloudClient$"
+    open-floating true
+}
+
+// @id=wr_1779248435059529945 @name=Connector
+window-rule {
+    match app-id="^Connector$"
     open-floating true
 }
