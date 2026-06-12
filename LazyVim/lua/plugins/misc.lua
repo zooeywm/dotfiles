@@ -120,7 +120,7 @@ return {
                 desc = "Find Files (cwd)",
                 action = "<leader>fF",
             })
-            opts.indent.animate = { duration = { step = 20, total = 300 } }
+            opts.indent = { animate = { enabled = true, duration = { step = 20, total = 300 } } }
             opts.words.enabled = false
             -- zen
             opts.zen = {
