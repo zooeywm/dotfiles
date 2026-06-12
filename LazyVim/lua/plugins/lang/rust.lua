@@ -63,6 +63,11 @@ return {
                             enable = false,
                         },
                         checkOnSave = true,
+                        lens = {
+                            implementations = {
+                                enable = false,
+                            },
+                        },
                         inlayHints = {
                             typeHints = {
                                 enable = false,

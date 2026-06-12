@@ -179,7 +179,6 @@ const MANIFEST = {
     doxx: "docx TUI",
 
     # language
-    pot-translation: "一站式翻译"
     pdf2zh: { manager: "uv", desc: "智能布局留存翻译 PDF" }
 
     # monitor

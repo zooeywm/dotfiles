@@ -12,7 +12,7 @@ return {
                 exclude = { "rust" },
             },
             codelens = {
-                enabled = true,
+                enabled = false,
             },
             document_color = {
                 enabled = true,

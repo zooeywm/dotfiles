@@ -109,24 +109,6 @@ return {
             end,
         },
     },
-    -- {
-    --     "milanglacier/minuet-ai.nvim",
-    --     config = function()
-    --         require("minuet").setup({
-    --             provider = "openai_fim_compatible",
-    --             provider_options = {
-    --                 openai_fim_compatible = {
-    --                     api_key = "DEEPSEEK_API_KEY",
-    --                     name = "deepseek",
-    --                     optional = {
-    --                         max_tokens = 256,
-    --                         top_p = 0.9,
-    --                     },
-    --                 },
-    --             },
-    --         })
-    --     end,
-    -- },
     {
         "saghen/blink.cmp",
         dependencies = {
@@ -134,7 +116,6 @@ return {
             { "bydlw98/blink-cmp-env", lazy = true },
             { "mikavilpas/blink-ripgrep.nvim", lazy = true },
             { "Kaiser-Yang/blink-cmp-dictionary", dependencies = { "nvim-lua/plenary.nvim" }, lazy = true },
-            -- "giuxtaposition/blink-cmp-copilot",
         },
         opts = {
             snippets = {
@@ -142,16 +123,8 @@ return {
             },
             sources = {
                 default = {
-                    "lsp",
-                    "path",
-                    "snippets",
-                    "buffer",
                     "ripgrep",
                     "dictionary",
-                    "env",
-                    "cmdline",
-                    -- "minuet",
-                    -- "copilot",
                 },
                 per_filetype = {
                     sql = { "dadbod" },
@@ -163,23 +136,6 @@ return {
                     nu = { "env" },
                 },
                 providers = {
-                    -- minuet = {
-                    --     name = "minuet",
-                    --     module = "minuet.blink",
-                    --     async = true,
-                    --     -- Should match minuet.config.request_timeout * 1000,
-                    --     -- since minuet.config.request_timeout is in seconds
-                    --     timeout_ms = 10000,
-                    --     score_offset = 300, -- Gives minuet higher priority among suggestions
-                    -- },
-                    -- copilot = {
-                    --     timeout_ms = 10000,
-                    --     name = "copilot",
-                    --     module = "blink-cmp-copilot",
-                    --     kind = "Copilot",
-                    --     score_offset = 500,
-                    --     async = true,
-                    -- },
                     env = {
                         name = "Env",
                         module = "blink-cmp-env",

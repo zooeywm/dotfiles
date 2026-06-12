@@ -7,6 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
   "edit_predictions": {
     "mode": "eager"
   },
@@ -24,6 +36,7 @@
   "buffer_font_weight": 400.0,
   "show_edit_predictions": false,
   "agent": {
+    "dock": "right",
     "tool_permissions": {
       "default": "allow"
     },

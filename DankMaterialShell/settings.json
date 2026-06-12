@@ -555,6 +555,10 @@
           "enabled": true
         },
         {
+          "id": "workspaceSwitcher",
+          "enabled": true
+        },
+        {
           "id": "separator",
           "enabled": true
         },
