@@ -26,6 +26,7 @@ return {
                 "taplo",
                 "gopls",
                 "ts_ls",
+                "tailwindcss",
                 "volar",
                 "tinymist",
                 "bashls",

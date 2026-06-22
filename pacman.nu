@@ -46,6 +46,8 @@ const MANIFEST = {
     sccache: "编译缓存"
     clang: { packages: ["clang", "llvm"], desc: "C/C++工具链" }
     typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] }
+    vtsls: { manager: "npm", packages: ["@vtsls/language-server"], desc: "typescript语言服务器" }
+    tailwindcss: { manager: "npm", packages: ["@tailwindcss/language-server"], desc: "tailwindcss语言服务器" }
     oxfmt: { manager: "npm", packages: ["oxfmt"] }
     typst: { packages: ["typst", "tinymist", "typstyle"] }
     tree-sitter-cli: "安装 tree-sitter 解析器"

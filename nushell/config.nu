@@ -41,6 +41,13 @@ def swap [lhs: string, rhs: string] {
 	mv $"($lhs).swapping" $rhs
 }
 
+# 卸载 git 子模块
+def rm-submodule [path: string] {
+    git submodule deinit --force $path
+    git rm --force $path
+    git commit -m $"untrack submodule `($path)`"
+}
+
 # 移形换影
 def --env yazi-nav [...args] {
 	let tmp = (mktemp -t "yazi-cwd.XXXXXX")
