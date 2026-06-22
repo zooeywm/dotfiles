@@ -28,7 +28,7 @@ layout {
     tab-indicator {
         // hide-when-single-tab
         width 10
-        gap 0
+        gap 4
         length total-proportion=0.8
         position "left"
         gaps-between-tabs 2
