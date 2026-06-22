@@ -1,128 +1,63 @@
 return {
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "saghen/blink.cmp" },
-        event = "BufReadPre",
-        keys = {
-            { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", ft = { "cpp", "c" }, desc = "Switch Source/Header (C/C++)" },
-        },
-        opts = {
-            inlay_hints = {
-                enabled = false,
-                exclude = { "rust" },
-            },
-            codelens = {
-                enabled = false,
-            },
-            document_color = {
-                enabled = true,
-            },
-            -- LSP Server Settings
-            servers = {
-                "lua_ls",
-                "just",
-                "dockerls",
-                "texlab",
-                "taplo",
-                "gopls",
-                "ts_ls",
-                "tailwindcss",
-                "volar",
-                "tinymist",
-                "bashls",
-                "jsonls",
-                "slint_lsp",
-                "nushell",
-                "clangd",
-                "basedpyright",
-                "neocmake",
-                "hyprls",
-                "qmlls",
-                "astro",
-                "cssls",
-            },
-            capabilities = {
+        opts = function(_, opts)
+            local common_capabilities = {
                 workspace = {
                     fileOperations = {
                         didRename = true,
                         willRename = true,
                     },
                 },
-            },
-        },
-        config = vim.schedule_wrap(function(_, opts)
-            -- 指定诊断日志的图标
-            for severity, icon in pairs(opts.diagnostics.signs.text) do
-                local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
-                name = "DiagnosticSign" .. name
-                vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-            end
-
-            -- inlay hints
-            if opts.inlay_hints.enabled then
-                Snacks.util.lsp.on({ method = "textDocument/inlayHint" }, function(_, buffer)
-                    if vim.api.nvim_buf_is_valid(buffer) and vim.bo[buffer].buftype == "" and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype) then
-                        vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
-                    end
-                end)
-            end
-
-            -- folds
-            if opts.folds.enabled then
-                Snacks.util.lsp.on({ method = "textDocument/foldingRange" }, function()
-                    if LazyVim.set_default("foldmethod", "expr") then LazyVim.set_default("foldexpr", "v:lua.vim.lsp.foldexpr()") end
-                end)
-            end
-
-            -- code lens
-            if opts.codelens.enabled and vim.lsp.codelens then
-                Snacks.util.lsp.on({ method = "textDocument/codeLens" }, function(buffer)
-                    vim.lsp.codelens.refresh()
-
-                    vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-
-                        buffer = buffer,
-
-                        callback = vim.lsp.codelens.refresh,
-                    })
-                end)
-            end
-            -- if opts.document_color.enabled then
-            --     LazyVim.lsp.on_supports_method(
-            --         "textDocument/documentColor",
-            --         function(_, buffer)
-            --             vim.lsp.document_color.enable(true, buffer, {
-            --                 style = "virtual",
-            --             })
-            --         end
-            --     )
-            -- end
-
-            -- if vim.g.project_lspconfig ~= nil then
-            --     opts.servers = vim.tbl_deep_extend("force", opts.servers, vim.g.project_lspconfig)
-            --     opts.servers.rust_analyzer = nil
-            -- end
-
-            -- diagnostics
-            vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
-
-            local default_lsp_config = {
-                capabilities = vim.tbl_deep_extend(
-                    "force",
-                    vim.lsp.protocol.make_client_capabilities(),
-                    require("blink.cmp").get_lsp_capabilities(), -- 令 blink.cmp 连接服务器
-                    opts.capabilities or {}
-                ),
             }
-            vim.lsp.config("*", default_lsp_config)
-            vim.lsp.enable(opts.servers)
+            local with_capabilities = {
+                capabilities = vim.deepcopy(common_capabilities),
+            }
+            local opts_ext = {
+                inlay_hints = {
+                    enabled = false,
+                    exclude = { "rust" },
+                },
+                codelens = {
+                    enabled = false,
+                },
+                servers = {
+                    ["*"] = {
+                        capabilities = vim.deepcopy(common_capabilities),
+                    },
+                    lua_ls = vim.deepcopy(with_capabilities),
+                    just = vim.deepcopy(with_capabilities),
+                    dockerls = vim.deepcopy(with_capabilities),
+                    texlab = vim.deepcopy(with_capabilities),
+                    taplo = vim.deepcopy(with_capabilities),
+                    gopls = vim.deepcopy(with_capabilities),
+                    ts_ls = vim.deepcopy(with_capabilities),
+                    tailwindcss = vim.deepcopy(with_capabilities),
+                    volar = vim.deepcopy(with_capabilities),
+                    tinymist = vim.deepcopy(with_capabilities),
+                    bashls = vim.deepcopy(with_capabilities),
+                    jsonls = vim.deepcopy(with_capabilities),
+                    slint_lsp = vim.deepcopy(with_capabilities),
+                    nushell = vim.deepcopy(with_capabilities),
+                    clangd = {
+                        capabilities = vim.deepcopy(common_capabilities),
+                        keys = {
+                            { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+                        },
+                    },
+                    basedpyright = vim.deepcopy(with_capabilities),
+                    neocmake = vim.deepcopy(with_capabilities),
+                    hyprls = vim.deepcopy(with_capabilities),
+                    qmlls = vim.deepcopy(with_capabilities),
+                    astro = vim.deepcopy(with_capabilities),
+                    cssls = vim.deepcopy(with_capabilities),
+                },
+            }
 
-            -- for server, server_opts in pairs(opts.servers) do
-            --     server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
-            --     -- 如果语言服务器不支持语义化 token，高亮就会 fallback 到 treesitter
-            --     require("lspconfig")[server].setup(server_opts)
-            -- end
-        end),
+            local merged = vim.tbl_deep_extend("force", opts, opts_ext)
+            merged.capabilities = nil
+            return merged
+        end,
     },
     {
         "nvimdev/lspsaga.nvim",

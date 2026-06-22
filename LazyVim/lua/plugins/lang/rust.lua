@@ -25,12 +25,7 @@ return {
         ft = { "rust" },
         keys = {
             { "<leader>ce", "<cmd>RustLsp expandMacro<CR>", ft = "rust", desc = "show-expand-macro" },
-            { "<leader>cr", "<cmd>RustLsp runnables<CR>", ft = "rust", desc = "show-runnables" },
-            { "<leader>cc", "<cmd>RustLsp openCargo<CR>", ft = "rust", desc = "open-cargo-toml" },
-            { "<leader>cd", "<cmd>RustLsp openDocs<CR>", ft = "rust", desc = "open-rust-doc" },
-            { "<leader>ch", "<cmd>RustLsp hover actions<CR>", ft = "rust", desc = "show-hover-actions" },
-            { "<leader>ld", "<cmd>RustLsp renderDiagnostic current<CR>", ft = "rust", desc = "diagnostic-current" },
-            { "gp", "<cmd>RustLsp parentModule<CR>", ft = "rust", desc = "goto-parent-module" },
+            { "<leader>cO", "<cmd>RustLsp openCargo<CR>", ft = "rust", desc = "open-cargo-toml" },
         },
         opts = {
             tools = {
@@ -51,6 +46,9 @@ return {
             server = {
                 settings = {
                     ["rust-analyzer"] = {
+                        diagnostics = {
+                            disabled = { "proc-macro-disabled" },
+                        },
                         check = {
                             command = "clippy",
                             extraArgs = {
@@ -62,7 +60,7 @@ return {
                         cachePriming = {
                             enable = false,
                         },
-                        checkOnSave = true,
+                        checkOnSave = false,
                         lens = {
                             implementations = {
                                 enable = false,
@@ -73,7 +71,7 @@ return {
                                 enable = false,
                             },
                             parameterHints = {
-                                enable = true,
+                                enable = false,
                             },
                             discriminantHints = {
                                 enable = "always",
@@ -81,8 +79,8 @@ return {
                         },
                         procMacro = {
                             ignored = {
-                                "async_trait::async_trait",
-                                "tokio::test",
+                                ["async-trait"] = { "async_trait" },
+                                ["tokio-macros"] = { "main", "test" },
                             },
                         },
                         completion = {
@@ -90,6 +88,10 @@ return {
                                 exclude = {
                                     {
                                         path = "anyhow::Ok",
+                                        type = "always",
+                                    },
+                                    {
+                                        path = "boxcar::Vec",
                                         type = "always",
                                     },
                                 },
@@ -105,6 +107,26 @@ return {
 
             vim.g.rustaceanvim = opts
         end,
+    },
+    {
+        "neovim/nvim-lspconfig",
+        opts = {
+            servers = {
+                rust_analyzer = {
+                    enabled = false,
+                },
+                ["rust-analyzer"] = {
+                    keys = {
+                        { "<leader>cc", "<cmd>RustLsp flyCheck<CR>", desc = "fly-check" },
+                        { "<leader>cr", "<cmd>RustLsp runnables<CR>", desc = "show-runnables" },
+                        { "<leader>cd", "<cmd>RustLsp openDocs<CR>", desc = "open-rust-doc" },
+                        { "<leader>ch", "<cmd>RustLsp hover actions<CR>", desc = "show-hover-actions" },
+                        { "<leader>ld", "<cmd>RustLsp renderDiagnostic current<CR>", desc = "diagnostic-current" },
+                        { "gp", "<cmd>RustLsp parentModule<CR>", desc = "goto-parent-module" },
+                    },
+                },
+            },
+        },
     },
     {
         "vxpm/ferris.nvim",
