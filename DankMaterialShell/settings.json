@@ -30,7 +30,7 @@
   "matugenScheme": "scheme-neutral",
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
-  "popupTransparency": 0.65,
+  "popupTransparency": 1,
   "dockTransparency": 0.5,
   "widgetBackgroundColor": "sth",
   "widgetColorMode": "colorful",
