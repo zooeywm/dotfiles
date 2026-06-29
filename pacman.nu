@@ -108,7 +108,7 @@ const MANIFEST = {
     eza: "高级 ls"
     rsync: "超级复制"
     parallel-disk-usage: "磁盘空间统计"
-    yazi: { packages: ["yazi-git", "jq", "ffmpegthumbnailer", "unarchiver", "ueberzugpp"], desc: "终端文件管理器" }
+    yazi: { packages: ["yazi", "jq", "ffmpegthumbnailer", "unarchiver", "ueberzugpp"], desc: "终端文件管理器" }
     resvg: "for yazi SVG preview"
     gparted: "分区 GUI"
     exfatprogs: "exfat 格式化工具"
