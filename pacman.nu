@@ -254,6 +254,7 @@ const MANIFEST = {
     rclone: "Net Drive Synchronization"
     libfido2: "ssh-agent dependency"
     genact: "Linux 领域大神"
+    ngrok: "内网穿透"
 
     # niri
     niri: "卷轴桌面"
