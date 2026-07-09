@@ -60,7 +60,7 @@ return {
                         cachePriming = {
                             enable = false,
                         },
-                        checkOnSave = false,
+                        checkOnSave = true,
                         lens = {
                             implementations = {
                                 enable = false,
