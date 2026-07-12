@@ -90,6 +90,15 @@ return {
             { "<leader>lo", "<cmd>Lspsaga outgoing_calls<cr>", desc = "Outgoing calls tree" },
         },
         opts = {
+            lightbulb = {
+                enable = false,
+            },
+            symbol_in_winbar = {
+                enable = false,
+            },
+            beacon = {
+                enable = false,
+            },
             outline = {
                 win_width = 50,
                 close_after_jump = true,
