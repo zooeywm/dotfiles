@@ -162,6 +162,7 @@ animations {
 
 debug {
     honor-xdg-activation-with-invalid-serial
+    enable-overlay-planes
 }
 
 // window-rule {

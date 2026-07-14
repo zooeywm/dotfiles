@@ -286,3 +286,15 @@ window-rule {
     match app-id="^Connector$"
     open-floating true
 }
+
+// @id=wr_1783999798430297684 @name=Connector
+window-rule {
+    match app-id="^Connector$"
+    open-on-output "HDMI-A-1"
+}
+
+// @id=wr_1783999897986040988 @name=com.danklinux.dms
+window-rule {
+    match app-id="^com.danklinux.dms$"
+    open-floating true
+}
