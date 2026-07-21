@@ -359,9 +359,21 @@ const MANIFEST = {
 }
 
 def main [
-    --managers (-M): string = '',
+    --managers (-M): string = 'all',
 ] {
-    let managers = $managers | split row ','
+    let managers = if $managers == 'all' {
+        [
+            'paru'
+            'npm'
+            'cargo-binstall'
+            'cargo'
+            'uv'
+            'pnpm'
+            'pi'
+        ]
+    } else {
+        $managers | split row ','
+    }
 
     let manifest = $MANIFEST
         | items {|k, v|
@@ -380,7 +392,7 @@ def main [
 
     let paru = which paru | get -o 0.path
     let cargo = which cargo | get -o 0.path
-    let cargo_bin = which cargo | get -o 0.path
+    let cargo_binstall = which cargo-binstall | get -o 0.path
     let npm = which npm | get -o 0.path
     let uv = which uv | get -o 0.path
     let pnpm = which pnpm | get -o 0.path
@@ -396,6 +408,7 @@ def main [
         pnpm: [],
         pi: [],
     }
+
     for it in $manifest {
         let packages = $it.packages? | default [$it.name]
         let mgr = $it.manager? | default 'pacman'
@@ -404,55 +417,59 @@ def main [
         $tbl = $tbl | upsert $mgr $subtbl
     }
 
-    try {
-        if 'paru' in $managers and $paru != null {
-            paru -Sy --needed ...$tbl.pacman ...$tbl.paru
-        } else {
+
+    # Arch package
+    if ('paru' in $managers) and ($paru != null) {
+        if (($tbl.pacman | length) > 0) or (($tbl.paru | length) > 0) {
+            ^$paru -Sy --needed ...$tbl.pacman ...$tbl.paru
+        }
+    } else {
+        if ($tbl.pacman | length) > 0 {
             sudo pacman -Sy --needed ...$tbl.pacman
         }
     }
 
-    if 'npm' in $managers and $npm != null {
-        try {
-            npm install -g ...$tbl.npm
-        }
+
+    # npm
+    if ('npm' in $managers) and ($npm != null) and (($tbl.npm | length) > 0) {
+        ^$npm install -g ...$tbl.npm
     }
 
-    if 'cargo-binstall' in $managers and $cargo_bin != null {
-        try {
-            cargo binstall ...$tbl.cargo
-        }
+
+    # cargo binstall
+    if ('cargo-binstall' in $managers) and ($cargo_binstall != null) and (($tbl.cargo | length) > 0) {
+        ^$cargo_binstall ...$tbl.cargo
     }
 
-    if 'cargo' in $managers and $cargo != null {
+
+    # cargo source
+    if ('cargo' in $managers) and ($cargo != null) {
         for p in $tbl.'cargo:src' {
-            try {
-                cargo install --git $p
-            }
+            ^$cargo install --git $p
         }
     }
 
-    if 'uv' in $managers and $uv != null {
+
+    # uv
+    if ('uv' in $managers) and ($uv != null) {
         for p in $tbl.uv {
-            try {
-                uv tool install $p
-            }
+            ^$uv tool install $p
         }
     }
 
-    if 'pnpm' in $managers and $pnpm != null {
+
+    # pnpm
+    if ('pnpm' in $managers) and ($pnpm != null) {
         for p in $tbl.pnpm {
-            try {
-                pnpm install -g --ignore-scripts $p
-            }
+            ^$pnpm install -g --ignore-scripts $p
         }
     }
 
-    if 'pi' in $managers and $pi != null {
+
+    # pi extensions
+    if ('pi' in $managers) and ($pi != null) {
         for p in $tbl.pi {
-            try {
-                pi install $p
-            }
+            ^$pi install $p
         }
     }
 }
