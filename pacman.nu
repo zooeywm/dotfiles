@@ -61,7 +61,7 @@ const MANIFEST = {
 
     # desktop
     qt-theme: { packages: ["qt6ct", "qt5ct", "kvantum"] }
-    wezterm: { packages: ["wezterm-git"], desc: "现代终端模拟器" }
+    # wezterm: { packages: ["wezterm-git"], desc: "现代终端模拟器" }
     sddm: "会话管理器"
     dolphin: { packages: ["dolphin", "ffmpegthumbs", "kdegraphics-thumbnailers"], desc: "KDE 文件管理器" }
     spectacle: "KDE 截图"
@@ -187,7 +187,7 @@ const MANIFEST = {
     acpi: "电池信息"
     bandwhich: "监测网络带宽"
     bottom: "高级 top"
-    light: "调节亮度"
+    # light: "调节亮度"
     pamixer: "调节音量"
     procs: "查看进程"
     wiremix: "音量面板"
@@ -254,7 +254,7 @@ const MANIFEST = {
     rclone: "Net Drive Synchronization"
     libfido2: "ssh-agent dependency"
     genact: "Linux 领域大神"
-    ngrok: "内网穿透"
+    ngrok: { manager: "paru", desc: "内网穿透"}
 
     # niri
     niri: "卷轴桌面"
@@ -284,29 +284,107 @@ const MANIFEST = {
     binary: "Binary Calculator"
     # https://github.com/casualsnek/waydroid_script
     # waydroid: { packages: [ "lzip", "waydroid" ]}
+
+    # AI
+    codex: {
+        packages: ["openai-codex"],
+        desc: "Codex",
+    },
+    llmfit: {
+        packages: ["llmfit-bin"],
+        manager: "paru",
+        desc: "根据需求找模型",
+    },
+    ## pi
+    pi: {
+        packages: ["@earendil-works/pi-coding-agent"],
+        manager: "pnpm",
+        desc: "agent核",
+    },
+    pi-web-access: {
+        packages: ["npm:pi-web-access"],
+        manager: "pi",
+        desc: "上网工具",
+    },
+    pi-permission-system: {
+        packages: ["npm:@gotgenes/pi-permission-system"],
+        manager: "pi",
+        desc: "权限管理",
+    },
+    pi-fff: {
+        packages: ["npm:@ff-labs/pi-fff"],
+        manager: "pi",
+        desc: "搜索工具",
+    },
+    pi-skills: {
+        packages: ["npm:@spences10/pi-skills"],
+        manager: "pi",
+        desc: "技能管理",
+    },
+    pi-tool-display: {
+        packages: ["npm:pi-tool-display"],
+        manager: "pi",
+        desc: "美化工具输出",
+    },
+    pi-anycopy: {
+        packages: ["npm:pi-anycopy"],
+        manager: "pi",
+        desc: "复制会话历史",
+    },
+    pi-btw: {
+        packages: ["npm:@narumitw/pi-btw"],
+        manager: "pi",
+        desc: "临时提问",
+    },
+    rpiv-ask-user-question: {
+        packages: ["npm:@juicesharp/rpiv-ask-user-question"],
+        manager: "pi",
+        desc: "结构化问卷",
+    },
+    pi-codex-conversion: {
+        packages: ["npm:@howaboua/pi-codex-conversion"],
+        manager: "pi",
+        desc: "pi的codex实现",
+    },
+    plannotator: {
+        packages: ["npm:@plannotator/pi-extension"],
+        manager: "pi",
+        desc: "review代码",
+    },
+    # pi-cursor-sdk: {
+    #     packages: ["npm:pi-cursor-sdk"],
+    #     manager: "pi",
+    #     desc: "Cursor桥接层",
+    # },
 }
 
-def run-cmd [cmd: list<string>] {
-    print ("" | fill --character "=" --width (term size | get columns))
-    print ($"(ansi blue)>>> (ansi reset)($cmd | str join ' ')" + "\n")
-    ^$cmd.0 ...($cmd | skip 1)
-}
+def main [
+    --managers (-M): string = '',
+] {
+    let managers = $managers | split row ','
 
-def main [] {
     let manifest = $MANIFEST
         | items {|k, v|
             if ($v | describe) == 'string' {
-                { name: $k, desc: $v }
+                {
+                    name: $k,
+                    desc: $v,
+                }
             } else {
-                { name: $k, ...$v }
+                {
+                    name: $k,
+                    ...$v
+                }
             }
         }
 
-    let paru = try { which paru | get 0 | get path }
-    let cargo = try { which cargo | get 0 | get path }
-    let cargo_bin = try { which cargo-binstall | get 0 | get path }
-    let npm = try { which npm | get 0 | get path }
-    let uv = try { which uv | get 0 | get path }
+    let paru = which paru | get -o 0.path
+    let cargo = which cargo | get -o 0.path
+    let cargo_bin = which cargo | get -o 0.path
+    let npm = which npm | get -o 0.path
+    let uv = which uv | get -o 0.path
+    let pnpm = which pnpm | get -o 0.path
+    let pi = which pi | get -o 0.path
 
     mut tbl = {
         pacman: [],
@@ -315,47 +393,65 @@ def main [] {
         'cargo:src': [],
         npm: [],
         uv: [],
+        pnpm: [],
+        pi: [],
     }
-
     for it in $manifest {
         let packages = $it.packages? | default [$it.name]
         let mgr = $it.manager? | default 'pacman'
+
         let subtbl = $tbl | get $mgr | append $packages
         $tbl = $tbl | upsert $mgr $subtbl
     }
 
     try {
-        if $paru != null {
-            run-cmd [paru -Sy --needed ...$tbl.pacman ...$tbl.paru]
+        if 'paru' in $managers and $paru != null {
+            paru -Sy --needed ...$tbl.pacman ...$tbl.paru
         } else {
-            run-cmd [pacman -Sy --needed ...$tbl.pacman]
+            sudo pacman -Sy --needed ...$tbl.pacman
         }
     }
 
-    try {
-        if $npm != null and ($tbl.npm | is-empty) == false {
-            run-cmd [$npm "install" "-g" ...$tbl.npm]
+    if 'npm' in $managers and $npm != null {
+        try {
+            npm install -g ...$tbl.npm
         }
     }
 
-    try {
-        if $cargo_bin != null and ($tbl.cargo | is-empty) == false {
-            run-cmd [$cargo_bin ...$tbl.cargo]
+    if 'cargo-binstall' in $managers and $cargo_bin != null {
+        try {
+            cargo binstall ...$tbl.cargo
         }
     }
 
-    if $cargo != null {
+    if 'cargo' in $managers and $cargo != null {
         for p in $tbl.'cargo:src' {
             try {
-                run-cmd [$cargo "install" "--git" $p]
+                cargo install --git $p
             }
         }
     }
 
-    if $uv != null {
+    if 'uv' in $managers and $uv != null {
         for p in $tbl.uv {
             try {
-                run-cmd [$uv "tool" "install" $p]
+                uv tool install $p
+            }
+        }
+    }
+
+    if 'pnpm' in $managers and $pnpm != null {
+        for p in $tbl.pnpm {
+            try {
+                pnpm install -g --ignore-scripts $p
+            }
+        }
+    }
+
+    if 'pi' in $managers and $pi != null {
+        for p in $tbl.pi {
+            try {
+                pi install $p
             }
         }
     }

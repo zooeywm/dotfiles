@@ -298,3 +298,9 @@ window-rule {
     match app-id="^com.danklinux.dms$"
     open-floating true
 }
+
+// @id=wr_1784538669942781119 @name=Rule
+window-rule {
+    match title="Rabbit"
+    open-floating true
+}
