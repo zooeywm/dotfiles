@@ -290,67 +290,67 @@ const MANIFEST = {
         packages: ["openai-codex"],
         desc: "Codex",
     },
-    llmfit: {
-        packages: ["llmfit-bin"],
-        manager: "paru",
-        desc: "根据需求找模型",
-    },
-    ## pi
-    pi: {
-        packages: ["@earendil-works/pi-coding-agent"],
-        manager: "pnpm",
-        desc: "agent核",
-    },
-    pi-web-access: {
-        packages: ["npm:pi-web-access"],
-        manager: "pi",
-        desc: "上网工具",
-    },
-    pi-permission-system: {
-        packages: ["npm:@gotgenes/pi-permission-system"],
-        manager: "pi",
-        desc: "权限管理",
-    },
-    pi-fff: {
-        packages: ["npm:@ff-labs/pi-fff"],
-        manager: "pi",
-        desc: "搜索工具",
-    },
-    pi-skills: {
-        packages: ["npm:@spences10/pi-skills"],
-        manager: "pi",
-        desc: "技能管理",
-    },
-    pi-tool-display: {
-        packages: ["npm:pi-tool-display"],
-        manager: "pi",
-        desc: "美化工具输出",
-    },
-    pi-anycopy: {
-        packages: ["npm:pi-anycopy"],
-        manager: "pi",
-        desc: "复制会话历史",
-    },
-    pi-btw: {
-        packages: ["npm:@narumitw/pi-btw"],
-        manager: "pi",
-        desc: "临时提问",
-    },
-    rpiv-ask-user-question: {
-        packages: ["npm:@juicesharp/rpiv-ask-user-question"],
-        manager: "pi",
-        desc: "结构化问卷",
-    },
-    pi-codex-conversion: {
-        packages: ["npm:@howaboua/pi-codex-conversion"],
-        manager: "pi",
-        desc: "pi的codex实现",
-    },
-    plannotator: {
-        packages: ["npm:@plannotator/pi-extension"],
-        manager: "pi",
-        desc: "review代码",
-    },
+    # llmfit: {
+    #     packages: ["llmfit-bin"],
+    #     manager: "paru",
+    #     desc: "根据需求找模型",
+    # },
+    # ## pi
+    # pi: {
+    #     packages: ["@earendil-works/pi-coding-agent"],
+    #     manager: "pnpm",
+    #     desc: "agent核",
+    # },
+    # pi-web-access: {
+    #     packages: ["npm:pi-web-access"],
+    #     manager: "pi",
+    #     desc: "上网工具",
+    # },
+    # pi-permission-system: {
+    #     packages: ["npm:@gotgenes/pi-permission-system"],
+    #     manager: "pi",
+    #     desc: "权限管理",
+    # },
+    # pi-fff: {
+    #     packages: ["npm:@ff-labs/pi-fff"],
+    #     manager: "pi",
+    #     desc: "搜索工具",
+    # },
+    # pi-skills: {
+    #     packages: ["npm:@spences10/pi-skills"],
+    #     manager: "pi",
+    #     desc: "技能管理",
+    # },
+    # pi-tool-display: {
+    #     packages: ["npm:pi-tool-display"],
+    #     manager: "pi",
+    #     desc: "美化工具输出",
+    # },
+    # pi-anycopy: {
+    #     packages: ["npm:pi-anycopy"],
+    #     manager: "pi",
+    #     desc: "复制会话历史",
+    # },
+    # pi-btw: {
+    #     packages: ["npm:@narumitw/pi-btw"],
+    #     manager: "pi",
+    #     desc: "临时提问",
+    # },
+    # rpiv-ask-user-question: {
+    #     packages: ["npm:@juicesharp/rpiv-ask-user-question"],
+    #     manager: "pi",
+    #     desc: "结构化问卷",
+    # },
+    # pi-codex-conversion: {
+    #     packages: ["npm:@howaboua/pi-codex-conversion"],
+    #     manager: "pi",
+    #     desc: "pi的codex实现",
+    # },
+    # plannotator: {
+    #     packages: ["npm:@plannotator/pi-extension"],
+    #     manager: "pi",
+    #     desc: "review代码",
+    # },
     # pi-cursor-sdk: {
     #     packages: ["npm:pi-cursor-sdk"],
     #     manager: "pi",

@@ -216,6 +216,6 @@ def is-hard-linked [src: path, dest: path]: nothing -> bool {
     }
 }
 
-def 'path strip' [...prefix: string]: nothing -> path {
+def 'path strip' [...prefix: string] {
     $in | path relative-to ($prefix | path join)
 }
