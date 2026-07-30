@@ -332,3 +332,11 @@ _source-existent ~zdot/p10k.zsh
 if [[ -f "$HOME/.zsh_completion" ]]; then
     source "$HOME/.zsh_completion"
 fi
+
+# pnpm
+export PNPM_HOME="/home/zooeywm/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
