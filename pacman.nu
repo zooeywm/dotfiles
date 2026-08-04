@@ -292,7 +292,6 @@ const MANIFEST = {
         desc: "Codex",
     },
     llmfit: {
-        packages: ["llmfit-bin"],
         manager: "paru",
         desc: "根据需求找模型",
     },

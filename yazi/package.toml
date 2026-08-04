@@ -10,18 +10,18 @@ hash = "7de446280b1ba8c49ffd86dbc24bbbe6"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "bb758e2"
+rev = "b9598e6"
 hash = "7a4b4237223aaa94e589d1c01a23542a"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "bb758e2"
+rev = "b9598e6"
 hash = "5b1c276b75cae91cbbdbe7863f39a540"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "bb758e2"
-hash = "39ce0924dfe3989dc89d7caa1473c77c"
+rev = "b9598e6"
+hash = "a2b67c52fc36d4c7d3ccb8940d9a140"
 
 [[plugin.deps]]
 use = "TD-Sky/sudo"
@@ -30,7 +30,7 @@ hash = "d390cd2d8b996939a695411b446f58d0"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "bb758e2"
+rev = "b9598e6"
 hash = "15e5b67a241172cbb86b8fbf9e63692"
 
 [[plugin.deps]]
@@ -40,23 +40,23 @@ hash = "6ea5f37c7f219671ec504cb8311f889d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "bb758e2"
-hash = "b32d06923a619e353fca3cacf2ebe9cd"
+rev = "b9598e6"
+hash = "b33b8b5e45cb10ffd31d3cccb93c6fd7"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "bb758e2"
-hash = "bc5da419b4337d0122ac531e705fa7b6"
+rev = "b9598e6"
+hash = "b97710d0734c380d0a1f58c13dab0da2"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "bb758e2"
+rev = "b9598e6"
 hash = "7b625412411be411153886894d9acaf"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "bb758e2"
-hash = "e0d59bd47866a6a574c74574097e5070"
+rev = "b9598e6"
+hash = "f23ecc89ce0f9eeefdd4cea14e2a9ba7"
 
 [[plugin.deps]]
 use = "zooeywm/wl-clipboard"
@@ -65,7 +65,7 @@ hash = "51ff959c3c26cb3889589a0f8d394f14"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:types"
-rev = "bb758e2"
+rev = "b9598e6"
 hash = "9105494e98299f392aee95340066da9f"
 
 [[plugin.deps]]
