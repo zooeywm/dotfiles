@@ -304,3 +304,9 @@ window-rule {
     match title="Rabbit"
     open-floating true
 }
+
+// @id=wr_1786700649201439586 @name=rabbit
+window-rule {
+    match app-id="^rabbit$"
+    open-floating true
+}

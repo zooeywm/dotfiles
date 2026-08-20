@@ -17,7 +17,6 @@ $PATH:\
 $HOME/.local/bin:\
 $HOME/.dotnet/tools:\
 /usr/lib/jvm/default/bin:\
-$HOME/repos/others/depot_tools:\
 $HOME/go/bin"
 
 # fcitx5

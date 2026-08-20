@@ -5,23 +5,23 @@ hash = "36bf4d772125a51af4ef440c06820e32"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
-rev = "159eaba"
-hash = "7de446280b1ba8c49ffd86dbc24bbbe6"
+rev = "ea92cf4"
+hash = "9776f378459072b6c2875eae5addc49d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "b9598e6"
+rev = "efa4d79"
 hash = "7a4b4237223aaa94e589d1c01a23542a"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "b9598e6"
-hash = "5b1c276b75cae91cbbdbe7863f39a540"
+rev = "efa4d79"
+hash = "87472b05a8c420100f6a2b9cde1e7746"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "b9598e6"
-hash = "a2b67c52fc36d4c7d3ccb8940d9a140"
+rev = "efa4d79"
+hash = "14558d2829c0aa05e99c57de8f74d199"
 
 [[plugin.deps]]
 use = "TD-Sky/sudo"
@@ -30,8 +30,8 @@ hash = "d390cd2d8b996939a695411b446f58d0"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "b9598e6"
-hash = "15e5b67a241172cbb86b8fbf9e63692"
+rev = "efa4d79"
+hash = "5b2fbef7d1513ce38ff72623a071a5e"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
@@ -40,23 +40,23 @@ hash = "6ea5f37c7f219671ec504cb8311f889d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "b9598e6"
-hash = "b33b8b5e45cb10ffd31d3cccb93c6fd7"
+rev = "efa4d79"
+hash = "94d994483dd84ddb2a47a52b59feaae6"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "b9598e6"
-hash = "b97710d0734c380d0a1f58c13dab0da2"
+rev = "efa4d79"
+hash = "853240b2454c93a93fd03fc9fd7e06e8"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "b9598e6"
-hash = "7b625412411be411153886894d9acaf"
+rev = "efa4d79"
+hash = "f281261ff04ad7ec867c3f802a50835f"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "b9598e6"
-hash = "f23ecc89ce0f9eeefdd4cea14e2a9ba7"
+rev = "efa4d79"
+hash = "45a533508a9840cc5a10cf6129f63e6a"
 
 [[plugin.deps]]
 use = "zooeywm/wl-clipboard"
@@ -65,8 +65,8 @@ hash = "51ff959c3c26cb3889589a0f8d394f14"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:types"
-rev = "b9598e6"
-hash = "9105494e98299f392aee95340066da9f"
+rev = "efa4d79"
+hash = "ff056b5acd05d915dc3a3936cb0cfd3e"
 
 [[plugin.deps]]
 use = "lpnh/fr"

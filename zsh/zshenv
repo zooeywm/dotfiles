@@ -62,8 +62,8 @@ path=(
     ~/.local/bin
     $path
     ~/.dotnet/tools
-    ~/repos/others/depot_tools
     ~/go/bin
+    ~/.local/share/depot_tools
 )
 
 # bun completions
