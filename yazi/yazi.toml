@@ -14,7 +14,6 @@ show_hidden    = true
 show_symlink   = true
 scrolloff      = 5
 mouse_events   = ["click", "scroll"]
-title_format   = "Yazi: {cwd}"
 
 [preview]
 wrap            = "no"
@@ -61,12 +60,12 @@ binutil = [
   { run = "aarch64-linux-gnu-strip --only-keep-debug %s1 -o %s1.debug && aarch64-linux-gnu-strip %s1", desc = "aarch64-strip" },
 ]
 compress = [
-  { run = "cd %s1 && zip -r %s1.zip $(realpath --relative-to=$PWD %s1)", desc = "Zip" },
-  { run = "tar -czvf %s1.tar.gz $(realpath --relative-to=$PWD %s1)", desc = "Tar.gz" },
-  { run = "tar -cvf %s1.tar $(realpath --relative-to=$PWD %s1)", desc = "Tar" },
-  { run = "dpkg -b %s1 \"${1%/}.deb\"", desc = "Deb" },
+  { run = "target=%s1; cd -- \"$target\" && zip -r \"$target.zip\" .", desc = "Zip" },
+  { run = "target=%s1; tar -czvf \"$target.tar.gz\" -C \"$target\" .", desc = "Tar.gz" },
+  { run = "target=%s1; tar -cvf \"$target.tar\" -C \"$target\" .", desc = "Tar" },
+  { run = "target=%s1; dpkg -b \"$target\" \"${target%/}.deb\"", desc = "Deb" },
 ]
-deb = [{ run = "dpkg-deb -x %s1 ${1%.deb} && dpkg-deb -e %s1 ${1%.deb}/DEBIAN", desc = "Extract deb here" }]
+deb = [{ run = "target=%s1; dest=${target%.deb}; dpkg-deb -x \"$target\" \"$dest\" && dpkg-deb -e \"$target\" \"$dest/DEBIAN\"", desc = "Extract deb here" }]
 terminal-here = [
   { run = "kitty @ launch --type=tab --cwd %d1", desc = "Kitty Tab Here", for = "linux" },
   { run = "kitty @ launch --type=window --cwd %d1", desc = "Kitty Window Here", for = "linux" },
@@ -74,31 +73,34 @@ terminal-here = [
 
 nv12 = [
   { run = '''
-size=$(basename "$1" | grep -oE '[0-9]+x[0-9]+' | head -n1)
+target=%s1
+size=$(basename -- "$target" | grep -oE '[0-9]+x[0-9]+' | head -n1)
 if [ -z "$size" ]; then
   size="1920x1080"
 fi
-ffplay -f rawvideo -pixel_format nv12 -video_size "$size" "$1"
+ffplay -f rawvideo -pixel_format nv12 -video_size "$size" "$target"
 ''', desc = "Play NV12" },
 ]
 
 rgba = [
   { run = '''
-size=$(basename "$1" | grep -oE '[0-9]+x[0-9]+' | head -n1)
+target=%s1
+size=$(basename -- "$target" | grep -oE '[0-9]+x[0-9]+' | head -n1)
 if [ -z "$size" ]; then
   size="1920x1080"
 fi
-ffplay -f rawvideo -pixel_format rgba -vf vflip -video_size "$size" "$1"
+ffplay -f rawvideo -pixel_format rgba -vf vflip -video_size "$size" "$target"
 ''', desc = "Play RGBA" },
 ]
 
 rgb = [
   { run = '''
-size=$(basename "$1" | grep -oE '[0-9]+x[0-9]+' | head -n1)
+target=%s1
+size=$(basename -- "$target" | grep -oE '[0-9]+x[0-9]+' | head -n1)
 if [ -z "$size" ]; then
   size="1920x1080"
 fi
-ffplay -f rawvideo -pixel_format rgb24 -vf vflip -video_size "$size" "$1"
+ffplay -f rawvideo -pixel_format rgb24 -vf vflip -video_size "$size" "$target"
 ''', desc = "Play RGB24" },
 ]
 
@@ -112,7 +114,7 @@ rules = [
   # Audio
   { mime = "audio/*", use = ["open", "media", "reveal", "terminal-here"] },
   # Video Image
-  { mime = "{video,image}/*", use = ["wallpaper", "open", "media", "reveal", "terminal-here"] },
+  { mime = "{video,image}/*", use = ["open", "media", "reveal", "terminal-here"] },
   # Archive
   { mime = "application/{gzip,zip,tar,bzip*,7z*,xz,rar,zstd,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract", "open", "reveal", "terminal-here"] },
   # Binary
@@ -128,8 +130,11 @@ rules = [
 ]
 
 [tasks]
-micro_workers    = 10
-macro_workers    = 10
+file_workers     = 3
+plugin_workers   = 5
+fetch_workers    = 5
+preload_workers  = 2
+process_workers  = 5
 bizarre_retry    = 3
 image_alloc      = 536870912      # 512MB
 image_bound      = [10000, 10000]
@@ -138,11 +143,11 @@ suppress_preload = false
 [plugin]
 fetchers = [
   # Mimetype
-  { id = "mime", url = "*/", run = "mime.dir", prio = "high", group = "mime" },
-  { id = "mime", url = "local://*", run = "mime.local", prio = "high", group = "mime" },
-  { id = "mime", url = "remote://*", run = "mime.remote", prio = "high", group = "mime" },
-  # { id = "git", url = "local://*", run = "git", prio = "normal" },
-  # { id = "git", url = "*/", run = "git", prio = "normal" },
+  { url = "*/", run = "mime.dir", prio = "high", group = "mime" },
+  { url = "local://*", run = "mime.local", prio = "high", group = "mime" },
+  { url = "remote://*", run = "mime.remote", prio = "high", group = "mime" },
+  # { url = "local://*", run = "git", prio = "normal", group = "git" },
+  # { url = "*/", run = "git", prio = "normal", group = "git" },
 ]
 
 spotters = [

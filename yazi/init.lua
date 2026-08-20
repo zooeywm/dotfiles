@@ -7,20 +7,19 @@ require("full-border"):setup({
     type = ui.Border.ROUNDED,
 })
 
+ps.sub("ind-app-title", function()
+    local cwd = tostring(cx.active.current.cwd)
+    local home = os.getenv("HOME")
+    if home and cwd:sub(1, #home) == home and (cwd == home or cwd:sub(#home + 1, #home + 1) == "/") then
+        cwd = "~" .. cwd:sub(#home + 1)
+    end
+    return { value = "Yazi: " .. cwd }
+end)
+
 -- require("githead"):setup()
 
 Status:children_add(function(self)
     local h = self._current.hovered
-    if h and h.link_to then
-        return " -> " .. tostring(h.link_to)
-    else
-        return ""
-    end
-end, 3300, Status.LEFT)
-
-Status:children_add(function(self)
-    local h = self._current.hovered
-
     if h and h.link_to then
         return " -> " .. tostring(h.link_to)
     else

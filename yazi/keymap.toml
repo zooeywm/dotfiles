@@ -46,41 +46,37 @@ keymap = [
   { on = "O", run = "shell 'kitty @ launch --type=window --cwd %d1'", desc = "Kitty Window Here" },
   { on = "o", run = "open --interactive", desc = "Open  selected files interactively" },
   { on = "e", run = "shell 'xdg-open .'", desc = "Look up in file manager" },
-  { on = "<S-e>", run = "shell 'dragon-drop -x -i -T %1' ", desc = "Drag and drop" },
+  { on = "<S-e>", run = "shell 'dragon-drop -x -i -T %s'", desc = "Drag and drop" },
   { on = "<Enter>", run = "open --hovered", desc = "Always open the hovered file regardless of the selection state." },
   { on = "<S-Enter>", run = "open --interactive", desc = "Open selected files interactively" },
   # { on = ["y", "y"], run = "yank", desc = "Yank selected files (copy)" },
   { on = ["y", "y"], run = [
-    'shell -- for path in %s; do echo "file://$path"; done | wl-copy -t text/uri-list',
+    "shell -- python3 -c 'import pathlib, sys; sys.stdout.write(\"\".join(pathlib.Path(p).as_uri() + \"\\r\\n\" for p in sys.argv[1:]))' %s | wl-copy -t text/uri-list",
     "yank",
   ], desc = "Yank selected files (copy)" },
-  { on = ["y", "d"], run = "shell 'dragon-drop -x -i -T %1' ", desc = "Drag and drop" },
   { on = "Y", run = "unyank", desc = "Cancel yank status of files" },
   { on = ["y", "p"], run = ["escape --visual", "copy path"], desc = "Copy absolute path" },
   { on = ["y", "d"], run = ["escape --visual", "copy dirname"], desc = "Copy path of parent directory" },
   { on = ["y", "f"], run = ["escape --visual", "copy filename"], desc = "Copy name of file" },
   { on = ["y", "n"], run = ["escape --visual", "copy name_without_ext"], desc = "Copy name of file without extension" },
-  { on = ["y", "c"], run = ["escape --visual", """
-        shell '
-        if [[ -f $1 ]]; then
-            xs < $1
-        fi' """], desc = "Copy file content" },
+  { on = ["y", "c"], run = ["escape --visual", "shell 'if [ -f %s1 ]; then xs < %s1; fi'"], desc = "Copy file content" },
   { on = ["y", "g"], run = ["escape --visual", """
         shell '
-        target="${1:-.}"
-        if [[ -f $target ]]; then
-            cd "$(dirname $target)"
-            target="$(basename $target)"
-        elif [ -d $target ]; then
-            cd $target
-        fi
-        git_root=$(git rev-parse --show-toplevel 2>/dev/null)
-        if [ $? -ne 0 ] || [ -z "$git_root" ]; then
-            notify-send "Error：The current directory is not in the Git repository"
+        target=%s1
+        if [ -f "$target" ]; then
+            workdir=$(dirname -- "$target")
+        elif [ -d "$target" ]; then
+            workdir=$target
+        else
+            notify-send "Error: The selected path does not exist"
             exit 1
         fi
-        relative_path=$(realpath --relative-to=$git_root $target)
-        echo $relative_path | xs ' """], desc = "Copy file git path" },
+        if ! git_root=$(git -C "$workdir" rev-parse --show-toplevel 2>/dev/null); then
+            notify-send "Error: The selected path is not in a Git repository"
+            exit 1
+        fi
+        relative_path=$(realpath --relative-to="$git_root" -- "$target")
+        printf "%%s\n" "$relative_path" | xs ' """], desc = "Copy file git path" },
   { on = "x", run = "yank --cut", desc = "Cut selected files" },
   { on = "X", run = "unyank", desc = "Cancel the yank status of files" },
   { on = ["p", "p"], run = "paste", desc = "Paste the files" },
@@ -177,7 +173,10 @@ keymap = [
 
   { on = "<C-d>", run = "plugin diff", desc = "Diff the selected with the hovered file" },
   { on = ["c", "s"], run = "plugin what-size", desc = "Calc size of selection or cwd" },
-  { on = ["y", "s"], run = ['shell -- for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list', "yank"], desc = "copy to clipboard" },
+  { on = ["y", "s"], run = [
+    "shell -- python3 -c 'import pathlib, sys; sys.stdout.write(\"\".join(pathlib.Path(p).as_uri() + \"\\r\\n\" for p in sys.argv[1:]))' %s | wl-copy -t text/uri-list",
+    "yank",
+  ], desc = "Copy to system clipboard" },
   { on = "M", run = "plugin toggle-pane max-preview", desc = "Maximize or restore preview" },
   { on = "H", run = "plugin toggle-pane min-preview", desc = "Hide or show preview" },
   { on = ["g", "l"], run = "plugin lazygit", desc = "Run lazygit" },
@@ -351,8 +350,6 @@ keymap = [
   { on = "<A-j>", run = "arrow next", desc = "Move cursor down" },
   { on = "<Up>", run = "arrow prev", desc = "Move cursor up" },
   { on = "<Down>", run = "arrow next", desc = "Move cursor down" },
-  { on = "<C-p>", run = "arrow prev", desc = "Move cursor up" },
-  { on = "<C-n>", run = "arrow next", desc = "Move cursor down" },
 
   { on = "~", run = "help", desc = "Open help" },
   { on = "<F1>", run = "help", desc = "Open help" },

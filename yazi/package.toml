@@ -59,11 +59,6 @@ rev = "efa4d79"
 hash = "45a533508a9840cc5a10cf6129f63e6a"
 
 [[plugin.deps]]
-use = "zooeywm/wl-clipboard"
-rev = "318938d"
-hash = "51ff959c3c26cb3889589a0f8d394f14"
-
-[[plugin.deps]]
 use = "yazi-rs/plugins:types"
 rev = "efa4d79"
 hash = "ff056b5acd05d915dc3a3936cb0cfd3e"
