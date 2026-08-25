@@ -304,3 +304,9 @@ window-rule {
     match app-id="^Connector$"
     open-floating true
 }
+
+// @id=wr_1787219068780699770 @name=mpv
+window-rule {
+    match app-id="^mpv$"
+    open-floating true
+}
