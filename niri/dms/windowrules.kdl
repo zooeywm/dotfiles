@@ -310,3 +310,21 @@ window-rule {
     match app-id="^mpv$"
     open-floating true
 }
+
+// @id=wr_1787891010399746998 @name=org.kde.gwenview
+window-rule {
+    match app-id="^org.kde.gwenview$"
+    open-floating true
+}
+
+// @id=wr_1788345888519928920 @name=wechat
+window-rule {
+    match app-id="^wechat$"
+    open-floating true
+}
+
+// @id=dms-floating-windows @name=DMS Floating Windows
+window-rule {
+    match app-id="^com.danklinux.dms$"
+    open-floating true
+}
