@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# 锁定当前 DMS/niri 会话
+dms ipc call lock lock
+
+# 给锁屏一点时间建立
+sleep 0.3
+
+# 切换到 SDDM greeter，不结束当前 session
+busctl call \
+  org.freedesktop.DisplayManager \
+  /org/freedesktop/DisplayManager/Seat0 \
+  org.freedesktop.DisplayManager.Seat \
+  SwitchToGreeter

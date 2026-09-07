@@ -183,3 +183,19 @@ include "dms/outputs.kdl"
 
 include "dms/cursor.kdl"
 include "dms/input.kdl"
+
+// Open windows as floating by default.
+window-rule {
+    open-floating true
+}
+
+// Keep browsers and terminals in the tiling layout.
+window-rule {
+    match app-id=r#"^(chromium|google-chrome|google-chrome-stable)$"#
+    open-floating false
+}
+
+window-rule {
+    match app-id=r#"^(kitty|Alacritty)$"#
+    open-floating false
+}
