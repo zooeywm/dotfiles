@@ -178,7 +178,6 @@ debug {
 include "dms/layout.kdl"
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
-include "dms/windowrules.kdl"
 include "dms/outputs.kdl"
 
 include "dms/cursor.kdl"
@@ -199,3 +198,6 @@ window-rule {
     match app-id=r#"^(kitty|Alacritty)$"#
     open-floating false
 }
+
+// Load DMS rules after the global defaults so specific DMS rules win.
+include "dms/windowrules.kdl"
