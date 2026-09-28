@@ -117,7 +117,6 @@ alias -g :n='>/dev/null'
 alias -g :nn='&>/dev/null'
 alias -g :bg='&>/dev/null &!'
 alias -g :h='--help 2>&1 | bat -pl help'
-alias cls='printf "\033c"'
 # alias g='gitui -d "$(git rev-parse --show-toplevel)"'
 alias g='lazygit'
 # alias j='lazyjj'
@@ -227,14 +226,14 @@ zle -N rationalize-dot
 bindkey '.' rationalize-dot
 bindkey '\E.' self-insert-unmeta  # [Alt+.] insert dot literally
 
-# [Ctrl+L] Clear screen but keep scrollback
-# Ref: https://superuser.com/questions/1389834
+# [Ctrl+L] Clear screen *and* scrollback, redrawing the prompt at the top
+# ED2 erases the visible screen, ED3 the scrollback; terminals that don't
+# implement ED3 ignore it and are still left with a cleared screen.
+# Ref: kitty.conf(5), clear_terminal -> clear-screen-and-scrollback()
 clear-screen() {
-    local prompt_height=$(print -n ${(%%)PS1} | wc -l)
-    local lines=$((LINES - prompt_height))
-    printf "$terminfo[cud1]%.0s" {1..$lines}  # cursor down
-    printf "$terminfo[cuu1]%.0s" {1..$lines}  # cursor up
-    zle .reset-prompt
+    builtin print -rn -- $'\e[H\e[2J\e[3J' >"$TTY"
+    builtin zle .reset-prompt
+    builtin zle -R
 }
 zle -N clear-screen
 bindkey '^L' clear-screen
