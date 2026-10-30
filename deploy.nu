@@ -84,7 +84,7 @@ def 'main root' [--dry-run (-n)] {
 
     if $dry_run {
         let changed = (
-            ^rsync -rlptD -n --itemize-changes root/ /
+            ^rsync -rlptD -n --modify-window=2 --itemize-changes root/ /
             | lines
             | where {|l| ($l | str starts-with '>') or ($l | str starts-with 'c') }
         )
@@ -96,7 +96,7 @@ def 'main root' [--dry-run (-n)] {
         return
     }
 
-    let r = (^rsync -rlptD --itemize-changes root/ / | complete)
+    let r = (^rsync -rlptD --modify-window=2 --itemize-changes root/ / | complete)
     if $r.exit_code != 0 {
         log error $"rsync failed: ($r.stderr | str trim)"
         exit 1
