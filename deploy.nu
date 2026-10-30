@@ -67,6 +67,10 @@ def main [--dry-run (-n), --prune] {
 
 # 把 root/ 镜像到 /（root/etc、root/boot、root/usr ...）。
 def 'main root' [--dry-run (-n)] {
+    if (not $dry_run) and ((^id -u | str trim) != '0') {
+        log error "root 部署会写入 /etc、/boot 等目录，请用 sudo 运行：sudo ./deploy.nu root"
+        exit 1
+    }
     if (which rsync | is-empty) {
         if $dry_run {
             log info "rsync not found; dry-run unavailable, would run: cp -r root/* /"
@@ -261,7 +265,11 @@ def link [
             return { linked: 0, failed: [] }
         }
         if $dry_run {
-            log info $"[dry-run] hard link ($src) => ($dest)"
+            if (dest-taken $dest) {
+                log info $"[dry-run] replace existing ($dest) with hard link to ($src)"
+            } else {
+                log info $"[dry-run] hard link ($src) => ($dest)"
+            }
             return { linked: 1, failed: [] }
         }
         let r = (^ln --force $srcp $dest | complete)
@@ -276,6 +284,10 @@ def link [
             return { linked: 0, failed: [] }
         }
         if $dry_run {
+            if (dest-taken $dest) {
+                log info $"[dry-run] conflict: ($dest) already exists"
+                return { linked: 0, failed: [$"($src) => ($dest): destination already exists"] }
+            }
             log info $"[dry-run] link ($src) => ($dest)"
             return { linked: 1, failed: [] }
         }
@@ -307,6 +319,7 @@ def prune-broken [--dry-run] {
     ]
 
     mut result = { pruned: 0, failed: [] }
+    mut removed = []
     let scans = ($dirs | each {|d| { dir: $d, depth: 8 } })
     let all_scans = ($scans | append { dir: ($env.HOME | path join ''), depth: 1 })
     for scan in $all_scans {
@@ -322,18 +335,51 @@ def prune-broken [--dry-run] {
             if $dry_run {
                 log info $"[dry-run] prune ($l) -> ($t)"
                 $result.pruned += 1
+                $removed = ($removed | append { path: $l, root: $d })
             } else {
                 let r = (^rm --force $l | complete)
                 if $r.exit_code == 0 {
                     log info $"prune ($l)"
                     $result.pruned += 1
+                    $removed = ($removed | append { path: $l, root: $d })
                 } else {
                     $result.failed = ($result.failed | append $"prune ($l): ($r.stderr | str trim)")
                 }
             }
         }
     }
+
+    # 删掉 prune 之后变空的目录：只沿被删链接的父目录向上，不碰扫描根目录本身
+    mut pending_dirs = []
+    for item in $removed {
+        let root = ($item.root | path expand)
+        mut d = ($item.path | path dirname)
+        while (($d | path expand) != $root) and ($d | path exists) {
+            let entries = (^find $d -mindepth 1 -maxdepth 1 err> /dev/null | lines)
+            let gone_links = ($removed | where {|r| (($r.path | path dirname | path expand) == ($d | path expand)) } | length)
+            let gone_dirs = ($pending_dirs | where {|p| (($p | path dirname | path expand) == ($d | path expand)) } | length)
+            if (($entries | length) - $gone_links - $gone_dirs) > 0 {
+                break
+            }
+            if $dry_run {
+                log info $"[dry-run] rmdir empty ($d)"
+                $pending_dirs = ($pending_dirs | append $d)
+            } else {
+                let r = (^rmdir $d | complete)
+                if $r.exit_code != 0 {
+                    break
+                }
+                log info $"rmdir empty ($d)"
+            }
+            $d = ($d | path dirname)
+        }
+    }
+
     $result
+}
+
+def dest-taken [dest: path]: nothing -> bool {
+    ((^test -e $dest | complete).exit_code == 0) or ((^test -L $dest | complete).exit_code == 0)
 }
 
 def is-linked [src: path, dest: path]: nothing -> bool {
