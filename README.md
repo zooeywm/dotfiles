@@ -71,13 +71,26 @@ Install with command: `./pacman.nu`
 Host-level configuration is reproducible:
 
 - `root/` mirrors `/` and is deployed with `sudo ./deploy.nu root`. It holds
-  journald/coredump size caps, the udev battery rule
-  (`99-battery.rules`) and `/usr/local/bin/on_battery_change.sh`.
+  journald/coredump size caps, the udev battery rule (`99-battery.rules`),
+  `/usr/local/bin/on_battery_change.sh`, `nftables.conf` and
+  `NetworkManager/conf.d/wifi_backend.conf`.
 - `system/apply.sh` applies the non-file state (disabled services, timers,
-  power profile, ufw rules): `sudo ~/.dotfiles/system/apply.sh`.
+  power profile, nftables): `sudo ~/.dotfiles/system/apply.sh`.
 - `systemd/user/ssh-agent.service` provides a single long-lived SSH agent
   (`SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket`), deployed via
   `./deploy.nu` — never start an agent from `zshenv`.
+
+Stack choices (Arch Wiki, current tools over legacy ones):
+
+- Firewall: native `nftables` (`inet archwm`, deny inbound except trusted
+  LANs/tailnet), not `ufw`/iptables-nft.
+- Wi-Fi: `iwd` as the NetworkManager backend (`wifi.backend=iwd`), not
+  `wpa_supplicant` (still installed as a hard dependency of
+  `networkmanager`, but no longer used).
+- Boot loader: `systemd-boot` only; leftover GRUB files and EFI entry removed.
+- Scheduling: systemd timers only; `cronie` removed.
+- Power: `power-profiles-daemon` only; `tuned`, `cpupower`, `cpupower-gui`
+  removed.
 
 Machine-specific manual steps (host dependent, not committed):
 
@@ -87,5 +100,6 @@ Machine-specific manual steps (host dependent, not committed):
   CPPC tables), so it stays on `acpi-cpufreq` + `schedutil`.
 - Persistent zswap pool is configured in `root/boot/loader/entries/arch.conf`
   (`zswap.max_pool_percent=35`), deployed with `sudo ./deploy.nu root`.
-- Firewall assumes trusted LANs `10.100.0.0/22`, `192.168.0.0/16`,
-  `172.16.0.0/12` and the tailnet; ToDesk may fall back to relay.
+- Firewall: `nftables.conf` trusts LANs `10.100.0.0/22`, `192.168.0.0/16`,
+  `172.16.0.0/12`, `tailscale0`, `virbr0`, `Meta` (Clash TUN); ToDesk may fall
+  back to relay.
