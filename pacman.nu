@@ -401,13 +401,13 @@ def audit [] {
 def export-manifest [] {
     let q = {|n| if ($n =~ '^[A-Za-z0-9_-]+$') { $n } else { '"' + $n + '"' } }
     mut out = ['# pacman.nu export — 当前系统状态（需人工按 system/drivers/others 分类）', '', '[pacman]']
-    for n in (installed-pacman | sort) { $out = ($out | append (do $q $n) + ' = {}') }
+    for n in (installed-pacman | sort) { $out = ($out | append ((do $q $n) + ' = {}')) }
     $out = ($out | append ['', '[cargo]'])
-    for n in (installed-cargo | sort) { $out = ($out | append (do $q $n) + ' = {}') }
+    for n in (installed-cargo | sort) { $out = ($out | append ((do $q $n) + ' = {}')) }
     $out = ($out | append ['', '[uv]'])
-    for n in (installed-uv | sort) { $out = ($out | append (do $q $n) + ' = {}') }
+    for n in (installed-uv | sort) { $out = ($out | append ((do $q $n) + ' = {}')) }
     $out = ($out | append ['', '[bun]'])
-    for n in (installed-bun | sort) { $out = ($out | append (do $q $n) + ' = {}') }
+    for n in (installed-bun | sort) { $out = ($out | append ((do $q $n) + ' = {}')) }
     let tc = (installed-rustup | sort | each {|t| '"' + $t + '"' } | str join ', ')
     $out = ($out | append ['', '[rustup]', ('toolchains = [' + $tc + ']')])
     $out | each {|l| print $l } | ignore
