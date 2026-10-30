@@ -203,7 +203,7 @@ def install-cargo [manifest, names] {
     for name in $names {
         let meta = ($manifest.cargo | get $name)
         let r = if ('git' in ($meta | columns)) {
-            print $"(ansi green)安装 cargo(git): ($name)(ansi reset)"
+            print $"(ansi green)安装 cargo-git: ($name)(ansi reset)"
             (^cargo install --git ($meta | get git) --force | complete)
         } else {
             print $"(ansi green)安装 cargo: ($name)(ansi reset)"
