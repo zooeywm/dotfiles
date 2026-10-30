@@ -54,7 +54,6 @@ choose                     = {}
 chromium                   = {}
 clang                      = {}
 clash-verge-rev-bin        = { aur = true }
-claude-code                = { aur = true }
 clazy                      = {}
 cliphist                   = {}
 cmake-language-server      = {}
@@ -203,7 +202,6 @@ obs-studio                     = {}
 openai-codex                   = {}
 "openssl-1.1"                  = {}
 overskride                     = {}
-oxfmt                          = { aur = true }
 pacfiles                       = {}
 pamixer                        = {}
 pandoc-bin                     = {}
@@ -227,7 +225,6 @@ polkit-kde-agent               = {}
 power-profiles-daemon          = {}
 presenterm                     = {}
 prettier                       = {}
-prettier-plugin-xml            = { aur = true }
 prismlauncher                  = {}
 procs                          = {}
 proot-git                      = {}
@@ -333,8 +330,6 @@ virt-manager                   = {}
 virt-viewer                    = {}
 viu                            = {}
 vkmark                         = {}
-vscode-langservers-extracted   = { aur = true }
-vtsls                          = { aur = true }
 vulkan-headers                 = {}
 wakeonlan                      = {}
 wasm-pack                      = {}
@@ -433,7 +428,12 @@ trafilatura = {}
 uiautodev   = {}
 
 [bun]
-"@astrojs/language-server" = {}
-"@deepseek-ai/dsh"         = {}
+"@anthropic-ai/claude-code"  = {}
+"@prettier/plugin-xml"       = {}
+"@vtsls/language-server"     = {}
+oxfmt                        = {}
+vscode-langservers-extracted = {}
+"@astrojs/language-server"   = {}
+"@deepseek-ai/dsh"           = {}
 [rustup]
 toolchains = ["stable", "nightly", "1.75.0", "1.85", "1.88", "1.88.0", "1.95", "1.97.1", "1.99.1"]
