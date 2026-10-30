@@ -107,6 +107,9 @@ Stack choices (Arch Wiki, current tools over legacy ones):
 - Desktop: niri + DMS only; KDE Plasma (`plasma-meta` and its apps) removed.
   Kept on purpose: `sddm` (display manager), `polkit-kde-agent` (only polkit
   agent) and `xwaylandvideobridge` (XWayland screen capture, needs kpipewire).
+  The remaining KDE packages are only framework libraries these need
+  (`breeze-icons`, `kirigami`, `kirigami-addons`, `kwallet`, `kwindowsystem`,
+  `kpipewire`, `qqc2-desktop-style`).
 
 Machine-specific manual steps (host dependent, not committed):
 
