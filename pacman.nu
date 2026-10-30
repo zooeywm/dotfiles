@@ -18,7 +18,7 @@
 #   ./pacman.nu list            打印合并后的清单
 #
 # flags: --dry-run(-n) 只打印计划 / --yes(-y) 不询问 / --no-prune 不卸载
-#        校验：非 pacman 声明若在仓库/AUR 已有（含同义包名）会直接报错
+#        校验：仅官方仓库/archlinuxcn 已有才报错；AUR 独有的工具仍用 cargo/uv/bun
 
 const MANAGERS = ['pacman' 'cargo' 'uv' 'bun' 'rustup']
 const TABLE_MANAGERS = ['pacman' 'cargo' 'uv' 'bun']
@@ -157,23 +157,7 @@ def repo-has [name] {
     (^pacman -Si $name | complete).exit_code == 0
 }
 
-def aur-has [name] {
-    try {
-        let r = (http get $"https://aur.archlinux.org/rpc/v5/info?arg[]=($name)")
-        (($r | get results? | default []) | length) > 0
-    } catch {
-        false
-    }
-}
 
-def aur-search [term] {
-    try {
-        let r = (http get $"https://aur.archlinux.org/rpc/v5/search/($term)?by=name")
-        ($r | get results? | default [] | each {|x| $x.Name })
-    } catch {
-        []
-    }
-}
 
 def normalize-pkg [name] {
     let parts = ($name | split row '/')
@@ -203,15 +187,6 @@ def validate [manifest] {
         let repo_hit = ($cands | where {|c| repo-has $c } | first)
         if not ($repo_hit | is-empty) {
             $"($e.mgr):($e.name) ≈ pacman 仓库包 ($repo_hit) → 按 pacman 优先应移入 [pacman]"
-        } else if ($cands | length) > 0 {
-            let term = ($cands | last)
-            let aur = (aur-search $term)
-            let hit = ($cands | where {|c| $c in $aur } | first)
-            if not ($hit | is-empty) {
-                $"($e.mgr):($e.name) ≈ AUR 包 ($hit) → 应移入 [pacman] 并加 aur = true"
-            } else {
-                null
-            }
         } else {
             null
         }
@@ -244,12 +219,19 @@ def install-cargo [manifest, names] {
     mut failed = []
     for name in $names {
         let meta = ($manifest.cargo | get $name)
-        let r = if ('git' in ($meta | columns)) {
+        let git = ($meta | get --optional git)
+        let pkg = ($meta | get --optional package)
+        let locked = (($meta | get --optional locked) | default false)
+        # 可选字段：package = "crate 名"（git 仓库含多个二进制时指定）、
+        #           locked = true（用 crate 自带 Cargo.lock，避免新依赖编译失败）
+        let r = if not ($git | is-empty) {
             print $"(ansi green)安装 cargo-git: ($name)(ansi reset)"
-            (^cargo install --git ($meta | get git) --force | complete)
+            let extra = (if ($pkg | is-empty) { [] } else { [$pkg] })
+            (^cargo install --git $git --force ...$extra | complete)
         } else {
             print $"(ansi green)安装 cargo: ($name)(ansi reset)"
-            (^cargo install --force $name | complete)
+            let extra = (if $locked { ['--locked'] } else { [] })
+            (^cargo install --force $name ...$extra | complete)
         }
         if $r.exit_code != 0 { fail-msg $"cargo:($name)" $r; $failed = ($failed | append $"cargo:($name)") }
     }

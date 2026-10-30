@@ -4,7 +4,6 @@
 7zip                       = {}
 aarch64-linux-gnu-binutils = {}
 acpi                       = {}
-asciinema-agg              = { aur = true }
 alacritty                  = {}
 android-tools              = {}
 anydesk-bin                = { aur = true }
@@ -27,7 +26,6 @@ brightnessctl              = {}
 bun                        = {}
 cargo-audit                = {}
 cargo-auditable            = {}
-cargo-autoinherit          = { aur = true }
 cargo-binstall             = {}
 cargo-binutils             = {}
 cargo-bloat                = {}
@@ -45,12 +43,10 @@ cargo-msrv                 = {}
 cargo-nextest              = {}
 cargo-outdated             = {}
 cargo-release              = {}
-cargo-shear                = { aur = true }
 cargo-supply-chain         = {}
 cargo-update               = {}
 cargo-watch                = {}
 cargo-wizard               = {}
-cargo-xwin                 = { aur = true }
 cargo-zigbuild             = {}
 ccze                       = { aur = true }
 chafa                      = {}
@@ -400,7 +396,6 @@ xorg-xwininfo                  = {}
 xorg-xwud                      = {}
 xwayland-satellite             = {}
 xwaylandvideobridge            = { aur = true }
-xwin                           = { aur = true }
 yaml-language-server           = {}
 yazi-git                       = {}
 ydotool                        = {}
@@ -418,24 +413,27 @@ zsh-autosuggestions            = {}
 zsh-completions                = {}
 zsh-syntax-highlighting        = {}
 
-tailwindcss-language-server      = {}
-vue-language-server              = {}
-nufmt-git                        = { aur = true }
-slint-viewer-bin                 = { aur = true }
-waybar-module-pacman-updates-git = { aur = true }
-wgsl-analyzer-bin                = { aur = true }
-
-astrojs-language-server = { aur = true }
-
+tailwindcss-language-server = {}
+vue-language-server         = {}
 [cargo]
-cargo-get                  = {}
-cargo-workspace-unused-pub = { git = "https://github.com/cpg314/cargo-workspace-unused-pub.git" }
+agg                          = { git = "https://github.com/asciinema/agg" }
+cargo-autoinherit            = {}
+cargo-get                    = {}
+cargo-shear                  = { locked = true }
+cargo-workspace-unused-pub   = { git = "https://github.com/cpg314/cargo-workspace-unused-pub.git" }
+cargo-xwin                   = {}
+nufmt                        = { git = "https://github.com/nushell/nufmt" }
+slint-viewer                 = {}
+waybar-module-pacman-updates = {}
+wgsl-analyzer                = { git = "https://github.com/wgsl-analyzer/wgsl-analyzer", package = "wgsl-analyzer" }
+xwin                         = {}
 [uv]
 pdf2zh      = {}
 trafilatura = {}
 uiautodev   = {}
 
 [bun]
-"@deepseek-ai/dsh" = {}
+"@astrojs/language-server" = {}
+"@deepseek-ai/dsh"         = {}
 [rustup]
 toolchains = ["stable", "nightly", "1.75.0", "1.85", "1.88", "1.88.0", "1.95", "1.97.1", "1.99.1"]
