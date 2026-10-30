@@ -1,53 +1,111 @@
 #!/usr/bin/env -S nu --stdin
 
 use std/log
-use std/iter
 
-def main [] {
-    []
-    | pf shell ~/.config/shell
-    | pf clangd ~/.config/clangd
-    | pf navi ~/.local/share/navi/cheats
-    | pf memo ~/.local/share/memo
-    | pf zsh/zshenv ~/.zshenv
-    | pf zsh/zshrc ~/.config/zsh/.zshrc
-    | pf zsh/p10k.zsh -t ~/.config/zsh
-    | pf bashrc ~/.bashrc
-    | pf rofi/config ~/.config/rofi
-    | pf rofi/themes ~/.local/share/rofi/themes
-    # hard-link on
-    | pf gtk/gtk-3.0 ~/.config/gtk-3.0 -h
-    | pf gtk/gtk-4.0 ~/.config/gtk-4.0 -h
-    | pf Xresources ~/.Xresources -h
-    # hard-link off
-    | pf bin -t ~/.local
-    | pf cargo ~/.cargo
-    | pf fcitx5/config ~/.config/fcitx5
-    | pf fcitx5/share ~/.local/share/fcitx5
-    | pf waybar/style.less ~/.config/waybar/style.css
-    | pf waybar/latte.css ~/.config/waybar/latte.css
-    | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
-    | pf ssh ~/.ssh
-    | pf codex ~/.codex
-    # | pf Templates -t ~
-    | pfs [
-        starship.toml fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
-        LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
-        gitui lazygit zathura mpv gdb pip.conf macchina paru
-        mise atuin uv jj zed nix systemd
-    ] ~/.config
-    | pfs [
-        hypr fontconfig mimeapps.list
-    ] ~/.config -h
-    | pfs [memo applications] ~/.local/share
-    | each {|item| deploy-item $item }
+# 部署用户配置：把仓库里的文件 symlink / hard-link 到目标位置。
+#   ./deploy.nu                  正常部署
+#   ./deploy.nu --dry-run        只看会做什么，不落盘
+#   ./deploy.nu --prune          顺带清掉指向本仓库的失效链接（文件已从仓库删除/改名）
+#   sudo ./deploy.nu root        把 root/ 镜像到 /（--dry-run 可预览）
+def main [--dry-run (-n), --prune] {
+    let results = (
+        [
+        ]
+        | pf shell ~/.config/shell
+        | pf clangd ~/.config/clangd
+        | pf navi ~/.local/share/navi/cheats
+        | pf zsh/zshenv ~/.zshenv
+        | pf zsh/zshrc ~/.config/zsh/.zshrc
+        | pf zsh/p10k.zsh -t ~/.config/zsh
+        | pf bashrc ~/.bashrc
+        | pf rofi/config ~/.config/rofi
+        | pf rofi/themes ~/.local/share/rofi/themes
+        # hard-link on
+        | pf gtk/gtk-3.0 ~/.config/gtk-3.0 -h
+        | pf gtk/gtk-4.0 ~/.config/gtk-4.0 -h
+        | pf Xresources ~/.Xresources -h
+        # hard-link off
+        | pf bin -t ~/.local
+        | pf cargo ~/.cargo
+        | pf fcitx5/config ~/.config/fcitx5
+        | pf fcitx5/share ~/.local/share/fcitx5
+        | pf waybar/style.less ~/.config/waybar/style.css
+        | pf waybar/latte.css ~/.config/waybar/latte.css
+        | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
+        | pf ssh ~/.ssh
+        | pf codex ~/.codex
+        # | pf Templates -t ~
+        | pfs [
+            starship.toml fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
+            LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
+            gitui lazygit zathura mpv gdb pip.conf macchina paru
+            mise atuin uv jj zed nix systemd
+        ] ~/.config
+        | pfs [
+            hypr fontconfig mimeapps.list
+        ] ~/.config -h
+        | pfs [memo applications] ~/.local/share
+        | each {|item| deploy-item $item --dry-run=$dry_run }
+    )
 
-    return
+    let prune_result = (if $prune {
+        prune-broken --dry-run=$dry_run
+    } else {
+        { pruned: 0, failed: [] }
+    })
+
+    let linked = ($results | each {|r| $r.linked } | math sum)
+    let failed = (($results | each {|r| $r.failed } | flatten) ++ $prune_result.failed)
+    log info $"linked: ($linked), pruned: ($prune_result.pruned), failed: ($failed | length)"
+    if ($failed | length) > 0 {
+        for f in $failed {
+            log error $f
+        }
+        exit 1
+    }
 }
 
-def 'main root' [] {
-    for src in (ls root | get name) {
-        cp -r $src  /
+# 把 root/ 镜像到 /（root/etc、root/boot、root/usr ...）。
+def 'main root' [--dry-run (-n)] {
+    if (which rsync | is-empty) {
+        if $dry_run {
+            log info "rsync not found; dry-run unavailable, would run: cp -r root/* /"
+        } else {
+            for src in (ls root | get name) {
+                cp -r $src /
+            }
+        }
+        return
+    }
+
+    if $dry_run {
+        let changed = (
+            ^rsync -rlptD -n --itemize-changes root/ /
+            | lines
+            | where {|l| ($l | str starts-with '>') or ($l | str starts-with 'c') }
+        )
+        if ($changed | is-empty) {
+            log info "root: up to date"
+        } else {
+            $changed | each {|l| log info $l } | ignore
+        }
+        return
+    }
+
+    let r = (^rsync -rlptD --itemize-changes root/ / | complete)
+    if $r.exit_code != 0 {
+        log error $"rsync failed: ($r.stderr | str trim)"
+        exit 1
+    }
+    let changed = (
+        $r.stdout
+        | lines
+        | where {|l| ($l | str starts-with '>') or ($l | str starts-with 'c') }
+    )
+    if ($changed | is-empty) {
+        log info "root: up to date"
+    } else {
+        $changed | each {|l| log info $l } | ignore
     }
 }
 
@@ -88,18 +146,18 @@ def pfs [
     }
 }
 
-def deploy-item [item: record] {
+def deploy-item [item: record, --dry-run] {
     let dest = $item.dest | path expand
 
     match ($item.src | path type) {
         file => {
-            deploy-file $item.src $dest --place=$item.place --hard=$item.hard
+            deploy-file $item.src $dest --place=$item.place --hard=$item.hard --dry-run=$dry_run
         },
         dir if $item.place => {
-            place-dir $item.src $dest --hard=$item.hard
+            place-dir $item.src $dest --hard=$item.hard --dry-run=$dry_run
         },
         dir => {
-            deploy-dir $item.src $dest --hard=$item.hard
+            deploy-dir $item.src $dest --hard=$item.hard --dry-run=$dry_run
         },
     }
 }
@@ -109,22 +167,28 @@ def deploy-file [
     dest: path,
     --place,
     --hard,
+    --dry-run,
 ] {
     let dest = if $place {
-        mkdir -v $dest
+        if not $dry_run {
+            mkdir -v $dest
+        }
         $dest | path join ($src | path basename)
     } else {
-        mkdir -v ($dest | path dirname)
+        if not $dry_run {
+            mkdir -v ($dest | path dirname)
+        }
         $dest
     }
 
-    link $src $dest --hard=$hard
+    link $src $dest --hard=$hard --dry-run=$dry_run
 }
 
 def deploy-dir [
     src: string,
     dest: path,
     --hard,
+    --dry-run,
 ] {
     let dest_path = {|p|
         $dest
@@ -134,25 +198,29 @@ def deploy-dir [
         )
     }
 
-    let dirs = glob $"($src)/**/*" --no-file
-        | skip 1
-        | each $dest_path
-
-    # 确保dirs为空时也创建dest
-    mkdir -v $dest ...$dirs
-
-    glob $"($src)/**/*" --no-dir
-    | each {|file|
-        let dest = do $dest_path $file
-        let file = $file | path strip (pwd)
-        link $file $dest --hard=$hard
+    let entries = (glob $"($src)/**/*")
+    let dirs = ($entries | where {|p| ($p | path type) == 'dir' } | each $dest_path)
+    if not $dry_run {
+        mkdir -v $dest ...$dirs
     }
+
+    let files = ($entries | where {|p| ($p | path type) != 'dir' })
+    mut result = { linked: 0, failed: [] }
+    for file in $files {
+        let dest = (do $dest_path $file)
+        let file = ($file | path strip (pwd))
+        let r = (link $file $dest --hard=$hard --dry-run=$dry_run)
+        $result.linked += $r.linked
+        $result.failed = ($result.failed ++ $r.failed)
+    }
+    $result
 }
 
 def place-dir [
     src: string,
     dest: path,
     --hard,
+    --dry-run,
 ] {
     let dest_path = {|p|
         $dest
@@ -162,39 +230,110 @@ def place-dir [
         )
     }
 
-    let dirs = glob $"($src)/**/*" --no-file
-        | each $dest_path
-
-    mkdir -v ...$dirs
-
-    glob $"($src)/**/*" --no-dir
-    | each {|file|
-        let dest = do $dest_path $file
-        let file = $file | path strip (pwd)
-        link $file $dest --hard=$hard
+    let entries = (glob $"($src)/**/*")
+    let dirs = ($entries | where {|p| ($p | path type) == 'dir' } | each $dest_path)
+    if not $dry_run {
+        mkdir -v ...$dirs
     }
+
+    let files = ($entries | where {|p| ($p | path type) != 'dir' })
+    mut result = { linked: 0, failed: [] }
+    for file in $files {
+        let dest = (do $dest_path $file)
+        let file = ($file | path strip (pwd))
+        let r = (link $file $dest --hard=$hard --dry-run=$dry_run)
+        $result.linked += $r.linked
+        $result.failed = ($result.failed ++ $r.failed)
+    }
+    $result
 }
 
 def link [
     src: string,
     dest: path,
     --hard,
+    --dry-run,
 ] {
     let srcp = pwd | path join $src
 
     if $hard {
-        if not (is-hard-linked $srcp $dest) {
-            log info $"($src) => ($dest)"
-            ln --force $srcp $dest
+        if (is-hard-linked $srcp $dest) {
+            return { linked: 0, failed: [] }
         }
-    } else if not (is-linked $srcp $dest) {
-        log info $"($src) => ($dest)"
-        try {
-            ln -s $srcp $dest
-        } catch {|err|
-            log error "link failed"
+        if $dry_run {
+            log info $"[dry-run] hard link ($src) => ($dest)"
+            return { linked: 1, failed: [] }
+        }
+        let r = (^ln --force $srcp $dest | complete)
+        if $r.exit_code == 0 {
+            log info $"hard link ($src) => ($dest)"
+            { linked: 1, failed: [] }
+        } else {
+            { linked: 0, failed: [$"($src) => ($dest): ($r.stderr | str trim | str substring 0..200)"] }
+        }
+    } else {
+        if (is-linked $srcp $dest) {
+            return { linked: 0, failed: [] }
+        }
+        if $dry_run {
+            log info $"[dry-run] link ($src) => ($dest)"
+            return { linked: 1, failed: [] }
+        }
+        let r = (^ln -s $srcp $dest | complete)
+        if $r.exit_code == 0 {
+            log info $"link ($src) => ($dest)"
+            { linked: 1, failed: [] }
+        } else {
+            { linked: 0, failed: [$"($src) => ($dest): ($r.stderr | str trim | str substring 0..200)"] }
         }
     }
+}
+
+# 删除指向本仓库、但目标已不存在的 symlink（文件已从仓库删除/改名）。
+def prune-broken [--dry-run] {
+    let repo = (pwd)
+    let dirs = [
+        ($env.HOME | path join '.config')
+        ($env.HOME | path join '.local/bin')
+        ($env.HOME | path join '.local/state')
+        ($env.HOME | path join '.local/share/memo')
+        ($env.HOME | path join '.local/share/applications')
+        ($env.HOME | path join '.local/share/navi/cheats')
+        ($env.HOME | path join '.local/share/rofi/themes')
+        ($env.HOME | path join '.local/share/fcitx5')
+        ($env.HOME | path join '.cargo')
+        ($env.HOME | path join '.ssh')
+        ($env.HOME | path join '.codex')
+    ]
+
+    mut result = { pruned: 0, failed: [] }
+    let scans = ($dirs | each {|d| { dir: $d, depth: 8 } })
+    let all_scans = ($scans | append { dir: ($env.HOME | path join ''), depth: 1 })
+    for scan in $all_scans {
+        let d = $scan.dir
+        if not ($d | path exists) {
+            continue
+        }
+        for l in (^find $d -maxdepth $scan.depth -xtype l err> /dev/null | lines) {
+            let t = (^readlink $l | str trim)
+            if not ($t | str starts-with $repo) {
+                continue
+            }
+            if $dry_run {
+                log info $"[dry-run] prune ($l) -> ($t)"
+                $result.pruned += 1
+            } else {
+                let r = (^rm --force $l | complete)
+                if $r.exit_code == 0 {
+                    log info $"prune ($l)"
+                    $result.pruned += 1
+                } else {
+                    $result.failed = ($result.failed | append $"prune ($l): ($r.stderr | str trim)")
+                }
+            }
+        }
+    }
+    $result
 }
 
 def is-linked [src: path, dest: path]: nothing -> bool {

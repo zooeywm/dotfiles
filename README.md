@@ -8,9 +8,12 @@ Distribute the files to specified locations in file system via:
 
 ```bash
 # For user
-$ ./deploy.nu
+$ ./deploy.nu              # symlink/hard-link everything
+$ ./deploy.nu --dry-run    # preview only, no writes
+$ ./deploy.nu --prune      # also remove links into this repo whose source file was deleted
 
-# For root
+# For root (root/ mirrors /, copied with rsync)
+$ sudo ./deploy.nu root --dry-run   # preview
 $ sudo ./deploy.nu root
 ```
 
