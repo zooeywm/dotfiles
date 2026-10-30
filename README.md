@@ -77,11 +77,14 @@ $ ./pacman.nu --dry-run    # show the plan without touching anything
 $ ./pacman.nu export       # dump the current machine as TOML (bootstrap)
 ```
 
-Manager priority: pacman (official / archlinuxcn / AUR via paru) first — a
-non-pacman declaration that also exists in pacman is rejected. Node is
-managed by mise (project-level versions); JS globals use bun; npm/pnpm are
-not used. The manifest must cover every explicitly installed package — an
-undeclared package is offered for removal on sync.
+Manager priority: pacman (official / archlinuxcn / AUR via paru) first.
+Every sync/audit validates each cargo/uv/bun entry against the pacman repos
+and the AUR, also trying the `@scope/name` → `scope-name`, `_` → `-`, and
+`-git`/`-bin` package-name variants, and refuses to run while such a
+declaration exists. Node is managed by mise (project-level versions); JS
+globals use bun; npm/pnpm are not used. The manifest must cover every
+explicitly installed package — an undeclared package is offered for removal
+on sync.
 
 ## How this repo maps to the machine
 

@@ -18,7 +18,7 @@
 #   ./pacman.nu list            打印合并后的清单
 #
 # flags: --dry-run(-n) 只打印计划 / --yes(-y) 不询问 / --no-prune 不卸载
-#        --check-aur 联网校验非 pacman 声明是否在 AUR 存在
+#        校验：非 pacman 声明若在仓库/AUR 已有（含同义包名）会直接报错
 
 const MANAGERS = ['pacman' 'cargo' 'uv' 'bun' 'rustup']
 const TABLE_MANAGERS = ['pacman' 'cargo' 'uv' 'bun']
@@ -166,16 +166,58 @@ def aur-has [name] {
     }
 }
 
-def validate [manifest, --check-aur] {
-    for mgr in ['cargo' 'uv' 'bun'] {
-        for name in ($manifest | get $mgr | columns) {
-            if (repo-has $name) {
-                error make {msg: $"($mgr):($name) 在 pacman 仓库已有 → 按 pacman 优先应移入 [pacman] 并删除此声明"}
+def aur-search [term] {
+    try {
+        let r = (http get $"https://aur.archlinux.org/rpc/v5/search/($term)?by=name")
+        ($r | get results? | default [] | each {|x| $x.Name })
+    } catch {
+        []
+    }
+}
+
+def normalize-pkg [name] {
+    let parts = ($name | split row '/')
+    let base = if ($parts | length) > 1 { $parts | skip 1 | str join '/' } else { $name }
+    $base | str replace -a '_' '-'
+}
+
+def pkg-candidates [name] {
+    let norm = (normalize-pkg $name)
+    let scoped = if ($name | str starts-with '@') {
+        let parts = ($name | split row '/')
+        let scope = (($parts | first) | str replace -a '@' '')
+        let inner = ($parts | skip 1 | str join '/')
+        $"($scope)-($inner)" | str replace -a '_' '-'
+    } else {
+        $norm
+    }
+    ([$name $norm $scoped] | uniq | where {|c| ($c | str length) >= 5 })
+}
+
+def validate [manifest] {
+    let entries = (['cargo' 'uv' 'bun'] | each {|mgr|
+        ($manifest | get $mgr | columns) | each {|n| {mgr: $mgr, name: $n} }
+    } | flatten)
+    let problems = ($entries | par-each {|e|
+        let cands = (pkg-candidates $e.name)
+        let repo_hit = ($cands | where {|c| repo-has $c } | first)
+        if not ($repo_hit | is-empty) {
+            $"($e.mgr):($e.name) ≈ pacman 仓库包 ($repo_hit) → 按 pacman 优先应移入 [pacman]"
+        } else if ($cands | length) > 0 {
+            let term = ($cands | last)
+            let aur = (aur-search $term)
+            let hit = ($cands | where {|c| $c in $aur } | first)
+            if not ($hit | is-empty) {
+                $"($e.mgr):($e.name) ≈ AUR 包 ($hit) → 应移入 [pacman] 并加 aur = true"
+            } else {
+                null
             }
-            if $check_aur and (aur-has $name) {
-                error make {msg: $"($mgr):($name) 在 AUR 已有 → 按 pacman 优先应移入 [pacman] 并删除此声明"}
-            }
+        } else {
+            null
         }
+    } | where {|x| $x != null })
+    if ($problems | length) > 0 {
+        error make {msg: ($problems | str join '；')}
     }
 }
 
@@ -298,10 +340,10 @@ def require-tools [] {
     }
 }
 
-def sync [--dry-run, --yes, --no-prune, --check-aur] {
+def sync [--dry-run, --yes, --no-prune] {
     require-tools
     let manifest = (load-manifest)
-    validate $manifest --check-aur=$check_aur
+    validate $manifest
     let p = (plan $manifest)
 
     print ""
@@ -430,11 +472,10 @@ def main [
     --dry-run (-n)
     --yes (-y)
     --no-prune
-    --check-aur
 ] {
     let action = ($action | default 'sync')
     match $action {
-        'sync' => { sync --dry-run=$dry_run --yes=$yes --no-prune=$no_prune --check-aur=$check_aur },
+        'sync' => { sync --dry-run=$dry_run --yes=$yes --no-prune=$no_prune },
         'audit' => { audit },
         'export' => { export-manifest },
         'list' => { list-manifest },
