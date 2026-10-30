@@ -50,8 +50,10 @@ export NINJA_STATUS=$'\e[35m[%f/%t]\e[0m '
 # Repo
 export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
 
-eval "$(ssh-agent)" >> /dev/null 2>&1
-ssh-add ~/.ssh/id_ed25519 >> /dev/null 2>&1
+# SSH agent: one long-lived agent provided by systemd user unit ssh-agent.service
+# (never spawn an agent from zshenv — it runs for every zsh invocation)
+export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-${XDG_RUNTIME_DIR}/ssh-agent.socket}"
+[[ -S $SSH_AUTH_SOCK ]] && ssh-add -q ~/.ssh/id_ed25519 >/dev/null 2>&1
 
 ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
@@ -64,6 +66,10 @@ path=(
     ~/.dotnet/tools
     ~/go/bin
 )
+
+# bun
+export BUN_INSTALL="$HOME/.cache/.bun"
+path=("$BUN_INSTALL/bin" $path)
 
 # bun completions
 [ -s "/home/zooeywm/.bun/_bun" ] && source "/home/zooeywm/.bun/_bun"

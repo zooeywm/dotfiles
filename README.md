@@ -65,3 +65,27 @@ $ sudo ./deploy.nu root
 I record my favorite applications in [pacman.nu](./pacman.nu).
 
 Install with command: `./pacman.nu`
+
+## System configuration
+
+Host-level configuration is reproducible:
+
+- `root/` mirrors `/` and is deployed with `sudo ./deploy.nu root`. It holds
+  journald/coredump size caps, the udev battery rule
+  (`99-battery.rules`) and `/usr/local/bin/on_battery_change.sh`.
+- `system/apply.sh` applies the non-file state (disabled services, timers,
+  power profile, ufw rules): `sudo ~/.dotfiles/system/apply.sh`.
+- `systemd/user/ssh-agent.service` provides a single long-lived SSH agent
+  (`SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket`), deployed via
+  `./deploy.nu` — never start an agent from `zshenv`.
+
+Machine-specific manual steps (host dependent, not committed):
+
+- `/etc/fstab`: root ext4 is mounted with `rw,noatime`.
+- Hibernation: no `resume=` kernel parameter is configured.
+- `amd_pstate=active` is not usable on this machine (firmware exposes no ACPI
+  CPPC tables), so it stays on `acpi-cpufreq` + `schedutil`.
+- Persistent zswap pool: append `zswap.max_pool_percent=35` to the
+  systemd-boot entry options (`/boot/loader/entries/arch.conf`).
+- Firewall assumes trusted LANs `10.100.0.0/22`, `192.168.0.0/16`,
+  `172.16.0.0/12` and the tailnet; ToDesk may fall back to relay.

@@ -1,0 +1,12 @@
+[Unit]
+Description=SSH key agent (single, long-lived)
+Documentation=man:ssh-agent(1)
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/ssh-agent -D -a %t/ssh-agent.socket
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

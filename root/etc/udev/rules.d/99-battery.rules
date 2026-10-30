@@ -1,0 +1,4 @@
+# Switch power profile when the AC adapter is plugged/unplugged.
+# Installed by ~/.dotfiles/root; script lives in /usr/local/bin/on_battery_change.sh
+SUBSYSTEM=="power_supply", KERNEL=="ACAD", ATTR{online}=="0", RUN+="/usr/local/bin/on_battery_change.sh"
+SUBSYSTEM=="power_supply", KERNEL=="ACAD", ATTR{online}=="1", RUN+="/usr/local/bin/on_battery_change.sh"
