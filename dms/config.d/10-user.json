@@ -1,0 +1,39 @@
+{
+  "customPowerButtons": [
+    {
+      "label": "Switch User",
+      "icon": "switch_account",
+      "command": "/home/zooeywm/.local/bin/dms-switch-user-sddm"
+    }
+  ],
+  "powerMenuActions": [
+    "reboot",
+    "logout",
+    "poweroff",
+    "lock",
+    "suspend",
+    "restart",
+    "hibernate"
+  ],
+  "powerMenuDefaultAction": "poweroff",
+  "muxType": "zellij",
+  "matugenTemplateKitty": false,
+  "matugenTemplateNeovim": true,
+  "greeterPamExternallyManaged": true,
+  "cursorSettings": {
+    "theme": "Breeze_Light",
+    "size": 24,
+    "niri": {
+      "hideWhenTyping": false,
+      "hideAfterInactiveMs": 0
+    },
+    "hyprland": {
+      "hideOnKeyPress": false,
+      "hideOnTouch": false,
+      "inactiveTimeout": 0
+    },
+    "dwl": {
+      "cursorHideTimeout": 0
+    }
+  }
+}

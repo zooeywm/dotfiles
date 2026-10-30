@@ -204,7 +204,8 @@ const MANIFEST = {
     gping: "图形化 ping"
     traceroute: "路由显形"
     lsof: "监测端口"
-    flclash: "飞越长城"
+    # flclash: "飞越长城"
+    clash-nyanpasu-bin: "飞越长城"
     openssh: "ssh"
     xh: "Friendly and fast tool for sending HTTP requests"
     rustscan: "扫描端口"
@@ -268,9 +269,9 @@ const MANIFEST = {
     # awww: "壁纸上屏"
     cliphist: "剪贴板历史"
     matugen: "材料设计颜色生成"
-    dgop: "资源信息监控"
+    dux-gop: "资源信息监控"
     quickshell: ""
-    dms-shell: { packages: ["dms-shell-niri", "cups-pk-helper"], desc: "极致 quickshell" }
+    dux-shell: { packages: ["dux-shell", "cups-pk-helper"], desc: "极致 quickshell" }
     wl-clipboard: "Wayland Clipboard"
     # waybar: "Status bar"
     grim: "Screen cut"

@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+# 通用「app 窗口开 / 关」开关：按一下打开，再按一下关闭。
+#
+# 用法：app-toggle <app-id-正则> <进程匹配串> <启动命令...>
+#   例：app-toggle '^(qq|linuxqq)' /opt/QQ qq
+#
+#   1. 有窗口但没聚焦 → 拉到前台（多窗口时取最近用过的那个）
+#   2. 有窗口且已聚焦 → 关闭窗口（带托盘的 app 会收进托盘，进程保留）
+#   3. 没有窗口 → 找它的托盘项并 Activate（等同点托盘图标），
+#      app 自己把窗口重新映射出来，不会开新实例
+#   4. 没在运行 → 用启动命令启动
+#
+# 依赖：niri（niri msg）、jq、busctl
+
+set -uo pipefail
+
+if (($# < 3)); then
+    echo "usage: app-toggle <app-id-regex> <process-pattern> <launch-command...>" >&2
+    exit 2
+fi
+
+app_re=$1
+proc_pat=$2
+shift 2
+
+# 匹配窗口 id，按最近一次聚焦时间排序（最后一个 = 最近用过的）
+window_ids() {
+    niri msg --json windows 2>/dev/null |
+        jq -r --arg re "$app_re" \
+            '[.[] | select((.app_id // "") | test($re; "i"))]
+             | sort_by(.focus_timestamp.secs // 0) | .[].id'
+}
+
+is_focused() {
+    niri msg --json windows 2>/dev/null |
+        jq -e --arg re "$app_re" \
+            'any(.[]; ((.app_id // "") | test($re; "i")) and .is_focused)' >/dev/null
+}
+
+# 从 StatusNotifierWatcher 找属于该 app 进程的托盘项，输出 "busname path"
+tray_item() {
+    local items list item bus path pid
+    items=$(busctl --user get-property org.kde.StatusNotifierWatcher \
+        /StatusNotifierWatcher org.kde.StatusNotifierWatcher \
+        RegisteredStatusNotifierItems 2>/dev/null) || return 1
+    list=$(busctl --user list --no-pager 2>/dev/null) || return 1
+
+    # 输出形如：as 7 ":1.133/StatusNotifierItem" "org.kde.StatusNotifierItem-2-2/StatusNotifierItem"
+    for item in $(sed -E 's/^as [0-9]+ ?//' <<<"$items" | tr -d '"'); do
+        bus=${item%%/*}
+        path=/${item#*/}
+        pid=$(awk -v b="$bus" '$1 == b { print $2; exit }' <<<"$list")
+        [[ ${pid:-} =~ ^[0-9]+$ ]] || continue
+        if tr '\0' ' ' <"/proc/$pid/cmdline" 2>/dev/null | grep -q -- "$proc_pat"; then
+            printf '%s %s\n' "$bus" "$path"
+            return 0
+        fi
+    done
+    return 1
+}
+
+mapfile -t ids < <(window_ids)
+
+if ((${#ids[@]})); then
+    if is_focused; then
+        # 已在前台：关掉窗口（有托盘的 app 会收进托盘，进程留着，再按一次唤回来）
+        for id in "${ids[@]}"; do
+            niri msg action close-window --id "$id" >/dev/null 2>&1 || true
+        done
+    else
+        # 在后台：先拉到前台
+        niri msg action focus-window --id "${ids[-1]}" >/dev/null
+    fi
+    exit 0
+fi
+
+if read -r bus path < <(tray_item); then
+    # 和「点击托盘图标」相同，app 自己会把窗口重新映射出来，不会开新实例
+    busctl --user call "$bus" "$path" org.kde.StatusNotifierItem Activate ii 0 0
+    exit 0
+fi
+
+# 既没有窗口也没有托盘项：app 没在运行，正常启动
+setsid -f "$@" >/dev/null 2>&1

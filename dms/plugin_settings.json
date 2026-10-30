@@ -1,0 +1,50 @@
+{
+  "dankBatteryAlerts": {
+    "enabled": false,
+    "criticalThreshold": 10
+  },
+  "dankDesktopWeather": {
+    "enabled": false
+  },
+  "niriWindows": {
+    "enabled": false
+  },
+  "dankPomodoroTimer": {
+    "enabled": false
+  },
+  "calculator": {
+    "enabled": true,
+    "trigger": "=",
+    "noTrigger": true
+  },
+  "emojiLauncher": {
+    "enabled": true,
+    "trigger": ":"
+  },
+  "bongoCat": {
+    "enabled": true,
+    "catSizePercent": 100,
+    "classicIdle": false,
+    "soundEnabled": false,
+    "catCustomColor": {
+      "r": 0.9529411792755127,
+      "g": 0.7333333492279053,
+      "b": 0.5686274766921997,
+      "a": 1,
+      "hsvHue": 0.07141666859388351,
+      "hsvSaturation": 0.40329593420028687,
+      "hsvValue": 0.9529411792755127,
+      "hslHue": 0.07141666859388351,
+      "hslSaturation": 0.8032807111740112,
+      "hslLightness": 0.7607843279838562,
+      "valid": true,
+      "rgba": -803951
+    }
+  },
+  "amdGpuMonitor": {
+    "enabled": true
+  },
+  "fullscreenPowerMenu": {
+    "enabled": true
+  }
+}

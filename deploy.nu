@@ -34,10 +34,10 @@ def main [] {
     # | pf Templates -t ~
     | pf pi ~/.pi
     | pfs [
-        starship.toml fish nushell dunst presenterm niri swaylock DankMaterialShell xdg-desktop-portal
+        starship.toml fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
         LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
         gitui lazygit zathura mpv gdb pip.conf macchina paru
-        mise atuin uv jj zed nix
+        mise atuin uv jj zed nix systemd
     ] ~/.config
     | pfs [
         hypr fontconfig mimeapps.list
@@ -210,7 +210,7 @@ def is-linked [src: path, dest: path]: nothing -> bool {
 
 def is-hard-linked [src: path, dest: path]: nothing -> bool {
     let f = {|p| stat --printf %i $p err> /dev/null }
-    try {Add commentMore actions
+    try {
         (do $f $src) == (do $f $dest)
     } catch {
         false

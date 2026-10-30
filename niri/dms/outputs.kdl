@@ -3,7 +3,7 @@
 output "eDP-1" {
     mode "2880x1800@120.000"
     scale 1
-    position x=0 y=516
+    position x=0 y=207
 }
 
 output "HDMI-A-1" {

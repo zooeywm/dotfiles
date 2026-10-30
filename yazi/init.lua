@@ -3,8 +3,8 @@ require("session"):setup({
     sync_yanked = true,
 })
 require("full-border"):setup({
-    -- Available values: ui.Border.PLAIN, ui.Border.ROUNDED
-    type = ui.Border.ROUNDED,
+    -- Available values: "plain", "rounded"
+    set = "rounded",
 })
 
 ps.sub("ind-app-title", function()

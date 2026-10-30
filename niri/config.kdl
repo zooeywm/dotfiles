@@ -201,3 +201,15 @@ window-rule {
 
 // Load DMS rules after the global defaults so specific DMS rules win.
 include "dms/windowrules.kdl"
+
+// 自定义快捷键：放在 dms/*.kdl include 之后，覆盖 DMS 生成的同名绑定。
+// app-toggle：按一下打开窗口，再按一下关闭（有托盘的 app 关闭时收进托盘，不退出、不开新实例）。
+binds {
+    // Mod+A：QQ
+    Mod+A repeat=false hotkey-overlay-title="QQ" { spawn-sh "$HOME/.local/bin/app-toggle '^(qq|linuxqq)' /opt/QQ qq"; }
+    // Mod+C：飞书（DMS 生成文件里 Mod+A 原本是飞书，被上面覆盖了；Mod+C 原本是 center-column，也被这条覆盖）
+    Mod+C repeat=false hotkey-overlay-title="飞书" { spawn-sh "$HOME/.local/bin/app-toggle '^feishu$' bytedance-feishu-stable feishu"; }
+    // Mod+E：微信（DMS 生成的 Mod+E 是直接启动微信，这里改成开关）
+    Mod+E repeat=false hotkey-overlay-title="微信" { spawn-sh "$HOME/.local/bin/app-toggle '^wechat$' /opt/wechat-universal wechat-universal"; }
+}
+
