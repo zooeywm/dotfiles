@@ -66,31 +66,47 @@ I record my favorite applications in [pacman.nu](./pacman.nu).
 
 Install with command: `./pacman.nu`
 
-## System configuration
+## How this repo maps to the machine
 
-Host-level configuration is reproducible:
+`~/.dotfiles` is the single source of truth. Three layers, applied in order:
 
-- `root/` mirrors `/` and is deployed with `sudo ./deploy.nu root`. It holds
-  journald/coredump size caps, the udev battery rule (`99-battery.rules`),
-  `/usr/local/bin/on_battery_change.sh`, `nftables.conf` and
-  `NetworkManager/conf.d/wifi_backend.conf`.
-- `system/apply.sh` applies the non-file state (disabled services, timers,
-  power profile, nftables): `sudo ~/.dotfiles/system/apply.sh`.
-- `systemd/user/ssh-agent.service` provides a single long-lived SSH agent
-  (`SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket`), deployed via
-  `./deploy.nu` — never start an agent from `zshenv`.
+1. **User config** → `./deploy.nu` — the `pf` / `pfs` lists symlink or
+   hard-link each `./<tool>` directory to `~/.config/<tool>` (or `~/<file>`).
+2. **Files under `/`** → `sudo ./deploy.nu root` — `root/` mirrors `/` and is
+   copied over it (`root/boot`, `root/etc`, `root/usr`).
+3. **Host state** → `sudo ~/.dotfiles/system/apply.sh` — services on/off,
+   timers, power profile, nftables reload and the package policy in
+   `system/packages-remove.txt` (purge list + orphan sweep).
+
+Workflow: edit dotfiles → `./deploy.nu` → `sudo ./deploy.nu root` →
+`sudo ./system/apply.sh`. The machine converges to the repo; anything
+configured out-of-band is not reproducible and should be moved here.
+
+Files worth knowing:
+
+- `root/etc/nftables.conf` — host firewall (`inet archwm`).
+- `root/etc/NetworkManager/conf.d/wifi_backend.conf` — `wifi.backend=iwd`.
+- `root/etc/systemd/{journald,coredump}.conf.d/` — size caps.
+- `root/etc/udev/rules.d/99-battery.rules` +
+  `root/usr/local/bin/on_battery_change.sh` — AC plug/unplug switches the
+  power profile.
+- `root/etc/sddm.conf.d/zz-theme.conf` — `maya` theme (Plasma themes are gone).
+- `systemd/user/ssh-agent.service` — one long-lived SSH agent
+  (`SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket`); never start an agent
+  from `zshenv`.
 
 Stack choices (Arch Wiki, current tools over legacy ones):
 
-- Firewall: native `nftables` (`inet archwm`, deny inbound except trusted
-  LANs/tailnet), not `ufw`/iptables-nft.
-- Wi-Fi: `iwd` as the NetworkManager backend (`wifi.backend=iwd`), not
-  `wpa_supplicant` (still installed as a hard dependency of
-  `networkmanager`, but no longer used).
+- Firewall: native `nftables`, not `ufw`/iptables-nft.
+- Wi-Fi: `iwd` as the NetworkManager backend, not `wpa_supplicant` (still
+  installed as a hard dependency of `networkmanager`, but unused).
 - Boot loader: `systemd-boot` only; leftover GRUB files and EFI entry removed.
 - Scheduling: systemd timers only; `cronie` removed.
 - Power: `power-profiles-daemon` only; `tuned`, `cpupower`, `cpupower-gui`
   removed.
+- Desktop: niri + DMS only; KDE Plasma (`plasma-meta` and its apps) removed.
+  Kept on purpose: `sddm` (display manager), `polkit-kde-agent` (only polkit
+  agent) and `xwaylandvideobridge` (XWayland screen capture, needs kpipewire).
 
 Machine-specific manual steps (host dependent, not committed):
 

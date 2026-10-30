@@ -1,0 +1,29 @@
+# Packages purged from archwm: old/duplicate stacks and the unused KDE desktop.
+# system/apply.sh removes every entry that is still installed, then sweeps
+# orphaned dependencies (`pacman -Qdtq`).
+#
+# Keep this list in sync with README "Stack choices".
+
+# firewall / scheduler / power / boot leftovers
+ufw
+cronie
+tuned
+cpupower
+cpupower-gui-git
+bridge-utils
+alhp-keyring
+alhp-mirrorlist
+dotter-rs-bin
+dott-rs-bin
+
+# KDE Plasma desktop (niri is the only session; sddm stays as display manager,
+# polkit-kde-agent stays as the only polkit agent, xwaylandvideobridge provides
+# XWayland screen capture and needs KDE's kpipewire)
+plasma-meta
+dolphin
+gwenview
+spectacle
+ffmpegthumbs
+kdegraphics-thumbnailers
+kdiff3
+krfb

@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
-# Reproducible host state for archwm (batch A/B tuning).
-# File-based configs live in ./root (deploy with: sudo ./deploy.nu root).
-# This script applies the non-file state: service on/off, timers, power, firewall.
+# Reproducible host state for archwm.
+#
+# ~/.dotfiles is the single source of truth:
+#   1. user configs  -> ./deploy.nu          (pfs/pf lists, symlinks/hardlinks)
+#   2. files under / -> sudo ./deploy.nu root (root/ mirror -> /)
+#   3. host state    -> sudo ./system/apply.sh (this script)
+#
+# This script applies the non-file state: service on/off, timers, power
+# profile, nftables reload and the package policy in packages-remove.txt.
 #
 # Usage: sudo ~/.dotfiles/system/apply.sh
 set -euo pipefail
+
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 
 echo ':: boot: do not block on network-online (Samba server stays enabled)'
 systemctl disable --now NetworkManager-wait-online.service
@@ -21,6 +29,25 @@ systemctl disable --now tuned.service 2>/dev/null || true
 systemctl disable --now cpupower.service 2>/dev/null || true
 # cronie removed in favour of systemd timers
 systemctl disable --now cronie.service 2>/dev/null || true
+
+echo ':: package policy (packages-remove.txt): purge old stacks, sweep orphans'
+if [[ -r $script_dir/packages-remove.txt ]]; then
+    to_remove=()
+    while IFS= read -r line || [[ -n $line ]]; do
+        pkg=${line%%#*}
+        pkg=${pkg//[[:space:]]/}
+        [[ -z $pkg ]] && continue
+        pacman -Qq -- "$pkg" >/dev/null 2>&1 && to_remove+=("$pkg")
+    done < "$script_dir/packages-remove.txt"
+    if ((${#to_remove[@]})); then
+        pacman -Rns --noconfirm "${to_remove[@]}"
+    fi
+fi
+orphans=$(pacman -Qdtq 2>/dev/null || true)
+if [[ -n $orphans ]]; then
+    # shellcheck disable=SC2086
+    pacman -Rns --noconfirm $orphans
+fi
 
 echo ':: timers'
 systemctl enable --now fstrim.timer
