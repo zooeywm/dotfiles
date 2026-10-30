@@ -27,3 +27,4 @@ ffmpegthumbs
 kdegraphics-thumbnailers
 kdiff3
 krfb
+xdg-desktop-portal-kde
