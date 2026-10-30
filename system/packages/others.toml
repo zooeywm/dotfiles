@@ -428,7 +428,6 @@ trafilatura = {}
 uiautodev   = {}
 
 [bun]
-"@anthropic-ai/claude-code"  = {}
 "@prettier/plugin-xml"       = {}
 "@vtsls/language-server"     = {}
 oxfmt                        = {}
