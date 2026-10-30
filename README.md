@@ -85,7 +85,7 @@ Machine-specific manual steps (host dependent, not committed):
 - Hibernation: no `resume=` kernel parameter is configured.
 - `amd_pstate=active` is not usable on this machine (firmware exposes no ACPI
   CPPC tables), so it stays on `acpi-cpufreq` + `schedutil`.
-- Persistent zswap pool: append `zswap.max_pool_percent=35` to the
-  systemd-boot entry options (`/boot/loader/entries/arch.conf`).
+- Persistent zswap pool is configured in `root/boot/loader/entries/arch.conf`
+  (`zswap.max_pool_percent=35`), deployed with `sudo ./deploy.nu root`.
 - Firewall assumes trusted LANs `10.100.0.0/22`, `192.168.0.0/16`,
   `172.16.0.0/12` and the tailnet; ToDesk may fall back to relay.
