@@ -27,8 +27,6 @@ def main [] {
     | pf waybar/style.less ~/.config/waybar/style.css
     | pf waybar/latte.css ~/.config/waybar/latte.css
     | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
-    | pf kde ~/.config
-    | pf kde/kwalletrc ~/.config/kwalletrc
     | pf ssh ~/.ssh
     | pf codex ~/.codex
     # | pf Templates -t ~
