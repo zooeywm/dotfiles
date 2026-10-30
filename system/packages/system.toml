@@ -1,0 +1,26 @@
+# 该文件由 pacman.nu 生态使用：声明=期望状态，sync 会安装缺失、提示卸载未声明。
+
+[pacman]
+arch-install-scripts = {}
+base                 = {}
+ca-certificates      = {}
+chrony               = {}
+dosfstools           = {}
+efibootmgr           = {}
+inetutils            = {}
+iwd                  = {}
+linux                = {}
+linux-headers        = {}
+lsof                 = {}
+lvm2                 = {}
+man-db               = {}
+man-pages            = {}
+networkmanager       = {}
+ntfs-3g              = {}
+openssh              = {}
+pacman-contrib       = {}
+plocate              = {}
+polkit               = {}
+strace               = {}
+sudo-rs              = {}
+zsh                  = {}

@@ -1,476 +1,443 @@
 #!/usr/bin/env -S nu --stdin
 
-const MANIFEST = {
-    # 社交
-    telegram-desktop: "telegram"
-    QQ: { packages: ["linuxqq-nt-bwrap"], manager: "paru", desc: "QQ (sandbox)" }
-    wechat: { packages: ["wechat-universal-bwrap"], manager: "paru", desc: "WeChat (sandbox)" }
-    wemeet: { packages: ["wemeet-wayland-screenshare-git"], manager: "paru", desc: "WeMeet (sandbox)" }
-    feishu: { packages: ["feishu-bin"], manager: "paru", desc: "Feishu" }
+# pacman.nu — 软件包状态引擎
+#
+# 本体不写软件，只读清单并收敛系统：
+#   system/packages/system.toml    系统核心（内核/引导/基础运行时）
+#   system/packages/drivers.toml   驱动/固件/硬件支持
+#   system/packages/others.toml    其余软件（pacman + cargo + uv + bun + rustup）
+#
+# 管理器优先级：pacman（官方/archlinuxcn/AUR）> 其他。非 pacman 声明若在
+# pacman 侧存在会被 audit/sync 直接报错。
+#
+# 用法：
+#   ./pacman.nu                 默认 sync：装缺失，逐项询问卸载未声明
+#   ./pacman.nu sync [flags]    同上
+#   ./pacman.nu audit           只报告差异，有差异时退出码 1
+#   ./pacman.nu export          从当前系统导出清单（TOML 输出到 stdout）
+#   ./pacman.nu list            打印合并后的清单
+#
+# flags: --dry-run(-n) 只打印计划 / --yes(-y) 不询问 / --no-prune 不卸载
+#        --check-aur 联网校验非 pacman 声明是否在 AUR 存在
 
-    # OS
-    qemu-full: "QEMU"
-    ventoy-bin: { manager: "paru", desc: "ventoy" }
-    podman: ""
+const MANAGERS = ['pacman' 'cargo' 'uv' 'bun' 'rustup']
+const TABLE_MANAGERS = ['pacman' 'cargo' 'uv' 'bun']
 
-    # kernel
-    linux-headers: ""
-    sof-firmware: "Audio card firmware"
-    # vulkan-intel: "vulkan 的 intel 驱动"
-    mkinitcpio-firmware: { manager: "paru", desc: "get rid of the annoying 'WARNING: Possibly missing firmware for module:' messages" }
-    pipewire: { packages: [ "pipewire", "wireplumber", "pipewire-pulse", "pipewire-alsa", "pipewire-jack", "pipewire-v4l2" ], desc: "audio" }
-    chrony: "Time sync daemon"
+# ---------- 清单 ----------
 
-    # PL
-    gdb: "GNU debugger"
-    lldb: "LLVM debugger"
-    mold: "modern linker"
-    wild: "rust linker"
-    rustup: "管理 rust 工具链"
-    tokei: "统计代码"
-    gcc: "GNU 的 C/C++工具链"
-    ast-grep: "匹配搜索 tree-sitter"
-    cargo-binutils: { manager: "cargo", desc: "Rust 二进制工具" }
-    lua-language-server: "lua language server"
-    stylua: "lua 格式化器"
-    tombi: "toml 语言工具"
-    shfmt: "bash/zsh 格式化器"
-    gopls: "Go 语言服务器"
-    yaml-language-server: { manager: "npm" }
-    vscode-json-language-server: { manager: "npm", packages: ["vscode-langservers-extracted"] }
-    volar: { manager: "npm", packages: ["@vue/language-server"] }
-    biome: "前端格式化器"
-    prettier: { manager: "npm", packages: ["prettier", "@prettier/plugin-xml"], desc: "前端格式化器" }
-    mise: "管理语言工具链"
-    bash-language-server: { manager: "npm" }
-    sccache: "编译缓存"
-    clang: { packages: ["clang", "llvm"], desc: "C/C++工具链" }
-    typescript: { manager: "npm", packages: ["typescript", "typescript-language-server"] }
-    vtsls: { manager: "npm", packages: ["@vtsls/language-server"], desc: "typescript语言服务器" }
-    tailwindcss: { manager: "npm", packages: ["@tailwindcss/language-server"], desc: "tailwindcss语言服务器" }
-    oxfmt: { manager: "npm", packages: ["oxfmt"] }
-    typst: { packages: ["typst", "tinymist", "typstyle"] }
-    tree-sitter-cli: "安装 tree-sitter 解析器"
-    uv: "Python package manager written in rust"
-    ruff: "python 格式化器"
-    basedpyright: { manager: "uv", desc: "python 语言服务器" }
-    strace: "Bin stack trace"
-    astro-ls: { manager: "npm", packages: ["@astrojs/language-server"] desc: "AstroJS 的语言服务器", }
-    qt6-languageserver: "qt6 languageserver"
-    slint-lsp-bin: { manager: "paru", desc: "slint lsp" }
+def base-dir [] { $env.FILE_PWD }
 
-    # desktop
-    qt-theme: { packages: ["qt6ct", "qt5ct", "kvantum"] }
-    # wezterm: { packages: ["wezterm-git"], desc: "现代终端模拟器" }
-    sddm: "会话管理器"
-    dolphin: { packages: ["dolphin", "ffmpegthumbs", "kdegraphics-thumbnailers"], desc: "KDE 文件管理器" }
-    spectacle: "KDE 截图"
-    fcitx: { packages: ["fcitx5-im", "fcitx5-chinese-addons", "fcitx5-pinyin-zhwiki"], desc: "小企鹅输入法" }
-    zen-browser: "Browser using the firefox core vertical label bar"
-    # dbeaver: "PostgreSQL 客户端"
-    sqlitebrowser: "SQLite 客户端"
-    nerd-fonts: {
-      packages: [
-        "ttf-jetbrains-mono",
-        "ttf-firacode-nerd",
-        "ttf-nerd-fonts-symbols",
-        "ttf-nerd-fonts-symbols-mono"
-      ],
-      desc: "终端字体（最小集合）"
-    }
-    noto-fonts: {
-      packages: [
-        "noto-fonts",
-        "noto-fonts-cjk",
-        "noto-fonts-emoji"
-      ],
-      desc: "基础字体（拉丁 + CJK + emoji）"
-    }
-    polkit-kde-agent: "Authorization Panel"
-    polkit: "Policy kit"
-    bluez: "Bluetooth kernel"
-    bluez-utils: "Bluetooth cli"
-    overskride: "Bluetooth GUI"
-    kalker: { manager: "paru", desc: "Terminal calculator" }
-    libreoffice-fresh-zh-cn: "doc, xml, ppt"
-
-    # shell
-    nushell: "结构化 shell"
-    atuin: "历史命令"
-    starship: "装饰提示符"
-    zoxide: "瞬移"
-    zellij: "终端复用器"
-    bash-completion: "bash 补全"
-    zsh: { packages: ["zsh", "zsh-completions"], desc: "zsh 及额外补全包" }
-
-    # filesystem
-    xdg-user-dirs: "规范目录"
-    eza: "高级 ls"
-    rsync: "超级复制"
-    parallel-disk-usage: "磁盘空间统计"
-    yazi: { packages: ["yazi-git", "jq", "ffmpegthumbnailer", "unarchiver", "ueberzugpp"], desc: "终端文件管理器" }
-    resvg: "for yazi SVG preview"
-    gparted: "分区 GUI"
-    exfatprogs: "exfat 格式化工具"
-    squashfs-tools: "高压缩率只读文件系统"
-
-    # utility
-    man: { packages: ["man-db", "man-pages"], desc: "手册" }
-    less: "pager"
-    bat: "高级 cat"
-    choose: "高级 cut"
-    dos2unix: "改变文本的平台"
-    enca: "检查文件编码"
-    fd: "搜索文件"
-    jaq: "高级 jq"
-    jless: "json 阅读器"
-    ripgrep: "正则匹配行"
-    ripgrep-all: "万能正则匹配行"
-    sd: "高级 sed"
-    skim: "模糊搜索.rs"
-    fzf: "模糊搜索.go"
-    tree: "树视图"
-    protobuf: "ProtocolBuffers"
-    navi: "命令速查"
-    pastel: "调色板"
-    hyperfine: "竞争测试"
-    pueue: "守护大任务"
-    hexyl: "hex 查看器"
-    libtree: "程序的库依赖树视图"
-    halp: "命令行选项标准化检验"
-    terminus-font: "Outer terminal font"
-    neovim: "editor"
-    neovide: "neovim gui"
-    zed: "Zed Editor"
-    plocate: "locate 的并行版本"
-    ripdrag: { packages: ["ripdrag-git"], desc: "准备拖拽" }
-    d2: "diagram tool"
-
-    # git
-    lazygit: "git TUI"
-    difftastic: "语言 diff"
-    git-cliff: "变更日志生成器"
-    gitoxide: "锈化 git"
-    git-filter-repo: "过滤 git 项目"
-    # jujutsu: "新一代 VCS"
-    # lazyjj: "jujutsu TUI"
-    # gitlogue: "git 重现动画"
-
-    # data
-    7zip: "7z"
-    unrar: "解压 RAR"
-    zip: { packages: ["zip", "unzip"] }
-    qbittorrent: "下载种子"
-    dufs: "文件服务器"
-
-    # media
-    imagemagick: "图片瑞士军刀"
-    mpv: "看视频"
-    yt-dlp: "下载 Youtube 视频"
-    dagtoc: { packages: ["dagtoc-bin"], manager: "paru", desc: "操作 PDF 目录" }
-    pandoc: { packages: ["pandoc-bin"], desc: "LaTex 渲染器" }
-    kid3-qt: "编辑音乐标签"
-    espeak: { packages: ["espeak-ng"], desc: "Ebook speaker" }
-    mupdf-tools: "PDF 工具箱"
-    gwenview: "看图"
-    zathura: { packages: ["zathura", "zathura-pdf-mupdf"], desc: "PDF 阅读器" }
-    webp-pixbuf-loader: "GDK 的 webp 支持"
-    inkscape: "操作矢量图"
-    poppler: "`pdftoppm -png`将 PDF 转成图片"
-    viu: "终端看图"
-    doxx: "docx TUI",
-
-    # language
-    pdf2zh: { manager: "uv", desc: "智能布局留存翻译 PDF" }
-
-    # monitor
-    acpi: "电池信息"
-    bandwhich: "监测网络带宽"
-    bottom: "高级 top"
-    # light: "调节亮度"
-    pamixer: "调节音量"
-    procs: "查看进程"
-    wiremix: "音量面板"
-    dysk: "统计分区大小"
-    erdtree: "体积伴随文件树"
-    macchina: "系统信息"
-    udisk: { packages: ["udisks2", "udiskie"], desc: "Usb device auto mount" }
-    cyme: "usb 设备查看"
-    qpwgraph: "音频设备拓扑图"
-
-    # network
-    # networkmanager: { packages: [ "networkmanager", "stalonetray", "network-manager-applet"] }
-    inetutils: "telnet"
-    gping: "图形化 ping"
-    traceroute: "路由显形"
-    lsof: "监测端口"
-    # flclash: "飞越长城"
-    clash-nyanpasu-bin: "飞越长城"
-    openssh: "ssh"
-    xh: "Friendly and fast tool for sending HTTP requests"
-    rustscan: "扫描端口"
-
-    # show
-    asciinema: "录制命令行视频"
-    screenkey: "按键回显"
-    # obs-studio: "流录制"
-
-    # cargo
-    cargo-shear: { manager: "cargo", desc: "检查无用依赖" }
-    cargo-nextest: { manager: "cargo", desc: "检查无用依赖" }
-    cargo-msrv: "最旧可用 rustc 版本"
-    cargo-expand: "展开宏"
-    cargo-edit: "编辑依赖"
-    cargo-supply-chain: "依赖元信息"
-    cargo-deny: "分析依赖"
-    cargo-audit: { packages: ["cargo-audit", "cargo-auditable"], desc: "审计" }
-    cargo-depgraph: "依赖图"
-    cargo-update: "更新 cargo 安装的应用"
-    cargo-cache: "管理缓存"
-    cargo-zigbuild: "无痛链接指定版本 glibc"
-    cargo-wizard: "编译配置"
-    cargo-binstall: "下载 crate 的二进制"
-    cargo-get: { manager: "cargo", desc: "读取 Cargo.toml 信息" }
-    cargo-workspace-unused-pub: {
-        packages: ["https://github.com/cpg314/cargo-workspace-unused-pub.git"]
-        manager: "cargo:src"
-        desc: "检查工作空间未使用的 pub 项"
-    }
-    cargo-insta: "懒人测试"
-    cargo-autoinherit: { manager: "cargo", desc: "一键收束工作空间下的依赖" }
-    cargo-bloat: "查看依赖的空间占用情况"
-
-    # arch
-    nvrs: { manager: "paru", packages: ["nvrs-bin"], desc: "检查包版本" }
-    pacman-contrib: "打包工具箱"
-    aurpublish: "打包钩子"
-    alhp-keyrings: { manager: "paru", packages: ["alhp-keyring", "alhp-mirrorlist"], desc: "alhp-keyrings" }
-    pacfiles: "pacfiles is a pacman -F alternative that runs blazingly fast"
-
-    # amd
-    amd-ucode: "AMD CPU driver"
-    xf86-video-amdgpu: "AMD GPU video accelerator"
-
-    # misc
-    v4l2loopback-dkms: "Virtual camera with screen"
-    rclone: "Net Drive Synchronization"
-    libfido2: "ssh-agent dependency"
-    genact: "Linux 领域大神"
-    ngrok: { manager: "paru", desc: "内网穿透"}
-
-    # niri
-    niri: "卷轴桌面"
-    xwayland-satellite: "新一代wayland到X11的适配器"
-    libnotify: "通知"
-    satty: "编辑图片"
-    alsa-ucm-conf: "ALSA接线图"
-    alsa-firmware: "ALSA固件"
-    brightnessctl: "亮度调节"
-    # awww: "壁纸上屏"
-    cliphist: "剪贴板历史"
-    matugen: "材料设计颜色生成"
-    dux-gop: "资源信息监控"
-    quickshell: ""
-    dux-shell: { packages: ["dux-shell", "cups-pk-helper"], desc: "极致 quickshell" }
-    wl-clipboard: "Wayland Clipboard"
-    # waybar: "Status bar"
-    grim: "Screen cut"
-    slurp: "Screen area cut"
-    wl-screenrec-git: "rust wayland screen recorder"
-    # wf-recorder: "cpp wayland screen recorder"
-    # hyprland: { packages: [ "hyprland", "hyprlock", "hypridle", "cpio", "xdg-desktop-portal-hyprland", "qt5-wayland", "hyprsunset", "hyprpolkitagent", "hyprpicker" ] }
-    xdg-desktop-portal-gnome: ""
-    xdg-desktop-portal-gtk: ""
-    qt6-multimedia-ffmpeg: ""
-    rofi: "Menu"
-    binary: "Binary Calculator"
-    # https://github.com/casualsnek/waydroid_script
-    # waydroid: { packages: [ "lzip", "waydroid" ]}
-
-    # AI
-    codex: {
-        packages: ["openai-codex"],
-        desc: "Codex",
-    },
-    llmfit: {
-        manager: "paru",
-        desc: "根据需求找模型",
-    },
-    ## pi
-    pi: {
-        packages: ["@earendil-works/pi-coding-agent"],
-        manager: "pnpm",
-        desc: "agent核",
-    },
-    pi-web-access: {
-        packages: ["npm:pi-web-access"],
-        manager: "pi",
-        desc: "上网工具",
-    },
-    pi-permission-system: {
-        packages: ["npm:@gotgenes/pi-permission-system"],
-        manager: "pi",
-        desc: "权限管理",
-    },
-    pi-fff: {
-        packages: ["npm:@ff-labs/pi-fff"],
-        manager: "pi",
-        desc: "搜索工具",
-    },
-    pi-skills: {
-        packages: ["npm:@spences10/pi-skills"],
-        manager: "pi",
-        desc: "技能管理",
-    },
-    pi-tool-display: {
-        packages: ["npm:pi-tool-display"],
-        manager: "pi",
-        desc: "美化工具输出",
-    },
-    pi-anycopy: {
-        packages: ["npm:pi-anycopy"],
-        manager: "pi",
-        desc: "复制会话历史",
-    },
-    pi-btw: {
-        packages: ["npm:@narumitw/pi-btw"],
-        manager: "pi",
-        desc: "临时提问",
-    },
-    rpiv-ask-user-question: {
-        packages: ["npm:@juicesharp/rpiv-ask-user-question"],
-        manager: "pi",
-        desc: "结构化问卷",
-    },
-    pi-codex-conversion: {
-        packages: ["npm:@howaboua/pi-codex-conversion"],
-        manager: "pi",
-        desc: "pi的codex实现",
-    },
-    plannotator: {
-        packages: ["npm:@plannotator/pi-extension"],
-        manager: "pi",
-        desc: "review代码",
-    },
-    # pi-cursor-sdk: {
-    #     packages: ["npm:pi-cursor-sdk"],
-    #     manager: "pi",
-    #     desc: "Cursor桥接层",
-    # },
+def manifest-files [] {
+    let dir = ((base-dir) | path join 'system' 'packages')
+    ['system' 'drivers' 'others'] | each {|n| $dir | path join $"($n).toml" }
 }
 
-def main [
-    --managers (-M): string = 'all',
-] {
-    let managers = if $managers == 'all' {
-        [
-            'paru'
-            'npm'
-            'cargo-binstall'
-            'cargo'
-            'uv'
-            'pnpm'
-            'pi'
-        ]
-    } else {
-        $managers | split row ','
-    }
-
-    let manifest = $MANIFEST
-        | items {|k, v|
-            if ($v | describe) == 'string' {
-                {
-                    name: $k,
-                    desc: $v,
+def load-manifest [] {
+    mut out = {pacman: {}, cargo: {}, uv: {}, bun: {}, rustup: []}
+    mut seen: list<string> = []
+    for f in (manifest-files) {
+        if not ($f | path exists) {
+            error make {msg: $"清单缺失: ($f)"}
+        }
+        let doc = (open $f)
+        for mgr in ($doc | columns) {
+            if $mgr == 'rustup' {
+                for tc in ($doc | get rustup | get toolchains) {
+                    let key = $"rustup:($tc)"
+                    if $key in $seen { error make {msg: $"重复声明: ($key)（($f)）"} }
+                    $seen = ($seen | append $key)
+                    $out = ($out | upsert rustup ($out.rustup | append $tc))
+                }
+            } else if $mgr in $TABLE_MANAGERS {
+                let tbl = ($doc | get $mgr)
+                for name in ($tbl | columns) {
+                    let key = $"($mgr):($name)"
+                    if $key in $seen { error make {msg: $"重复声明: ($key)（($f)）"} }
+                    $seen = ($seen | append $key)
+                    $out = ($out | upsert $mgr ($out | get $mgr | insert $name ($tbl | get $name)))
                 }
             } else {
-                {
-                    name: $k,
-                    ...$v
+                error make {msg: $"未知管理器: ($mgr)（($f)）"}
+            }
+        }
+    }
+    $out
+}
+
+# ---------- 系统状态 ----------
+
+def installed-pacman [] {
+    ^pacman -Qq -e
+    | lines
+    | where {|x| ($x | str trim | str length) > 0 }
+}
+
+def installed-cargo [] {
+    ^cargo install --list
+    | lines
+    | where {|l| ($l | str length) > 0 and not ($l | str starts-with ' ') }
+    | each {|l| $l | split row ' v' | first }
+}
+
+def installed-uv [] {
+    ^uv tool list
+    | lines
+    | where {|l| ($l | str length) > 0 and not ($l | str starts-with ' ') and not ($l | str starts-with '- ') }
+    | each {|l| $l | split row ' ' | first }
+}
+
+def installed-bun [] {
+    let home = $env.HOME
+    let candidates = [
+        ($env.BUN_INSTALL? | default '')
+        ($home | path join '.cache' '.bun')
+        ($home | path join '.bun')
+    ] | where {|p| $p != '' }
+    let found = (
+        $candidates
+        | each {|p| $p | path join 'install' 'global' 'package.json' }
+        | where {|p| $p | path exists }
+    )
+    if ($found | is-empty) {
+        []
+    } else {
+        let d = (open ($found | first))
+        if ('dependencies' in ($d | columns)) { $d.dependencies | columns } else { [] }
+    }
+}
+
+def installed-rustup [] {
+    ^rustup toolchain list
+    | lines
+    | where {|l| ($l | str length) > 0 }
+    | each {|l| $l | split row ' ' | first | split row '-' | first }
+}
+
+def installed-all [] {
+    {
+        pacman: (installed-pacman)
+        cargo: (installed-cargo)
+        uv: (installed-uv)
+        bun: (installed-bun)
+        rustup: (installed-rustup)
+    }
+}
+
+# ---------- 计划 ----------
+
+def plan [manifest] {
+    let installed = (installed-all)
+    mut p = {}
+    for mgr in $TABLE_MANAGERS {
+        let desired = ($manifest | get $mgr | columns)
+        let inst = ($installed | get $mgr)
+        $p = ($p | insert $mgr {
+            install: ($desired | where {|x| not ($x in $inst) })
+            remove: ($inst | where {|x| not ($x in $desired) })
+        })
+    }
+    let rd = ($manifest.rustup | uniq)
+    let ri = ($installed.rustup | uniq)
+    $p = ($p | insert rustup {
+        install: ($rd | where {|x| not ($x in $ri) })
+        remove: ($ri | where {|x| not ($x in $rd) })
+    })
+    $p
+}
+
+def drift-count [p] {
+    $MANAGERS | each {|m|
+        ($p | get $m | get install | length) + ($p | get $m | get remove | length)
+    } | math sum
+}
+
+# ---------- 校验（pacman 优先） ----------
+
+def repo-has [name] {
+    (^pacman -Si $name | complete).exit_code == 0
+}
+
+def aur-has [name] {
+    try {
+        let r = (http get $"https://aur.archlinux.org/rpc/v5/info?arg[]=($name)")
+        (($r | get results? | default []) | length) > 0
+    } catch {
+        false
+    }
+}
+
+def validate [manifest, --check-aur] {
+    for mgr in ['cargo' 'uv' 'bun'] {
+        for name in ($manifest | get $mgr | columns) {
+            if (repo-has $name) {
+                error make {msg: $"($mgr):($name) 在 pacman 仓库已有 → 按 pacman 优先应移入 [pacman] 并删除此声明"}
+            }
+            if $check_aur and (aur-has $name) {
+                error make {msg: $"($mgr):($name) 在 AUR 已有 → 按 pacman 优先应移入 [pacman] 并删除此声明"}
+            }
+        }
+    }
+}
+
+# ---------- 安装 ----------
+
+def fail-msg [name, r] {
+    let why = (($r.stderr | str trim) | str substring 0..300)
+    print $"(ansi red)安装失败 ($name): ($why)(ansi reset)"
+}
+
+def install-pacman [names] {
+    if ($names | is-empty) { return [] }
+    print $"(ansi green)安装 pacman: ($names | str join ' ')(ansi reset)"
+    let r = (^paru -S --needed --noconfirm ...$names | complete)
+    if $r.exit_code == 0 {
+        []
+    } else {
+        fail-msg 'pacman' $r
+        $names
+    }
+}
+
+def install-cargo [manifest, names] {
+    mut failed = []
+    for name in $names {
+        let meta = ($manifest.cargo | get $name)
+        let r = if ('git' in ($meta | columns)) {
+            print $"(ansi green)安装 cargo(git): ($name)(ansi reset)"
+            (^cargo install --git ($meta | get git) --force | complete)
+        } else {
+            print $"(ansi green)安装 cargo: ($name)(ansi reset)"
+            (^cargo install --force $name | complete)
+        }
+        if $r.exit_code != 0 { fail-msg $"cargo:($name)" $r; $failed = ($failed | append $"cargo:($name)") }
+    }
+    $failed
+}
+
+def install-uv [names] {
+    mut failed = []
+    for name in $names {
+        print $"(ansi green)安装 uv: ($name)(ansi reset)"
+        let r = (^uv tool install $name | complete)
+        if $r.exit_code != 0 { fail-msg $"uv:($name)" $r; $failed = ($failed | append $"uv:($name)") }
+    }
+    $failed
+}
+
+def install-bun [names] {
+    mut failed = []
+    for name in $names {
+        print $"(ansi green)安装 bun: ($name)(ansi reset)"
+        let r = (^bun add -g $name | complete)
+        if $r.exit_code != 0 { fail-msg $"bun:($name)" $r; $failed = ($failed | append $"bun:($name)") }
+    }
+    $failed
+}
+
+def install-rustup [names] {
+    mut failed = []
+    for ch in $names {
+        print $"(ansi green)安装 rustup: ($ch)(ansi reset)"
+        let r = (^rustup toolchain install $ch | complete)
+        if $r.exit_code != 0 { fail-msg $"rustup:($ch)" $r; $failed = ($failed | append $"rustup:($ch)") }
+    }
+    $failed
+}
+
+# ---------- 卸载 ----------
+
+def remove-pacman [names] {
+    if ($names | is-empty) { return }
+    print $"(ansi red)卸载 pacman: ($names | str join ' ')(ansi reset)"
+    let r = (^sudo pacman -Rns --noconfirm ...$names | complete)
+    if $r.exit_code != 0 {
+        print $"(ansi yellow)批量卸载失败，逐个尝试…(ansi reset)"
+        for n in $names {
+            let one = (^sudo pacman -Rns --noconfirm $n | complete)
+            if $one.exit_code != 0 {
+                let why = (($one.stderr | str trim) | str substring 0..200)
+                print $"(ansi yellow)跳过 ($n): ($why)(ansi reset)"
+            }
+        }
+    }
+}
+
+def confirm [text: string] {
+    try {
+        let a = (input $text)
+        (($a | str trim | str lowercase) in ['y' 'yes'])
+    } catch {
+        false
+    }
+}
+
+def warn-legacy [] {
+    try {
+        let r = (^npm ls -g --depth=0 --json | complete)
+        if $r.exit_code == 0 {
+            let d = ($r.stdout | from json)
+            let deps = if ('dependencies' in ($d | columns)) { $d.dependencies | columns } else { [] }
+            let deps = ($deps | where {|x| not ($x in ['npm' 'corepack' 'nopt']) })
+            if ($deps | length) > 0 {
+                print $"(ansi yellow)注意: 旧 npm 全局包仍存在: ($deps | str join ', ')(ansi reset)"
+            }
+        }
+    } catch {}
+    if (($env.HOME | path join '.local' 'share' 'pnpm' 'global') | path exists) {
+        print $"(ansi yellow)注意: 旧 pnpm 全局目录仍存在: ~/.local/share/pnpm/global(ansi reset)"
+    }
+}
+
+# ---------- 命令 ----------
+
+def require-tools [] {
+    for c in ['paru' 'cargo' 'uv' 'bun' 'rustup' 'pacman'] {
+        if ((which $c | length) == 0) {
+            error make {msg: $"缺少命令: ($c)"}
+        }
+    }
+}
+
+def sync [--dry-run, --yes, --no-prune, --check-aur] {
+    require-tools
+    let manifest = (load-manifest)
+    validate $manifest --check-aur=$check_aur
+    let p = (plan $manifest)
+
+    print ""
+    print $"(ansi green_bold)== 安装 ==(ansi reset)"
+    let missing = ($MANAGERS | each {|m|
+        let xs = ($p | get $m | get install)
+        if ($xs | is-empty) { null } else { $"  ($m): ($xs | str join ' ')" }
+    } | where {|x| $x != null })
+    if ($missing | is-empty) { print "  无" } else { $missing | each {|l| print $l } }
+
+    print ""
+    print $"(ansi yellow_bold)== 卸载（已装但清单未声明）==(ansi reset)"
+    let extra = ($MANAGERS | each {|m|
+        let xs = ($p | get $m | get remove)
+        if ($xs | is-empty) { null } else { $"  ($m): ($xs | str join ' ')" }
+    } | where {|x| $x != null })
+    if ($extra | is-empty) { print "  无" } else { $extra | each {|l| print $l } }
+    print ""
+
+    if $dry_run {
+        print "(dry-run：未做任何修改)"
+        return
+    }
+
+    # 1) 安装
+    mut failures = []
+    $failures = ($failures | append (install-pacman ($p.pacman.install)))
+    $failures = ($failures | append (install-cargo $manifest ($p.cargo.install)))
+    $failures = ($failures | append (install-uv ($p.uv.install)))
+    $failures = ($failures | append (install-bun ($p.bun.install)))
+    $failures = ($failures | append (install-rustup ($p.rustup.install)))
+
+    # 安装失败时不做任何卸载，避免出现“旧的删了、新的没装”的空窗
+    if not ($failures | is-empty) {
+        print ""
+        print $"(ansi red)有 ($failures | length) 项安装失败，已跳过全部卸载。先处理失败项再重跑。(ansi reset)"
+        exit 1
+    }
+
+    # 2) 卸载
+    if not $no_prune {
+        mut removals = {pacman: [], cargo: [], uv: [], bun: [], rustup: []}
+        for mgr in $MANAGERS {
+            for name in ($p | get $mgr | get remove) {
+                let ok = if $yes { true } else { confirm $"卸载未声明包 ($mgr):($name)? [y/N] " }
+                if $ok {
+                    $removals = ($removals | upsert $mgr ($removals | get $mgr | append $name))
                 }
             }
         }
-
-    let paru = which paru | get -o 0.path
-    let cargo = which cargo | get -o 0.path
-    let cargo_binstall = which cargo-binstall | get -o 0.path
-    let npm = which npm | get -o 0.path
-    let uv = which uv | get -o 0.path
-    let pnpm = which pnpm | get -o 0.path
-    let pi = which pi | get -o 0.path
-
-    mut tbl = {
-        pacman: [],
-        paru: [],
-        cargo: [],
-        'cargo:src': [],
-        npm: [],
-        uv: [],
-        pnpm: [],
-        pi: [],
+        remove-pacman ($removals.pacman)
+        for n in ($removals.cargo) { print $"(ansi red)卸载 cargo: ($n)(ansi reset)"; ^cargo uninstall $n | ignore }
+        for n in ($removals.uv) { print $"(ansi red)卸载 uv: ($n)(ansi reset)"; ^uv tool uninstall $n | ignore }
+        for n in ($removals.bun) { print $"(ansi red)卸载 bun: ($n)(ansi reset)"; ^bun remove -g $n | ignore }
+        for n in ($removals.rustup) { print $"(ansi red)卸载 rustup: ($n)(ansi reset)"; ^rustup toolchain uninstall $n | ignore }
     }
 
-    for it in $manifest {
-        let packages = $it.packages? | default [$it.name]
-        let mgr = $it.manager? | default 'pacman'
-
-        let subtbl = $tbl | get $mgr | append $packages
-        $tbl = $tbl | upsert $mgr $subtbl
-    }
-
-
-    # Arch package
-    if ('paru' in $managers) and ($paru != null) {
-        if (($tbl.pacman | length) > 0) or (($tbl.paru | length) > 0) {
-            ^$paru -Sy --needed ...$tbl.pacman ...$tbl.paru
-        }
+    # 3) 复检（--no-prune 时未声明项不算漂移）
+    let after = (plan $manifest)
+    let drift = if $no_prune {
+        $MANAGERS | each {|m| ($after | get $m | get install | length) } | math sum
     } else {
-        if ($tbl.pacman | length) > 0 {
-            sudo pacman -Sy --needed ...$tbl.pacman
+        (drift-count $after)
+    }
+    if $drift == 0 {
+        print $"(ansi green)完成：系统与清单一致(ansi reset)"
+    } else {
+        print $"(ansi yellow)完成：仍有 ($drift) 项差异（安装失败或被跳过）(ansi reset)"
+        exit 1
+    }
+}
+
+def audit [] {
+    let manifest = (load-manifest)
+    validate $manifest
+    let p = (plan $manifest)
+    warn-legacy
+
+    print ""
+    for mgr in $MANAGERS {
+        let i = ($p | get $mgr | get install)
+        let r = ($p | get $mgr | get remove)
+        print $"(ansi green_bold)($mgr)(ansi reset) 缺失: ($i | length)，未声明: ($r | length)"
+        if not ($i | is-empty) { print $"  + ($i | str join ' ')" }
+        if not ($r | is-empty) { print $"  - ($r | str join ' ')" }
+    }
+    print ""
+    let drift = (drift-count $p)
+    if $drift > 0 {
+        print $"(ansi yellow)存在 ($drift) 项差异(ansi reset)"
+        exit 1
+    } else {
+        print $"(ansi green)系统与清单一致(ansi reset)"
+    }
+}
+
+def export-manifest [] {
+    let q = {|n| if ($n =~ '^[A-Za-z0-9_-]+$') { $n } else { '"' + $n + '"' } }
+    mut out = ['# pacman.nu export — 当前系统状态（需人工按 system/drivers/others 分类）', '', '[pacman]']
+    for n in (installed-pacman | sort) { $out = ($out | append (do $q $n) + ' = {}') }
+    $out = ($out | append ['', '[cargo]'])
+    for n in (installed-cargo | sort) { $out = ($out | append (do $q $n) + ' = {}') }
+    $out = ($out | append ['', '[uv]'])
+    for n in (installed-uv | sort) { $out = ($out | append (do $q $n) + ' = {}') }
+    $out = ($out | append ['', '[bun]'])
+    for n in (installed-bun | sort) { $out = ($out | append (do $q $n) + ' = {}') }
+    let tc = (installed-rustup | sort | each {|t| '"' + $t + '"' } | str join ', ')
+    $out = ($out | append ['', '[rustup]', ('toolchains = [' + $tc + ']')])
+    $out | each {|l| print $l } | ignore
+}
+
+def list-manifest [] {
+    let m = (load-manifest)
+    for mgr in $MANAGERS {
+        print $"(ansi green_bold)[($mgr)](ansi reset)"
+        if $mgr == 'rustup' {
+            print $"  ($m.rustup | str join ' ')"
+        } else {
+            ($m | get $mgr | columns) | each {|x| print $"  ($x)" } | ignore
         }
     }
+}
 
-
-    # npm
-    if ('npm' in $managers) and ($npm != null) and (($tbl.npm | length) > 0) {
-        ^$npm install -g ...$tbl.npm
-    }
-
-
-    # cargo binstall
-    if ('cargo-binstall' in $managers) and ($cargo_binstall != null) and (($tbl.cargo | length) > 0) {
-        ^$cargo_binstall ...$tbl.cargo
-    }
-
-
-    # cargo source
-    if ('cargo' in $managers) and ($cargo != null) {
-        for p in $tbl.'cargo:src' {
-            ^$cargo install --git $p
-        }
-    }
-
-
-    # uv
-    if ('uv' in $managers) and ($uv != null) {
-        for p in $tbl.uv {
-            ^$uv tool install $p
-        }
-    }
-
-
-    # pnpm
-    if ('pnpm' in $managers) and ($pnpm != null) {
-        for p in $tbl.pnpm {
-            ^$pnpm install -g --ignore-scripts $p
-        }
-    }
-
-
-    # pi extensions
-    if ('pi' in $managers) and ($pi != null) {
-        for p in $tbl.pi {
-            ^$pi install $p
-        }
+def main [
+    action?: string
+    --dry-run (-n)
+    --yes (-y)
+    --no-prune
+    --check-aur
+] {
+    let action = ($action | default 'sync')
+    match $action {
+        'sync' => { sync --dry-run=$dry_run --yes=$yes --no-prune=$no_prune --check-aur=$check_aur },
+        'audit' => { audit },
+        'export' => { export-manifest },
+        'list' => { list-manifest },
+        _ => { error make {msg: $"未知命令: ($action)（可用: sync / audit / export / list）"} },
     }
 }

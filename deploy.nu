@@ -30,7 +30,6 @@ def main [] {
     | pf ssh ~/.ssh
     | pf codex ~/.codex
     # | pf Templates -t ~
-    | pf pi ~/.pi
     | pfs [
         starship.toml fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
         LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff

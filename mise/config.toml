@@ -1,8 +1,6 @@
 [tools]
 usage = "latest"
 node  = "24"
-npm   = "11.7.0"
-pnpm  = "10"
 # flutter = "3.24"
 
 [settings]

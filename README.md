@@ -60,27 +60,47 @@ $ sudo ./deploy.nu root
 
 [_uv_](./uv) - An extremely fast Python package and project manager, written in Rust. [uv](https://github.com/astral-sh/uv).
 
-## Favorite Applications
+## Packages
 
-I record my favorite applications in [pacman.nu](./pacman.nu).
+Everything installed is declared in [system/packages](./system/packages):
 
-Install with command: `./pacman.nu`
+- `system.toml` — system core (kernel, boot, base runtime)
+- `drivers.toml` — drivers / firmware / hardware support
+- `others.toml` — everything else (pacman/AUR + cargo + uv + bun + rustup)
+
+[pacman.nu](./pacman.nu) reads them and converges the machine:
+
+```bash
+$ ./pacman.nu              # sync: install missing, ask before removing undeclared
+$ ./pacman.nu audit        # report drift only (exit 1 when out of sync)
+$ ./pacman.nu --dry-run    # show the plan without touching anything
+$ ./pacman.nu export       # dump the current machine as TOML (bootstrap)
+```
+
+Manager priority: pacman (official / archlinuxcn / AUR via paru) first — a
+non-pacman declaration that also exists in pacman is rejected. Node is
+managed by mise (project-level versions); JS globals use bun; npm/pnpm are
+not used. The manifest must cover every explicitly installed package — an
+undeclared package is offered for removal on sync.
 
 ## How this repo maps to the machine
 
-`~/.dotfiles` is the single source of truth. Three layers, applied in order:
+`~/.dotfiles` is the single source of truth. Four layers, applied in order:
 
-1. **User config** → `./deploy.nu` — the `pf` / `pfs` lists symlink or
+1. **Packages** → `./pacman.nu` — installs what the TOML manifests declare,
+   offers to remove what is installed but undeclared.
+2. **User config** → `./deploy.nu` — the `pf` / `pfs` lists symlink or
    hard-link each `./<tool>` directory to `~/.config/<tool>` (or `~/<file>`).
-2. **Files under `/`** → `sudo ./deploy.nu root` — `root/` mirrors `/` and is
+3. **Files under `/`** → `sudo ./deploy.nu root` — `root/` mirrors `/` and is
    copied over it (`root/boot`, `root/etc`, `root/usr`).
-3. **Host state** → `sudo ~/.dotfiles/system/apply.sh` — services on/off,
-   timers, power profile, nftables reload and the package policy in
-   `system/packages-remove.txt` (purge list + orphan sweep).
+4. **Host state** → `sudo ~/.dotfiles/system/apply.sh` — services on/off,
+   timers, power profile, nftables reload and the legacy purge list in
+   `system/packages-remove.txt` (orphan sweep).
 
-Workflow: edit dotfiles → `./deploy.nu` → `sudo ./deploy.nu root` →
-`sudo ./system/apply.sh`. The machine converges to the repo; anything
-configured out-of-band is not reproducible and should be moved here.
+Workflow: edit dotfiles → `./pacman.nu` → `./deploy.nu` →
+`sudo ./deploy.nu root` → `sudo ./system/apply.sh`. The machine converges to
+the repo; anything configured out-of-band is not reproducible and should be
+moved here.
 
 Files worth knowing:
 

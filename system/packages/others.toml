@@ -1,0 +1,441 @@
+# 该文件由 pacman.nu 生态使用：声明=期望状态，sync 会安装缺失、提示卸载未声明。
+
+[pacman]
+7zip                       = {}
+aarch64-linux-gnu-binutils = {}
+acpi                       = {}
+asciinema-agg              = { aur = true }
+alacritty                  = {}
+android-tools              = {}
+anydesk-bin                = { aur = true }
+archlinuxcn-keyring        = {}
+asciinema                  = {}
+ast-grep                   = {}
+atuin                      = {}
+aurpublish                 = {}
+bandwhich                  = {}
+base-devel                 = {}
+bash-completion            = {}
+bash-language-server       = {}
+bat                        = {}
+bc                         = {}
+bear                       = {}
+binary                     = {}
+biome                      = {}
+bottom                     = {}
+brightnessctl              = {}
+bun                        = {}
+cargo-audit                = {}
+cargo-auditable            = {}
+cargo-autoinherit          = { aur = true }
+cargo-binstall             = {}
+cargo-binutils             = {}
+cargo-bloat                = {}
+cargo-cache                = {}
+cargo-deny                 = {}
+cargo-depgraph             = {}
+cargo-edit                 = {}
+cargo-expand               = {}
+cargo-flamegraph           = {}
+cargo-generate             = {}
+cargo-insta                = {}
+cargo-llvm-cov             = {}
+cargo-machete              = {}
+cargo-msrv                 = {}
+cargo-nextest              = {}
+cargo-outdated             = {}
+cargo-release              = {}
+cargo-shear                = { aur = true }
+cargo-supply-chain         = {}
+cargo-update               = {}
+cargo-watch                = {}
+cargo-wizard               = {}
+cargo-xwin                 = { aur = true }
+cargo-zigbuild             = {}
+ccze                       = { aur = true }
+chafa                      = {}
+choose                     = {}
+chromium                   = {}
+clang                      = {}
+clash-verge-rev-bin        = { aur = true }
+claude-code                = { aur = true }
+clazy                      = {}
+cliphist                   = {}
+cmake-language-server      = {}
+cmatrix                    = {}
+codespell                  = {}
+coppwr-bin                 = { aur = true }
+copyq                      = {}
+corplink-bin               = { aur = true }
+cowsay                     = {}
+cpio                       = {}
+cppcheck                   = {}
+d2                         = {}
+dagtoc-bin                 = { aur = true }
+dbeaver                    = {}
+debtap                     = { aur = true }
+difftastic                 = {}
+dmenu                      = {}
+dockerfile-language-server = {}
+dolphin-emu                = {}
+dos2unix                   = {}
+downgrade                  = {}
+doxx                       = {}
+dpkg                       = {}
+dragon-drop                = { aur = true }
+dufs                       = {}
+dux-gop                    = {}
+dux-shell                  = {}
+dysk                       = {}
+easyeffects                = {}
+element-desktop            = {}
+enca                       = {}
+erdtree                    = {}
+espeak-ng                  = {}
+ex-vi-compat               = {}
+eza                        = {}
+fcitx5                     = {}
+fcitx5-anthy               = {}
+fcitx5-chinese-addons      = {}
+fcitx5-configtool          = {}
+fcitx5-gtk                 = {}
+fcitx5-material-color      = {}
+fcitx5-pinyin-moegirl      = {}
+fcitx5-pinyin-zhwiki       = {}
+fd                         = {}
+feishu-bin                 = { aur = true }
+ffmpegthumbnailer          = {}
+figlet                     = {}
+fish                       = {}
+
+freerdp                        = {}
+fzf                            = {}
+gdb                            = {}
+genact                         = {}
+git-cliff                      = {}
+git-delta                      = {}
+git-filter-repo                = {}
+github-cli                     = {}
+gitoxide                       = {}
+glmark2                        = {}
+glow                           = {}
+glsl-language-server           = {}
+gopls                          = {}
+gparted                        = {}
+gping                          = {}
+gputest                        = { aur = true }
+greetd                         = {}
+greetd-dms-greeter-git         = { aur = true }
+grim                           = {}
+gst-libav                      = {}
+gst-plugins-bad                = {}
+gst-plugins-good               = {}
+gtkmm                          = { aur = true }
+guestfs-tools                  = {}
+halp                           = {}
+helix                          = {}
+hexyl                          = {}
+hyperfine                      = {}
+imagemagick                    = {}
+impala                         = {}
+inkscape                       = {}
+inotify-tools                  = {}
+iptables                       = {}
+jaq                            = {}
+jless                          = {}
+just                           = {}
+just-lsp                       = {}
+kalker                         = { aur = true }
+kcolorchooser                  = {}
+kdlfmt                         = {}
+keepassxc                      = {}
+kid3-qt                        = {}
+kitty                          = {}
+kvantum-qt5                    = {}
+lazydocker                     = {}
+lazygit                        = {}
+leveldb-cli                    = { aur = true }
+"libc++"                       = {}
+libreoffice-fresh-zh-cn        = {}
+libtree                        = {}
+libvirt                        = {}
+libx11                         = {}
+light                          = { aur = true }
+linuxqq-nt-bwrap               = { aur = true }
+lldb                           = {}
+llmfit                         = {}
+llvm                           = {}
+lshw                           = {}
+lua-language-server            = {}
+ly                             = {}
+lzip                           = {}
+macchina                       = {}
+mangohud                       = {}
+markdownlint-cli2              = {}
+matugen                        = {}
+mbake                          = { aur = true }
+mcfly                          = {}
+mediainfo                      = {}
+minecraft-server               = {}
+mingw-w64-gcc                  = {}
+mise                           = {}
+mold                           = {}
+moonlight-qt                   = {}
+mpv                            = {}
+ms-sys                         = { aur = true }
+mupdf                          = {}
+mupdf-tools                    = {}
+musl                           = {}
+namcap                         = {}
+nano                           = {}
+nasm                           = {}
+navi                           = {}
+neovide                        = {}
+neovim                         = {}
+networkmanager-l2tp            = {}
+ngrok                          = { aur = true }
+niri                           = {}
+nix                            = {}
+nodejs                         = {}
+notcurses                      = {}
+noto-fonts-cjk                 = {}
+noto-fonts-emoji               = {}
+nushell                        = {}
+nvrs-bin                       = { aur = true }
+nvtop                          = {}
+obs-studio                     = {}
+openai-codex                   = {}
+"openssl-1.1"                  = {}
+overskride                     = {}
+oxfmt                          = { aur = true }
+pacfiles                       = {}
+pamixer                        = {}
+pandoc-bin                     = {}
+parallel-disk-usage            = {}
+parsec-bin                     = { aur = true }
+paru                           = {}
+pastel                         = {}
+patchelf                       = {}
+pavucontrol                    = {}
+perl-image-exiftool            = {}
+piliplus                       = {}
+pipewire-alsa                  = {}
+pipewire-jack                  = {}
+pipewire-pulse                 = {}
+pipewire-session-manager       = {}
+pipewire-v4l2                  = {}
+podman                         = {}
+podman-compose                 = {}
+podman-docker                  = {}
+polkit-kde-agent               = {}
+power-profiles-daemon          = {}
+presenterm                     = {}
+prettier                       = {}
+prettier-plugin-xml            = { aur = true }
+prismlauncher                  = {}
+procs                          = {}
+proot-git                      = {}
+protobuf                       = {}
+pueue                          = {}
+pv                             = {}
+python-pip                     = {}
+qbittorrent                    = {}
+qemu-full                      = {}
+qemu-user-static               = {}
+qemu-user-static-binfmt        = {}
+qml-lsp-git                    = { aur = true }
+qpwgraph                       = {}
+qt5-tools                      = {}
+qt5-wayland                    = {}
+qt5ct                          = {}
+qt6-languageserver             = {}
+qt6ct                          = {}
+quickshell                     = {}
+radeontop                      = {}
+rclone                         = {}
+remmina                        = {}
+repo                           = {}
+resvg                          = {}
+ripdrag-git                    = {}
+ripgrep                        = {}
+riscv64-elf-gdb                = {}
+rofi                           = {}
+rsync                          = {}
+ruff                           = {}
+rustdesk                       = {}
+rustscan                       = {}
+rustup                         = {}
+samba                          = {}
+satty                          = {}
+sccache                        = {}
+scrcpy                         = {}
+screenkey                      = {}
+sd                             = {}
+sddm                           = {}
+sdl2_ttf                       = {}
+sdl3_ttf-git                   = { aur = true }
+sea-orm-cli                    = {}
+sentry-cli                     = {}
+serie                          = {}
+shfmt                          = {}
+showmethekey                   = {}
+skim                           = {}
+slint-lsp-bin                  = { aur = true }
+slurp                          = {}
+sniffnet                       = {}
+speech-dispatcher              = {}
+spotify-launcher               = {}
+sqlitebrowser                  = {}
+sshfs                          = {}
+sshs                           = {}
+stalonetray                    = {}
+starship                       = {}
+steam                          = {}
+strongswan                     = {}
+stylua                         = {}
+sunshine                       = {}
+swtpm                          = {}
+tailscale                      = {}
+taplo-cli                      = {}
+telegram-desktop               = {}
+terminus-font                  = {}
+tesseract-data-chi_sim         = {}
+tesseract-data-chi_sim_vert    = {}
+tesseract-data-eng             = {}
+tesseract-data-jpn             = {}
+testdisk                       = {}
+tinymist                       = {}
+todesk-bin                     = { aur = true }
+tokei                          = {}
+tombi                          = {}
+traceroute                     = {}
+tree                           = {}
+tree-sitter-cli                = {}
+ttf-firacode-nerd              = {}
+ttf-jetbrains-mono             = {}
+ttf-nerd-fonts-symbols         = {}
+ttf-nerd-fonts-symbols-mono    = {}
+tumbler                        = {}
+typescript                     = {}
+typescript-language-server     = {}
+typos                          = {}
+typst                          = {}
+typstyle                       = {}
+udiskie                        = {}
+udiskie-dmenu-git              = { aur = true }
+udisks2                        = {}
+ueberzugpp                     = {}
+unarchiver                     = {}
+unrar                          = {}
+unrar-free                     = {}
+unzip                          = {}
+uv                             = {}
+uwsm                           = {}
+valgrind                       = {}
+ventoy-bin                     = { aur = true }
+virt-manager                   = {}
+virt-viewer                    = {}
+viu                            = {}
+vkmark                         = {}
+vscode-langservers-extracted   = { aur = true }
+vtsls                          = { aur = true }
+vulkan-headers                 = {}
+wakeonlan                      = {}
+wasm-pack                      = {}
+webp-pixbuf-loader             = {}
+wechat-universal-bwrap         = { aur = true }
+wemeet-bin                     = { aur = true }
+wemeet-wayland-screenshare-git = { aur = true }
+wget                           = {}
+wild                           = {}
+wimlib                         = {}
+wine                           = {}
+wiremix                        = {}
+wl-clipboard                   = {}
+wl-mirror                      = {}
+wl-screenrec-git               = {}
+wlr-randr                      = {}
+wofi                           = {}
+xbindkeys                      = {}
+xclip                          = {}
+xdg-desktop-portal-gnome       = {}
+xdg-desktop-portal-gtk         = {}
+xdg-desktop-portal-hyprland    = {}
+xdg-ninja-git                  = {}
+xdg-user-dirs                  = {}
+xh                             = {}
+xmake                          = {}
+xmlto                          = {}
+xorg-bdftopcf                  = {}
+xorg-docs                      = {}
+xorg-font-util                 = {}
+xorg-fonts-100dpi              = {}
+xorg-fonts-75dpi               = {}
+xorg-iceauth                   = {}
+xorg-server-devel              = {}
+xorg-server-xephyr             = {}
+xorg-server-xnest              = {}
+xorg-server-xvfb               = {}
+xorg-sessreg                   = {}
+xorg-smproxy                   = {}
+xorg-x11perf                   = {}
+xorg-xbacklight                = {}
+xorg-xcmsdb                    = {}
+xorg-xcursorgen                = {}
+xorg-xdriinfo                  = {}
+xorg-xev                       = {}
+xorg-xgamma                    = {}
+xorg-xhost                     = {}
+xorg-xinit                     = {}
+xorg-xkbevd                    = {}
+xorg-xkbutils                  = {}
+xorg-xkill                     = {}
+xorg-xlsatoms                  = {}
+xorg-xlsclients                = {}
+xorg-xpr                       = {}
+xorg-xrefresh                  = {}
+xorg-xvinfo                    = {}
+xorg-xwd                       = {}
+xorg-xwininfo                  = {}
+xorg-xwud                      = {}
+xwayland-satellite             = {}
+xwaylandvideobridge            = { aur = true }
+xwin                           = { aur = true }
+yaml-language-server           = {}
+yazi-git                       = {}
+ydotool                        = {}
+yt-dlp                         = {}
+zathura                        = {}
+zathura-pdf-mupdf              = {}
+zed                            = {}
+zellij                         = {}
+zen-browser                    = {}
+zenity                         = {}
+zig                            = {}
+zip                            = {}
+zoxide                         = {}
+zsh-autosuggestions            = {}
+zsh-completions                = {}
+zsh-syntax-highlighting        = {}
+
+[cargo]
+cargo-get                    = {}
+cargo-workspace-unused-pub   = { git = "https://github.com/cpg314/cargo-workspace-unused-pub.git" }
+nufmt                        = { git = "https://github.com/nushell/nufmt" }
+slint-viewer                 = {}
+waybar-module-pacman-updates = {}
+wgsl_analyzer                = { git = "https://github.com/wgsl-analyzer/wgsl-analyzer" }
+
+[uv]
+pdf2zh      = {}
+trafilatura = {}
+uiautodev   = {}
+
+[bun]
+"@astrojs/language-server"     = {}
+"@deepseek-ai/dsh"             = {}
+"@tailwindcss/language-server" = {}
+"@vue/language-server"         = {}
+
+[rustup]
+toolchains = ["stable", "nightly", "1.75.0", "1.85", "1.88", "1.88.0", "1.95", "1.97.1", "1.99.1"]

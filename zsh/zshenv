@@ -71,5 +71,3 @@ path=(
 export BUN_INSTALL="$HOME/.cache/.bun"
 path=("$BUN_INSTALL/bin" $path)
 
-# bun completions
-[ -s "/home/zooeywm/.bun/_bun" ] && source "/home/zooeywm/.bun/_bun"

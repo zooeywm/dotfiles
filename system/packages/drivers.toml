@@ -1,0 +1,36 @@
+# 该文件由 pacman.nu 生态使用：声明=期望状态，sync 会安装缺失、提示卸载未声明。
+
+[pacman]
+alsa-firmware                = {}
+alsa-utils                   = {}
+amd-ucode                    = {}
+bluez                        = {}
+bluez-cups                   = {}
+bluez-hid2hci                = {}
+bluez-tools                  = {}
+bluez-utils                  = {}
+cups                         = {}
+cups-pk-helper               = {}
+cyme                         = {}
+epson-inkjet-printer-202101w = { aur = true }
+evhz-git                     = {}
+evtest                       = {}
+gst-plugin-va                = {}
+joyutils                     = {}
+jstest-gtk-git               = { aur = true }
+lib32-vulkan-radeon          = {}
+libfido2                     = {}
+libva-utils                  = {}
+linux-firmware               = {}
+mkinitcpio-firmware          = { aur = true }
+openrazer-daemon             = {}
+razergenie                   = { aur = true }
+sof-firmware                 = {}
+usbip                        = {}
+v4l2loopback-dkms            = {}
+vdpauinfo                    = {}
+vulkan-intel                 = {}
+vulkan-radeon                = {}
+xf86-video-amdgpu            = {}
+xf86-video-ati               = {}
+xf86-video-vesa              = {}
