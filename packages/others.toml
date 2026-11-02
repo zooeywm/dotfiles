@@ -289,7 +289,6 @@ tesseract-data-eng             = {}
 tesseract-data-jpn             = {}
 testdisk                       = {}
 tinymist                       = {}
-todesk-bin                     = { aur = true }
 tokei                          = {}
 tombi                          = {}
 traceroute                     = {}

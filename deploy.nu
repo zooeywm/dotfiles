@@ -185,7 +185,6 @@ def apply-host-state [--dry-run] {
         { desc: "enable cups", optional: true, run: { ^systemctl enable --now cups.service } }
         { desc: "enable dnsmasq (libvirt)", optional: true, run: { ^systemctl enable --now dnsmasq.service } }
         { desc: "enable tailscaled", optional: true, run: { ^systemctl enable --now tailscaled.service } }
-        { desc: "enable todeskd", optional: true, run: { ^systemctl enable --now todeskd.service } }
         { desc: "enable clash-verge-service", optional: true, run: { ^systemctl enable --now clash-verge-service.service } }
         { desc: "enable man-db.timer", optional: true, run: { ^systemctl enable --now man-db.timer } }
         { desc: "enable libvirt-win11-net-auto-switch.timer", optional: true, run: { ^systemctl enable --now libvirt-win11-net-auto-switch.timer } }

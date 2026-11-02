@@ -163,5 +163,4 @@ Machine-specific manual steps (host dependent, not committed):
 - Persistent zswap pool is configured in `root/boot/loader/entries/arch.conf`
   (`zswap.max_pool_percent=35`), deployed with `sudo ./deploy.nu root`.
 - Firewall: `nftables.conf` trusts LANs `10.100.0.0/22`, `192.168.0.0/16`,
-  `172.16.0.0/12`, `tailscale0`, `virbr0`, `Meta` (Clash TUN); ToDesk may fall
-  back to relay.
+  `172.16.0.0/12`, `tailscale0`, `virbr0`, `Meta` (Clash TUN).
