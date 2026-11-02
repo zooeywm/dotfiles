@@ -64,7 +64,6 @@ path=(
     ~/.local/bin
     $path
     ~/.dotnet/tools
-    ~/go/bin
 )
 
 # bun

@@ -113,7 +113,6 @@ gitoxide                       = {}
 glmark2                        = {}
 glow                           = {}
 glsl-language-server           = {}
-gopls                          = {}
 gparted                        = {}
 gping                          = {}
 gputest                        = { aur = true }

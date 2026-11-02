@@ -30,7 +30,6 @@ return {
                     dockerls = vim.deepcopy(with_capabilities),
                     texlab = vim.deepcopy(with_capabilities),
                     taplo = vim.deepcopy(with_capabilities),
-                    gopls = vim.deepcopy(with_capabilities),
                     ts_ls = vim.deepcopy(with_capabilities),
                     tailwindcss = vim.deepcopy(with_capabilities),
                     volar = vim.deepcopy(with_capabilities),

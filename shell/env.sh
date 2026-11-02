@@ -16,8 +16,7 @@ export PATH="$HOME/.cargo/bin:\
 $PATH:\
 $HOME/.local/bin:\
 $HOME/.dotnet/tools:\
-/usr/lib/jvm/default/bin:\
-$HOME/go/bin"
+/usr/lib/jvm/default/bin"
 
 # fcitx5
 export XMODIFIERS='@im=fcitx'
