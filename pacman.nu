@@ -447,11 +447,39 @@ def cargo-installed [] {
     $out
 }
 
-# crates.io 上的最新版本号，失败返回空串
+# crates.io sparse 索引的目录路径（cargo 的 1/2/3/4+ 字符规则）
+def sparse-index-path [name: string] {
+    let n = ($name | str lowercase)
+    let len = ($n | str length)
+    if $len <= 2 {
+        $"($len)/($n)"
+    } else if $len == 3 {
+        $"3/($n | str substring 0..0)/($n)"
+    } else {
+        $"($n | str substring 0..1)/($n | str substring 2..3)/($n)"
+    }
+}
+
+# rsproxy sparse 索引里的最新稳定版；失败回退 cargo search
 def cargo-latest-version [name: string] {
-    let r = (^cargo search $name --limit 1 --registry crates-io | complete)
-    if $r.exit_code != 0 { return '' }
-    let m = (($r.stdout | lines | first | default '') | parse --regex '= "(?<v>[^"]+)"')
+    let r = (^curl -sSf --max-time 8 $"https://rsproxy.cn/index/(sparse-index-path $name)" | complete)
+    if $r.exit_code == 0 {
+        let vers = (
+            $r.stdout | lines
+            | where {|l| $l | str contains '"yanked":false' }
+            | parse --regex '"vers":"(?<v>[^"]+)"'
+            | get v
+        )
+        if not ($vers | is-empty) {
+            let stable = ($vers | where {|v| not ($v | str contains '-') })
+            let pool = (if ($stable | is-empty) { $vers } else { $stable })
+            return ($pool | to text | ^sort -V | lines | last)
+        }
+        return ''
+    }
+    let s = (^cargo search $name --limit 1 --registry crates-io | complete)
+    if $s.exit_code != 0 { return '' }
+    let m = (($s.stdout | lines | first | default '') | parse --regex '= "(?<v>[^"]+)"')
     if ($m | is-empty) { '' } else { $m.0.v }
 }
 
@@ -461,6 +489,37 @@ def git-remote-hash [url: string] {
     if $r.exit_code != 0 { return '' }
     let first = (($r.stdout | lines | first | default '') | split row "\t" | first | str trim)
     $first
+}
+
+# 并发检查清单里的 cargo 包：name -> {git, local, latest, local_hash, remote_hash, up_to_date}
+def cargo-update-plan [manifest] {
+    let installed = (cargo-installed)
+    let rows = (
+        ($manifest.cargo | columns) | par-each {|name|
+            let meta = ($manifest.cargo | get $name)
+            let git = ($meta | get --optional git)
+            let inst = ($installed | get --optional $name)
+            let local = (($inst | default {}).version? | default '')
+            let src = (($inst | default {}).src? | default '')
+            let lh = (($src | parse --regex '#(?<h>[0-9a-fA-F]+)') | get --optional 0 | default {} | get --optional h | default '')
+            if not ($git | is-empty) {
+                let remote = (git-remote-hash $git)
+                {
+                    name: $name, git: $git, local: $local, latest: '',
+                    local_hash: $lh, remote_hash: $remote,
+                    up_to_date: ((not ($lh | is-empty)) and (not ($remote | is-empty)) and ($remote | str starts-with $lh)),
+                }
+            } else {
+                let latest = (cargo-latest-version $name)
+                {
+                    name: $name, git: '', local: $local, latest: $latest,
+                    local_hash: '', remote_hash: '',
+                    up_to_date: ((not ($local | is-empty)) and (not ($latest | is-empty)) and ((^vercmp $local $latest | str trim) != '-1')),
+                }
+            }
+        }
+    )
+    $rows | reduce --fold {} {|it, acc| $acc | upsert $it.name $it }
 }
 
 # 升级：系统 + AUR 全量升级，再升级清单里各原生管理器管理的包。
@@ -481,10 +540,28 @@ def update [--dry-run, --yes] {
         } else {
             print $aur.stdout
         }
-        print $"(ansi green_bold)原生管理器(ansi reset)"
-        for name in ($manifest.cargo | columns) { print $"  cargo install --force ($name)" }
-        print '  uv tool upgrade <清单内工具>'
-        print '  bun add -g <清单内包>'
+        print $"(ansi green_bold)cargo(ansi reset)"
+        let p = (cargo-update-plan $manifest)
+        for name in ($manifest.cargo | columns) {
+            let e = ($p | get --optional $name)
+            if ($e | is-empty) { continue }
+            if not ($e.git | is-empty) {
+                if $e.up_to_date {
+                    print $"  ($name): 已是远端最新（($e.local_hash)）"
+                } else {
+                    print $"  ($name): git 有新提交（($e.local_hash) -> ($e.remote_hash)）"
+                }
+            } else {
+                if $e.up_to_date {
+                    print $"  ($name): 已是最新（($e.local)）"
+                } else {
+                    print $"  ($name): ($e.local) -> ($e.latest)"
+                }
+            }
+        }
+        print $"(ansi green_bold)uv / bun / rustup(ansi reset)"
+        print $"  uv: ($manifest.uv | columns | str join ' ')"
+        print $"  bun: ($manifest.bun | columns | str join ' ')"
         print '  rustup update'
         return
     }
@@ -504,41 +581,29 @@ def update [--dry-run, --yes] {
     mut failed = []
 
     print $"(ansi green_bold)升级 cargo(ansi reset)"
-    let installed = (cargo-installed)
+    let cplan = (cargo-update-plan $manifest)
     for name in ($manifest.cargo | columns) {
+        let e = ($cplan | get --optional $name)
+        if ($e | is-empty) { continue }
         let meta = ($manifest.cargo | get $name)
-        let git = ($meta | get --optional git)
         let pkg = ($meta | get --optional package)
         let locked = (($meta | get --optional locked) | default false)
-        let inst = ($installed | get --optional $name)
-        let local_ver = (($inst | default {}).version? | default '')
-        let local_src = (($inst | default {}).src? | default '')
-        let extra = (if ($pkg | is-empty) { [] } else { [$pkg] })
-        let r = if not ($git | is-empty) {
-            let local_hash = (($local_src | parse --regex '#(?<h>[0-9a-fA-F]+)') | get --optional 0 | default {})
-            let lh = ($local_hash.h? | default '')
-            let remote = (git-remote-hash $git)
-            if (not ($lh | is-empty)) and (not ($remote | is-empty)) and ($remote | str starts-with $lh) {
-                print $"  ($name): 已是远端最新（($lh)）"
-                null
+        if $e.up_to_date {
+            if not ($e.git | is-empty) {
+                print $"  ($name): 已是远端最新（($e.local_hash)）"
             } else {
-                print $"  ($name): 从 git 重装"
-                (^cargo install --git $git --force ...$extra | complete)
+                print $"  ($name): 已是最新（($e.local)）"
             }
+        } else if not ($e.git | is-empty) {
+            print $"  ($name): 从 git 重装"
+            let extra = (if ($pkg | is-empty) { [] } else { [$pkg] })
+            let r = (^cargo install --git $e.git --force ...$extra | complete)
+            if $r.exit_code != 0 { fail-msg $"cargo:($name)" $r; $failed = ($failed | append $"cargo:($name)") }
         } else {
-            let latest = (cargo-latest-version $name)
-            if (not ($local_ver | is-empty)) and (not ($latest | is-empty)) and ((^vercmp $local_ver $latest | str trim) != '-1') {
-                print $"  ($name): 已是最新（($local_ver)）"
-                null
-            } else {
-                let lk = (if $locked { ['--locked'] } else { [] })
-                print $"  ($name): ($local_ver) -> ($latest)"
-                (^cargo install --force $name ...$lk | complete)
-            }
-        }
-        if ($r | is-not-empty) and ($r.exit_code != 0) {
-            fail-msg $"cargo:($name)" $r
-            $failed = ($failed | append $"cargo:($name)")
+            print $"  ($name): ($e.local) -> ($e.latest)"
+            let lk = (if $locked { ['--locked'] } else { [] })
+            let r = (^cargo install --force $name ...$lk | complete)
+            if $r.exit_code != 0 { fail-msg $"cargo:($name)" $r; $failed = ($failed | append $"cargo:($name)") }
         }
     }
 
