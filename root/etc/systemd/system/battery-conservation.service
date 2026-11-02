@@ -1,0 +1,14 @@
+# Managed by ~/.dotfiles (root/etc/systemd/system/battery-conservation.service), deploy with: sudo ./deploy.nu root
+[Unit]
+Description=Battery conservation mode (charge limit)
+After=multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# 只有 IdeaPad 的 VPC2004 设备才存在该节点；换机器时自动跳过
+ExecCondition=/usr/bin/test -e /sys/bus/platform/devices/VPC2004:00/conservation_mode
+ExecStart=/bin/sh -c 'echo 1 > /sys/bus/platform/devices/VPC2004:00/conservation_mode'
+
+[Install]
+WantedBy=multi-user.target

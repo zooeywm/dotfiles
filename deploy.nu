@@ -36,7 +36,7 @@ def main [--dry-run (-n), --prune] {
             fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
             LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
             gitui lazygit zathura mpv gdb pip.conf macchina paru
-            mise atuin uv jj zed nix systemd
+            mise atuin uv jj zed nix systemd chromium-flags.conf
         ] ~/.config
         | targets [
             fontconfig mimeapps.list
@@ -170,6 +170,13 @@ def apply-host-state [--dry-run] {
         { desc: "firewall reload (nftables)", optional: false, run: { ^nft -f /etc/nftables.conf } }
         { desc: "enable nftables", optional: false, run: { ^systemctl enable nftables.service } }
         { desc: "reload udev rules", optional: false, run: { ^udevadm control --reload-rules } }
+        # --- 内核/内存/日志/电源调优（配置文件在 root/etc 下，这里让改动立即生效）---
+        { desc: "load tcp_bbr", optional: false, run: { ^modprobe tcp_bbr } }
+        { desc: "apply sysctl", optional: false, run: { ^sysctl --system } }
+        { desc: "restart systemd-journald", optional: true, run: { ^systemctl restart systemd-journald.service } }
+        { desc: "enable systemd-oomd", optional: false, run: { ^systemctl enable --now systemd-oomd.service } }
+        { desc: "enable battery-conservation", optional: true, run: { ^systemctl enable --now battery-conservation.service } }
+        { desc: "wifi powersave off (iwd DriverQuirks 也在 /etc/iwd/main.conf 里持久化)", optional: true, run: { ^iw dev wlan0 set power_save off } }
         # --- 桌面/基础服务（新机也要保持开启）---
         { desc: "enable NetworkManager", optional: false, run: { ^systemctl enable --now NetworkManager.service } }
         { desc: "enable sddm", optional: false, run: { ^systemctl enable --now sddm.service } }
@@ -181,7 +188,7 @@ def apply-host-state [--dry-run] {
         { desc: "enable libvirt-guests", optional: true, run: { ^systemctl enable --now libvirt-guests.service } }
         { desc: "enable nix-daemon", optional: true, run: { ^systemctl enable --now nix-daemon.service } }
         { desc: "enable sshd", optional: true, run: { ^systemctl enable --now sshd.service } }
-        { desc: "enable smb", optional: true, run: { ^systemctl enable --now smb.service } }
+        { desc: "disable smb (共享按需启动)", optional: true, run: { ^systemctl disable --now smb.service } }
         { desc: "enable cups", optional: true, run: { ^systemctl enable --now cups.service } }
         { desc: "enable dnsmasq (libvirt)", optional: true, run: { ^systemctl enable --now dnsmasq.service } }
         { desc: "enable tailscaled", optional: true, run: { ^systemctl enable --now tailscaled.service } }
