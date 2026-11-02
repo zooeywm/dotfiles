@@ -164,7 +164,6 @@ matugen                        = {}
 mbake                          = { aur = true }
 mcfly                          = {}
 mediainfo                      = {}
-minecraft-server               = {}
 mingw-w64-gcc                  = {}
 mise                           = {}
 mold                           = {}
@@ -217,7 +216,6 @@ polkit-kde-agent               = {}
 power-profiles-daemon          = {}
 presenterm                     = {}
 prettier                       = {}
-prismlauncher                  = {}
 procs                          = {}
 proot-git                      = {}
 protobuf                       = {}
