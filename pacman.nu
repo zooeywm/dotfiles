@@ -295,23 +295,6 @@ def confirm [text: string] {
     }
 }
 
-def warn-legacy [] {
-    try {
-        let r = (^npm ls -g --depth=0 --json | complete)
-        if $r.exit_code == 0 {
-            let d = ($r.stdout | from json)
-            let deps = if ('dependencies' in ($d | columns)) { $d.dependencies | columns } else { [] }
-            let deps = ($deps | where {|x| not ($x in ['npm' 'corepack' 'nopt']) })
-            if ($deps | length) > 0 {
-                print $"(ansi yellow)注意: 旧 npm 全局包仍存在: ($deps | str join ', ')(ansi reset)"
-            }
-        }
-    } catch {}
-    if (($env.HOME | path join '.local' 'share' 'pnpm' 'global') | path exists) {
-        print $"(ansi yellow)注意: 旧 pnpm 全局目录仍存在: ~/.local/share/pnpm/global(ansi reset)"
-    }
-}
-
 # ---------- 命令 ----------
 
 def require-tools [] {
@@ -402,7 +385,6 @@ def audit [] {
     let manifest = (load-manifest)
     validate $manifest
     let p = (plan $manifest)
-    warn-legacy
 
     print ""
     for mgr in $MANAGERS {

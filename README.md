@@ -101,9 +101,8 @@ package is offered for removal on sync.
    hard-link each `./<tool>` directory to `~/.config/<tool>` (or `~/<file>`).
 3. **Files under `/`** → `sudo ./deploy.nu root` — `root/` mirrors `/` and is
    copied over it (`root/boot`, `root/etc`, `root/usr`).
-4. **Host state** → `sudo ~/.dotfiles/system/apply.sh` — services on/off,
-   timers, power profile, nftables reload and the legacy purge list in
-   `system/packages-remove.txt` (orphan sweep).
+4. **Host state** → `sudo ./system/apply.sh` — services on/off, timers,
+   power profile, nftables reload and udev rule reload.
 
 Workflow: edit dotfiles → `./pacman.nu` → `./deploy.nu` →
 `sudo ./deploy.nu root` → `sudo ./system/apply.sh`. The machine converges to
@@ -118,26 +117,28 @@ Files worth knowing:
 - `root/etc/udev/rules.d/99-battery.rules` +
   `root/usr/local/bin/on_battery_change.sh` — AC plug/unplug switches the
   power profile.
-- `root/etc/sddm.conf.d/zz-theme.conf` — `maya` theme (Plasma themes are gone).
+- `root/etc/sddm.conf.d/zz-theme.conf` — `sugar-candy` SDDM theme.
 - `systemd/user/ssh-agent.service` — one long-lived SSH agent
   (`SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket`); never start an agent
   from `zshenv`.
 
-Stack choices (Arch Wiki, current tools over legacy ones):
+Stack choices:
 
-- Firewall: native `nftables`, not `ufw`/iptables-nft.
-- Wi-Fi: `iwd` as the NetworkManager backend, not `wpa_supplicant` (still
-  installed as a hard dependency of `networkmanager`, but unused).
-- Boot loader: `systemd-boot` only; leftover GRUB files and EFI entry removed.
-- Scheduling: systemd timers only; `cronie` removed.
-- Power: `power-profiles-daemon` only; `tuned`, `cpupower`, `cpupower-gui`
-  removed.
-- Desktop: niri + DMS only; KDE Plasma (`plasma-meta` and its apps) removed.
-  Kept on purpose: `sddm` (display manager), `polkit-kde-agent` (only polkit
-  agent) and `xwaylandvideobridge` (XWayland screen capture, needs kpipewire).
-  The remaining KDE packages are only framework libraries these need
-  (`breeze-icons`, `kirigami`, `kirigami-addons`, `kwallet`, `kwindowsystem`,
-  `kpipewire`, `qqc2-desktop-style`).
+- Firewall: native `nftables`.
+- Wi-Fi: `iwd` as the NetworkManager backend; `wpa_supplicant` is installed
+  only as a NetworkManager dependency, with its service disabled.
+- Boot loader: `systemd-boot`.
+- Scheduling: systemd timers (`fstrim`, `paccache`).
+- Power: `power-profiles-daemon`, `acpi-cpufreq` + `schedutil`, zswap pool
+  configured via kernel cmdline.
+- Desktop: niri + DMS; `sddm` is the display manager, `polkit-kde-agent` the
+  only polkit agent, `xwaylandvideobridge` provides XWayland screen capture.
+  The KDE framework libraries these need are `breeze-icons`, `kirigami`,
+  `kirigami-addons`, `kwallet`, `kwindowsystem`, `kpipewire`,
+  `qqc2-desktop-style`.
+- Package state: fully declared in `system/packages/*.toml`; `pacman.nu` is
+  the only package authority (it installs declared packages and removes
+  undeclared ones).
 
 Machine-specific manual steps (host dependent, not committed):
 
