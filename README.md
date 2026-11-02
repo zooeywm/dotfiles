@@ -5,7 +5,7 @@ Arch Linux 配置仓库。`~/.dotfiles` 是唯一事实来源：软件包、用�
 | 入口 | 作用 |
 |---|---|
 | `./bootstrap.sh` | 新机前置：写入 archlinuxcn 源，安装 `paru`/`nushell`/`rsync`/`git` |
-| `./pacman.nu` | 按 `packages/*.toml` 收敛软件包（`sync` / `audit` / `export`） |
+| `./pacman.nu` | 按 `packages/*.toml` 收敛软件包（`sync` / `update` / `audit` / `export`） |
 | `./deploy.nu` | 用户配置 symlink/hard-link 到目标位置，启用用户级 systemd 单元 |
 | `sudo ./deploy.nu root` | `root/` 镜像到 `/`，生成 bootloader UUID、补用户组、开服务 |
 
@@ -32,6 +32,7 @@ Arch Linux 配置仓库。`~/.dotfiles` 是唯一事实来源：软件包、用�
 ## 软件包规则
 
 官方仓库（pacman / archlinuxcn）优先；AUR 只用于没有原生管理器等价物的程序。cargo / uv / bun 等原生管理的工具留在原生管理器，Node 由 mise 管，npm/pnpm 不用。清单必须覆盖所有显式安装包，`pacman.nu sync` 会提议删除未声明的包；`audit` 在漂移时退出 1。
+升级用 `./pacman.nu update`：`paru -Syu` 升级系统/AUR，再按清单升级 cargo（git 源比对远端 HEAD，registry 比对 crates.io 最新版）、uv、bun、rustup；`--dry-run` 先看有哪些更新。
 
 ## deploy 做了什么
 

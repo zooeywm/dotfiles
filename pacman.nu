@@ -13,6 +13,7 @@
 # 用法：
 #   ./pacman.nu                 默认 sync：装缺失，逐项询问卸载未声明
 #   ./pacman.nu sync [flags]    同上
+#   ./pacman.nu update          升级：pacman/AUR 全量 + 原生管理器里清单内的包
 #   ./pacman.nu audit           只报告差异，有差异时退出码 1
 #   ./pacman.nu export          从当前系统导出清单（TOML 输出到 stdout）
 #   ./pacman.nu list            打印合并后的清单
@@ -431,6 +432,146 @@ def list-manifest [] {
     }
 }
 
+# ---------- 升级 ----------
+
+# 已安装的 cargo 包：name -> {version, src}（src 对 git 安装含 #hash）
+def cargo-installed [] {
+    mut out = {}
+    for line in (^cargo install --list | complete | get stdout | lines) {
+        let t = ($line | str trim)
+        if not ($t | str ends-with ':') { continue }
+        let m = ($t | parse --regex '^(?<name>\S+) v(?<ver>\S+)(?: \((?<src>[^)]+)\))?:$')
+        if ($m | is-empty) { continue }
+        $out = ($out | upsert $m.0.name {version: $m.0.ver, src: ($m.0 | get --optional src)})
+    }
+    $out
+}
+
+# crates.io 上的最新版本号，失败返回空串
+def cargo-latest-version [name: string] {
+    let r = (^cargo search $name --limit 1 --registry crates-io | complete)
+    if $r.exit_code != 0 { return '' }
+    let m = (($r.stdout | lines | first | default '') | parse --regex '= "(?<v>[^"]+)"')
+    if ($m | is-empty) { '' } else { $m.0.v }
+}
+
+# 远端仓库 HEAD（git 安装的包用它判断有没有新提交）
+def git-remote-hash [url: string] {
+    let r = (^git ls-remote $url HEAD | complete)
+    if $r.exit_code != 0 { return '' }
+    let first = (($r.stdout | lines | first | default '') | split row "\t" | first | str trim)
+    $first
+}
+
+# 升级：系统 + AUR 全量升级，再升级清单里各原生管理器管理的包。
+def update [--dry-run, --yes] {
+    let manifest = (load-manifest)
+
+    if $dry_run {
+        print $"(ansi green_bold)可升级的 pacman / AUR 包(ansi reset)"
+        let repo = (^checkupdates | complete)
+        if ($repo.stdout | str trim | is-empty) {
+            print '  （仓库无更新）'
+        } else {
+            print $repo.stdout
+        }
+        let aur = (^paru -Qua | complete)
+        if ($aur.stdout | str trim | is-empty) {
+            print '  （AUR 无更新）'
+        } else {
+            print $aur.stdout
+        }
+        print $"(ansi green_bold)原生管理器(ansi reset)"
+        for name in ($manifest.cargo | columns) { print $"  cargo install --force ($name)" }
+        print '  uv tool upgrade <清单内工具>'
+        print '  bun add -g <清单内包>'
+        print '  rustup update'
+        return
+    }
+
+    if not $yes {
+        let ok = (confirm "升级系统与清单内的所有包？[y/N] ")
+        if not $ok { return }
+    }
+
+    print $"(ansi green_bold)升级 pacman / AUR(ansi reset)"
+    ^paru -Syu --noconfirm
+    if $env.LAST_EXIT_CODE != 0 {
+        print $"(ansi red)pacman/paru 升级失败，已中止(ansi reset)"
+        exit 1
+    }
+
+    mut failed = []
+
+    print $"(ansi green_bold)升级 cargo(ansi reset)"
+    let installed = (cargo-installed)
+    for name in ($manifest.cargo | columns) {
+        let meta = ($manifest.cargo | get $name)
+        let git = ($meta | get --optional git)
+        let pkg = ($meta | get --optional package)
+        let locked = (($meta | get --optional locked) | default false)
+        let inst = ($installed | get --optional $name)
+        let local_ver = (($inst | default {}).version? | default '')
+        let local_src = (($inst | default {}).src? | default '')
+        let extra = (if ($pkg | is-empty) { [] } else { [$pkg] })
+        let r = if not ($git | is-empty) {
+            let local_hash = (($local_src | parse --regex '#(?<h>[0-9a-fA-F]+)') | get --optional 0 | default {})
+            let lh = ($local_hash.h? | default '')
+            let remote = (git-remote-hash $git)
+            if (not ($lh | is-empty)) and (not ($remote | is-empty)) and ($remote | str starts-with $lh) {
+                print $"  ($name): 已是远端最新（($lh)）"
+                null
+            } else {
+                print $"  ($name): 从 git 重装"
+                (^cargo install --git $git --force ...$extra | complete)
+            }
+        } else {
+            let latest = (cargo-latest-version $name)
+            if (not ($local_ver | is-empty)) and (not ($latest | is-empty)) and ((^vercmp $local_ver $latest | str trim) != '-1') {
+                print $"  ($name): 已是最新（($local_ver)）"
+                null
+            } else {
+                let lk = (if $locked { ['--locked'] } else { [] })
+                print $"  ($name): ($local_ver) -> ($latest)"
+                (^cargo install --force $name ...$lk | complete)
+            }
+        }
+        if ($r | is-not-empty) and ($r.exit_code != 0) {
+            fail-msg $"cargo:($name)" $r
+            $failed = ($failed | append $"cargo:($name)")
+        }
+    }
+
+    print $"(ansi green_bold)升级 uv(ansi reset)"
+    for name in ($manifest.uv | columns) {
+        let r = (^uv tool upgrade $name | complete)
+        if $r.exit_code != 0 { fail-msg $"uv:($name)" $r; $failed = ($failed | append $"uv:($name)") }
+    }
+
+    print $"(ansi green_bold)升级 bun(ansi reset)"
+    for name in ($manifest.bun | columns) {
+        let r = (^bun add -g $name | complete)
+        if $r.exit_code != 0 { fail-msg $"bun:($name)" $r; $failed = ($failed | append $"bun:($name)") }
+    }
+
+    print $"(ansi green_bold)升级 rustup toolchains(ansi reset)"
+    let r = (^rustup update | complete)
+    if $r.exit_code != 0 { fail-msg 'rustup' $r; $failed = ($failed | append 'rustup') }
+
+    let p = (plan $manifest)
+    let drift = (drift-count $p)
+    print ""
+    if not ($failed | is-empty) {
+        print $"(ansi red)有 ($failed | length) 项升级失败: ($failed | str join ', ')(ansi reset)"
+        exit 1
+    }
+    if $drift > 0 {
+        print $"(ansi yellow)升级完成，但系统有 ($drift) 项与清单不一致（跑 ./pacman.nu 收敛）(ansi reset)"
+    } else {
+        print $"(ansi green)升级完成，系统与清单一致(ansi reset)"
+    }
+}
+
 def main [
     action?: string
     --dry-run (-n)
@@ -441,8 +582,9 @@ def main [
     match $action {
         'sync' => { sync --dry-run=$dry_run --yes=$yes --no-prune=$no_prune },
         'audit' => { audit },
+        'update' => { update --dry-run=$dry_run --yes=$yes },
         'export' => { export-manifest },
         'list' => { list-manifest },
-        _ => { error make {msg: $"未知命令: ($action)（可用: sync / audit / export / list）"} },
+        _ => { error make {msg: $"未知命令: ($action)（可用: sync / update / audit / export / list）"} },
     }
 }
