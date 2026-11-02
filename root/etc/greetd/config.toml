@@ -2,6 +2,7 @@
 vt = 1
 
 [default_session]
-# niri 是 Wayland 会话，tuigreet 认证后由 greetd 以登录用户身份执行
-command = "tuigreet --power-shutdown 'systemctl poweroff' --power-reboot 'systemctl reboot' --cmd niri-session"
+# Dux Shell 配套的图形 greeter：自带 niri 合成器，认证后启动 niri-session
+# --cache-dir/-C 由 dms-greeter sync 生成，仓库里保持同一份状态
+command = "/usr/bin/dms-greeter --command niri --cache-dir /var/cache/dms-greeter -C /etc/greetd/niri/config.kdl"
 user = "greeter"

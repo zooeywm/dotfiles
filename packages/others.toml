@@ -80,6 +80,7 @@ dpkg                       = {}
 dragon-drop                = { aur = true }
 dufs                       = {}
 dux-gop                    = {}
+dux-greeter-bin            = { aur = true }
 dux-shell                  = {}
 dysk                       = {}
 easyeffects                = {}
@@ -118,7 +119,6 @@ gparted                        = {}
 gping                          = {}
 gputest                        = { aur = true }
 greetd                         = {}
-greetd-tuigreet                = {}
 grim                           = {}
 gst-libav                      = {}
 gst-plugins-bad                = {}
