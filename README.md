@@ -93,21 +93,20 @@ package is offered for removal on sync.
 
 ## How this repo maps to the machine
 
-`~/.dotfiles` is the single source of truth. Four layers, applied in order:
+`~/.dotfiles` is the single source of truth. Three layers, applied in order:
 
 1. **Packages** → `./pacman.nu` — installs what the TOML manifests declare,
    offers to remove what is installed but undeclared.
 2. **User config** → `./deploy.nu` — the `pf` / `pfs` lists symlink or
    hard-link each `./<tool>` directory to `~/.config/<tool>` (or `~/<file>`).
-3. **Files under `/`** → `sudo ./deploy.nu root` — `root/` mirrors `/` and is
-   copied over it (`root/boot`, `root/etc`, `root/usr`).
-4. **Host state** → `sudo ./system/apply.sh` — services on/off, timers,
-   power profile, nftables reload and udev rule reload.
+3. **Root system** → `sudo ./deploy.nu root` — `root/` mirrors `/`
+   (`root/boot`, `root/etc`, `root/usr`), then host state is applied:
+   services on/off, timers, power profile, nftables reload and udev reload.
+   `--dry-run` previews both.
 
 Workflow: edit dotfiles → `./pacman.nu` → `./deploy.nu` →
-`sudo ./deploy.nu root` → `sudo ./system/apply.sh`. The machine converges to
-the repo; anything configured out-of-band is not reproducible and should be
-moved here.
+`sudo ./deploy.nu root`. The machine converges to the repo; anything
+configured out-of-band is not reproducible and should be moved here.
 
 Files worth knowing:
 

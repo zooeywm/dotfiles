@@ -6,7 +6,7 @@ use std/log
 #   ./deploy.nu                  正常部署
 #   ./deploy.nu --dry-run        只看会做什么，不落盘
 #   ./deploy.nu --prune          顺带清掉指向本仓库的失效链接（文件已从仓库删除/改名）
-#   sudo ./deploy.nu root        把 root/ 镜像到 /（--dry-run 可预览）
+#   sudo ./deploy.nu root        镜像 root/ 到 / 并应用主机状态（--dry-run 可预览）
 def main [--dry-run (-n), --prune] {
     let results = (
         [
@@ -65,12 +65,18 @@ def main [--dry-run (-n), --prune] {
     }
 }
 
-# 把 root/ 镜像到 /（root/etc、root/boot、root/usr ...）。
+# 把 root/ 镜像到 /，然后应用主机状态（服务、timer、电源、防火墙、udev）。
 def 'main root' [--dry-run (-n)] {
     if (not $dry_run) and ((^id -u | str trim) != '0') {
         log error "root 部署会写入 /etc、/boot 等目录，请用 sudo 运行：sudo ./deploy.nu root"
         exit 1
     }
+    mirror-root --dry-run=$dry_run
+    apply-host-state --dry-run=$dry_run
+}
+
+# root/ 镜像到 /（root/etc、root/boot、root/usr ...）。
+def mirror-root [--dry-run] {
     if (which rsync | is-empty) {
         if $dry_run {
             log info "rsync not found; dry-run unavailable, would run: cp -r root/* /"
@@ -110,6 +116,78 @@ def 'main root' [--dry-run (-n)] {
         log info "root: up to date"
     } else {
         $changed | each {|l| log info $l } | ignore
+    }
+}
+
+# 应用非文件的主机状态：服务开关、timer、电源、nftables、udev。
+def apply-host-state [--dry-run] {
+    let steps = [
+        { desc: "disable NetworkManager-wait-online", optional: false, run: { ^systemctl disable --now NetworkManager-wait-online.service } }
+        { desc: "enable iwd", optional: false, run: { ^systemctl enable --now iwd.service } }
+        { desc: "disable wpa_supplicant", optional: false, run: { ^systemctl disable --now wpa_supplicant.service } }
+        { desc: "disable systemd-timesyncd", optional: false, run: { ^systemctl disable --now systemd-timesyncd.service } }
+        { desc: "enable fstrim.timer", optional: false, run: { ^systemctl enable --now fstrim.timer } }
+        { desc: "enable paccache.timer", optional: false, run: { ^systemctl enable --now paccache.timer } }
+        { desc: "power profile balanced", optional: true, run: { ^powerprofilesctl set balanced } }
+        { desc: "firewall reload (nftables)", optional: false, run: { ^nft -f /etc/nftables.conf } }
+        { desc: "enable nftables", optional: false, run: { ^systemctl enable nftables.service } }
+        { desc: "reload udev rules", optional: false, run: { ^udevadm control --reload-rules } }
+    ]
+
+    let optional_runtime = ["scaling governor schedutil", "zswap max_pool_percent=35"]
+    mut failed = []
+    for s in $steps {
+        if $dry_run {
+            log info $"[dry-run] host: ($s.desc)"
+            continue
+        }
+        let r = (do $s.run | complete)
+        if $r.exit_code == 0 {
+            log info $"host: ($s.desc)"
+        } else if $s.optional {
+            log warning $"host: ($s.desc) ignored: ($r.stderr | str trim)"
+        } else {
+            $failed = ($failed | append $"($s.desc): ($r.stderr | str trim)")
+        }
+    }
+
+    if $dry_run {
+        for d in $optional_runtime {
+            log info $"[dry-run] host: ($d)"
+        }
+        return
+    }
+
+    set-schedutil
+    set-zswap
+
+    let chain = (^nft list chain inet archwm input | complete)
+    if $chain.exit_code == 0 {
+        print $chain.stdout
+    }
+
+    if ($failed | length) > 0 {
+        for f in $failed {
+            log error $f
+        }
+        exit 1
+    }
+}
+
+def set-schedutil [] {
+    for f in (^find /sys/devices/system/cpu -maxdepth 2 -name scaling_governor | lines) {
+        try {
+            "schedutil" | save --force $f
+        } catch {}
+    }
+}
+
+def set-zswap [] {
+    let p = '/sys/module/zswap/parameters/max_pool_percent'
+    if ($p | path exists) {
+        try {
+            "35" | save --force $p
+        } catch {}
     }
 }
 
