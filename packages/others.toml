@@ -70,6 +70,7 @@ dbeaver                    = {}
 debtap                     = { aur = true }
 difftastic                 = {}
 dmenu                      = {}
+dmidecode                  = {}
 dockerfile-language-server = {}
 dolphin-emu                = {}
 dos2unix                   = {}
