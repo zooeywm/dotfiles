@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
-# 切换 DMS 的通知免打扰（DND）
+# 切换 DMS 的通知免打扰（DND），静默切换，不弹提示
 set -uo pipefail
 
-state=$(dms ipc call notifications getDoNotDisturb 2>/dev/null | tr -d '[:space:]')
-
-if [[ ${state:-false} == true ]]; then
-    # 取消静音：先切换（恢复通知），再弹提示
-    dms ipc call notifications toggleDoNotDisturb >/dev/null 2>&1 || exit 1
-    dms ipc call toast info "通知已取消静音" >/dev/null 2>&1
-else
-    # 开启静音：必须先弹提示再切 DND，否则 toast 会被 DND 静音/清掉
-    dms ipc call toast info "通知已静音" >/dev/null 2>&1
-    sleep 0.3
-    dms ipc call notifications toggleDoNotDisturb >/dev/null 2>&1 || exit 1
-fi
+dms ipc call notifications toggleDoNotDisturb >/dev/null 2>&1 || exit 1
