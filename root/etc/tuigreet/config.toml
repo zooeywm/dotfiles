@@ -1,0 +1,30 @@
+# tuigreet 主题：对齐 Dux Shell 的 Material 3 暖色深色调色板
+# （Linux 控制台只有 16 色，所以这里用 ANSI 色名而不是 hex）
+
+[display]
+show_time = true
+align_greeting = "center"
+
+[remember]
+username = true
+
+[secret]
+mode = "characters"
+
+[layout]
+width = 50
+window_padding = 1
+container_padding = 1
+prompt_padding = 1
+
+[theme]
+text     = "bright-white"
+time     = "bright-yellow"
+container = "black"
+border   = "bright-red"
+title    = "bright-yellow"
+greet    = "white"
+prompt   = "bright-red"
+input    = "bright-white"
+action   = "white"
+button   = "bright-yellow"

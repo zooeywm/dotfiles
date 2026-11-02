@@ -3,5 +3,5 @@ vt = 1
 
 [default_session]
 # niri 是 Wayland 会话，tuigreet 认证后由 greetd 以登录用户身份执行
-command = "tuigreet --time --remember --asterisks --power-shutdown 'systemctl poweroff' --power-reboot 'systemctl reboot' --cmd niri-session"
+command = "tuigreet --power-shutdown 'systemctl poweroff' --power-reboot 'systemctl reboot' --cmd niri-session"
 user = "greeter"
