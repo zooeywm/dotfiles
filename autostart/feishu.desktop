@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Feishu
+Name[zh_CN]=飞书
+GenericName=Feishu
+Comment=Feishu is an all-in-one platform that integrates instant communication, calendar, video meeting, collaborative documents, workplace, and various features.
+Exec=env GDK_SCALE=2 /usr/bin/feishu %U
+Icon=bytedance-feishu
+Terminal=false
+StartupNotify=true
+StartupWMClass=feishu
+Categories=Office;

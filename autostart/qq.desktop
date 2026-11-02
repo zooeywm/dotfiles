@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=QQ
+Comment=QQ
+Exec=/opt/QQ/start.sh %U
+Icon=qq
+Terminal=false
+SingleMainWindow=true
+StartupWMClass=QQ
+Categories=Network;Chat;

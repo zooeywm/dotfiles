@@ -42,6 +42,7 @@ def main [--dry-run (-n), --prune] {
             fontconfig mimeapps.list
         ] ~/.config -h
         | targets [memo applications] ~/.local/share
+        | target autostart ~/.config/autostart
         | each {|item| deploy-item $item --dry-run=$dry_run }
     )
 
