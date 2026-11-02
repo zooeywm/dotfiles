@@ -334,7 +334,6 @@ wemeet-wayland-screenshare-git = { aur = true }
 wget                           = {}
 wild                           = {}
 wimlib                         = {}
-wine                           = {}
 wiremix                        = {}
 wl-clipboard                   = {}
 wl-mirror                      = {}
