@@ -180,7 +180,8 @@ def apply-host-state [--dry-run] {
         { desc: "enable NetworkManager", optional: false, run: { ^systemctl enable --now NetworkManager.service } }
         # NetworkManager.service 自带 Also=NetworkManager-wait-online.service，enable 会把它一起打开，所以必须放在后面再关
         { desc: "disable NetworkManager-wait-online", optional: false, run: { ^systemctl disable --now NetworkManager-wait-online.service } }
-        { desc: "enable sddm", optional: false, run: { ^systemctl enable --now sddm.service } }
+        # 不在这里 --now start greetd：deploy 时当前会话还活着，启动 greeter 会顶掉它
+        { desc: "enable greetd", optional: false, run: { ^systemctl enable greetd.service } }
         { desc: "enable chronyd", optional: false, run: { ^systemctl enable --now chronyd.service } }
         { desc: "enable power-profiles-daemon", optional: false, run: { ^systemctl enable --now power-profiles-daemon.service } }
         { desc: "enable udisks2", optional: false, run: { ^systemctl enable --now udisks2.service } }

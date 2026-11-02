@@ -117,6 +117,8 @@ glsl-language-server           = {}
 gparted                        = {}
 gping                          = {}
 gputest                        = { aur = true }
+greetd                         = {}
+greetd-tuigreet                = {}
 grim                           = {}
 gst-libav                      = {}
 gst-plugins-bad                = {}
@@ -255,8 +257,6 @@ sccache                        = {}
 scrcpy                         = {}
 screenkey                      = {}
 sd                             = {}
-sddm                           = {}
-sddm-sugar-candy-git           = { aur = true }
 sdl2_ttf                       = {}
 sdl3_ttf-git                   = { aur = true }
 sea-orm-cli                    = {}
