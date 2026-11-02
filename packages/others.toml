@@ -119,8 +119,6 @@ gopls                          = {}
 gparted                        = {}
 gping                          = {}
 gputest                        = { aur = true }
-greetd                         = {}
-greetd-dms-greeter-git         = { aur = true }
 grim                           = {}
 gst-libav                      = {}
 gst-plugins-bad                = {}
@@ -155,14 +153,12 @@ libreoffice-fresh-zh-cn        = {}
 libtree                        = {}
 libvirt                        = {}
 libx11                         = {}
-light                          = { aur = true }
 linuxqq-nt-bwrap               = { aur = true }
 lldb                           = {}
 llmfit                         = {}
 llvm                           = {}
 lshw                           = {}
 lua-language-server            = {}
-ly                             = {}
 lzip                           = {}
 macchina                       = {}
 mangohud                       = {}
@@ -420,7 +416,6 @@ cargo-workspace-unused-pub   = { git = "https://github.com/cpg314/cargo-workspac
 cargo-xwin                   = {}
 nufmt                        = { git = "https://github.com/nushell/nufmt" }
 slint-viewer                 = {}
-waybar-module-pacman-updates = {}
 wgsl-analyzer                = { git = "https://github.com/wgsl-analyzer/wgsl-analyzer", package = "wgsl-analyzer" }
 xwin                         = {}
 [uv]

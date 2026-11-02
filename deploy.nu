@@ -29,8 +29,6 @@ def main [--dry-run (-n), --prune] {
         | target cargo ~/.cargo
         | target fcitx5/config ~/.config/fcitx5
         | target fcitx5/share ~/.local/share/fcitx5
-        | target waybar/style.less ~/.config/waybar/style.css
-        | target waybar/config.jsonc ~/.config/waybar/config.jsonc
         | target ssh ~/.ssh
         | target codex ~/.codex
         # | target Templates -p ~
@@ -41,7 +39,7 @@ def main [--dry-run (-n), --prune] {
             mise atuin uv jj zed nix systemd
         ] ~/.config
         | targets [
-            hypr fontconfig mimeapps.list
+            fontconfig mimeapps.list
         ] ~/.config -h
         | targets [memo applications] ~/.local/share
         | each {|item| deploy-item $item --dry-run=$dry_run }

@@ -1,0 +1,11 @@
+[Unit]
+Description=Periodically reconcile win11 libvirt NIC bridge/NAT state
+
+[Timer]
+OnBootSec=15s
+OnUnitActiveSec=5s
+AccuracySec=1s
+Unit=libvirt-win11-net-auto-switch.service
+
+[Install]
+WantedBy=timers.target

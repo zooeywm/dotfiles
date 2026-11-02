@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+URI='qemu:///system'
+DOMAIN='win11'
+BRIDGE_IF='br0'
+BRIDGE_MAC='52:54:00:d1:99:b2'
+NAT_MAC='52:54:00:d1:99:b3'
+
+log() {
+  logger -t libvirt-win11-net-auto-switch -- "$*"
+}
+
+if ! virsh -c "$URI" dominfo "$DOMAIN" >/dev/null 2>&1; then
+  log "domain $DOMAIN not found"
+  exit 0
+fi
+
+virsh -c "$URI" net-start default >/dev/null 2>&1 || true
+virsh -c "$URI" net-autostart default >/dev/null 2>&1 || true
+
+carrier=0
+if [[ -r "/sys/class/net/$BRIDGE_IF/carrier" ]]; then
+  carrier="$(cat "/sys/class/net/$BRIDGE_IF/carrier")"
+fi
+
+if [[ "$carrier" == '1' ]]; then
+  bridge_state='up'
+  nat_state='down'
+else
+  bridge_state='down'
+  nat_state='up'
+fi
+
+set_link() {
+  local mac="$1"
+  local state="$2"
+  virsh -c "$URI" domif-setlink "$DOMAIN" "$mac" "$state" >/dev/null 2>&1 || true
+  virsh -c "$URI" domif-setlink "$DOMAIN" "$mac" "$state" --config >/dev/null 2>&1 || true
+}
+
+set_link "$BRIDGE_MAC" "$bridge_state"
+set_link "$NAT_MAC" "$nat_state"
+log "domain=$DOMAIN bridge_if=$BRIDGE_IF carrier=$carrier bridge_mac=$BRIDGE_MAC:$bridge_state nat_mac=$NAT_MAC:$nat_state"
