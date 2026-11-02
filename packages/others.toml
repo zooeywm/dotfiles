@@ -407,7 +407,6 @@ cargo-workspace-unused-pub   = { git = "https://github.com/cpg314/cargo-workspac
 cargo-xwin                   = {}
 nufmt                        = { git = "https://github.com/nushell/nufmt" }
 slint-viewer                 = {}
-wgsl-analyzer                = { git = "https://github.com/wgsl-analyzer/wgsl-analyzer", package = "wgsl-analyzer" }
 xwin                         = {}
 [uv]
 pdf2zh      = {}
