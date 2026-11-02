@@ -1,0 +1,17 @@
+[Unit]
+Description=Clash Verge
+Documentation=https://github.com/clash-verge-rev/clash-verge-rev
+PartOf=graphical-session.target
+After=graphical-session.target dms.service
+
+[Service]
+Type=exec
+ExitType=cgroup
+ExecStart=/usr/bin/clash-verge
+Restart=no
+Slice=app.slice
+# 退出时会卡在清理流程，systemd 默认等 5s 才 SIGKILL；关短超时加快关机
+TimeoutStopSec=1s
+
+[Install]
+WantedBy=graphical-session.target

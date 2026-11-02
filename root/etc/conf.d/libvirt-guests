@@ -1,0 +1,5 @@
+# libvirt-guests 连接 libvirt 用的 URI。
+# 默认值 "default" 在 root 下解析不到可用的连接，关机时会打印
+#   libvirt-guests.sh: Can't connect to default. Skipping.
+# 显式指向系统级 libvirt 即可。
+URIS="qemu:///system"
