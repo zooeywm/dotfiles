@@ -3,9 +3,9 @@
 # pacman.nu — 软件包状态引擎
 #
 # 本体不写软件，只读清单并收敛系统：
-#   system/packages/system.toml    系统核心（内核/引导/基础运行时）
-#   system/packages/drivers.toml   驱动/固件/硬件支持
-#   system/packages/others.toml    其余软件（pacman + cargo + uv + bun + rustup）
+#   packages/system.toml    系统核心（内核/引导/基础运行时）
+#   packages/drivers.toml   驱动/固件/硬件支持
+#   packages/others.toml    其余软件（pacman + cargo + uv + bun + rustup）
 #
 # 管理器优先级：pacman（官方/archlinuxcn/AUR）> 其他。非 pacman 声明若在
 # pacman 侧存在会被 audit/sync 直接报错。
@@ -28,7 +28,7 @@ const TABLE_MANAGERS = ['pacman' 'cargo' 'uv' 'bun']
 def base-dir [] { $env.FILE_PWD }
 
 def manifest-files [] {
-    let dir = ((base-dir) | path join 'system' 'packages')
+    let dir = ((base-dir) | path join 'packages')
     ['system' 'drivers' 'others'] | each {|n| $dir | path join $"($n).toml" }
 }
 

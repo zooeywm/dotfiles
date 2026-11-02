@@ -65,7 +65,7 @@ $ sudo ./deploy.nu root
 
 ## Packages
 
-Everything installed is declared in [system/packages](./system/packages):
+Everything installed is declared in [packages](./packages):
 
 - `system.toml` — system core (kernel, boot, base runtime)
 - `drivers.toml` — drivers / firmware / hardware support
@@ -135,7 +135,7 @@ Stack choices:
   The KDE framework libraries these need are `breeze-icons`, `kirigami`,
   `kirigami-addons`, `kwallet`, `kwindowsystem`, `kpipewire`,
   `qqc2-desktop-style`.
-- Package state: fully declared in `system/packages/*.toml`; `pacman.nu` is
+- Package state: fully declared in `packages/*.toml`; `pacman.nu` is
   the only package authority (it installs declared packages and removes
   undeclared ones).
 
