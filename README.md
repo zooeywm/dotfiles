@@ -27,7 +27,7 @@ $ sudo ./deploy.nu root
 
 ### Desktop
 
-- Windows manager: [niri](https://github.com/YaLTeR/niri) + [dms](https://danklinux.com/)
+- Window manager: [niri](https://github.com/YaLTeR/niri) + [dms](https://danklinux.com/)
 
 ### Terminal
 
@@ -49,9 +49,7 @@ $ sudo ./deploy.nu root
 
 [_navi_](./navi) - The self-made cheat sheets of [navi](https://github.com/denisidoro/navi).
 
-[_scripts_](./scripts) - The shell scripts. Most of them are written in [nushell](https://www.nushell.sh).
-
-[_memo_](./memo) - The memos of my memo tool `scripts/mm`.
+[_memo_](./memo) - The memos of my memo tool `bin/mm`.
 
 [_atuin_](./atuin) - ✨ Magical shell history [atuin](https://github.com/atuinsh/atuin).
 

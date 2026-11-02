@@ -30,7 +30,6 @@ def main [--dry-run (-n), --prune] {
         | target fcitx5/config ~/.config/fcitx5
         | target fcitx5/share ~/.local/share/fcitx5
         | target waybar/style.less ~/.config/waybar/style.css
-        | target waybar/latte.css ~/.config/waybar/latte.css
         | target waybar/config.jsonc ~/.config/waybar/config.jsonc
         | target ssh ~/.ssh
         | target codex ~/.codex
@@ -234,6 +233,11 @@ def targets [
 
 def deploy-item [item: record, --dry-run] {
     let dest = $item.dest | path expand
+    if not ($item.src | path exists) {
+        let msg = $"($item.src): 源文件不存在"
+        log error $msg
+        return { linked: 0, failed: [$msg] }
+    }
 
     match ($item.src | path type) {
         file => {
@@ -319,7 +323,7 @@ def place-dir [
     let entries = (glob $"($src)/**/*")
     let dirs = ($entries | where {|p| ($p | path type) == 'dir' } | each $dest_path)
     if not $dry_run {
-        mkdir -v ...$dirs
+        mkdir -v $dest ...$dirs
     }
 
     let files = ($entries | where {|p| ($p | path type) != 'dir' })
@@ -473,7 +477,7 @@ def is-linked [src: path, dest: path]: nothing -> bool {
 }
 
 def is-hard-linked [src: path, dest: path]: nothing -> bool {
-    let f = {|p| stat --printf %i $p err> /dev/null }
+    let f = {|p| stat --printf '%d:%i' $p err> /dev/null }
     try {
         (do $f $src) == (do $f $dest)
     } catch {
