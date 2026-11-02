@@ -200,7 +200,6 @@ pacfiles                       = {}
 pamixer                        = {}
 pandoc-bin                     = {}
 parallel-disk-usage            = {}
-parsec-bin                     = { aur = true }
 paru                           = {}
 pastel                         = {}
 patchelf                       = {}
