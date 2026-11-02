@@ -160,7 +160,6 @@ def mirror-root [--dry-run] {
 # 应用非文件的主机状态：服务开关、timer、电源、nftables、udev。
 def apply-host-state [--dry-run] {
     let steps = [
-        { desc: "disable NetworkManager-wait-online", optional: false, run: { ^systemctl disable --now NetworkManager-wait-online.service } }
         { desc: "enable iwd", optional: false, run: { ^systemctl enable --now iwd.service } }
         { desc: "disable wpa_supplicant", optional: false, run: { ^systemctl disable --now wpa_supplicant.service } }
         { desc: "disable systemd-timesyncd", optional: false, run: { ^systemctl disable --now systemd-timesyncd.service } }
@@ -179,6 +178,8 @@ def apply-host-state [--dry-run] {
         { desc: "wifi powersave off (iwd DriverQuirks 也在 /etc/iwd/main.conf 里持久化)", optional: true, run: { ^iw dev wlan0 set power_save off } }
         # --- 桌面/基础服务（新机也要保持开启）---
         { desc: "enable NetworkManager", optional: false, run: { ^systemctl enable --now NetworkManager.service } }
+        # NetworkManager.service 自带 Also=NetworkManager-wait-online.service，enable 会把它一起打开，所以必须放在后面再关
+        { desc: "disable NetworkManager-wait-online", optional: false, run: { ^systemctl disable --now NetworkManager-wait-online.service } }
         { desc: "enable sddm", optional: false, run: { ^systemctl enable --now sddm.service } }
         { desc: "enable chronyd", optional: false, run: { ^systemctl enable --now chronyd.service } }
         { desc: "enable power-profiles-daemon", optional: false, run: { ^systemctl enable --now power-profiles-daemon.service } }
