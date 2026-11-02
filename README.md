@@ -51,6 +51,8 @@ root 层：先 rsync `root/` 到 `/`，然后
 - `root/etc/systemd/{journald,coredump}.conf.d/` — 日志体积上限
 - `root/etc/udev/rules.d/99-battery.rules` + `root/usr/local/bin/on_battery_change.sh` — 插拔电源切换 power profile
 - `root/etc/sddm.conf.d/zz-theme.conf` — `sugar-candy` SDDM 主题
+- `root/usr/share/sddm/themes/sugar-candy/Components/Input.qml` — 修主题小 bug：
+  用户名左侧 ComboBox 自带文本被挤成残影（`contentItem: Item {}` 隐藏，用户列表仍由左侧人像图标展开）
 - `systemd/user/ssh-agent.service` — 单例 SSH agent（`SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket`）
 - `mimeapps.list` — 默认 chromium、mpv、zathura、WPS 等关联
 
