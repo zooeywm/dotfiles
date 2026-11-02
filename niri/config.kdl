@@ -214,5 +214,7 @@ binds {
     Mod+E repeat=false hotkey-overlay-title="微信" { spawn-sh "$HOME/.local/bin/app-toggle '^wechat$' /opt/wechat-universal wechat-universal"; }
     // Mod+B：XWayland 视频桥接，按需启停（平时不自启，需要给 X11 应用共享屏幕时打开）
     Mod+B repeat=false hotkey-overlay-title="XWayland 视频桥接" { spawn-sh "if systemctl --user is-active --quiet xwaylandvideobridge; then systemctl --user stop xwaylandvideobridge && notify-send 'XWayland 视频桥接' '已停止'; else systemctl --user start xwaylandvideobridge && notify-send 'XWayland 视频桥接' '已启动'; fi"; }
+    // Mod+M：通知静音 / 取消静音（覆盖 DMS 里 Mod+M 的 Task Manager）
+    Mod+M repeat=false hotkey-overlay-title="通知免打扰" { spawn-sh "$HOME/.local/bin/dnd-toggle"; }
 }
 

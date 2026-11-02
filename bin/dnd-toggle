@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# 切换 DMS 的通知免打扰（DND）
+set -uo pipefail
+
+dms ipc call notifications toggleDoNotDisturb >/dev/null 2>&1 || exit 1
+
+# 开启 DND 后 toast 本身会被静音，所以只在取消静音时给提示；静音看状态栏图标
+state=$(dms ipc call notifications getDoNotDisturb 2>/dev/null | tr -d '[:space:]')
+if [[ ${state:-} != true ]]; then
+    dms ipc call toast info "通知已取消静音" >/dev/null 2>&1
+fi
