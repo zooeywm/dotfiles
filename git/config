@@ -46,3 +46,7 @@
 	tagopt = --force
 [color]
 	ui = auto
+
+# GitHub 加速：https 的 clone/fetch 走 gh-proxy（push 请用 ssh 远端）
+[url "https://v4.gh-proxy.org/https://github.com/"]
+	insteadOf = https://github.com/
