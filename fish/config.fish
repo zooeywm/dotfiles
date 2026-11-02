@@ -14,8 +14,6 @@ set -gx PATH \
 # 默认编辑器
 set -gx EDITOR 'lvim'
 
-# nodejs 本体镜像
-set -gx FNM_NODE_DIST_MIRROR 'https://npmmirror.com/mirrors/node'
 
 # XDG
 set -gx XDG_CONFIG_HOME "$HOME/.config"
@@ -84,8 +82,7 @@ if status is-interactive
 
     # 启动
     zoxide init fish | source
-    starship init fish | source
-    fnm env --use-on-cd | source
+    mise activate fish | source
     mcfly init fish | source
     # atuin init fish | source
     navi widget fish | source

@@ -24,8 +24,6 @@ export QT_QPA_PLATFORMTHEME='qt5ct'
 export EDITOR='lvim'
 export VISUAL='lvim'
 
-# fnm nodejs mirror
-export FNM_NODE_DIST_MIRROR='https://npmmirror.com/mirrors/node'
 
 # go mirror
 export GOPROXY='https://goproxy.cn'

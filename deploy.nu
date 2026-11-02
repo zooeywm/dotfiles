@@ -33,7 +33,7 @@ def main [--dry-run (-n), --prune] {
         | target codex ~/.codex
         # | target Templates -p ~
         | targets [
-            starship.toml fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
+            fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
             LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
             gitui lazygit zathura mpv gdb pip.conf macchina paru
             mise atuin uv jj zed nix systemd
