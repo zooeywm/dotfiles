@@ -1,0 +1,10 @@
+[Unit]
+Description=Xwayland Video Bridge（按需启动，不随会话自启）
+PartOf=graphical-session.target
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/xwaylandvideobridge
+Restart=no
+Slice=app.slice
+TimeoutStopSec=3s
