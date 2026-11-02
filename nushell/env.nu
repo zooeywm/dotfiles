@@ -22,8 +22,6 @@ load-env {
 
     MOLD_JOBS: 1,
 
-    LOCALE_ARCHIVE: /usr/lib/locale/locale-archive, # see https://nixos.wiki/wiki/Locales
-
     RUSTUP_DIST_SERVER: "https://rsproxy.cn", # affect `rustup update`
     RUSTUP_UPDATE_ROOT: "https://rsproxy.cn/rustup", # affect `rustup self-update`
     RUST_BACKTRACE: 1,

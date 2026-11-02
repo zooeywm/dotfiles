@@ -182,7 +182,6 @@ neovim                         = {}
 networkmanager-l2tp            = {}
 ngrok                          = { aur = true }
 niri                           = {}
-nix                            = {}
 nodejs                         = {}
 notcurses                      = {}
 noto-fonts-cjk                 = {}

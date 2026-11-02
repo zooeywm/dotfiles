@@ -36,7 +36,7 @@ def main [--dry-run (-n), --prune] {
             fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
             LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
             gitui lazygit zathura mpv gdb pip.conf macchina paru
-            mise atuin uv jj zed nix systemd chromium-flags.conf
+            mise atuin uv jj zed systemd chromium-flags.conf
         ] ~/.config
         | targets [
             fontconfig mimeapps.list
@@ -186,7 +186,6 @@ def apply-host-state [--dry-run] {
         { desc: "enable bluetooth", optional: true, run: { ^systemctl enable --now bluetooth.service } }
         { desc: "enable libvirtd", optional: true, run: { ^systemctl enable --now libvirtd.service } }
         { desc: "enable libvirt-guests", optional: true, run: { ^systemctl enable --now libvirt-guests.service } }
-        { desc: "enable nix-daemon", optional: true, run: { ^systemctl enable --now nix-daemon.service } }
         { desc: "enable sshd", optional: true, run: { ^systemctl enable --now sshd.service } }
         { desc: "disable smb (共享按需启动)", optional: true, run: { ^systemctl disable --now smb.service } }
         { desc: "enable cups", optional: true, run: { ^systemctl enable --now cups.service } }
