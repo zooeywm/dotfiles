@@ -53,7 +53,7 @@ def main [--dry-run (-n), --prune] {
     })
 
     # 用户级 systemd 单元（文件由上面的部署链接到 ~/.config/systemd/user 后启用）
-    let user_units = ['ssh-agent.service' 'dms.service' 'openrazer-daemon.service' 'clash-verge.service' 'dsh-web.service']
+    let user_units = ['ssh-agent.service' 'dms.service' 'clash-verge.service' 'dsh-web.service']
     for unit in $user_units {
         if $dry_run {
             log info $"[dry-run] user unit: enable ($unit)"
@@ -217,7 +217,7 @@ def apply-host-state [--dry-run] {
     }
 
     # 用户组：由软件包（sysusers）创建，这里补齐成员关系。
-    let user_groups = ['wheel' 'audio' 'input' 'kvm' 'render' 'video' 'libvirt' 'sambashare' 'openrazer']
+    let user_groups = ['wheel' 'audio' 'input' 'kvm' 'render' 'video' 'libvirt' 'sambashare']
     # 目标用户：sudo 下取 SUDO_USER，直接以用户运行则取自己
     let user = (if (($env.SUDO_USER? | default '') | is-not-empty) { $env.SUDO_USER } else { ^id -un | str trim })
     for g in $user_groups {

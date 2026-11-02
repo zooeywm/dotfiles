@@ -23,8 +23,6 @@ libfido2                     = {}
 libva-utils                  = {}
 linux-firmware               = {}
 mkinitcpio-firmware          = { aur = true }
-openrazer-daemon             = {}
-razergenie                   = { aur = true }
 sof-firmware                 = {}
 usbip                        = {}
 v4l2loopback-dkms            = {}
