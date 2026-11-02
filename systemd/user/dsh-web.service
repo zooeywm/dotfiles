@@ -1,0 +1,17 @@
+[Unit]
+Description=DeepSeek Harness Web GUI (dsh web)
+After=network.target
+
+[Service]
+Type=exec
+WorkingDirectory=/home/zooeywm
+# dsh 是 node 脚本（#!/usr/bin/env node），而 systemd 用户环境的 PATH 里没有 mise 的 node
+Environment=PATH=/home/zooeywm/.local/share/mise/installs/node/24/bin:/home/zooeywm/.cache/.bun/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/zooeywm/.cache/.bun/bin/dsh web --no-open
+Restart=on-failure
+RestartSec=2
+Slice=app.slice
+TimeoutStopSec=5s
+
+[Install]
+WantedBy=default.target
