@@ -17,6 +17,23 @@ $ sudo ./deploy.nu root --dry-run   # preview
 $ sudo ./deploy.nu root
 ```
 
+`deploy.nu root` 不是单纯的复制，它还会收敛主机状态：
+
+- `/boot/loader/entries/arch.conf` 按**当前机器**的根分区 UUID 动态生成（换机/换盘不用手改）
+- 补齐用户组成员关系（`wheel audio input kvm render video libvirt sambashare openrazer`）
+- 开启系统服务与 timer（NetworkManager、iwd、sddm、chronyd、libvirtd、nftables、fstrim、paccache 等）
+- 用户侧 `./deploy.nu` 会启用仓库自带的用户级 systemd 单元（如 `ssh-agent.service`）
+
+## Fresh install
+
+1. 用 `archinstall` 装好 base 系统，创建用户 `zooeywm` 并加入 `wheel`（其余组交给 deploy 处理）
+2. `git clone git@github.com:zooeywm/dotfiles.git ~/.dotfiles && cd ~/.dotfiles`
+3. `./bootstrap.sh` — 写入 pacman 仓库配置，安装 `paru`/`nushell`/`rsync`/`git`
+4. `./pacman.nu sync` — 安装清单里的全部软件
+5. `sudo ./deploy.nu root` — 系统文件 + bootloader UUID + 用户组 + 服务
+6. `./deploy.nu` — 用户配置 + 用户级单元
+7. 注销重登，让组成员关系生效
+
 ## My Toolkit
 
 ### Shell

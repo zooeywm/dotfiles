@@ -3,10 +3,11 @@
 use std/log
 
 # 部署用户配置：把仓库里的文件 symlink / hard-link 到目标位置。
-#   ./deploy.nu                  正常部署
+#   ./deploy.nu                  正常部署（文件链接 + 启用用户级 systemd 单元）
 #   ./deploy.nu --dry-run        只看会做什么，不落盘
 #   ./deploy.nu --prune          顺带清掉指向本仓库的失效链接（文件已从仓库删除/改名）
-#   sudo ./deploy.nu root        镜像 root/ 到 / 并应用主机状态（--dry-run 可预览）
+#   sudo ./deploy.nu root        镜像 root/ 到 /、按当前根分区动态写 bootloader 条目，
+#                                并应用主机状态（用户组、服务、timer、电源、nftables、udev）
 def main [--dry-run (-n), --prune] {
     let results = (
         [
@@ -50,6 +51,21 @@ def main [--dry-run (-n), --prune] {
         { pruned: 0, failed: [] }
     })
 
+    # 用户级 systemd 单元（文件由上面的部署链接到 ~/.config/systemd/user 后启用）
+    let user_units = ['ssh-agent.service' 'dms.service' 'openrazer-daemon.service']
+    for unit in $user_units {
+        if $dry_run {
+            log info $"[dry-run] user unit: enable ($unit)"
+            continue
+        }
+        let r = (^systemctl --user enable --now $unit | complete)
+        if $r.exit_code == 0 {
+            log info $"user unit: enabled ($unit)"
+        } else {
+            log warning $"user unit: ($unit) skipped: ($r.stderr | str trim)"
+        }
+    }
+
     let linked = ($results | each {|r| $r.linked } | math sum)
     let failed = (($results | each {|r| $r.failed } | flatten) ++ $prune_result.failed)
     log info $"linked: ($linked), pruned: ($prune_result.pruned), failed: ($failed | length)"
@@ -72,6 +88,42 @@ def 'main root' [--dry-run (-n)] {
 }
 
 # root/ 镜像到 /（root/etc、root/boot、root/usr ...）。
+# 当前根文件系统所在设备的 UUID（LVM/ext4/btrfs 通用）。
+def root-fs-uuid [] {
+    let dev = (^findmnt -no SOURCE / | str trim)
+    if ($dev | is-empty) { return '' }
+    (^lsblk -no UUID $dev | str trim)
+}
+
+# 用当前机器实际的 root UUID 渲染 bootloader 条目。
+def render-boot-entry [uuid: string] {
+    open 'root/boot/loader/entries/arch.conf'
+    | str replace --regex 'root=UUID=[0-9a-fA-F-]+' $"root=UUID=($uuid)"
+}
+
+# 生成 /boot/loader/entries/arch.conf：模板来自仓库，UUID 取当前机器。
+def apply-boot-entry [--dry-run] {
+    let dest = '/boot/loader/entries/arch.conf'
+    let uuid = (root-fs-uuid)
+    if ($uuid | is-empty) {
+        log error 'cannot detect root filesystem UUID'
+        exit 1
+    }
+    let desired = (render-boot-entry $uuid)
+    let current = (if ($dest | path exists) { open --raw $dest | str trim } else { '' })
+    if (($desired | str trim) == $current) {
+        log info "boot entry: up to date"
+        return
+    }
+    if $dry_run {
+        log info $"[dry-run] update ($dest) root UUID=($uuid)"
+        return
+    }
+    $desired | save --force $dest
+    ^chmod 644 $dest
+    log info $"boot entry: updated ($dest) root UUID=($uuid)"
+}
+
 def mirror-root [--dry-run] {
     if (which rsync | is-empty) {
         if $dry_run {
@@ -81,24 +133,12 @@ def mirror-root [--dry-run] {
                 cp -r $src /
             }
         }
+        apply-boot-entry --dry-run=$dry_run
         return
     }
 
-    if $dry_run {
-        let changed = (
-            ^rsync -rlptD -n --modify-window=2 --itemize-changes root/ /
-            | lines
-            | where {|l| ($l | str starts-with '>') or ($l | str starts-with 'c') }
-        )
-        if ($changed | is-empty) {
-            log info "root: up to date"
-        } else {
-            $changed | each {|l| log info $l } | ignore
-        }
-        return
-    }
-
-    let r = (^rsync -rlptD --modify-window=2 --itemize-changes root/ / | complete)
+    let rsync_args = (if $dry_run { ['-rlptD' '-n'] } else { ['-rlptD'] })
+    let r = (^rsync ...$rsync_args --modify-window=2 --itemize-changes         --exclude=boot/loader/entries/arch.conf root/ / | complete)
     if $r.exit_code != 0 {
         log error $"rsync failed: ($r.stderr | str trim)"
         exit 1
@@ -113,6 +153,8 @@ def mirror-root [--dry-run] {
     } else {
         $changed | each {|l| log info $l } | ignore
     }
+
+    apply-boot-entry --dry-run=$dry_run
 }
 
 # 应用非文件的主机状态：服务开关、timer、电源、nftables、udev。
@@ -128,6 +170,25 @@ def apply-host-state [--dry-run] {
         { desc: "firewall reload (nftables)", optional: false, run: { ^nft -f /etc/nftables.conf } }
         { desc: "enable nftables", optional: false, run: { ^systemctl enable nftables.service } }
         { desc: "reload udev rules", optional: false, run: { ^udevadm control --reload-rules } }
+        # --- 桌面/基础服务（新机也要保持开启）---
+        { desc: "enable NetworkManager", optional: false, run: { ^systemctl enable --now NetworkManager.service } }
+        { desc: "enable sddm", optional: false, run: { ^systemctl enable --now sddm.service } }
+        { desc: "enable chronyd", optional: false, run: { ^systemctl enable --now chronyd.service } }
+        { desc: "enable power-profiles-daemon", optional: false, run: { ^systemctl enable --now power-profiles-daemon.service } }
+        { desc: "enable udisks2", optional: false, run: { ^systemctl enable --now udisks2.service } }
+        { desc: "enable bluetooth", optional: true, run: { ^systemctl enable --now bluetooth.service } }
+        { desc: "enable libvirtd", optional: true, run: { ^systemctl enable --now libvirtd.service } }
+        { desc: "enable libvirt-guests", optional: true, run: { ^systemctl enable --now libvirt-guests.service } }
+        { desc: "enable nix-daemon", optional: true, run: { ^systemctl enable --now nix-daemon.service } }
+        { desc: "enable sshd", optional: true, run: { ^systemctl enable --now sshd.service } }
+        { desc: "enable smb", optional: true, run: { ^systemctl enable --now smb.service } }
+        { desc: "enable cups", optional: true, run: { ^systemctl enable --now cups.service } }
+        { desc: "enable dnsmasq (libvirt)", optional: true, run: { ^systemctl enable --now dnsmasq.service } }
+        { desc: "enable tailscaled", optional: true, run: { ^systemctl enable --now tailscaled.service } }
+        { desc: "enable todeskd", optional: true, run: { ^systemctl enable --now todeskd.service } }
+        { desc: "enable clash-verge-service", optional: true, run: { ^systemctl enable --now clash-verge-service.service } }
+        { desc: "enable man-db.timer", optional: true, run: { ^systemctl enable --now man-db.timer } }
+        { desc: "enable libvirt-win11-net-auto-switch.timer", optional: true, run: { ^systemctl enable --now libvirt-win11-net-auto-switch.timer } }
     ]
 
     let optional_runtime = ["scaling governor schedutil", "zswap max_pool_percent=35"]
@@ -144,6 +205,32 @@ def apply-host-state [--dry-run] {
             log warning $"host: ($s.desc) ignored: ($r.stderr | str trim)"
         } else {
             $failed = ($failed | append $"($s.desc): ($r.stderr | str trim)")
+        }
+    }
+
+    # 用户组：由软件包（sysusers）创建，这里补齐成员关系。
+    let user_groups = ['wheel' 'audio' 'input' 'kvm' 'render' 'video' 'libvirt' 'sambashare' 'openrazer']
+    # 目标用户：sudo 下取 SUDO_USER，直接以用户运行则取自己
+    let user = (if (($env.SUDO_USER? | default '') | is-not-empty) { $env.SUDO_USER } else { ^id -un | str trim })
+    for g in $user_groups {
+        let grp = (^getent group $g | complete)
+        if $grp.exit_code != 0 {
+            log warning $"group: ($g) 不存在，跳过（对应软件包还没装？）"
+            continue
+        }
+        let has = (^id -nG $user | complete | get stdout | str trim | split row ' ' | any {|x| $x == $g })
+        if $has {
+            continue
+        }
+        if $dry_run {
+            log info $"[dry-run] group: add ($user) -> ($g)"
+            continue
+        }
+        let r = (^gpasswd -a $user $g | complete)
+        if $r.exit_code == 0 {
+            log info $"group: added ($user) -> ($g)"
+        } else {
+            $failed = ($failed | append $"group ($g): ($r.stderr | str trim)")
         }
     }
 
