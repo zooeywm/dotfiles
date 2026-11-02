@@ -265,6 +265,7 @@ scrcpy                         = {}
 screenkey                      = {}
 sd                             = {}
 sddm                           = {}
+sddm-sugar-candy-git           = { aur = true }
 sdl2_ttf                       = {}
 sdl3_ttf-git                   = { aur = true }
 sea-orm-cli                    = {}
