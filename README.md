@@ -97,8 +97,8 @@ package is offered for removal on sync.
 
 1. **Packages** → `./pacman.nu` — installs what the TOML manifests declare,
    offers to remove what is installed but undeclared.
-2. **User config** → `./deploy.nu` — the `pf` / `pfs` lists symlink or
-   hard-link each `./<tool>` directory to `~/.config/<tool>` (or `~/<file>`).
+2. **User config** → `./deploy.nu` — the `target` / `targets` list symlinks or
+   hard-links each `./<tool>` directory to `~/.config/<tool>` (or `~/<file>`).
 3. **Root system** → `sudo ./deploy.nu root` — `root/` mirrors `/`
    (`root/boot`, `root/etc`, `root/usr`), then host state is applied:
    services on/off, timers, power profile, nftables reload and udev reload.

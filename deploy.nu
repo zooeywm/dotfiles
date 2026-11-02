@@ -11,40 +11,40 @@ def main [--dry-run (-n), --prune] {
     let results = (
         [
         ]
-        | pf shell ~/.config/shell
-        | pf clangd ~/.config/clangd
-        | pf navi ~/.local/share/navi/cheats
-        | pf zsh/zshenv ~/.zshenv
-        | pf zsh/zshrc ~/.config/zsh/.zshrc
-        | pf zsh/p10k.zsh -t ~/.config/zsh
-        | pf bashrc ~/.bashrc
-        | pf rofi/config ~/.config/rofi
-        | pf rofi/themes ~/.local/share/rofi/themes
+        | target shell ~/.config/shell
+        | target clangd ~/.config/clangd
+        | target navi ~/.local/share/navi/cheats
+        | target zsh/zshenv ~/.zshenv
+        | target zsh/zshrc ~/.config/zsh/.zshrc
+        | target zsh/p10k.zsh -p ~/.config/zsh
+        | target bashrc ~/.bashrc
+        | target rofi/config ~/.config/rofi
+        | target rofi/themes ~/.local/share/rofi/themes
         # hard-link on
-        | pf gtk/gtk-3.0 ~/.config/gtk-3.0 -h
-        | pf gtk/gtk-4.0 ~/.config/gtk-4.0 -h
-        | pf Xresources ~/.Xresources -h
+        | target gtk/gtk-3.0 ~/.config/gtk-3.0 -h
+        | target gtk/gtk-4.0 ~/.config/gtk-4.0 -h
+        | target Xresources ~/.Xresources -h
         # hard-link off
-        | pf bin -t ~/.local
-        | pf cargo ~/.cargo
-        | pf fcitx5/config ~/.config/fcitx5
-        | pf fcitx5/share ~/.local/share/fcitx5
-        | pf waybar/style.less ~/.config/waybar/style.css
-        | pf waybar/latte.css ~/.config/waybar/latte.css
-        | pf waybar/config.jsonc ~/.config/waybar/config.jsonc
-        | pf ssh ~/.ssh
-        | pf codex ~/.codex
-        # | pf Templates -t ~
-        | pfs [
+        | target bin -p ~/.local
+        | target cargo ~/.cargo
+        | target fcitx5/config ~/.config/fcitx5
+        | target fcitx5/share ~/.local/share/fcitx5
+        | target waybar/style.less ~/.config/waybar/style.css
+        | target waybar/latte.css ~/.config/waybar/latte.css
+        | target waybar/config.jsonc ~/.config/waybar/config.jsonc
+        | target ssh ~/.ssh
+        | target codex ~/.codex
+        # | target Templates -p ~
+        | targets [
             starship.toml fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
             LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
             gitui lazygit zathura mpv gdb pip.conf macchina paru
             mise atuin uv jj zed nix systemd
         ] ~/.config
-        | pfs [
+        | targets [
             hypr fontconfig mimeapps.list
         ] ~/.config -h
-        | pfs [memo applications] ~/.local/share
+        | targets [memo applications] ~/.local/share
         | each {|item| deploy-item $item --dry-run=$dry_run }
     )
 
@@ -192,9 +192,12 @@ def set-zswap [] {
 }
 
 # prepare
-def pf [
+# 向部署列表追加一个目标：仓库里的 src -> 目标位置 dest。
+#   --place (-p)：dest 是一个目录，把 src 按相对路径放进该目录
+#   --hard  (-h)：硬链接而不是符号链接
+def target [
     src: string,
-    --target (-t),
+    --place (-p),
     dest: string,
     --hard (-h),
 ] {
@@ -204,12 +207,13 @@ def pf [
     | append {
         src: $src,
         dest: $dest,
-        place: $target,
+        place: $place,
         hard: $hard,
     }
 }
 
-def pfs [
+# 一次把多个 src 追加到同一个 dest 目录（相当于对每个 src 用 target --place）。
+def targets [
     srcs: list<string>,
     dest: string
     --hard (-h),
