@@ -17,8 +17,6 @@ def main [--dry-run (-n), --prune] {
         | target zsh/zshenv ~/.zshenv
         | target zsh/zshrc ~/.config/zsh/.zshrc
         | target zsh/p10k.zsh -p ~/.config/zsh
-        | target bashrc ~/.bashrc
-        | target bash_profile ~/.bash_profile
         | target rofi/config ~/.config/rofi
         | target rofi/themes ~/.local/share/rofi/themes
         # hard-link on
