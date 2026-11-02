@@ -6,7 +6,6 @@ aarch64-linux-gnu-binutils = {}
 acpi                       = {}
 alacritty                  = {}
 android-tools              = {}
-anydesk-bin                = { aur = true }
 archlinuxcn-keyring        = {}
 asciinema                  = {}
 ast-grep                   = {}
