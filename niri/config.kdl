@@ -113,6 +113,7 @@ switch-events {
 
 spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri & /usr/lib/xdg-desktop-portal-hyprland"
 spawn-sh-at-startup "udiskie --tray"
+spawn-sh-at-startup "xrdb -merge ~/.Xresources"
 
 hotkey-overlay {
     skip-at-startup
