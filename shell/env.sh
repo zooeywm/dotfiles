@@ -5,8 +5,8 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 # rust 工具链镜像源
-export RUSTUP_DIST_SERVER='https://mirrors.ustc.edu.cn/rust-static'
-export RUSTUP_UPDATE_ROOT='https://mirrors.ustc.edu.cn/rust-static/rustup'
+export RUSTUP_DIST_SERVER='https://rsproxy.cn'
+export RUSTUP_UPDATE_ROOT='https://rsproxy.cn/rustup'
 export RUSTC_WRAPPER="/usr/bin/sccache"
 export SCCACHE_DIR='$HOME/.cache/sccache'
 export SCCACHE_CACHE_SIZE="100G"

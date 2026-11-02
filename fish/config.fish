@@ -1,6 +1,6 @@
 # rust 工具链镜像源
-set -gx RUSTUP_DIST_SERVER 'https://mirrors.ustc.edu.cn/rust-static'
-set -gx RUSTUP_UPDATE_ROOT 'https://mirrors.ustc.edu.cn/rust-static/rustup'
+set -gx RUSTUP_DIST_SERVER 'https://rsproxy.cn'
+set -gx RUSTUP_UPDATE_ROOT 'https://rsproxy.cn/rustup'
 
 # 用户可执行程序目录
 set -gx PATH \
