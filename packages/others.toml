@@ -165,6 +165,7 @@ matugen                        = {}
 mbake                          = { aur = true }
 mcfly                          = {}
 mediainfo                      = {}
+"memtest86+-efi"                = {}
 mingw-w64-gcc                  = {}
 mise                           = {}
 mold                           = {}
