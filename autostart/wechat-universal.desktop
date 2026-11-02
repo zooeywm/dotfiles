@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=WeChat (Universal)
+Name[zh_CN]=微信 Universal
+Comment=WeChat Universal
+TryExec=/usr/lib/wechat-universal/start.sh
+Exec=/usr/lib/wechat-universal/start.sh %u
+Icon=wechat-universal
+Categories=Network;InstantMessaging;Chat;
+Terminal=false
+StartupWMClass=wechat
+X-GNOME-SingleWindow=true
+SingleMainWindow=true
