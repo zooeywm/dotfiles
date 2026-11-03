@@ -199,19 +199,25 @@ def validate [manifest] {
 
 # ---------- 安装 ----------
 
-def fail-msg [name, r] {
-    let why = (($r.stderr | str trim) | str substring 0..300)
-    print $"(ansi red)安装失败 ($name): ($why)(ansi reset)"
+# 流式执行外部命令：stdout/stderr 直接打到终端，进度条/下载速度可见；
+# 返回是否成功（替代会吞掉实时输出的 | complete）。
+def run-live [label: string, ...cmd: string]: nothing -> bool {
+    try {
+        run-external ...$cmd
+        true
+    } catch {
+        let code = ($env.LAST_EXIT_CODE | default '?')
+        print $"(ansi red)失败 ($label): exit ($code)(ansi reset)"
+        false
+    }
 }
 
 def install-pacman [names] {
     if ($names | is-empty) { return [] }
     print $"(ansi green)安装 pacman: ($names | str join ' ')(ansi reset)"
-    let r = (^paru -S --needed --noconfirm ...$names | complete)
-    if $r.exit_code == 0 {
+    if (run-live 'pacman' ...(['paru' '-S' '--needed' '--noconfirm'] ++ $names)) {
         []
     } else {
-        fail-msg 'pacman' $r
         $names
     }
 }
@@ -225,16 +231,16 @@ def install-cargo [manifest, names] {
         let locked = (($meta | get --optional locked) | default false)
         # 可选字段：package = "crate 名"（git 仓库含多个二进制时指定）、
         #           locked = true（用 crate 自带 Cargo.lock，避免新依赖编译失败）
-        let r = if not ($git | is-empty) {
+        let ok = if not ($git | is-empty) {
             print $"(ansi green)安装 cargo-git: ($name)(ansi reset)"
             let extra = (if ($pkg | is-empty) { [] } else { [$pkg] })
-            (^cargo install --git $git --force ...$extra | complete)
+            run-live $"cargo:($name)" ...(['cargo' 'install' '--git' $git '--force'] ++ $extra)
         } else {
             print $"(ansi green)安装 cargo: ($name)(ansi reset)"
             let extra = (if $locked { ['--locked'] } else { [] })
-            (^cargo install --force $name ...$extra | complete)
+            run-live $"cargo:($name)" ...(['cargo' 'install' '--force' $name] ++ $extra)
         }
-        if $r.exit_code != 0 { fail-msg $"cargo:($name)" $r; $failed = ($failed | append $"cargo:($name)") }
+        if not $ok { $failed = ($failed | append $"cargo:($name)") }
     }
     $failed
 }
@@ -243,8 +249,9 @@ def install-uv [names] {
     mut failed = []
     for name in $names {
         print $"(ansi green)安装 uv: ($name)(ansi reset)"
-        let r = (^uv tool install $name | complete)
-        if $r.exit_code != 0 { fail-msg $"uv:($name)" $r; $failed = ($failed | append $"uv:($name)") }
+        if not (run-live $"uv:($name)" ...['uv' 'tool' 'install' $name]) {
+            $failed = ($failed | append $"uv:($name)")
+        }
     }
     $failed
 }
@@ -253,8 +260,9 @@ def install-bun [names] {
     mut failed = []
     for name in $names {
         print $"(ansi green)安装 bun: ($name)(ansi reset)"
-        let r = (^bun add -g $name | complete)
-        if $r.exit_code != 0 { fail-msg $"bun:($name)" $r; $failed = ($failed | append $"bun:($name)") }
+        if not (run-live $"bun:($name)" ...['bun' 'add' '-g' $name]) {
+            $failed = ($failed | append $"bun:($name)")
+        }
     }
     $failed
 }
@@ -263,8 +271,9 @@ def install-rustup [names] {
     mut failed = []
     for ch in $names {
         print $"(ansi green)安装 rustup: ($ch)(ansi reset)"
-        let r = (^rustup toolchain install $ch | complete)
-        if $r.exit_code != 0 { fail-msg $"rustup:($ch)" $r; $failed = ($failed | append $"rustup:($ch)") }
+        if not (run-live $"rustup:($ch)" ...['rustup' 'toolchain' 'install' $ch]) {
+            $failed = ($failed | append $"rustup:($ch)")
+        }
     }
     $failed
 }
@@ -572,8 +581,9 @@ def update [--dry-run, --yes] {
     }
 
     print $"(ansi green_bold)升级 pacman / AUR(ansi reset)"
-    ^paru -Syu --noconfirm
-    if $env.LAST_EXIT_CODE != 0 {
+    try {
+        ^paru -Syu --noconfirm
+    } catch {
         print $"(ansi red)pacman/paru 升级失败，已中止(ansi reset)"
         exit 1
     }
@@ -597,31 +607,36 @@ def update [--dry-run, --yes] {
         } else if not ($e.git | is-empty) {
             print $"  ($name): 从 git 重装"
             let extra = (if ($pkg | is-empty) { [] } else { [$pkg] })
-            let r = (^cargo install --git $e.git --force ...$extra | complete)
-            if $r.exit_code != 0 { fail-msg $"cargo:($name)" $r; $failed = ($failed | append $"cargo:($name)") }
+            if not (run-live $"cargo:($name)" ...(['cargo' 'install' '--git' $e.git '--force'] ++ $extra)) {
+                $failed = ($failed | append $"cargo:($name)")
+            }
         } else {
             print $"  ($name): ($e.local) -> ($e.latest)"
             let lk = (if $locked { ['--locked'] } else { [] })
-            let r = (^cargo install --force $name ...$lk | complete)
-            if $r.exit_code != 0 { fail-msg $"cargo:($name)" $r; $failed = ($failed | append $"cargo:($name)") }
+            if not (run-live $"cargo:($name)" ...(['cargo' 'install' '--force' $name] ++ $lk)) {
+                $failed = ($failed | append $"cargo:($name)")
+            }
         }
     }
 
     print $"(ansi green_bold)升级 uv(ansi reset)"
     for name in ($manifest.uv | columns) {
-        let r = (^uv tool upgrade $name | complete)
-        if $r.exit_code != 0 { fail-msg $"uv:($name)" $r; $failed = ($failed | append $"uv:($name)") }
+        if not (run-live $"uv:($name)" ...['uv' 'tool' 'upgrade' $name]) {
+            $failed = ($failed | append $"uv:($name)")
+        }
     }
 
     print $"(ansi green_bold)升级 bun(ansi reset)"
     for name in ($manifest.bun | columns) {
-        let r = (^bun add -g $name | complete)
-        if $r.exit_code != 0 { fail-msg $"bun:($name)" $r; $failed = ($failed | append $"bun:($name)") }
+        if not (run-live $"bun:($name)" ...['bun' 'add' '-g' $name]) {
+            $failed = ($failed | append $"bun:($name)")
+        }
     }
 
     print $"(ansi green_bold)升级 rustup toolchains(ansi reset)"
-    let r = (^rustup update | complete)
-    if $r.exit_code != 0 { fail-msg 'rustup' $r; $failed = ($failed | append 'rustup') }
+    if not (run-live 'rustup' ...['rustup' 'update']) {
+        $failed = ($failed | append 'rustup')
+    }
 
     let p = (plan $manifest)
     let drift = (drift-count $p)
