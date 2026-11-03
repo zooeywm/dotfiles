@@ -246,14 +246,20 @@ def install-cargo [manifest, names] {
 }
 
 def install-uv [names] {
-    mut failed = []
-    for name in $names {
-        print $"(ansi green)安装 uv: ($name)(ansi reset)"
-        if not (run-live $"uv:($name)" ...['uv' 'tool' 'install' $name]) {
-            $failed = ($failed | append $"uv:($name)")
+    if ($names | is-empty) { return [] }
+    print $"(ansi green)安装 uv: ($names | str join ' ')(ansi reset)"
+    if (run-live 'uv' ...(['uv' 'tool' 'install'] ++ $names)) {
+        []
+    } else {
+        print $"(ansi yellow)uv 批量安装失败，逐个重试…(ansi reset)"
+        mut failed = []
+        for name in $names {
+            if not (run-live $"uv:($name)" ...['uv' 'tool' 'install' $name]) {
+                $failed = ($failed | append $"uv:($name)")
+            }
         }
+        $failed
     }
-    $failed
 }
 
 def install-bun [names] {
@@ -626,9 +632,16 @@ def update [--dry-run, --yes] {
     }
 
     print $"(ansi green_bold)升级 uv(ansi reset)"
-    for name in ($manifest.uv | columns) {
-        if not (run-live $"uv:($name)" ...['uv' 'tool' 'upgrade' $name]) {
-            $failed = ($failed | append $"uv:($name)")
+    let uv_names = ($manifest.uv | columns)
+    if not ($uv_names | is-empty) {
+        # uv tool upgrade 支持多包名，一次解析、只输出一次 Nothing to upgrade
+        if not (run-live 'uv' ...(['uv' 'tool' 'upgrade'] ++ $uv_names)) {
+            print $"(ansi yellow)uv 批量升级失败，逐个重试…(ansi reset)"
+            for name in $uv_names {
+                if not (run-live $"uv:($name)" ...['uv' 'tool' 'upgrade' $name]) {
+                    $failed = ($failed | append $"uv:($name)")
+                }
+            }
         }
     }
 
