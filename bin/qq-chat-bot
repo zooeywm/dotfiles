@@ -30,8 +30,8 @@ const GUEST_WORKSPACE = `${STATE_DIR}/guest-workspace`;
 
 const OWNER_MAX_REPLY = 1500;
 const GUEST_MAX_REPLY = 600;
-const GUEST_MIN_INTERVAL_MS = 8_000;
 const GUEST_DAILY_LIMIT = 40;
+const GUEST_MAX_PENDING = 3; // 同一访客最多排 3 条，防止刷屏
 const MAX_GUEST_SESSIONS = 20;
 
 function log(msg: string) {
@@ -274,15 +274,22 @@ class AgentConn {
     return run;
   }
 
-  async promptOn(sessionId: string, text: string): Promise<string> {
+  async promptOn(sessionId: string, text: string, images: ImagePart[] = []): Promise<string> {
     const chunks: string[] = [];
     this.collectors.set(sessionId, (t) => chunks.push(t));
+    const prompt: any[] = [
+      {
+        type: "text",
+        text: text || "（发来一张图片，请看看内容再回复）",
+      },
+      ...images.map((img) => ({
+        type: "image",
+        data: img.data,
+        mimeType: img.mimeType,
+      })),
+    ];
     try {
-      await this.rpc(
-        "session/prompt",
-        { sessionId, prompt: [{ type: "text", text }] },
-        300_000,
-      );
+      await this.rpc("session/prompt", { sessionId, prompt }, 300_000);
     } finally {
       this.collectors.delete(sessionId);
     }
@@ -290,10 +297,10 @@ class AgentConn {
   }
 
   // 主人用：固定 session
-  prompt(text: string): Promise<string> {
+  prompt(text: string, images: ImagePart[] = []): Promise<string> {
     return this.enqueue(async () => {
       const sid = await this.ensureSession();
-      return this.promptOn(sid, text);
+      return this.promptOn(sid, text, images);
     });
   }
 
@@ -337,20 +344,21 @@ async function guestSession(userId: number): Promise<string> {
   return sessionId;
 }
 
-type GuestUsage = { lastAt: number; day: string; count: number };
+type GuestUsage = { day: string; count: number };
 const guestUsage = new Map<number, GuestUsage>();
+const guestPending = new Map<number, number>();
 
-function guestAllowed(userId: number): { ok: boolean; reason?: "fast" | "daily" } {
-  const now = Date.now();
+function guestAllowed(userId: number): { ok: boolean; reason?: "pending" | "daily" } {
   const day = new Date().toISOString().slice(0, 10);
-  const u = guestUsage.get(userId) ?? { lastAt: 0, day, count: 0 };
+  const u = guestUsage.get(userId) ?? { day, count: 0 };
   if (u.day !== day) {
     u.day = day;
     u.count = 0;
   }
-  if (now - u.lastAt < GUEST_MIN_INTERVAL_MS) return { ok: false, reason: "fast" };
+  if ((guestPending.get(userId) ?? 0) >= GUEST_MAX_PENDING) {
+    return { ok: false, reason: "pending" };
+  }
   if (u.count >= GUEST_DAILY_LIMIT) return { ok: false, reason: "daily" };
-  u.lastAt = now;
   u.count += 1;
   guestUsage.set(userId, u);
   return { ok: true };
@@ -386,19 +394,25 @@ async function sendQQ(userId: number, text: string) {
   }
 }
 
-function extractText(event: any): string {
-  if (typeof event.raw_message === "string" && event.raw_message.trim()) {
-    return event.raw_message.trim();
-  }
-  if (typeof event.message === "string") return event.message.trim();
+function extractContent(event: any): { text: string; images: string[] } {
+  const images: string[] = [];
+  const texts: string[] = [];
   if (Array.isArray(event.message)) {
-    return event.message
-      .filter((s: any) => s.type === "text")
-      .map((s: any) => s.data?.text ?? "")
-      .join("")
-      .trim();
+    for (const seg of event.message) {
+      if (seg?.type === "text") texts.push(seg.data?.text ?? "");
+      if ((seg?.type === "image" || seg?.type === "mface") && seg.data?.url) {
+        images.push(seg.data.url);
+      }
+    }
   }
-  return "";
+  let text = texts.join("").trim();
+  if (!text && typeof event.raw_message === "string") {
+    text = event.raw_message.replace(/\[CQ:[^\]]+\]/g, "").trim();
+  }
+  if (!text && typeof event.message === "string") {
+    text = event.message.replace(/\[CQ:[^\]]+\]/g, "").trim();
+  }
+  return { text, images };
 }
 
 async function triggerNews(userId: number) {
@@ -411,54 +425,121 @@ async function triggerNews(userId: number) {
   if (code !== 0) await sendQQ(userId, "简报生成失败了，看下日志？");
 }
 
+type ImagePart = { data: string; mimeType: string };
+
+function detectMime(buf: Uint8Array): string {
+  if (buf.length >= 3 && buf[0] === 0xff && buf[1] === 0xd8) return "image/jpeg";
+  if (buf.length >= 4 && buf[0] === 0x89 && buf[1] === 0x50) return "image/png";
+  if (buf.length >= 6 && String.fromCharCode(...buf.slice(0, 3)) === "GIF") return "image/gif";
+  if (buf.length >= 12 && String.fromCharCode(...buf.slice(8, 12)) === "WEBP") return "image/webp";
+  if (buf.length >= 2 && String.fromCharCode(buf[0], buf[1]) === "BM") return "image/bmp";
+  return "application/octet-stream";
+}
+
+async function toPng(input: Uint8Array): Promise<Uint8Array> {
+  const proc = spawn(
+    ["ffmpeg", "-v", "error", "-i", "pipe:0", "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "pipe:1"],
+    { stdin: "pipe", stdout: "pipe", stderr: "pipe" },
+  );
+  proc.stdin.write(input);
+  proc.stdin.flush();
+  proc.stdin.end();
+  const out = new Uint8Array(await new Response(proc.stdout).arrayBuffer());
+  await proc.exited;
+  return out;
+}
+
+async function prepareImage(url: string): Promise<ImagePart | null> {
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(20_000) });
+    if (!res.ok) {
+      log(`图片下载失败 HTTP ${res.status}: ${url}`);
+      return null;
+    }
+    let bytes = new Uint8Array(await res.arrayBuffer());
+    let mime = detectMime(bytes);
+    if (mime === "image/gif" || mime === "image/webp" || mime === "image/bmp" || mime === "application/octet-stream") {
+      bytes = await toPng(bytes);
+      mime = "image/png";
+    }
+    if (bytes.length > 6 * 1024 * 1024) {
+      log(`图片太大，跳过 (${bytes.length} B)`);
+      return null;
+    }
+    return { data: Buffer.from(bytes).toString("base64"), mimeType: mime };
+  } catch (e) {
+    log(`图片处理失败: ${e}`);
+    return null;
+  }
+}
+
 function truncate(text: string, max: number): string {
   return text.length > max ? text.slice(0, max) + "…" : text;
 }
 
-async function handleOwner(userId: number, text: string) {
+async function prepareImages(urls: string[]): Promise<ImagePart[]> {
+  const picked = urls.slice(0, 3);
+  if (picked.length === 0) return [];
+  const parts = await Promise.all(picked.map((u) => prepareImage(u)));
+  return parts.filter((p): p is ImagePart => p !== null);
+}
+
+async function handleOwner(userId: number, text: string, images: string[] = []) {
   if (text === "/news" || text === "新闻" || text === "简报") {
     await triggerNews(userId);
     return;
   }
-  const answer = await owner.prompt(text);
-  await sendQQ(
-    userId,
-    truncate(answer || "（没憋出回复，再说一遍？）", OWNER_MAX_REPLY),
-  );
+  const parts = await prepareImages(images);
+  const answer = await owner.prompt(text, parts);
+  const reply = truncate(answer || "（没憋出回复，再说一遍？）", OWNER_MAX_REPLY);
+  log(`[owner] 回复 ${reply.length} 字`);
+  await sendQQ(userId, reply);
 }
 
-async function handleGuest(userId: number, text: string) {
+async function handleGuest(userId: number, text: string, images: string[] = []) {
   const gate = guestAllowed(userId);
   if (!gate.ok) {
     if (gate.reason === "daily") {
       await sendQQ(userId, "今天的提问额度用完了，明天再来吧。");
+    } else {
+      await sendQQ(userId, "消息有点多，等我回完这两条再发～");
     }
     return;
   }
-  const sessionId = await guest.enqueue(() => guestSession(userId));
-  const answer = await guest.enqueue(() => guest.promptOn(sessionId, text));
-  await sendQQ(
-    userId,
-    truncate(answer || "（这个问题我暂时答不上来）", GUEST_MAX_REPLY),
-  );
+  guestPending.set(userId, (guestPending.get(userId) ?? 0) + 1);
+  try {
+    const parts = await prepareImages(images);
+    const sessionId = await guest.enqueue(() => guestSession(userId));
+    const answer = await guest.enqueue(() => guest.promptOn(sessionId, text, parts));
+    const reply = truncate(answer || "（这个问题我暂时答不上来）", GUEST_MAX_REPLY);
+    log(`[guest ${userId}] 回复 ${reply.length} 字`);
+    await sendQQ(userId, reply);
+  } finally {
+    const left = (guestPending.get(userId) ?? 1) - 1;
+    if (left <= 0) guestPending.delete(userId);
+    else guestPending.set(userId, left);
+  }
 }
 
-let chain: Promise<void> = Promise.resolve();
-function enqueue(fn: () => Promise<void>) {
-  chain = chain.then(fn).catch((e) => log(`处理失败: ${e}`));
+async function runTask(label: string, fn: () => Promise<void>) {
+  try {
+    await fn();
+  } catch (e) {
+    log(`${label} 处理失败: ${e}`);
+  }
 }
 
 async function handleEvent(event: any) {
   if (event.post_type !== "message" || event.message_type !== "private") return;
   const userId = Number(event.user_id);
   if (!Number.isFinite(userId)) return;
-  const text = extractText(event);
-  if (!text) return;
+  const { text, images } = extractContent(event);
+  if (!text && images.length === 0) return;
 
   if (userId === OWNER_QQ) {
-    enqueue(() => handleOwner(userId, text));
+    void runTask("owner", () => handleOwner(userId, text, images));
   } else if (GUEST_QQS.has(userId)) {
-    enqueue(() => handleGuest(userId, text));
+    void runTask(`guest ${userId}`, () => handleGuest(userId, text, images));
   } else {
     log(`忽略未授权私聊 from ${userId}: ${text.slice(0, 40)}`);
   }
