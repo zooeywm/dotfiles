@@ -1,0 +1,20 @@
+# 新闻机器人专用 harness（dsh headless）：只挂庭宇 provider + 默认模型。
+# 由 deploy.nu 链接到 ~/.dsh/profiles/news/cordis.patch.yml。
+# 定时器：qq-news-report.timer（每天 08:00 / 20:00）。
+- id: llm-pi-ai
+  name: "@deepseek-ai/dsh-llm-pi-ai"
+  config:
+    providers:
+      tingyu:
+        apiKeyEnv: TINGYU_API_KEY
+        api: openai-completions
+        baseURL: https://tokens.tingyutech.cn/v1
+        models:
+          - id: deepseek-v4.1-flash
+            name: deepseek-v4.1-flash
+            input: [text, image]
+- id: agent-default-model
+  name: "@deepseek-ai/dsh-agent-default-model"
+  config:
+    provider: tingyu
+    model: deepseek-v4.1-flash

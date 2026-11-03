@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+# 抓 RSS → 庭宇 harness（dsh --profile news headless）生成 AI/科技简报 → 经 NapCat 发到 QQ。
+#
+#   qq-news-report              生成并发送（默认，供 systemd timer 调用）
+#   qq-news-report --dry-run    只生成并打印，不发送
+#   qq-news-report --message X  直接发一条文本（调试用）
+#
+# 环境变量：TARGET_QQ（默认 841817493）、NAPCAT_BASE（默认 127.0.0.1:3001）、
+#          DSH_BIN、DSH_CREDENTIALS。
+set -euo pipefail
+
+TARGET_QQ="${TARGET_QQ:-841817493}"
+NAPCAT_BASE="${NAPCAT_BASE:-http://127.0.0.1:3001}"
+CREDENTIALS="${DSH_CREDENTIALS:-$HOME/.dsh/.credentials.yaml}"
+DSH_BIN="${DSH_BIN:-$HOME/.cache/.bun/bin/dsh}"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/qq-news-report"
+mkdir -p "$STATE_DIR"
+
+FEEDS=(
+  https://news.ycombinator.com/rss
+  https://www.theverge.com/rss/index.xml
+  https://arstechnica.com/feed/
+  https://techcrunch.com/feed/
+  https://www.jiqizhixin.com/rss
+  https://www.solidot.org/index.rss
+)
+
+log() { printf '%s %s\n' "$(date '+%F %T')" "$*" >&2; }
+
+napcat_token() {
+  local f
+  f=$(ls "$HOME"/.config/napcat-qq-plugin/config/onebot11_*.json 2>/dev/null | head -1 || true)
+  [ -n "${f:-}" ] || { printf ''; return; }
+  jq -r '.network.httpServers[0].token // empty' "$f" 2>/dev/null || printf ''
+}
+
+send_qq() {
+  local text="$1" token
+  token=$(napcat_token)
+  python3 - "$NAPCAT_BASE" "$token" "$TARGET_QQ" "$text" <<'PY'
+import json, sys, urllib.request
+
+base, token, qq, text = sys.argv[1:5]
+body = json.dumps({"user_id": int(qq), "message": text}).encode()
+req = urllib.request.Request(base.rstrip("/") + "/send_private_msg", data=body,
+                             headers={"Content-Type": "application/json"})
+if token:
+    req.add_header("Authorization", "Bearer " + token)
+try:
+    with urllib.request.urlopen(req, timeout=30) as r:
+        print(r.read().decode())
+except Exception as e:
+    print("SEND_FAILED:", e, file=sys.stderr)
+    sys.exit(1)
+PY
+}
+
+fetch_feeds() {
+  local out="$STATE_DIR/feeds.txt"
+  : > "$out"
+  local u body
+  for u in "${FEEDS[@]}"; do
+    body=$(curl -fsSL --max-time 20 --compressed \
+      -A 'Mozilla/5.0 (X11; Linux x86_64) qq-news-report' "$u" 2>/dev/null || true)
+    if [ -z "$body" ]; then
+      log "feed 抓取失败: $u"
+      continue
+    fi
+    { printf '<feed url="%s">\n' "$u"; printf '%s' "${body:0:12000}"; printf '\n</feed>\n'; } >> "$out"
+  done
+  wc -c < "$out"
+}
+
+generate() {
+  local task="$STATE_DIR/task.txt"
+  {
+    cat <<'EOF'
+你是新闻简报编辑。下面是刚抓取的 RSS 原始内容（含标签和噪音）。请筛选出 6-8 条过去 24 小时内最重要的 AI / 科技新闻，用中文写成简报，格式严格如下：
+
+1. 标题
+   一句话摘要
+   链接
+
+要求：只输出简报正文；每条链接必须是原文链接；不要编造条目；不要输出解释或代码块。
+EOF
+    echo
+    echo '原始订阅内容：'
+    cat "$STATE_DIR/feeds.txt"
+  } > "$task"
+
+  local key
+  key=$(python3 - "$CREDENTIALS" <<'PY'
+import sys, yaml
+print(yaml.safe_load(open(sys.argv[1]))["refs"]["TINGYU_API_KEY"])
+PY
+)
+  TINGYU_API_KEY="$key" timeout 300 "$DSH_BIN" --profile news - < "$task" 2> "$STATE_DIR/last.err"
+}
+
+main() {
+  case "${1:-}" in
+    --dry-run)
+      fetch_feeds > /dev/null
+      generate | tee "$STATE_DIR/last.md"
+      exit 0
+      ;;
+    --message)
+      shift
+      [ $# -ge 1 ] || { log '缺少消息文本'; exit 2; }
+      send_qq "$*" > /dev/null
+      log '已发送'
+      exit 0
+      ;;
+  esac
+
+  fetch_feeds > /dev/null
+  local digest
+  if ! digest=$(generate); then
+    log 'harness 生成失败，见 last.err'
+    exit 1
+  fi
+  digest=$(python3 -c 'import sys; print(sys.stdin.read().strip()[:3000])' <<< "$digest")
+  if [ -z "$digest" ]; then
+    log '简报为空'
+    exit 1
+  fi
+  printf '%s\n' "$digest" > "$STATE_DIR/last.md"
+  if ! send_qq "$digest" > /dev/null; then
+    log 'QQ 发送失败'
+    exit 1
+  fi
+  log "已发送（${#digest} 字符）"
+}
+
+main "$@"
