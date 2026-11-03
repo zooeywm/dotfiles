@@ -179,7 +179,6 @@ mupdf-tools                    = {}
 musl                           = {}
 namcap                         = {}
 nano                           = {}
-napcat-qq                      = { aur = true }
 nasm                           = {}
 navi                           = {}
 neovide                        = {}

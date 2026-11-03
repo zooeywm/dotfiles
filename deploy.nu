@@ -43,9 +43,6 @@ def main [--dry-run (-n), --prune] {
         ] ~/.config -h
         | targets [memo applications] ~/.local/share
         | target autostart ~/.config/autostart
-        | target dsh/profiles/news/cordis.patch.yml -p ~/.dsh/profiles/news
-        | target dsh/profiles/chat/cordis.patch.yml -p ~/.dsh/profiles/chat
-        | target dsh/profiles/chat-guest/cordis.patch.yml -p ~/.dsh/profiles/chat-guest
         | each {|item| deploy-item $item --dry-run=$dry_run }
     )
 
@@ -56,7 +53,7 @@ def main [--dry-run (-n), --prune] {
     })
 
     # 用户级 systemd 单元（文件由上面的部署链接到 ~/.config/systemd/user 后启用）
-    let user_units = ['ssh-agent.service' 'dms.service' 'clash-verge.service' 'dsh-web.service' 'napcat.service' 'qq-news-report.timer' 'qq-chat-bot.service']
+    let user_units = ['ssh-agent.service' 'dms.service' 'clash-verge.service' 'dsh-web.service']
     for unit in $user_units {
         if $dry_run {
             log info $"[dry-run] user unit: enable ($unit)"
