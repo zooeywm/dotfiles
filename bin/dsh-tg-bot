@@ -37,6 +37,7 @@ ACK_AFTER = 5           # 秒：没动静先发进度消息
 FLUSH_EVERY = 2.5       # 秒：进度消息刷新节流
 HEARTBEAT = 120         # 秒：长任务心跳
 MAX_PROGRESS_CHARS = 3800
+IMAGE_DIR = Path(os.environ.get("XDG_CACHE_HOME", HOME / ".cache")) / "dsh-tg-images"
 MAX_CHUNK = 3500
 
 HELP = """我是跑在你 Arch 机器上的 DSH，可以直接让我干活：
@@ -179,6 +180,29 @@ class Bot:
             self.call("sendChatAction", {"chat_id": self.chat_id, "action": "typing"})
         except (urllib.error.URLError, OSError):
             pass
+
+    def download_image(self, msg):
+        """把 Telegram 图片下载到本地，返回路径；不是图片则返回 None。"""
+        photo = msg.get("photo")
+        doc = msg.get("document") or {}
+        if photo:
+            file_id = photo[-1]["file_id"]
+            suffix = ".jpg"
+        elif str(doc.get("mime_type") or "").startswith("image/"):
+            file_id = doc["file_id"]
+            suffix = Path(doc.get("file_name") or "image.jpg").suffix or ".jpg"
+        else:
+            return None
+        resp = self.call("getFile", {"file_id": file_id})
+        file_path = (resp.get("result") or {}).get("file_path")
+        if not file_path:
+            raise RuntimeError("getFile 没有返回 file_path")
+        IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+        target = IMAGE_DIR / f"{msg.get('message_id', 0)}-{int(time.time())}{suffix}"
+        url = f"https://api.telegram.org/file/bot{self.token}/{file_path}"
+        with urllib.request.urlopen(url, timeout=120) as up, open(target, "wb") as fh:
+            fh.write(up.read())
+        return target
 
     # ---------- dsh ----------
     def env(self):
@@ -323,11 +347,19 @@ class Bot:
         chat = msg.get("chat") or {}
         if chat.get("id") != self.chat_id:
             return
-        text = msg.get("text") or msg.get("caption") or ""
-        if not text.strip():
-            self.send("目前只支持文字消息。")
+        try:
+            image = self.download_image(msg)
+        except Exception as exc:  # noqa: BLE001
+            log("download_image failed:", exc)
+            self.send(f"图片下载失败：{exc}")
             return
-        text = text.strip()
+        text = (msg.get("text") or msg.get("caption") or "").strip()
+        if image is not None:
+            prompt = f"[用户在 Telegram 发来一张图片，已保存到 {image}，请用 read_image 工具查看后再回答]"
+            text = f"{prompt}\n{text}" if text else prompt
+        elif not text:
+            self.send("目前只支持文字和图片消息。")
+            return
         if text in ("/start", "/help"):
             self.send(HELP)
             return
