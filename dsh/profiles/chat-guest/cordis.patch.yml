@@ -1,0 +1,47 @@
+# 访客模式 harness（dsh --profile chat-guest，常驻 ACP 进程）：
+# 庭宇 provider + deepseek-v4.1-flash；只允许联网检索（web_search / web_fetch），
+# 本地文件与命令工具全部关闭，沙箱只读。
+- id: llm-pi-ai
+  name: "@deepseek-ai/dsh-llm-pi-ai"
+  config:
+    providers:
+      tingyu:
+        apiKeyEnv: TINGYU_API_KEY
+        api: openai-completions
+        baseURL: https://tokens.tingyutech.cn/v1
+        models:
+          - id: deepseek-v4.1-flash
+            name: deepseek-v4.1-flash
+            input: [text, image]
+- id: agent-default-model
+  name: "@deepseek-ai/dsh-agent-default-model"
+  config:
+    provider: tingyu
+    model: deepseek-v4.1-flash
+- id: acp
+  config:
+    provider: tingyu
+    model: deepseek-v4.1-flash
+- id: system-prompt
+  config:
+    personaPrefix: >-
+      你是 YUKO，在 QQ 上回答访客（非主人）的问题。你只能使用 web_search / web_fetch
+      查公开资料来回答；不要透露主人的任何私人信息（聊天记录、文件、账号、日程、
+      联系人、机器状态等），不要执行任何本地操作，不要假装能访问本机。回答用简洁
+      中文（一般不超过 80 字），不要用 Markdown 标题或代码块，不要提及模型名或内部配置。
+- id: sandbox-policy
+  config:
+    mode: read-only
+- id: user-approval
+  config:
+    policy: 'never'
+- id: tool-web
+  disabled: true
+- id: tool-bash
+  disabled: true
+- id: tool-jobs
+  disabled: true
+- id: tool-fs
+  disabled: true
+- id: tool-fs-search
+  disabled: true

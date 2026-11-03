@@ -1,0 +1,235 @@
+#!/usr/bin/env bun
+// 极简 MCP stdio 服务：给 QQ 聊天机器人提供 web_search / web_fetch 两个联网工具。
+// 只走 stdout 传协议帧，日志一律走 stderr。
+const SERVER_INFO = { name: "qq-chat-web", version: "0.1.0" };
+const UA = "Mozilla/5.0 (X11; Linux x86_64) qq-chat-web/0.1";
+
+type ToolDef = {
+  name: string;
+  description: string;
+  inputSchema: Record<string, unknown>;
+};
+
+const TOOLS: ToolDef[] = [
+  {
+    name: "web_search",
+    description:
+      "用搜索引擎查网页。输入查询词，返回标题、链接和摘要列表（最多 8 条）。适合查新闻、资料、价格等实时信息。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: { type: "string", description: "搜索词" },
+        max_results: { type: "integer", description: "返回条数，默认 6，最大 8" },
+      },
+      required: ["query"],
+    },
+  },
+  {
+    name: "web_fetch",
+    description:
+      "抓取一个网页并返回纯文本（去标签，最长 8000 字）。适合打开搜索结果里的链接细看内容。",
+    inputSchema: {
+      type: "object",
+      properties: { url: { type: "string", description: "完整 http(s) URL" } },
+      required: ["url"],
+    },
+  },
+];
+
+function log(msg: string) {
+  console.error(`${new Date().toISOString()} [mcp-web] ${msg}`);
+}
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<noscript\b[\s\S]*?<\/noscript>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/(p|div|li|h[1-6]|tr)>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&hellip;/g, "…")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n\s*\n+/g, "\n")
+    .trim();
+}
+
+async function fetchText(url: string, timeoutMs = 20_000): Promise<Response> {
+  return fetch(url, {
+    headers: { "user-agent": UA, accept: "text/html,application/json,text/plain,*/*" },
+    redirect: "follow",
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+}
+
+type SearchHit = { title: string; url: string; snippet: string };
+
+// DDG 的结果链接是 //duckduckgo.com/l/?uddg=<encoded real url>，还原成原链接
+function decodeDdgUrl(raw: string): string {
+  let url = raw.replace(/&amp;/g, "&");
+  const m = url.match(/[?&]uddg=([^&]+)/);
+  if (m) {
+    try {
+      url = decodeURIComponent(m[1]);
+    } catch {
+      /* 保持原样 */
+    }
+  }
+  return url;
+}
+
+function parseDuckDuckGo(html: string): SearchHit[] {
+  const hits: SearchHit[] = [];
+  const linkRe =
+    /<a[^>]+class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+  const snippetRe = /<a[^>]+class="result__snippet"[^>]*>([\s\S]*?)<\/a>/gi;
+  const snippets: string[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = snippetRe.exec(html))) snippets.push(stripHtml(m[1]));
+  let i = 0;
+  while ((m = linkRe.exec(html))) {
+    hits.push({
+      url: decodeDdgUrl(m[1]),
+      title: stripHtml(m[2]),
+      snippet: snippets[i++] ?? "",
+    });
+  }
+  return hits;
+}
+
+function parseBing(html: string): SearchHit[] {
+  const hits: SearchHit[] = [];
+  const blockRe = /<li class="b_algo"[\s\S]*?<\/li>/gi;
+  const linkRe = /<h2[^>]*>\s*<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i;
+  const snipRe = /<p[^>]*class="[^"]*b_(?:lineclamp\d|snippet)[^"]*"[^>]*>([\s\S]*?)<\/p>/i;
+  let m: RegExpExecArray | null;
+  while ((m = blockRe.exec(html))) {
+    const block = m[0];
+    const lm = linkRe.exec(block);
+    if (!lm) continue;
+    hits.push({
+      url: lm[1],
+      title: stripHtml(lm[2]),
+      snippet: snipRe.exec(block) ? stripHtml(snipRe.exec(block)![1]) : "",
+    });
+  }
+  return hits;
+}
+
+async function webSearch(query: string, maxResults: number): Promise<string> {
+  const limit = Math.min(Math.max(maxResults || 6, 1), 8);
+  let hits: SearchHit[] = [];
+  try {
+    const res = await fetchText(
+      "https://html.duckduckgo.com/html/?q=" + encodeURIComponent(query),
+      25_000,
+    );
+    if (res.ok) hits = parseDuckDuckGo(await res.text());
+  } catch (e) {
+    log(`duckduckgo 失败: ${e}`);
+  }
+  if (hits.length < 2) {
+    try {
+      const res = await fetchText(
+        "https://www.bing.com/search?q=" + encodeURIComponent(query) + "&count=8",
+        25_000,
+      );
+      if (res.ok) hits = parseBing(await res.text());
+    } catch (e) {
+      log(`bing 失败: ${e}`);
+    }
+  }
+  if (hits.length === 0) return `没有搜到「${query}」的结果。`;
+  const lines: string[] = [`搜索「${query}」的结果：`];
+  hits.slice(0, limit).forEach((h, i) => {
+    lines.push(`${i + 1}. ${h.title || "(无标题)"}`);
+    lines.push(`   ${h.url}`);
+    if (h.snippet) lines.push(`   ${h.snippet}`);
+  });
+  return lines.join("\n");
+}
+
+async function webFetch(url: string): Promise<string> {
+  if (!/^https?:\/\//i.test(url)) return "只支持 http(s) 链接。";
+  const res = await fetchText(url, 25_000);
+  const ctype = res.headers.get("content-type") ?? "";
+  const body = await res.text();
+  if (!res.ok) return `抓取失败: HTTP ${res.status}`;
+  const text = ctype.includes("html") ? stripHtml(body) : body;
+  return `URL: ${url}\nHTTP ${res.status} ${ctype}\n\n${text.slice(0, 8000)}`;
+}
+
+function send(msg: unknown) {
+  process.stdout.write(JSON.stringify(msg) + "\n");
+}
+
+function result(id: number | string, res: unknown) {
+  send({ jsonrpc: "2.0", id, result: res });
+}
+
+function rpcError(id: number | string, code: number, message: string) {
+  send({ jsonrpc: "2.0", id, error: { code, message } });
+}
+
+async function handle(msg: any) {
+  const { id, method, params } = msg;
+  if (method === "initialize") {
+    return result(id, {
+      protocolVersion: params?.protocolVersion ?? "2024-11-05",
+      capabilities: { tools: {} },
+      serverInfo: SERVER_INFO,
+    });
+  }
+  if (method === "notifications/initialized" || method === "initialized") return;
+  if (method === "ping") return result(id, {});
+  if (method === "tools/list") return result(id, { tools: TOOLS });
+  if (method === "tools/call") {
+    const name = params?.name;
+    const args = params?.arguments ?? {};
+    try {
+      let text = "";
+      if (name === "web_search") {
+        text = await webSearch(String(args.query ?? ""), Number(args.max_results ?? 6));
+      } else if (name === "web_fetch") {
+        text = await webFetch(String(args.url ?? ""));
+      } else {
+        return rpcError(id, -32602, `未知工具: ${name}`);
+      }
+      return result(id, { content: [{ type: "text", text }], isError: false });
+    } catch (e) {
+      return result(id, {
+        content: [{ type: "text", text: `工具执行失败: ${e}` }],
+        isError: true,
+      });
+    }
+  }
+  if (id !== undefined && id !== null) rpcError(id, -32601, `不支持的 method: ${method}`);
+}
+
+const decoder = new TextDecoder();
+let buffer = "";
+
+for await (const chunk of Bun.stdin.stream()) {
+  buffer += decoder.decode(chunk, { stream: true });
+  let idx: number;
+  while ((idx = buffer.indexOf("\n")) >= 0) {
+    const line = buffer.slice(0, idx).trim();
+    buffer = buffer.slice(idx + 1);
+    if (!line) continue;
+    let msg: any;
+    try {
+      msg = JSON.parse(line);
+    } catch {
+      log(`无法解析: ${line.slice(0, 120)}`);
+      continue;
+    }
+    void handle(msg);
+  }
+}

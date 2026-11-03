@@ -1,12 +1,14 @@
 #!/usr/bin/env bun
-// YUKO QQ 聊天机器人：连 NapCat 的 OneBot WebSocket，收到主人私聊后走庭宇 harness 回复。
+// YUKO QQ 机器人：连 NapCat 的 OneBot WebSocket，按发送者身份路由到两个常驻 harness。
 //
-// 只响应 ALLOW_USERS 里的 QQ 号（避免被陌生人调用）。会话历史存在
-// ~/.local/state/qq-chat-bot/history.json，滚动保留最近 20 条。
+//   主人  841817493            → profile "chat"       （工作区内可读写文件 + 联网检索）
+//   访客  2360634520/1364957781 → profile "chat-guest" （只读沙箱 + 只允许联网检索）
+//   其他 QQ 号一律不理。
 //
-// 环境变量：CHAT_DSH_PROFILE（默认 news）、CHAT_DSH_BIN、CHAT_STATE_DIR。
+// 两个 harness 都是常驻 ACP 进程（dsh --profile ...），进程内按 QQ 号维护 ACP session，
+// 不再每条消息冷启动。访客有频率/每日额度限制。
 import { spawn } from "bun";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 
 const HOME = process.env.HOME ?? "/home/zooeywm";
 const CFG =
@@ -14,27 +16,26 @@ const CFG =
   `${HOME}/.config/napcat-qq-plugin/config/onebot11_2700226069.json`;
 const CRED = process.env.DSH_CREDENTIALS ?? `${HOME}/.dsh/.credentials.yaml`;
 const DSH_BIN = process.env.CHAT_DSH_BIN ?? `${HOME}/.cache/.bun/bin/dsh`;
-const PROFILE = process.env.CHAT_DSH_PROFILE ?? "news";
+const MCP_SCRIPT = process.env.CHAT_MCP ?? `${HOME}/.local/bin/qq-chat-mcp-web`;
 const STATE_DIR = process.env.CHAT_STATE_DIR ?? `${HOME}/.local/state/qq-chat-bot`;
-const HISTORY_FILE = `${STATE_DIR}/history.json`;
-const MAX_HISTORY = 20;
-const MAX_REPLY = 1500;
 
-const ALLOW_USERS = new Set([841817493]);
+const OWNER_QQ = 841817493;
+const GUEST_QQS = new Set([2360634520, 1364957781]);
+const OWNER_PROFILE = "chat";
+const GUEST_PROFILE = "chat-guest";
+const OWNER_WORKSPACE =
+  process.env.CHAT_OWNER_WORKSPACE ??
+  `${HOME}/Documents/deepseek-harness/default-workspace`;
+const GUEST_WORKSPACE = `${STATE_DIR}/guest-workspace`;
 
-type Cfg = {
-  network: {
-    httpServers: { host: string; port: number; token: string }[];
-    websocketServers: { host: string; port: number; token: string }[];
-  };
-};
+const OWNER_MAX_REPLY = 1500;
+const GUEST_MAX_REPLY = 600;
+const GUEST_MIN_INTERVAL_MS = 8_000;
+const GUEST_DAILY_LIMIT = 40;
+const MAX_GUEST_SESSIONS = 20;
 
 function log(msg: string) {
   console.error(`${new Date().toISOString()} ${msg}`);
-}
-
-function loadCfg(): Cfg {
-  return JSON.parse(readFileSync(CFG, "utf8")) as Cfg;
 }
 
 function tingyuKey(): string {
@@ -43,72 +44,334 @@ function tingyuKey(): string {
   return m[1];
 }
 
-type Turn = { role: "user" | "bot"; text: string };
-let history: Turn[] = [];
+type Pending = {
+  resolve: (v: any) => void;
+  reject: (e: Error) => void;
+  timer: ReturnType<typeof setTimeout>;
+};
 
-function loadHistory() {
-  try {
-    history = JSON.parse(readFileSync(HISTORY_FILE, "utf8")) as Turn[];
-  } catch {
-    history = [];
+type Collector = (text: string) => void;
+
+class AgentConn {
+  private proc: ReturnType<typeof spawn> | null = null;
+  private buf = "";
+  private decoder = new TextDecoder();
+  private nextId = 1;
+  private pending = new Map<number, Pending>();
+  private collectors = new Map<string, Collector>();
+  private sessionId: string | null = null;
+  private chain: Promise<void> = Promise.resolve();
+  private stopping = false;
+  private restartDelay = 1000;
+
+  constructor(
+    private readonly name: string,
+    private readonly profile: string,
+    private readonly cwd: string,
+  ) {
+    mkdirSync(this.cwd, { recursive: true });
+  }
+
+  start() {
+    if (this.proc) return;
+    this.stopping = false;
+    const env = { ...process.env, TINGYU_API_KEY: tingyuKey() };
+    this.proc = spawn([DSH_BIN, "--profile", this.profile], {
+      cwd: this.cwd,
+      stdin: "pipe",
+      stdout: "pipe",
+      stderr: "pipe",
+      env,
+    });
+    log(`[${this.name}] 启动 harness pid=${this.proc.pid} cwd=${this.cwd}`);
+    void this.readLoop();
+    void this.drainStderr();
+  }
+
+  private async readLoop() {
+    const proc = this.proc!;
+    const reader = proc.stdout.getReader();
+    try {
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        this.buf += this.decoder.decode(value, { stream: true });
+        let idx: number;
+        while ((idx = this.buf.indexOf("\n")) >= 0) {
+          const line = this.buf.slice(0, idx).trim();
+          this.buf = this.buf.slice(idx + 1);
+          if (line) this.dispatch(line);
+        }
+      }
+    } catch (e) {
+      log(`[${this.name}] stdout 读取失败: ${e}`);
+    }
+    this.onExit();
+  }
+
+  private async drainStderr() {
+    const proc = this.proc!;
+    try {
+      const reader = proc.stderr.getReader();
+      const dec = new TextDecoder();
+      let tail = "";
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        tail = (tail + dec.decode(value, { stream: true })).slice(-2000);
+      }
+      if (tail.trim()) log(`[${this.name}] stderr: ${tail.trim().slice(-500)}`);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  private onExit() {
+    if (this.stopping) return;
+    log(`[${this.name}] harness 退出，${this.restartDelay}ms 后重启`);
+    this.proc = null;
+    this.sessionId = null;
+    this.collectors.clear();
+    for (const [, p] of this.pending) {
+      clearTimeout(p.timer);
+      p.reject(new Error(`${this.name} harness 已退出`));
+    }
+    this.pending.clear();
+    setTimeout(() => {
+      if (!this.stopping) {
+        this.start();
+        this.restartDelay = 1000;
+      }
+    }, this.restartDelay);
+    this.restartDelay = Math.min(this.restartDelay * 2, 30_000);
+  }
+
+  private dispatch(line: string) {
+    let msg: any;
+    try {
+      msg = JSON.parse(line);
+    } catch {
+      log(`[${this.name}] 非 JSON 行: ${line.slice(0, 120)}`);
+      return;
+    }
+    if (
+      msg.id !== undefined &&
+      (msg.result !== undefined || msg.error !== undefined)
+    ) {
+      const p = this.pending.get(msg.id);
+      if (!p) return;
+      this.pending.delete(msg.id);
+      clearTimeout(p.timer);
+      if (msg.error) p.reject(new Error(JSON.stringify(msg.error)));
+      else p.resolve(msg.result);
+      return;
+    }
+    if (typeof msg.method === "string") this.handleServerMessage(msg);
+  }
+
+  private handleServerMessage(msg: any) {
+    const { method, id, params } = msg;
+    if (method === "session/update") {
+      const sessionId = params?.sessionId;
+      const update = params?.update ?? {};
+      if (update.sessionUpdate === "agent_message_chunk") {
+        const c = update.content;
+        if (c?.type === "text") this.collectors.get(sessionId)?.(c.text);
+      } else if (update.sessionUpdate === "tool_call") {
+        log(`[${this.name}] 工具调用: ${update.title ?? update.kind ?? "?"}`);
+      }
+      return;
+    }
+    if (method === "session/request_permission") {
+      const opts: any[] = params?.options ?? [];
+      const allow =
+        opts.find((o) => String(o.kind ?? "").startsWith("allow")) ?? opts[0];
+      this.respond(
+        id,
+        allow
+          ? { outcome: { outcome: "selected", optionId: allow.optionId } }
+          : { outcome: { outcome: "cancelled" } },
+      );
+      return;
+    }
+    this.respondError(id, -32601, `不支持的 client 方法: ${method}`);
+  }
+
+  private respond(id: any, result: unknown) {
+    this.write({ jsonrpc: "2.0", id, result });
+  }
+
+  private respondError(id: any, code: number, message: string) {
+    this.write({ jsonrpc: "2.0", id, error: { code, message } });
+  }
+
+  private write(obj: unknown) {
+    try {
+      this.proc?.stdin.write(JSON.stringify(obj) + "\n");
+      this.proc?.stdin.flush();
+    } catch (e) {
+      log(`[${this.name}] 写入失败: ${e}`);
+    }
+  }
+
+  private rpc(method: string, params: unknown, timeoutMs = 300_000): Promise<any> {
+    this.start();
+    const id = this.nextId++;
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        this.pending.delete(id);
+        reject(new Error(`${this.name}: ${method} 超时`));
+      }, timeoutMs);
+      this.pending.set(id, { resolve, reject, timer });
+      this.write({ jsonrpc: "2.0", id, method, params });
+    });
+  }
+
+  async ensureSession(): Promise<string> {
+    if (this.sessionId) return this.sessionId;
+    await this.rpc("initialize", {
+      protocolVersion: 1,
+      clientCapabilities: {},
+      clientInfo: { name: "qq-chat-bot", version: "0.2.0" },
+    });
+    const res = await this.rpc("session/new", {
+      cwd: this.cwd,
+      mcpServers: [
+        { name: "web", command: "/usr/bin/bun", args: [MCP_SCRIPT], env: [] },
+      ],
+    });
+    this.sessionId = res.sessionId as string;
+    log(`[${this.name}] session=${this.sessionId}`);
+    return this.sessionId;
+  }
+
+  async newSession(): Promise<string> {
+    await this.ensureSession(); // 确保 initialize 过
+    const res = await this.rpc("session/new", {
+      cwd: this.cwd,
+      mcpServers: [
+        { name: "web", command: "/usr/bin/bun", args: [MCP_SCRIPT], env: [] },
+      ],
+    });
+    return res.sessionId as string;
+  }
+
+  async closeSession(sessionId: string) {
+    try {
+      await this.rpc("session/close", { sessionId }, 30_000);
+    } catch (e) {
+      log(`[${this.name}] close session 失败: ${e}`);
+    }
+  }
+
+  // 串行执行，避免同一个 harness 上并发 prompt
+  enqueue<T>(fn: () => Promise<T>): Promise<T> {
+    const run = this.chain.then(fn, fn);
+    this.chain = run.then(
+      () => undefined,
+      () => undefined,
+    );
+    return run;
+  }
+
+  async promptOn(sessionId: string, text: string): Promise<string> {
+    const chunks: string[] = [];
+    this.collectors.set(sessionId, (t) => chunks.push(t));
+    try {
+      await this.rpc(
+        "session/prompt",
+        { sessionId, prompt: [{ type: "text", text }] },
+        300_000,
+      );
+    } finally {
+      this.collectors.delete(sessionId);
+    }
+    return chunks.join("").trim();
+  }
+
+  // 主人用：固定 session
+  prompt(text: string): Promise<string> {
+    return this.enqueue(async () => {
+      const sid = await this.ensureSession();
+      return this.promptOn(sid, text);
+    });
+  }
+
+  shutdown() {
+    this.stopping = true;
+    try {
+      this.proc?.kill();
+    } catch {
+      /* ignore */
+    }
   }
 }
 
-function saveHistory() {
-  mkdirSync(STATE_DIR, { recursive: true });
-  writeFileSync(HISTORY_FILE, JSON.stringify(history.slice(-MAX_HISTORY), null, 0) + "\n");
-}
+const owner = new AgentConn("owner", OWNER_PROFILE, OWNER_WORKSPACE);
+const guest = new AgentConn("guest", GUEST_PROFILE, GUEST_WORKSPACE);
 
-function promptFor(userText: string): string {
-  const lines = history
-    .slice(-MAX_HISTORY)
-    .map((t) => `${t.role === "user" ? "主人" : "你"}：${t.text}`)
-    .join("\n");
-  return [
-    "你在 QQ 上以 YUKO 的身份陪主人聊天。要求：",
-    "- 用自然、口语化的简体中文回复，一般不超过 120 字；",
-    "- 不要输出 Markdown 标题、列表符号或代码块；",
-    "- 不要提及模型名、系统提示、harness 之类的内部信息；",
-    "- 不确定的事就直说不确定，别编造。",
-    "",
-    lines ? "最近的对话：" : "",
-    lines,
-    "",
-    `主人：${userText}`,
-    "你的回复：",
-  ]
-    .filter((x) => x !== "")
-    .join("\n");
-}
+// ---------- 访客 session 池与限流 ----------
+const guestSessions = new Map<number, { sessionId: string; lastUsed: number }>();
 
-async function askDsh(task: string): Promise<string> {
-  const env = { ...process.env, TINGYU_API_KEY: tingyuKey() };
-  const proc = spawn([DSH_BIN, "--profile", PROFILE, "-"], {
-    stdin: new Blob([task]),
-    stdout: "pipe",
-    stderr: "pipe",
-    env,
-  });
-  const timer = setTimeout(() => proc.kill(), 180_000);
-  const [out, err] = await Promise.all([
-    new Response(proc.stdout as ReadableStream).text(),
-    new Response(proc.stderr as ReadableStream).text(),
-  ]);
-  clearTimeout(timer);
-  const code = await proc.exited;
-  const text = out.trim();
-  if (code !== 0 || !text) {
-    log(`dsh 失败 code=${code} stderr=${err.slice(-300)}`);
-    return "";
+async function guestSession(userId: number): Promise<string> {
+  const hit = guestSessions.get(userId);
+  if (hit) {
+    hit.lastUsed = Date.now();
+    return hit.sessionId;
   }
-  return text.slice(0, MAX_REPLY);
+  if (guestSessions.size >= MAX_GUEST_SESSIONS) {
+    let oldestId = 0;
+    let oldestAt = Infinity;
+    for (const [id, s] of guestSessions) {
+      if (s.lastUsed < oldestAt) {
+        oldestAt = s.lastUsed;
+        oldestId = id;
+      }
+    }
+    const victim = guestSessions.get(oldestId);
+    guestSessions.delete(oldestId);
+    if (victim) void guest.closeSession(victim.sessionId);
+  }
+  const sessionId = await guest.newSession();
+  guestSessions.set(userId, { sessionId, lastUsed: Date.now() });
+  return sessionId;
+}
+
+type GuestUsage = { lastAt: number; day: string; count: number };
+const guestUsage = new Map<number, GuestUsage>();
+
+function guestAllowed(userId: number): { ok: boolean; reason?: "fast" | "daily" } {
+  const now = Date.now();
+  const day = new Date().toISOString().slice(0, 10);
+  const u = guestUsage.get(userId) ?? { lastAt: 0, day, count: 0 };
+  if (u.day !== day) {
+    u.day = day;
+    u.count = 0;
+  }
+  if (now - u.lastAt < GUEST_MIN_INTERVAL_MS) return { ok: false, reason: "fast" };
+  if (u.count >= GUEST_DAILY_LIMIT) return { ok: false, reason: "daily" };
+  u.lastAt = now;
+  u.count += 1;
+  guestUsage.set(userId, u);
+  return { ok: true };
+}
+
+// ---------- QQ 侧 ----------
+type Cfg = {
+  network: {
+    httpServers: { host: string; port: number; token: string }[];
+    websocketServers: { host: string; port: number; token: string }[];
+  };
+};
+
+function loadCfg(): Cfg {
+  return JSON.parse(readFileSync(CFG, "utf8")) as Cfg;
 }
 
 async function sendQQ(userId: number, text: string) {
   const cfg = loadCfg();
   const http = cfg.network.httpServers[0];
-  const base = `http://${http.host}:${http.port}`;
-  const res = await fetch(`${base}/send_private_msg`, {
+  const res = await fetch(`http://${http.host}:${http.port}/send_private_msg`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -117,19 +380,10 @@ async function sendQQ(userId: number, text: string) {
     body: JSON.stringify({ user_id: userId, message: text }),
     signal: AbortSignal.timeout(30_000),
   });
-  const body = (await res.json()) as { status: string; retcode: number };
+  const body = (await res.json()) as { retcode: number };
   if (!res.ok || body.retcode !== 0) {
     log(`发送失败: http=${res.status} body=${JSON.stringify(body)}`);
   }
-}
-
-async function triggerNews(userId: number) {
-  const proc = spawn([`${HOME}/.local/bin/qq-news-report`], {
-    stdout: "ignore",
-    stderr: "inherit",
-  });
-  const code = await proc.exited;
-  if (code !== 0) await sendQQ(userId, "简报生成失败了，看下日志？");
 }
 
 function extractText(event: any): string {
@@ -147,7 +401,48 @@ function extractText(event: any): string {
   return "";
 }
 
-// 串行处理，避免多条消息并发把 harness 挤爆
+async function triggerNews(userId: number) {
+  await sendQQ(userId, "收到，正在生成简报，稍等…");
+  const proc = spawn([`${HOME}/.local/bin/qq-news-report`], {
+    stdout: "ignore",
+    stderr: "inherit",
+  });
+  const code = await proc.exited;
+  if (code !== 0) await sendQQ(userId, "简报生成失败了，看下日志？");
+}
+
+function truncate(text: string, max: number): string {
+  return text.length > max ? text.slice(0, max) + "…" : text;
+}
+
+async function handleOwner(userId: number, text: string) {
+  if (text === "/news" || text === "新闻" || text === "简报") {
+    await triggerNews(userId);
+    return;
+  }
+  const answer = await owner.prompt(text);
+  await sendQQ(
+    userId,
+    truncate(answer || "（没憋出回复，再说一遍？）", OWNER_MAX_REPLY),
+  );
+}
+
+async function handleGuest(userId: number, text: string) {
+  const gate = guestAllowed(userId);
+  if (!gate.ok) {
+    if (gate.reason === "daily") {
+      await sendQQ(userId, "今天的提问额度用完了，明天再来吧。");
+    }
+    return;
+  }
+  const sessionId = await guest.enqueue(() => guestSession(userId));
+  const answer = await guest.enqueue(() => guest.promptOn(sessionId, text));
+  await sendQQ(
+    userId,
+    truncate(answer || "（这个问题我暂时答不上来）", GUEST_MAX_REPLY),
+  );
+}
+
 let chain: Promise<void> = Promise.resolve();
 function enqueue(fn: () => Promise<void>) {
   chain = chain.then(fn).catch((e) => log(`处理失败: ${e}`));
@@ -156,26 +451,17 @@ function enqueue(fn: () => Promise<void>) {
 async function handleEvent(event: any) {
   if (event.post_type !== "message" || event.message_type !== "private") return;
   const userId = Number(event.user_id);
-  if (!ALLOW_USERS.has(userId)) {
-    log(`忽略非白名单消息 from ${userId}`);
-    return;
-  }
+  if (!Number.isFinite(userId)) return;
   const text = extractText(event);
   if (!text) return;
 
-  if (text === "/news" || text === "新闻" || text === "简报") {
-    await sendQQ(userId, "收到，正在生成简报，稍等…");
-    await triggerNews(userId);
-    history.push({ role: "user", text }, { role: "bot", text: "（已发送简报）" });
-    saveHistory();
-    return;
+  if (userId === OWNER_QQ) {
+    enqueue(() => handleOwner(userId, text));
+  } else if (GUEST_QQS.has(userId)) {
+    enqueue(() => handleGuest(userId, text));
+  } else {
+    log(`忽略未授权私聊 from ${userId}: ${text.slice(0, 40)}`);
   }
-
-  const reply = await askDsh(promptFor(text));
-  const final = reply || "（我这边模型走神了，再说一次？）";
-  await sendQQ(userId, final);
-  history.push({ role: "user", text }, { role: "bot", text: final });
-  saveHistory();
 }
 
 let ws: WebSocket | null = null;
@@ -190,7 +476,6 @@ function connect() {
   const url = `ws://${wsCfg.host}:${wsCfg.port}/?access_token=${encodeURIComponent(wsCfg.token)}`;
   log(`连接 ${url}`);
   ws = new WebSocket(url);
-
   ws.addEventListener("open", () => log("WS 已连接"));
   ws.addEventListener("message", (ev) => {
     let event: any;
@@ -200,7 +485,7 @@ function connect() {
       return;
     }
     if (event.post_type !== "message") return;
-    enqueue(() => handleEvent(event));
+    void handleEvent(event);
   });
   ws.addEventListener("error", (e) => log(`WS 错误: ${e}`));
   ws.addEventListener("close", () => {
@@ -209,5 +494,8 @@ function connect() {
   });
 }
 
-loadHistory();
+// 预启动两个 harness（进程挂了会自动重启）
+owner.start();
+guest.start();
+
 connect();

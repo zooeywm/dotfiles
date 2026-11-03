@@ -44,6 +44,8 @@ def main [--dry-run (-n), --prune] {
         | targets [memo applications] ~/.local/share
         | target autostart ~/.config/autostart
         | target dsh/profiles/news/cordis.patch.yml -p ~/.dsh/profiles/news
+        | target dsh/profiles/chat/cordis.patch.yml -p ~/.dsh/profiles/chat
+        | target dsh/profiles/chat-guest/cordis.patch.yml -p ~/.dsh/profiles/chat-guest
         | each {|item| deploy-item $item --dry-run=$dry_run }
     )
 
