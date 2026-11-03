@@ -257,14 +257,20 @@ def install-uv [names] {
 }
 
 def install-bun [names] {
-    mut failed = []
-    for name in $names {
-        print $"(ansi green)安装 bun: ($name)(ansi reset)"
-        if not (run-live $"bun:($name)" ...['bun' 'add' '-g' $name]) {
-            $failed = ($failed | append $"bun:($name)")
+    if ($names | is-empty) { return [] }
+    print $"(ansi green)安装 bun: ($names | str join ' ')(ansi reset)"
+    if (run-live 'bun' ...(['bun' 'add' '-g'] ++ $names)) {
+        []
+    } else {
+        print $"(ansi yellow)bun 批量安装失败，逐个重试…(ansi reset)"
+        mut failed = []
+        for name in $names {
+            if not (run-live $"bun:($name)" ...['bun' 'add' '-g' $name]) {
+                $failed = ($failed | append $"bun:($name)")
+            }
         }
+        $failed
     }
-    $failed
 }
 
 def install-rustup [names] {
@@ -627,9 +633,16 @@ def update [--dry-run, --yes] {
     }
 
     print $"(ansi green_bold)升级 bun(ansi reset)"
-    for name in ($manifest.bun | columns) {
-        if not (run-live $"bun:($name)" ...['bun' 'add' '-g' $name]) {
-            $failed = ($failed | append $"bun:($name)")
+    let bun_names = ($manifest.bun | columns)
+    if not ($bun_names | is-empty) {
+        # 一次 bun add -g 处理全部包，只出一次版本横幅/一次解析
+        if not (run-live 'bun' ...(['bun' 'add' '-g'] ++ $bun_names)) {
+            print $"(ansi yellow)bun 批量升级失败，逐个重试…(ansi reset)"
+            for name in $bun_names {
+                if not (run-live $"bun:($name)" ...['bun' 'add' '-g' $name]) {
+                    $failed = ($failed | append $"bun:($name)")
+                }
+            }
         }
     }
 
