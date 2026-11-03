@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# 通过 Telegram Bot 给自己发消息。
+#   tg-send "文本"                发文本
+#   echo "文本" | tg-send         从 stdin 读
+#   tg-send --file 路径 "说明"     发附件（可带说明）
+# 凭据：~/.config/dsh/telegram.json（token + chat_id，权限 600，不入仓库）
+set -uo pipefail
+
+cfg="${XDG_CONFIG_HOME:-$HOME/.config}/dsh/telegram.json"
+if [[ ! -r $cfg ]]; then
+    echo "缺少配置: $cfg（需要 {\"token\":..., \"chat_id\":...}）" >&2
+    exit 1
+fi
+
+token=$(jq -r '.token // empty' "$cfg")
+chat=$(jq -r '.chat_id // empty' "$cfg")
+if [[ -z $token || -z $chat ]]; then
+    echo "配置不完整: $cfg（需要 token 和 chat_id）" >&2
+    exit 1
+fi
+
+file=""
+if [[ ${1:-} == --file ]]; then
+    file=${2:-}
+    [[ -r $file ]] || { echo "文件不可读: ${file:-<空>}" >&2; exit 1; }
+    shift 2
+fi
+
+text=${*:-}
+if [[ -z $text && ! -t 0 ]]; then
+    text=$(cat)
+fi
+
+if [[ -n $file ]]; then
+    args=(-F "chat_id=$chat" -F "document=@$file")
+    [[ -n $text ]] && args+=(-F "caption=$text")
+    resp=$(curl -sf -m 120 "https://api.telegram.org/bot$token/sendDocument" "${args[@]}")
+else
+    [[ -n $text ]] || { echo "用法: tg-send [--file 文件] <文本>" >&2; exit 1; }
+    resp=$(curl -sf -m 30 "https://api.telegram.org/bot$token/sendMessage" \
+        --data-urlencode "chat_id=$chat" --data-urlencode "text=$text")
+fi
+
+if [[ $? -ne 0 ]]; then
+    echo "发送失败（网络或 API 错误）" >&2
+    exit 1
+fi
+if [[ $(jq -r '.ok // false' <<<"$resp") != true ]]; then
+    echo "发送失败: $(jq -r '.description // .' <<<"$resp")" >&2
+    exit 1
+fi
+echo "已发送到 Telegram（message_id $(jq -r '.result.message_id' <<<"$resp")）"
