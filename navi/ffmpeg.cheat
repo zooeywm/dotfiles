@@ -4,7 +4,7 @@ $input: ls | sed 's/^\(.*\)$/"\1"/'
 $input2: ls | sed 's/^\(.*\)$/"\1"/'
 $resolution: ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s='\:':p=0 <input>
 $fps: ffmpeg -i <input> 2>&1 | grep "Stream.*Video" | awk '{for(i=1;i<=NF;i++) if ($i ~ /fps/) print $(i-1)}'
-$fps-list: echo "<fps> 30 60 120" | tr ' ' '\n'
+$fps-list: echo "<fps> min(60,source_fps) 30 60 120" | tr ' ' '\n'
 $resolution-list: echo -e "<resolution>\n1280:720\n1920:1080\n2880:1800"
 $audio-format: echo "mp3 wav aiff" | tr ' ' '\n'
 $scale: echo "0.5 0.8" | tr ' ' '\n'
@@ -27,13 +27,13 @@ ffmpeg -i <input> -vn -c:a <audio-format> -q:a 0 -map a <output>.<audio-format>
 ffmpeg -i <input> -i <input2> -c copy <output>
 
 # Compress video with certain resolution (hardware H.264)
-ffmpeg -y -vaapi_device /dev/dri/renderD128 -i <input> -vf "scale=<resolution-list>,fps=<fps-list>,format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k <output>.mp4
+ffmpeg -y -vaapi_device /dev/dri/renderD128 -i <input> -vf "scale=<resolution-list>,fps='<fps-list>',format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k <output>.mp4
 
 # Compress picture with certain resolution
 ffmpeg -i <input> -vf "scale=<resolution-list>" <output>
 
 # Compress video with ratio (hardware H.264)
-ffmpeg -y -vaapi_device /dev/dri/renderD128 -i <input> -vf "scale=trunc(iw*<scale>/2)*2:trunc(ih*<scale>/2)*2,fps=<fps-list>,format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k <output>.mp4
+ffmpeg -y -vaapi_device /dev/dri/renderD128 -i <input> -vf "scale=trunc(iw*<scale>/2)*2:trunc(ih*<scale>/2)*2,fps='<fps-list>',format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k <output>.mp4
 
 # Compress video, keep resolution (hardware H.264)
 ffmpeg -y -vaapi_device /dev/dri/renderD128 -i <input> -vf "format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k <output>.mp4
@@ -45,4 +45,4 @@ ffmpeg -i <input> -vf "scale=iw*<scale>:ih*<scale>" <output>
 <resolution>
 
 # Convert video to gif
-ffmpeg -y -i <input> -filter_complex "fps=<fps-list>,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=32[p];[s1][p]paletteuse=dither=bayer" <output>.gif
+ffmpeg -y -i <input> -filter_complex "fps='<fps-list>',scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=32[p];[s1][p]paletteuse=dither=bayer" <output>.gif
