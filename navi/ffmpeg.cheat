@@ -26,14 +26,17 @@ ffmpeg -i <input> -vn -c:a <audio-format> -q:a 0 -map a <output>.<audio-format>
 # merge video and audio
 ffmpeg -i <input> -i <input2> -c copy <output>
 
-# Compress video with certain resolution
-ffmpeg -i <input> -vf "scale=<resolution-list>,fps=<fps-list>" -c:v libx264 -crf 23 -c:a aac -b:a 128k <output>
+# Compress video with certain resolution (hardware H.264)
+ffmpeg -y -vaapi_device /dev/dri/renderD128 -i <input> -vf "scale=<resolution-list>,fps=<fps-list>,format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k <output>.mp4
 
 # Compress picture with certain resolution
 ffmpeg -i <input> -vf "scale=<resolution-list>" <output>
 
-# Compress video with ratio
-ffmpeg -i <input> -vf "scale=iw*<scale>:ih*<scale>,fps=<fps-list>" -c:v libx264 -crf 23 -c:a aac -b:a 128k <output>
+# Compress video with ratio (hardware H.264)
+ffmpeg -y -vaapi_device /dev/dri/renderD128 -i <input> -vf "scale=trunc(iw*<scale>/2)*2:trunc(ih*<scale>/2)*2,fps=<fps-list>,format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k <output>.mp4
+
+# Compress video, keep resolution (hardware H.264)
+ffmpeg -y -vaapi_device /dev/dri/renderD128 -i <input> -vf "format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k <output>.mp4
 
 # Compress picture with ratio
 ffmpeg -i <input> -vf "scale=iw*<scale>:ih*<scale>" <output>

@@ -71,6 +71,33 @@ terminal-here = [
   { run = "kitty @ launch --type=window --cwd %d1", desc = "Kitty Window Here", for = "linux" },
 ]
 
+# 视频压缩（GPU 硬件编码），在新 kitty 窗口里跑，能看到 ffmpeg 进度
+video-compress = [
+  { run = '''
+target=%s1
+out="${target%.*}.compressed.mp4"
+kitty @ launch --type=window --title "Compress: $(basename -- "$target")" /bin/sh -c 'ffmpeg -y -hide_banner -vaapi_device /dev/dri/renderD128 -i "$1" -vf "format=nv12,hwupload" -c:v h264_vaapi -qp 22 -c:a aac -b:a 128k "$2"; echo; echo "Done: $2"; echo "Press enter to close"; read _' _ "$target" "$out"
+''', desc = "Compress: HW H.264 QP22 (native size)" },
+
+  { run = '''
+target=%s1
+out="${target%.*}.1080p.mp4"
+kitty @ launch --type=window --title "Compress 1080p: $(basename -- "$target")" /bin/sh -c 'ffmpeg -y -hide_banner -vaapi_device /dev/dri/renderD128 -i "$1" -vf "scale=-2:min(1080\,ih),format=nv12,hwupload" -c:v h264_vaapi -qp 24 -c:a aac -b:a 128k "$2"; echo; echo "Done: $2"; echo "Press enter to close"; read _' _ "$target" "$out"
+''', desc = "Compress: HW H.264 1080p QP24" },
+
+  { run = '''
+target=%s1
+out="${target%.*}.720p.mp4"
+kitty @ launch --type=window --title "Compress 720p: $(basename -- "$target")" /bin/sh -c 'ffmpeg -y -hide_banner -vaapi_device /dev/dri/renderD128 -i "$1" -vf "scale=-2:min(720\,ih),format=nv12,hwupload" -c:v h264_vaapi -qp 24 -c:a aac -b:a 128k "$2"; echo; echo "Done: $2"; echo "Press enter to close"; read _' _ "$target" "$out"
+''', desc = "Compress: HW H.264 720p QP24" },
+
+  { run = '''
+target=%s1
+out="${target%.*}.small.mp4"
+kitty @ launch --type=window --title "Compress small: $(basename -- "$target")" /bin/sh -c 'ffmpeg -y -hide_banner -vaapi_device /dev/dri/renderD128 -i "$1" -vf "format=nv12,hwupload" -c:v h264_vaapi -qp 30 -c:a aac -b:a 96k "$2"; echo; echo "Done: $2"; echo "Press enter to close"; read _' _ "$target" "$out"
+''', desc = "Compress: HW H.264 QP30 (small)" },
+]
+
 nv12 = [
   { run = '''
 target=%s1
@@ -114,7 +141,8 @@ rules = [
   # Audio
   { mime = "audio/*", use = ["open", "media", "reveal", "terminal-here"] },
   # Video Image
-  { mime = "{video,image}/*", use = ["open", "media", "reveal", "terminal-here"] },
+  { mime = "video/*", use = ["open", "media", "video-compress", "reveal", "terminal-here"] },
+  { mime = "image/*", use = ["open", "media", "reveal", "terminal-here"] },
   # Archive
   { mime = "application/{gzip,zip,tar,bzip*,7z*,xz,rar,zstd,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract", "open", "reveal", "terminal-here"] },
   # Binary
