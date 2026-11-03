@@ -330,7 +330,8 @@ quit_offset = [0, 0, 50, 15]
 [pick]
 open_title  = "Open with:"
 open_origin = "hovered"
-open_offset = [0, 1, 50, 7]
+# [x, y, 宽度, 高度]：高度从 7 加到 16，视频压缩那 8 个预设一屏全显示
+open_offset = [0, 1, 64, 16]
 
 [which]
 sort_by        = "none"
