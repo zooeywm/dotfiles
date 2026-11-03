@@ -6,8 +6,8 @@
 - 会话与 offset：~/.config/dsh/tg-bot-state.json
 - TINGYU_API_KEY 从 ~/.dsh/.credentials.yaml 读取后传给子进程
 
-运行中的命令会以 `🔧 工具: ...` 的形式实时转发到 Telegram，
-超过 5 秒没有动静会先回一句“收到，处理中…”。
+运行中的思考/工具调用会**追加到同一条进度消息**里（editMessageText 原地刷新），
+不再刷屏；回答单独发。超过 5 秒没动静会先发进度消息回执。
 
 用法（systemd 用户服务 dsh-tg-bot.service 常驻）：
     dsh-tg-bot
@@ -33,9 +33,10 @@ CREDS = HOME / ".dsh/.credentials.yaml"
 DSH = HOME / ".cache/.bun/bin/dsh"
 PROFILE = "headless"
 AGENT_TIMEOUT = int(os.environ.get("DSH_TG_TIMEOUT", "900"))
-ACK_AFTER = 5          # 秒：无进展先回“收到”
-HEARTBEAT = 120        # 秒：长任务定期报一句
-MAX_PROGRESS = 12      # 每次回答最多转发多少条工具进度
+ACK_AFTER = 5           # 秒：没动静先发进度消息
+FLUSH_EVERY = 2.5       # 秒：进度消息刷新节流
+HEARTBEAT = 120         # 秒：长任务心跳
+MAX_PROGRESS_CHARS = 3800
 MAX_CHUNK = 3500
 
 HELP = """我是跑在你 Arch 机器上的 DSH，可以直接让我干活：
@@ -46,7 +47,7 @@ HELP = """我是跑在你 Arch 机器上的 DSH，可以直接让我干活：
 /help   这条帮助
 
 直接发文字就行，我会在固定会话里接着聊；
-执行类请求（跑命令、改文件）也支持，长任务会实时把工具调用进度发给你。"""
+运行中的思考和工具调用会实时更新在同一条进度消息里。"""
 
 
 def log(*args):
@@ -66,6 +67,76 @@ def read_api_key():
 def clip(text, limit=160):
     text = re.sub(r"\s+", " ", str(text)).strip()
     return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
+class Progress:
+    """一条会被原地编辑的进度消息：思考/工具调用不断追加，不刷屏。"""
+
+    def __init__(self, bot):
+        self.bot = bot
+        self.message_id = None
+        self.lines = []
+        self.dirty = False
+        self.last_flush = 0.0
+        self.done = False
+
+    def add(self, line):
+        if not line:
+            return
+        self.lines.append(line)
+        self.dirty = True
+
+    def body(self, header):
+        shown, total = [], 0
+        for line in reversed(self.lines):
+            total += len(line) + 1
+            if total > MAX_PROGRESS_CHARS:
+                shown.append("…（前面省略）")
+                break
+            shown.append(line)
+        shown.reverse()
+        return "\n".join([header, *shown]) if shown else header
+
+    def flush(self, header, force=False):
+        if self.done:
+            return
+        now = time.monotonic()
+        if not force and (not self.dirty or now - self.last_flush < FLUSH_EVERY):
+            return
+        text = self.body(header)
+        try:
+            if self.message_id is None:
+                resp = self.bot.call("sendMessage", {"chat_id": self.bot.chat_id, "text": text})
+                self.message_id = ((resp.get("result") or {}).get("message_id"))
+            else:
+                try:
+                    self.bot.call(
+                        "editMessageText",
+                        {"chat_id": self.bot.chat_id, "message_id": self.message_id, "text": text},
+                    )
+                except urllib.error.HTTPError as exc:
+                    detail = exc.read().decode(errors="replace")
+                    if "message is not modified" not in detail:
+                        log("editMessageText failed:", detail[:200])
+        except (urllib.error.URLError, OSError) as exc:
+            log("progress flush failed:", exc)
+        self.dirty = False
+        self.last_flush = now
+
+    def finish(self, header):
+        self.done = True
+        if self.message_id is None:
+            if self.lines:
+                self.bot.send(self.body(header))
+            return
+        text = self.body(header)
+        try:
+            self.bot.call(
+                "editMessageText",
+                {"chat_id": self.bot.chat_id, "message_id": self.message_id, "text": text},
+            )
+        except (urllib.error.URLError, urllib.error.HTTPError, OSError) as exc:
+            log("progress finish failed:", exc)
 
 
 class Bot:
@@ -118,7 +189,7 @@ class Bot:
         return env
 
     def run_agent(self, text):
-        """跑一次会话，返回 (session_id, 最终文本)。期间把工具进度发到 Telegram。"""
+        """跑一次会话，返回 (session_id, 最终文本)。思考/工具调用写进同一条进度消息。"""
         cmd = [str(DSH), "--profile", PROFILE]
         sid = self.state.get("session_id")
         if sid:
@@ -157,10 +228,10 @@ class Bot:
         session_id = sid
         final_text = ""
         text_parts: list[str] = []
-        progress = 0
-        acked = False
-        last_beat = started
+        progress = Progress(self)
+        last_heartbeat = started
         deadline = started + AGENT_TIMEOUT
+        header = "⏳ 正在处理…"
 
         while True:
             try:
@@ -168,14 +239,16 @@ class Bot:
             except queue.Empty:
                 now = time.monotonic()
                 if now > deadline:
+                    progress.finish("⏱ 超时中断")
                     proc.kill()
                     raise subprocess.TimeoutExpired(cmd, AGENT_TIMEOUT)
-                if not acked and now - started >= ACK_AFTER:
-                    self.send("收到，正在处理…")
-                    acked = True
-                elif now - last_beat >= HEARTBEAT:
-                    self.send(f"还在处理…（已 {int(now - started)} 秒）")
-                    last_beat = now
+                if not progress.lines and now - started >= ACK_AFTER:
+                    progress.flush(header, force=True)
+                elif now - last_heartbeat >= HEARTBEAT:
+                    progress.add(f"⏱ 已经跑了 {int(now - started)} 秒…")
+                    progress.flush(header, force=True)
+                    last_heartbeat = now
+                progress.flush(header)
                 continue
             if line is None:
                 break
@@ -189,41 +262,44 @@ class Bot:
             kind = event.get("type")
             if kind == "session" and event.get("sessionId"):
                 session_id = event["sessionId"]
+            elif kind == "thinking":
+                thought = clip(event.get("text") or "", 300)
+                if thought:
+                    progress.add(f"🧠 {thought}")
             elif kind == "tool_call":
-                if progress < MAX_PROGRESS:
-                    progress += 1
-                    tool = event.get("tool") or "?"
-                    data = event.get("input") or {}
-                    detail = ""
-                    if isinstance(data, dict):
-                        for key in ("command", "path", "file_path", "pattern", "prompt", "description"):
-                            if data.get(key):
-                                detail = clip(data[key], 140)
-                                break
-                        if not detail:
-                            detail = clip(json.dumps(data, ensure_ascii=False), 120)
-                    last_beat = time.monotonic()
-                    acked = True
-                    self.send(f"🔧 {tool}: {detail}")
+                tool = event.get("tool") or "?"
+                data = event.get("input") or {}
+                detail = ""
+                if isinstance(data, dict):
+                    for key in ("command", "path", "file_path", "pattern", "prompt", "description"):
+                        if data.get(key):
+                            detail = clip(data[key], 160)
+                            break
+                    if not detail:
+                        detail = clip(json.dumps(data, ensure_ascii=False), 120)
+                progress.add(f"🔧 {tool}: {detail}")
             elif kind == "tool_result":
                 status = event.get("status")
                 if status not in (None, "completed"):
-                    failed = clip(event.get("result") or "", 200)
-                    self.send(f"⚠️ 工具失败: {failed}")
-                    last_beat = time.monotonic()
+                    progress.add(f"⚠️ 工具失败: {clip(event.get('result') or '', 200)}")
             elif kind == "text":
                 chunk = event.get("text") or ""
                 if chunk:
                     text_parts.append(chunk)
             elif kind == "final":
                 final_text = event.get("text") or ""
+            progress.flush(header)
 
         proc.wait(timeout=30)
+        elapsed = int(time.monotonic() - started)
         if proc.returncode not in (0, None):
             err = err_lines[-1] if err_lines else f"exit {proc.returncode}"
+            progress.finish("❌ 出错了")
             raise RuntimeError(err)
         if not session_id:
+            progress.finish("❌ 出错了")
             raise RuntimeError("没拿到会话 id")
+        progress.finish(f"✅ 完成（{elapsed}s）")
         answer = final_text.strip() or "".join(text_parts).strip() or "(空回答)"
         return session_id, answer
 
