@@ -53,7 +53,7 @@ def main [--dry-run (-n), --prune] {
     })
 
     # 用户级 systemd 单元（文件由上面的部署链接到 ~/.config/systemd/user 后启用）
-    let user_units = ['ssh-agent.service' 'dms.service' 'clash-verge.service' 'dsh-web.service']
+    let user_units = ['ssh-agent.service' 'dms.service' 'clash-verge.service' 'dsh-web.service' 'dsh-tg-bot.service']
     for unit in $user_units {
         if $dry_run {
             log info $"[dry-run] user unit: enable ($unit)"

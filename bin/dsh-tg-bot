@@ -1,0 +1,233 @@
+#!/usr/bin/env python3
+"""Telegram ↔ DSH 桥。
+
+把你发给 bot 的文字交给 `dsh --profile headless` 的一个持久会话，再把回答发回去。
+- 凭据/目标：~/.config/dsh/telegram.json（token、chat_id）
+- 会话与 offset：~/.config/dsh/tg-bot-state.json
+- TINGYU_API_KEY 从 ~/.dsh/.credentials.yaml 读取后传给子进程
+
+用法（systemd 用户服务 dsh-tg-bot.service 常驻）：
+    dsh-tg-bot
+"""
+
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+HOME = Path(os.environ.get("HOME", "/home/zooeywm"))
+CFG = Path(os.environ.get("XDG_CONFIG_HOME", HOME / ".config")) / "dsh/telegram.json"
+STATE = Path(os.environ.get("XDG_CONFIG_HOME", HOME / ".config")) / "dsh/tg-bot-state.json"
+CREDS = HOME / ".dsh/.credentials.yaml"
+DSH = HOME / ".cache/.bun/bin/dsh"
+PROFILE = "headless"
+AGENT_TIMEOUT = int(os.environ.get("DSH_TG_TIMEOUT", "900"))
+MAX_CHUNK = 3500
+
+HELP = """我是跑在你 Arch 机器上的 DSH，可以直接让我干活：
+
+/new    开新会话（清空上下文）
+/status 查看当前会话信息
+/id     显示你的 chat id
+/help   这条帮助
+
+直接发文字就行，我会在固定会话里接着聊；
+执行类请求（跑命令、改文件）也支持，但动重要东西前会先问。"""
+
+
+def log(*args):
+    print(time.strftime("%H:%M:%S"), *args, file=sys.stderr, flush=True)
+
+
+def read_api_key():
+    """从 dsh 凭据文件里取 TINGYU_API_KEY。"""
+    try:
+        text = CREDS.read_text()
+    except OSError:
+        return None
+    m = re.search(r"^\s*TINGYU_API_KEY:\s*(\S+)\s*$", text, re.M)
+    return m.group(1) if m else None
+
+
+class Bot:
+    def __init__(self):
+        cfg = json.loads(CFG.read_text())
+        self.token = cfg["token"]
+        self.chat_id = int(cfg["chat_id"])
+        self.cwd = cfg.get("cwd") or str(HOME)
+        self.api_key = read_api_key()
+        try:
+            self.state = json.loads(STATE.read_text())
+        except (OSError, json.JSONDecodeError):
+            self.state = {"offset": 0, "session_id": None}
+        self.base = f"https://api.telegram.org/bot{self.token}"
+
+    # ---------- telegram ----------
+    def call(self, method, params=None, timeout=60):
+        data = None
+        url = f"{self.base}/{method}"
+        if params is not None:
+            data = urllib.parse.urlencode(params).encode()
+        req = urllib.request.Request(url, data=data)
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return json.loads(resp.read().decode())
+
+    def send(self, text):
+        for i in range(0, len(text), MAX_CHUNK):
+            chunk = text[i : i + MAX_CHUNK]
+            try:
+                self.call(
+                    "sendMessage",
+                    {"chat_id": self.chat_id, "text": chunk, "disable_web_page_preview": "true"},
+                )
+            except (urllib.error.URLError, OSError) as exc:
+                log("sendMessage failed:", exc)
+                return
+
+    def typing(self):
+        try:
+            self.call("sendChatAction", {"chat_id": self.chat_id, "action": "typing"})
+        except (urllib.error.URLError, OSError):
+            pass
+
+    # ---------- dsh ----------
+    def env(self):
+        env = dict(os.environ)
+        if self.api_key:
+            env.setdefault("TINGYU_API_KEY", self.api_key)
+        env["DSH_HOME"] = str(HOME / ".dsh")
+        return env
+
+    def run_agent(self, text, use_json):
+        cmd = [str(DSH), "--profile", PROFILE]
+        sid = self.state.get("session_id")
+        if sid and not use_json:
+            cmd += ["--session-id", sid]
+        if use_json:
+            cmd.append("--json")
+        cmd.append(text)
+        log("run:", " ".join(cmd[:3]), f"({len(text)} chars)")
+        proc = subprocess.run(
+            cmd,
+            cwd=self.cwd,
+            env=self.env(),
+            capture_output=True,
+            text=True,
+            timeout=AGENT_TIMEOUT,
+        )
+        if proc.returncode != 0:
+            err = (proc.stderr or "").strip().splitlines()
+            raise RuntimeError(err[-1] if err else f"exit {proc.returncode}")
+        return proc.stdout
+
+    def ask(self, text):
+        new_session = not self.state.get("session_id")
+        out = self.run_agent(text, use_json=new_session)
+        if new_session:
+            session_id, final = None, ""
+            for line in out.splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    event = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if event.get("type") == "session" and event.get("sessionId"):
+                    session_id = event["sessionId"]
+                elif event.get("type") == "final":
+                    final = event.get("text") or ""
+            if not session_id:
+                raise RuntimeError("没拿到新会话 id")
+            self.state["session_id"] = session_id
+            self.save()
+            return final or "(空回答)"
+        return out.strip() or "(空回答)"
+
+    def save(self):
+        STATE.parent.mkdir(parents=True, exist_ok=True)
+        tmp = STATE.with_suffix(".tmp")
+        tmp.write_text(json.dumps(self.state, ensure_ascii=False, indent=1))
+        tmp.chmod(0o600)
+        tmp.replace(STATE)
+
+    # ---------- main loop ----------
+    def handle(self, update):
+        msg = update.get("message") or update.get("edited_message") or {}
+        chat = msg.get("chat") or {}
+        if chat.get("id") != self.chat_id:
+            return
+        text = msg.get("text") or msg.get("caption") or ""
+        if not text.strip():
+            self.send("目前只支持文字消息。")
+            return
+        text = text.strip()
+        if text in ("/start", "/help"):
+            self.send(HELP)
+            return
+        if text == "/id":
+            self.send(f"chat_id: {chat.get('id')}")
+            return
+        if text == "/new":
+            self.state["session_id"] = None
+            self.save()
+            self.send("已开新会话。")
+            return
+        if text == "/status":
+            self.send(
+                f"会话: {self.state.get('session_id') or '(下条消息新建)'}\n"
+                f"工作目录: {self.cwd}\n模型 profile: {PROFILE}"
+            )
+            return
+        self.typing()
+        started = time.monotonic()
+        try:
+            answer = self.ask(text)
+        except subprocess.TimeoutExpired:
+            self.send(f"超时（{AGENT_TIMEOUT}s），任务可能还在后台跑，稍后再问我状态。")
+            return
+        except Exception as exc:  # noqa: BLE001
+            self.send(f"出错了：{exc}")
+            return
+        elapsed = int(time.monotonic() - started)
+        self.send(answer)
+        if elapsed >= 20:
+            self.send(f"（耗时 {elapsed}s）")
+
+    def loop(self):
+        log("bot started, chat_id =", self.chat_id)
+        while True:
+            try:
+                resp = self.call(
+                    "getUpdates",
+                    {"offset": self.state["offset"], "timeout": 50, "allowed_updates": '["message","edited_message"]'},
+                    timeout=70,
+                )
+            except (urllib.error.URLError, OSError, TimeoutError) as exc:
+                log("getUpdates failed:", exc)
+                time.sleep(5)
+                continue
+            for update in resp.get("result", []):
+                self.state["offset"] = update["update_id"] + 1
+                try:
+                    self.handle(update)
+                except Exception as exc:  # noqa: BLE001
+                    log("handle failed:", exc)
+                self.save()
+
+
+def main():
+    try:
+        Bot().loop()
+    except KeyboardInterrupt:
+        pass
+
+
+if __name__ == "__main__":
+    main()

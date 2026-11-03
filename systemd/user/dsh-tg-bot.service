@@ -1,0 +1,18 @@
+[Unit]
+Description=DSH Telegram bot bridge (Telegram <-> dsh headless)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+WorkingDirectory=/home/zooeywm
+Environment=PATH=/home/zooeywm/.local/share/mise/installs/node/24/bin:/home/zooeywm/.cache/.bun/bin:/usr/local/bin:/usr/bin:/bin
+Environment=DSH_TG_TIMEOUT=900
+ExecStart=/home/zooeywm/.local/bin/dsh-tg-bot
+Restart=on-failure
+RestartSec=5
+Slice=app.slice
+TimeoutStopSec=10s
+
+[Install]
+WantedBy=default.target
