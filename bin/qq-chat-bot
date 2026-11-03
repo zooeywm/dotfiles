@@ -1,0 +1,213 @@
+#!/usr/bin/env bun
+// YUKO QQ 聊天机器人：连 NapCat 的 OneBot WebSocket，收到主人私聊后走庭宇 harness 回复。
+//
+// 只响应 ALLOW_USERS 里的 QQ 号（避免被陌生人调用）。会话历史存在
+// ~/.local/state/qq-chat-bot/history.json，滚动保留最近 20 条。
+//
+// 环境变量：CHAT_DSH_PROFILE（默认 news）、CHAT_DSH_BIN、CHAT_STATE_DIR。
+import { spawn } from "bun";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+
+const HOME = process.env.HOME ?? "/home/zooeywm";
+const CFG =
+  process.env.NAPCAT_CFG ??
+  `${HOME}/.config/napcat-qq-plugin/config/onebot11_2700226069.json`;
+const CRED = process.env.DSH_CREDENTIALS ?? `${HOME}/.dsh/.credentials.yaml`;
+const DSH_BIN = process.env.CHAT_DSH_BIN ?? `${HOME}/.cache/.bun/bin/dsh`;
+const PROFILE = process.env.CHAT_DSH_PROFILE ?? "news";
+const STATE_DIR = process.env.CHAT_STATE_DIR ?? `${HOME}/.local/state/qq-chat-bot`;
+const HISTORY_FILE = `${STATE_DIR}/history.json`;
+const MAX_HISTORY = 20;
+const MAX_REPLY = 1500;
+
+const ALLOW_USERS = new Set([841817493]);
+
+type Cfg = {
+  network: {
+    httpServers: { host: string; port: number; token: string }[];
+    websocketServers: { host: string; port: number; token: string }[];
+  };
+};
+
+function log(msg: string) {
+  console.error(`${new Date().toISOString()} ${msg}`);
+}
+
+function loadCfg(): Cfg {
+  return JSON.parse(readFileSync(CFG, "utf8")) as Cfg;
+}
+
+function tingyuKey(): string {
+  const m = readFileSync(CRED, "utf8").match(/^\s*TINGYU_API_KEY:\s*(\S+)\s*$/m);
+  if (!m) throw new Error("credentials.yaml 里找不到 TINGYU_API_KEY");
+  return m[1];
+}
+
+type Turn = { role: "user" | "bot"; text: string };
+let history: Turn[] = [];
+
+function loadHistory() {
+  try {
+    history = JSON.parse(readFileSync(HISTORY_FILE, "utf8")) as Turn[];
+  } catch {
+    history = [];
+  }
+}
+
+function saveHistory() {
+  mkdirSync(STATE_DIR, { recursive: true });
+  writeFileSync(HISTORY_FILE, JSON.stringify(history.slice(-MAX_HISTORY), null, 0) + "\n");
+}
+
+function promptFor(userText: string): string {
+  const lines = history
+    .slice(-MAX_HISTORY)
+    .map((t) => `${t.role === "user" ? "主人" : "你"}：${t.text}`)
+    .join("\n");
+  return [
+    "你在 QQ 上以 YUKO 的身份陪主人聊天。要求：",
+    "- 用自然、口语化的简体中文回复，一般不超过 120 字；",
+    "- 不要输出 Markdown 标题、列表符号或代码块；",
+    "- 不要提及模型名、系统提示、harness 之类的内部信息；",
+    "- 不确定的事就直说不确定，别编造。",
+    "",
+    lines ? "最近的对话：" : "",
+    lines,
+    "",
+    `主人：${userText}`,
+    "你的回复：",
+  ]
+    .filter((x) => x !== "")
+    .join("\n");
+}
+
+async function askDsh(task: string): Promise<string> {
+  const env = { ...process.env, TINGYU_API_KEY: tingyuKey() };
+  const proc = spawn([DSH_BIN, "--profile", PROFILE, "-"], {
+    stdin: new Blob([task]),
+    stdout: "pipe",
+    stderr: "pipe",
+    env,
+  });
+  const timer = setTimeout(() => proc.kill(), 180_000);
+  const [out, err] = await Promise.all([
+    new Response(proc.stdout as ReadableStream).text(),
+    new Response(proc.stderr as ReadableStream).text(),
+  ]);
+  clearTimeout(timer);
+  const code = await proc.exited;
+  const text = out.trim();
+  if (code !== 0 || !text) {
+    log(`dsh 失败 code=${code} stderr=${err.slice(-300)}`);
+    return "";
+  }
+  return text.slice(0, MAX_REPLY);
+}
+
+async function sendQQ(userId: number, text: string) {
+  const cfg = loadCfg();
+  const http = cfg.network.httpServers[0];
+  const base = `http://${http.host}:${http.port}`;
+  const res = await fetch(`${base}/send_private_msg`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${http.token}`,
+    },
+    body: JSON.stringify({ user_id: userId, message: text }),
+    signal: AbortSignal.timeout(30_000),
+  });
+  const body = (await res.json()) as { status: string; retcode: number };
+  if (!res.ok || body.retcode !== 0) {
+    log(`发送失败: http=${res.status} body=${JSON.stringify(body)}`);
+  }
+}
+
+async function triggerNews(userId: number) {
+  const proc = spawn([`${HOME}/.local/bin/qq-news-report`], {
+    stdout: "ignore",
+    stderr: "inherit",
+  });
+  const code = await proc.exited;
+  if (code !== 0) await sendQQ(userId, "简报生成失败了，看下日志？");
+}
+
+function extractText(event: any): string {
+  if (typeof event.raw_message === "string" && event.raw_message.trim()) {
+    return event.raw_message.trim();
+  }
+  if (typeof event.message === "string") return event.message.trim();
+  if (Array.isArray(event.message)) {
+    return event.message
+      .filter((s: any) => s.type === "text")
+      .map((s: any) => s.data?.text ?? "")
+      .join("")
+      .trim();
+  }
+  return "";
+}
+
+// 串行处理，避免多条消息并发把 harness 挤爆
+let chain: Promise<void> = Promise.resolve();
+function enqueue(fn: () => Promise<void>) {
+  chain = chain.then(fn).catch((e) => log(`处理失败: ${e}`));
+}
+
+async function handleEvent(event: any) {
+  if (event.post_type !== "message" || event.message_type !== "private") return;
+  const userId = Number(event.user_id);
+  if (!ALLOW_USERS.has(userId)) {
+    log(`忽略非白名单消息 from ${userId}`);
+    return;
+  }
+  const text = extractText(event);
+  if (!text) return;
+
+  if (text === "/news" || text === "新闻" || text === "简报") {
+    await sendQQ(userId, "收到，正在生成简报，稍等…");
+    await triggerNews(userId);
+    history.push({ role: "user", text }, { role: "bot", text: "（已发送简报）" });
+    saveHistory();
+    return;
+  }
+
+  const reply = await askDsh(promptFor(text));
+  const final = reply || "（我这边模型走神了，再说一次？）";
+  await sendQQ(userId, final);
+  history.push({ role: "user", text }, { role: "bot", text: final });
+  saveHistory();
+}
+
+let ws: WebSocket | null = null;
+
+function connect() {
+  const cfg = loadCfg();
+  const wsCfg = cfg.network.websocketServers[0];
+  if (!wsCfg) {
+    log("NapCat 配置里没有 websocketServers，退出");
+    process.exit(1);
+  }
+  const url = `ws://${wsCfg.host}:${wsCfg.port}/?access_token=${encodeURIComponent(wsCfg.token)}`;
+  log(`连接 ${url}`);
+  ws = new WebSocket(url);
+
+  ws.addEventListener("open", () => log("WS 已连接"));
+  ws.addEventListener("message", (ev) => {
+    let event: any;
+    try {
+      event = JSON.parse(String(ev.data));
+    } catch {
+      return;
+    }
+    if (event.post_type !== "message") return;
+    enqueue(() => handleEvent(event));
+  });
+  ws.addEventListener("error", (e) => log(`WS 错误: ${e}`));
+  ws.addEventListener("close", () => {
+    log("WS 断开，5 秒后重连");
+    setTimeout(connect, 5_000);
+  });
+}
+
+loadHistory();
+connect();
