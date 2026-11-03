@@ -2,9 +2,12 @@
 """Telegram ↔ DSH 桥。
 
 把你发给 bot 的文字交给 `dsh --profile headless` 的一个持久会话，再把回答发回去。
-- 凭据/目标：~/.config/dsh/telegram.json（token、chat_id）
+- 凭据/目标：~/.config/dsh/telegram.json（token、chat_id、可选 cwd）
 - 会话与 offset：~/.config/dsh/tg-bot-state.json
 - TINGYU_API_KEY 从 ~/.dsh/.credentials.yaml 读取后传给子进程
+
+运行中的命令会以 `🔧 工具: ...` 的形式实时转发到 Telegram，
+超过 5 秒没有动静会先回一句“收到，处理中…”。
 
 用法（systemd 用户服务 dsh-tg-bot.service 常驻）：
     dsh-tg-bot
@@ -12,9 +15,11 @@
 
 import json
 import os
+import queue
 import re
 import subprocess
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -28,6 +33,9 @@ CREDS = HOME / ".dsh/.credentials.yaml"
 DSH = HOME / ".cache/.bun/bin/dsh"
 PROFILE = "headless"
 AGENT_TIMEOUT = int(os.environ.get("DSH_TG_TIMEOUT", "900"))
+ACK_AFTER = 5          # 秒：无进展先回“收到”
+HEARTBEAT = 120        # 秒：长任务定期报一句
+MAX_PROGRESS = 12      # 每次回答最多转发多少条工具进度
 MAX_CHUNK = 3500
 
 HELP = """我是跑在你 Arch 机器上的 DSH，可以直接让我干活：
@@ -38,7 +46,7 @@ HELP = """我是跑在你 Arch 机器上的 DSH，可以直接让我干活：
 /help   这条帮助
 
 直接发文字就行，我会在固定会话里接着聊；
-执行类请求（跑命令、改文件）也支持，但动重要东西前会先问。"""
+执行类请求（跑命令、改文件）也支持，长任务会实时把工具调用进度发给你。"""
 
 
 def log(*args):
@@ -53,6 +61,11 @@ def read_api_key():
         return None
     m = re.search(r"^\s*TINGYU_API_KEY:\s*(\S+)\s*$", text, re.M)
     return m.group(1) if m else None
+
+
+def clip(text, limit=160):
+    text = re.sub(r"\s+", " ", str(text)).strip()
+    return text if len(text) <= limit else text[: limit - 1] + "…"
 
 
 class Bot:
@@ -104,51 +117,122 @@ class Bot:
         env["DSH_HOME"] = str(HOME / ".dsh")
         return env
 
-    def run_agent(self, text, use_json):
+    def run_agent(self, text):
+        """跑一次会话，返回 (session_id, 最终文本)。期间把工具进度发到 Telegram。"""
         cmd = [str(DSH), "--profile", PROFILE]
         sid = self.state.get("session_id")
-        if sid and not use_json:
+        if sid:
             cmd += ["--session-id", sid]
-        if use_json:
-            cmd.append("--json")
-        cmd.append(text)
-        log("run:", " ".join(cmd[:3]), f"({len(text)} chars)")
-        proc = subprocess.run(
+        cmd += ["--json", text]
+        log("run:", " ".join(cmd), f"({len(text)} chars)")
+
+        proc = subprocess.Popen(
             cmd,
             cwd=self.cwd,
             env=self.env(),
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
-            timeout=AGENT_TIMEOUT,
+            bufsize=1,
         )
-        if proc.returncode != 0:
-            err = (proc.stderr or "").strip().splitlines()
-            raise RuntimeError(err[-1] if err else f"exit {proc.returncode}")
-        return proc.stdout
+        out_q: queue.Queue = queue.Queue()
+        err_lines: list[str] = []
+
+        def reader():
+            assert proc.stdout is not None
+            for line in proc.stdout:
+                out_q.put(line)
+            out_q.put(None)
+
+        def err_reader():
+            assert proc.stderr is not None
+            for line in proc.stderr:
+                err_lines.append(line.rstrip())
+                del err_lines[:-20]
+
+        threading.Thread(target=reader, daemon=True).start()
+        threading.Thread(target=err_reader, daemon=True).start()
+
+        started = time.monotonic()
+        session_id = sid
+        final_text = ""
+        text_parts: list[str] = []
+        progress = 0
+        acked = False
+        last_beat = started
+        deadline = started + AGENT_TIMEOUT
+
+        while True:
+            try:
+                line = out_q.get(timeout=1.0)
+            except queue.Empty:
+                now = time.monotonic()
+                if now > deadline:
+                    proc.kill()
+                    raise subprocess.TimeoutExpired(cmd, AGENT_TIMEOUT)
+                if not acked and now - started >= ACK_AFTER:
+                    self.send("收到，正在处理…")
+                    acked = True
+                elif now - last_beat >= HEARTBEAT:
+                    self.send(f"还在处理…（已 {int(now - started)} 秒）")
+                    last_beat = now
+                continue
+            if line is None:
+                break
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                event = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            kind = event.get("type")
+            if kind == "session" and event.get("sessionId"):
+                session_id = event["sessionId"]
+            elif kind == "tool_call":
+                if progress < MAX_PROGRESS:
+                    progress += 1
+                    tool = event.get("tool") or "?"
+                    data = event.get("input") or {}
+                    detail = ""
+                    if isinstance(data, dict):
+                        for key in ("command", "path", "file_path", "pattern", "prompt", "description"):
+                            if data.get(key):
+                                detail = clip(data[key], 140)
+                                break
+                        if not detail:
+                            detail = clip(json.dumps(data, ensure_ascii=False), 120)
+                    last_beat = time.monotonic()
+                    acked = True
+                    self.send(f"🔧 {tool}: {detail}")
+            elif kind == "tool_result":
+                status = event.get("status")
+                if status not in (None, "completed"):
+                    failed = clip(event.get("result") or "", 200)
+                    self.send(f"⚠️ 工具失败: {failed}")
+                    last_beat = time.monotonic()
+            elif kind == "text":
+                chunk = event.get("text") or ""
+                if chunk:
+                    text_parts.append(chunk)
+            elif kind == "final":
+                final_text = event.get("text") or ""
+
+        proc.wait(timeout=30)
+        if proc.returncode not in (0, None):
+            err = err_lines[-1] if err_lines else f"exit {proc.returncode}"
+            raise RuntimeError(err)
+        if not session_id:
+            raise RuntimeError("没拿到会话 id")
+        answer = final_text.strip() or "".join(text_parts).strip() or "(空回答)"
+        return session_id, answer
 
     def ask(self, text):
-        new_session = not self.state.get("session_id")
-        out = self.run_agent(text, use_json=new_session)
-        if new_session:
-            session_id, final = None, ""
-            for line in out.splitlines():
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    event = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if event.get("type") == "session" and event.get("sessionId"):
-                    session_id = event["sessionId"]
-                elif event.get("type") == "final":
-                    final = event.get("text") or ""
-            if not session_id:
-                raise RuntimeError("没拿到新会话 id")
+        session_id, answer = self.run_agent(text)
+        if session_id != self.state.get("session_id"):
             self.state["session_id"] = session_id
             self.save()
-            return final or "(空回答)"
-        return out.strip() or "(空回答)"
+        return answer
 
     def save(self):
         STATE.parent.mkdir(parents=True, exist_ok=True)
