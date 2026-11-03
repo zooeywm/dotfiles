@@ -544,7 +544,7 @@ def cargo-update-plan [manifest] {
 }
 
 # 升级：系统 + AUR 全量升级，再升级清单里各原生管理器管理的包。
-def update [--dry-run, --yes] {
+def update [--dry-run] {
     let manifest = (load-manifest)
 
     if $dry_run {
@@ -585,11 +585,6 @@ def update [--dry-run, --yes] {
         print $"  bun: ($manifest.bun | columns | str join ' ')"
         print '  rustup update'
         return
-    }
-
-    if not $yes {
-        let ok = (confirm "升级系统与清单内的所有包？[y/N] ")
-        if not $ok { return }
     }
 
     print $"(ansi green_bold)升级 pacman / AUR(ansi reset)"
@@ -688,7 +683,7 @@ def main [
     match $action {
         'sync' => { sync --dry-run=$dry_run --yes=$yes --no-prune=$no_prune },
         'audit' => { audit },
-        'update' => { update --dry-run=$dry_run --yes=$yes },
+        'update' => { update --dry-run=$dry_run },
         'export' => { export-manifest },
         'list' => { list-manifest },
         _ => { error make {msg: $"未知命令: ($action)（可用: sync / update / audit / export / list）"} },
