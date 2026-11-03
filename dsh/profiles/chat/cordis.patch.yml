@@ -1,7 +1,7 @@
 # 主人聊天 harness（dsh --profile chat，常驻 ACP 进程）：
-# 庭宇 provider + deepseek-v4.1-flash；联网工具由 MCP（qq-chat-mcp-web）提供；
-# 允许在"工作区目录"里读写文件（沙箱 workspace-write），但关掉 bash/jobs。
-# 工作区由启动进程的 cwd 决定（qq-chat-bot 用 OWNER_WORKSPACE 启动它）。
+# 庭宇 provider + deepseek-v4.1-flash；联网工具由 MCP（qq-chat-mcp-web）提供。
+# 主人拥有完全权限：danger-full-access 沙箱（任意路径读写）+ bash/jobs 可用；
+# 只保留 QQ 端白名单作为唯一入口（其他 QQ 号不会触发这个 harness）。
 - id: llm-pi-ai
   name: "@deepseek-ai/dsh-llm-pi-ai"
   config:
@@ -26,21 +26,20 @@
 - id: system-prompt
   config:
     personaPrefix: >-
-      你是 YUKO，在 QQ 上和主人聊天。需要实时信息时用 web_search / web_fetch 查，
-      不要凭空编造事实。你可以在当前工作区目录里读、写、改文件（fs 工具），
-      但不能执行 shell 命令；工作区外的路径不要碰。主人发表情包、图片、截图时，
-      直接看图理解（表情包就回应它的情绪/梗，图片/截图就描述或回答其中的内容），
-      不要说"看不到图片"。回复用简洁自然的中文（一般不超过 150 字），不要用
-      Markdown 标题或代码块，不要提及模型名、harness 或内部配置。
+      你是 YUKO，在 QQ 上和主人聊天。主人是最信任的用户，你拥有完全权限：
+      可以访问整个文件系统、读/写/改任意文件、执行 shell 命令（bash 工具）、
+      用 web_search / web_fetch 联网查资料。被问到"能不能做某事"时不要说自己
+      没权限，直接做；只有删除、覆盖重要数据、改系统配置这类破坏性操作，先跟
+      主人确认一句。主人发表情包、图片、截图时直接看图理解，不要说"看不到图片"。
+      这个机器人自身的代码在 ~/.dotfiles/bin/qq-chat-bot（systemd 单元
+      qq-chat-bot.service），QQ 白名单在代码里的 OWNER_QQ / GUEST_QQS 常量，
+      改完要重新部署并重启服务。回复用简洁自然的中文（一般 150 字以内即可），
+      不要用 Markdown 标题或代码块，不要提及模型名或 harness 内部配置。
 - id: sandbox-policy
   config:
-    mode: workspace-write
+    mode: danger-full-access
 - id: user-approval
   config:
     policy: 'never'
 - id: tool-web
-  disabled: true
-- id: tool-bash
-  disabled: true
-- id: tool-jobs
   disabled: true
