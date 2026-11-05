@@ -426,4 +426,4 @@ vscode-langservers-extracted = {}
 "@astrojs/language-server"   = {}
 "@deepseek-ai/dsh"           = {}
 [rustup]
-toolchains = ["stable", "nightly", "1.75.0", "1.85", "1.88", "1.88.0", "1.95", "1.97.1", "1.99.1"]
+toolchains = ["stable", "1.99.1"]
