@@ -583,7 +583,7 @@ def update [--dry-run] {
         print $"(ansi green_bold)uv / bun / rustup(ansi reset)"
         print $"  uv: ($manifest.uv | columns | str join ' ')"
         print $"  bun: ($manifest.bun | columns | str join ' ')"
-        print '  rustup update'
+        print '  rustup update（跳过 nightly）'
         return
     }
 
@@ -654,8 +654,12 @@ def update [--dry-run] {
         }
     }
 
-    print $"(ansi green_bold)升级 rustup toolchains(ansi reset)"
-    if not (run-live 'rustup' ...['rustup' 'update']) {
+    print $"(ansi green_bold)升级 rustup toolchains（跳过 nightly）(ansi reset)"
+    # nightly 每次更新都可能带来行为变化，固定不动；要更新时手动 rustup update nightly
+    let tcs = (installed-rustup | filter {|t| not (($t | str lowercase) | str starts-with 'nightly') })
+    if ($tcs | is-empty) {
+        print $"(ansi yellow)  只装了 nightly，跳过(ansi reset)"
+    } else if not (run-live 'rustup' ...(['rustup' 'update'] ++ $tcs)) {
         $failed = ($failed | append 'rustup')
     }
 
