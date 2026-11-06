@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=YAQMC
+Name[zh_CN]=YAQMC
+Comment=Unofficial QQ Music client
+Exec=/usr/bin/yaqmc
+Icon=yaqmc
+Terminal=false
+StartupNotify=true
+StartupWMClass=YAQMC
+Categories=AudioVideo;Audio;Player;
