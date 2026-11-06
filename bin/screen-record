@@ -10,7 +10,6 @@ pid_count=$(fuser /usr/bin/wl-screenrec 2>/dev/null | wc -w)
 
 if [ "$pid_count" -gt 0 ]; then
     pkill wl-screenrec
-    notify-send "Screen Recording ended."
     exit 0
 fi
 
@@ -44,11 +43,9 @@ if geometry=$(get_geometry_hyprland) && [ -n "$geometry" ]; then
 elif geometry=$(get_geometry_niri) && [ -n "$geometry" ]; then
     :
 else
-    notify-send "Screen Recording failed" "Unable to detect monitor geometry"
+    echo "screen-record: unable to detect monitor geometry" >&2
     exit 1
 fi
-
-notify-send "Start recording"
 
 case "${1:-}" in
 area)
@@ -66,7 +63,7 @@ screen | "")
         -g "$geometry"
     ;;
 *)
-    notify-send "Unknown mode" "$1"
+    echo "screen-record: unknown mode: $1" >&2
     exit 1
     ;;
 esac
