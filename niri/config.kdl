@@ -7,6 +7,20 @@
 
 include "dms/colors.kdl"
 
+// 数字命名的工作区（保留固定输出，bar 上显示也是数字）
+workspace "1" {
+    open-on-output "eDP-1"
+}
+workspace "2" {
+    open-on-output "HDMI-A-1"
+}
+workspace "3" {
+    open-on-output "eDP-1"
+}
+workspace "4" {
+    open-on-output "eDP-1"
+}
+
 layout {
     preset-window-heights {
         proportion 0.5
