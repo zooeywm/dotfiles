@@ -7,19 +7,6 @@
 
 include "dms/colors.kdl"
 
-workspace "main" {
-    open-on-output "eDP-1"
-}
-workspace "browser" {
-    open-on-output "HDMI-A-1"
-}
-workspace "misc" {
-    open-on-output "eDP-1"
-}
-workspace "chat" {
-    open-on-output "eDP-1"
-}
-
 layout {
     preset-window-heights {
         proportion 0.5
