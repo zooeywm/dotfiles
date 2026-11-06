@@ -115,6 +115,7 @@ gitoxide                       = {}
 glmark2                        = {}
 glow                           = {}
 glsl-language-server           = {}
+gnome-keyring                  = {}
 gparted                        = {}
 gping                          = {}
 gputest                        = { aur = true }
