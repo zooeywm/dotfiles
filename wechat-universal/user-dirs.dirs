@@ -1,0 +1,2 @@
+# 微信沙箱内的 XDG 目录（让文件对话框出现「下载」条目）
+XDG_DOWNLOAD_DIR="$HOME/Downloads"

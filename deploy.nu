@@ -31,6 +31,8 @@ def main [--dry-run (-n), --prune] {
         | target fcitx5/share ~/.local/share/fcitx5
         | target ssh ~/.ssh
         | target codex ~/.codex
+        # 微信 Linux 版跑在 bwrap 沙箱里：挂下载目录 + 沙箱内 XDG 配置
+        | target wechat-universal/binds.list ~/.config/wechat-universal/binds.list
         # | target Templates -p ~
         | targets [
             fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
@@ -64,6 +66,19 @@ def main [--dry-run (-n), --prune] {
             log info $"user unit: enabled ($unit)"
         } else {
             log warning $"user unit: ($unit) skipped: ($r.stderr | str trim)"
+        }
+    }
+
+    # 微信 Linux 版跑在 bwrap 沙箱里，沙箱内 $HOME 是假的（Documents/WeChat_Data/home），
+    # 这个目录里的配置必须是真实文件，symlink 在沙箱里会断，所以用复制而不是链接。
+    let wechat_home_cfg = ($env.HOME | path join 'Documents/WeChat_Data/home/.config')
+    if ($wechat_home_cfg | path exists) {
+        let dest = ($wechat_home_cfg | path join 'user-dirs.dirs')
+        if $dry_run {
+            log info $"[dry-run] copy wechat-universal/user-dirs.dirs => ($dest)"
+        } else {
+            ^cp -f wechat-universal/user-dirs.dirs $dest
+            log info $"copy wechat-universal/user-dirs.dirs => ($dest)"
         }
     }
 
