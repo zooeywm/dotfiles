@@ -194,7 +194,6 @@ nushell                        = {}
 nvrs-bin                       = { aur = true }
 nvtop                          = {}
 obs-studio                     = {}
-openai-codex                   = {}
 "openssl-1.1"                  = {}
 overskride                     = {}
 pacfiles                       = {}
