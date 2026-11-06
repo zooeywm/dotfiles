@@ -38,11 +38,12 @@ def main [--dry-run (-n), --prune] {
             fish nushell dunst presenterm niri swaylock dms xdg-desktop-portal
             LazyVim neovide wezterm kitty alacritty zellij yazi git git-cliff
             gitui lazygit zathura mpv gdb pip.conf macchina paru
-            mise atuin uv jj zed systemd chromium-flags.conf
+            mise atuin uv jj zed systemd
         ] ~/.config
         | targets [
             fontconfig mimeapps.list
         ] ~/.config -h
+        | target chrome-flags.conf ~/.config/chrome-flags.conf
         | targets [memo applications] ~/.local/share
         | target autostart ~/.config/autostart
         | each {|item| deploy-item $item --dry-run=$dry_run }

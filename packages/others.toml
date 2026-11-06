@@ -50,7 +50,7 @@ cargo-zigbuild             = {}
 ccze                       = { aur = true }
 chafa                      = {}
 choose                     = {}
-chromium                   = {}
+google-chrome                  = {}
 clang                      = {}
 clash-verge-rev-bin        = { aur = true }
 clazy                      = {}
