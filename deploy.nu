@@ -112,10 +112,22 @@ def root-fs-uuid [] {
     (^lsblk -no UUID $dev | str trim)
 }
 
-# 用当前机器实际的 root UUID 渲染 bootloader 条目。
-def render-boot-entry [uuid: string] {
-    open 'root/boot/loader/entries/arch.conf'
-    | str replace --regex 'root=UUID=[0-9a-fA-F-]+' $"root=UUID=($uuid)"
+# 当前启用的 swap 设备 UUID（供 hibernate 的 resume= 使用；LVM/ext4/btrfs 通用）。
+def swap-fs-uuid [] {
+    let dev = (^awk 'NR==2{print $1}' /proc/swaps | str trim)
+    if ($dev | is-empty) { return '' }
+    (^lsblk -no UUID $dev | str trim)
+}
+
+# 用当前机器实际的 root / swap UUID 渲染 bootloader 条目。
+def render-boot-entry [uuid: string, swap_uuid: string] {
+    let rendered = (open 'root/boot/loader/entries/arch.conf'
+        | str replace --regex 'root=UUID=[0-9a-fA-F-]+' $"root=UUID=($uuid)")
+    # 没有 swap 的机器上不保留 resume=，避免内核/initramfs 报错。
+    if ($swap_uuid | is-empty) {
+        return ($rendered | str replace --regex ' ?resume=UUID=\S+' '')
+    }
+    ($rendered | str replace --regex 'resume=UUID=\S+' $"resume=UUID=($swap_uuid)")
 }
 
 # 生成 /boot/loader/entries/arch.conf：模板来自仓库，UUID 取当前机器。
@@ -126,19 +138,20 @@ def apply-boot-entry [--dry-run] {
         log error 'cannot detect root filesystem UUID'
         exit 1
     }
-    let desired = (render-boot-entry $uuid)
+    let swap_uuid = (swap-fs-uuid)
+    let desired = (render-boot-entry $uuid $swap_uuid)
     let current = (if ($dest | path exists) { open --raw $dest | str trim } else { '' })
     if (($desired | str trim) == $current) {
         log info "boot entry: up to date"
         return
     }
     if $dry_run {
-        log info $"[dry-run] update ($dest) root UUID=($uuid)"
+        log info $"[dry-run] update ($dest) root UUID=($uuid) resume UUID=($swap_uuid)"
         return
     }
     $desired | save --force $dest
     ^chmod 644 $dest
-    log info $"boot entry: updated ($dest) root UUID=($uuid)"
+    log info $"boot entry: updated ($dest) root UUID=($uuid) resume UUID=($swap_uuid)"
 }
 
 def mirror-root [--dry-run] {
