@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Google Chrome
+Name[zh_CN]=Google Chrome
+Comment=Web browser
+Exec=/usr/bin/google-chrome-stable %U
+Icon=google-chrome
+Terminal=false
+StartupNotify=true
+StartupWMClass=google-chrome
+Categories=Network;WebBrowser;
