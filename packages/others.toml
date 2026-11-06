@@ -383,6 +383,7 @@ xorg-xwininfo                  = {}
 xorg-xwud                      = {}
 xwayland-satellite             = {}
 xwaylandvideobridge            = { aur = true }
+yaqmc-bin                      = {}
 yaml-language-server           = {}
 yazi-git                       = {}
 ydotool                        = {}
