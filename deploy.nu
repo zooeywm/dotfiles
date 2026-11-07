@@ -120,8 +120,8 @@ def swap-fs-uuid [] {
 }
 
 # 用当前机器实际的 root / swap UUID 渲染 bootloader 条目。
-def render-boot-entry [uuid: string, swap_uuid: string] {
-    let rendered = (open 'root/boot/loader/entries/arch.conf'
+def render-boot-entry [uuid: string, swap_uuid: string, entry: string] {
+    let rendered = (open $'root/boot/loader/entries/($entry)'
         | str replace --regex 'root=UUID=[0-9a-fA-F-]+' $"root=UUID=($uuid)")
     # 没有 swap 的机器上不保留 resume=，避免内核/initramfs 报错。
     if ($swap_uuid | is-empty) {
@@ -132,26 +132,30 @@ def render-boot-entry [uuid: string, swap_uuid: string] {
 
 # 生成 /boot/loader/entries/arch.conf：模板来自仓库，UUID 取当前机器。
 def apply-boot-entry [--dry-run] {
-    let dest = '/boot/loader/entries/arch.conf'
     let uuid = (root-fs-uuid)
     if ($uuid | is-empty) {
         log error 'cannot detect root filesystem UUID'
         exit 1
     }
     let swap_uuid = (swap-fs-uuid)
-    let desired = (render-boot-entry $uuid $swap_uuid)
-    let current = (if ($dest | path exists) { open --raw $dest | str trim } else { '' })
-    if (($desired | str trim) == $current) {
-        log info "boot entry: up to date"
-        return
+    for entry in ['arch.conf' 'arch-lts.conf'] {
+        let src = $'root/boot/loader/entries/($entry)'
+        if not ($src | path exists) { continue }
+        let dest = $'/boot/loader/entries/($entry)'
+        let desired = (render-boot-entry $uuid $swap_uuid $entry)
+        let current = (if ($dest | path exists) { open --raw $dest | str trim } else { '' })
+        if (($desired | str trim) == $current) {
+            log info $'boot entry: up to date: ($entry)'
+            continue
+        }
+        if $dry_run {
+            log info $"[dry-run] update ($dest) root UUID=($uuid) resume UUID=($swap_uuid)"
+            continue
+        }
+        $desired | save --force $dest
+        ^chmod 644 $dest
+        log info $"boot entry: updated ($dest) root UUID=($uuid) resume UUID=($swap_uuid)"
     }
-    if $dry_run {
-        log info $"[dry-run] update ($dest) root UUID=($uuid) resume UUID=($swap_uuid)"
-        return
-    }
-    $desired | save --force $dest
-    ^chmod 644 $dest
-    log info $"boot entry: updated ($dest) root UUID=($uuid) resume UUID=($swap_uuid)"
 }
 
 def mirror-root [--dry-run] {
