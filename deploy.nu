@@ -44,6 +44,7 @@ def main [--dry-run (-n), --prune] {
             fontconfig mimeapps.list
         ] ~/.config -h
         | target chrome-flags.conf ~/.config/chrome-flags.conf
+        | target qq-bwrap-flags.conf ~/.config/qq-bwrap-flags.conf
         | targets [memo applications] ~/.local/share
         | target autostart ~/.config/autostart
         | each {|item| deploy-item $item --dry-run=$dry_run }

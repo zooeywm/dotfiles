@@ -1,2 +1,4 @@
-# 微信沙箱内的 XDG 目录（让文件对话框出现「下载」条目）
+# 微信沙箱内的 XDG 目录（让文件对话框出现「下载」「图片」「视频」条目）
 XDG_DOWNLOAD_DIR="$HOME/Downloads"
+XDG_PICTURES_DIR="$HOME/Pictures"
+XDG_VIDEOS_DIR="$HOME/Videos"
