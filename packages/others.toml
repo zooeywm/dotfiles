@@ -11,6 +11,7 @@ asciinema                  = {}
 ast-grep                   = {}
 atuin                      = {}
 aurpublish                 = {}
+azure-cli                  = {}
 bandwhich                  = {}
 base-devel                 = {}
 bash-completion            = {}
@@ -155,6 +156,7 @@ libtree                        = {}
 libvirt                        = {}
 libx11                         = {}
 linuxqq-nt-bwrap               = { aur = true }
+linuxqq-wayland-fix-git        = { aur = true }
 lldb                           = {}
 llmfit                         = {}
 llvm                           = {}

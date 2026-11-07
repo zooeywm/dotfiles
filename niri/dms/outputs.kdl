@@ -2,7 +2,7 @@
 
 output "eDP-1" {
     mode "2880x1800@120.000"
-    scale 1
+    scale 1.5
     position x=0 y=207
 }
 

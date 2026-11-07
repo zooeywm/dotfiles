@@ -27,16 +27,16 @@ window-rule {
     opacity 0.85
 }
 
-// @id=dms-floating-windows @name=DMS Floating Windows
-window-rule {
-    match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"
-    open-floating true
-}
-
 // @id=wr_1788749799444864040 @name=codex-desktop
 window-rule {
     match app-id="^codex-desktop$"
     open-floating false
+}
+
+// @id=dms-floating-windows @name=DMS Floating Windows
+window-rule {
+    match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"
+    open-floating true
 }
 
 // @id=dms-window-opaque @name=DMS Window Opaque
