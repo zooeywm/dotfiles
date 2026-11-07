@@ -44,6 +44,8 @@ def main [--dry-run (-n), --prune] {
             fontconfig mimeapps.list
         ] ~/.config -h
         | target chrome-flags.conf ~/.config/chrome-flags.conf
+        | target sunshine/sunshine.conf ~/.config/sunshine/sunshine.conf
+        | target clash-verge/Script.js ~/.local/share/io.github.clash-verge-rev.clash-verge-rev/profiles/Script.js
         | target qq-bwrap-flags.conf ~/.config/qq-bwrap-flags.conf
         | targets [memo applications] ~/.local/share
         | target autostart ~/.config/autostart
