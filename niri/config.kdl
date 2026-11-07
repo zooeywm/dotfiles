@@ -204,6 +204,12 @@ window-rule {
 // Load DMS rules after the global defaults so specific DMS rules win.
 include "dms/windowrules.kdl"
 
+// Waydroid 单窗口模式：最大化显示（不能 resize，避免触发 Android 分辨率切换导致崩溃）
+window-rule {
+    match app-id=r#"^Waydroid$"#
+    open-maximized true
+}
+
 // 自定义快捷键：放在 dms/*.kdl include 之后，覆盖 DMS 生成的同名绑定。
 // app-toggle：按一下打开窗口，再按一下关闭（有托盘的 app 关闭时收进托盘，不退出、不开新实例）。
 binds {
