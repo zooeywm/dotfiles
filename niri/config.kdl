@@ -106,8 +106,9 @@ overview {
 }
 
 switch-events {
-    lid-close { spawn "notify-send" "The laptop lid is closed!"; }
-    lid-open { spawn "notify-send" "The laptop lid is open!"; }
+    // 合盖只关显示器，不挂起（远程串流保持在线）
+    lid-close { spawn "niri" "msg" "action" "power-off-monitors"; }
+    lid-open { spawn "niri" "msg" "action" "power-on-monitors"; }
     tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
     tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
 }
