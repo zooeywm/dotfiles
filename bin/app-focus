@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# 「切到已有窗口，否则启动」——不会开新实例。
+#
+# 用法：app-focus <app-id-正则> <启动命令...>
+#   1. 已有匹配窗口 → 聚焦最近用过的那个（niri 会一起切到它所在的工作区）
+#   2. 没有窗口   → 用启动命令启动
+#
+# 依赖：niri（niri msg）、jq
+set -uo pipefail
+
+if (($# < 2)); then
+    echo "usage: app-focus <app-id-regex> <launch-command...>" >&2
+    exit 2
+fi
+
+app_re=$1
+shift
+
+# niri 只给「它自己 spawn 的进程」设 NIRI_SOCKET；如果脚本被别的途径调用（或环境没传下来），
+# 自动在 XDG_RUNTIME_DIR 里找 niri 的 socket，避免误判成“没有窗口”而新开实例。
+if [[ -z ${NIRI_SOCKET:-} ]]; then
+    for sock in "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"/niri.*.sock; do
+        [[ -S $sock ]] && { NIRI_SOCKET=$sock; export NIRI_SOCKET; break; }
+    done
+fi
+
+ids=$(niri msg --json windows 2>/dev/null |
+    jq -r --arg re "$app_re" \
+        '[.[] | select(((.app_id // "") | test($re; "i")))]
+         | sort_by(.focus_timestamp.secs // 0) | .[].id')
+
+if [[ -n ${ids:-} ]]; then
+    # 取最近用过的窗口（列表最后一个）
+    read -r -a arr <<<"$ids"
+    niri msg action focus-window --id "${arr[-1]}" >/dev/null
+    exit 0
+fi
+
+# 没有窗口：启动（setsid -f 脱离当前会话）
+setsid -f "$@" >/dev/null 2>&1
