@@ -221,5 +221,8 @@ binds {
     Mod+M repeat=false hotkey-overlay-title="移除最后一条通知" { spawn-sh "dms ipc call notifications dismiss"; }
     // Mod+Shift+M：通知免打扰开关
     Mod+Shift+M repeat=false hotkey-overlay-title="通知免打扰" { spawn-sh "$HOME/.local/bin/dnd-toggle"; }
+    // Mod+N / Mod+Shift+N：通知中心 ↔ 记事本 换位（覆盖 DMS 生成的同名绑定）
+    Mod+N repeat=false hotkey-overlay-title="通知中心" { spawn-sh "dms ipc call notifications toggle"; }
+    Mod+Shift+N repeat=false hotkey-overlay-title="记事本" { spawn-sh "dms ipc call notepad toggle"; }
 }
 
