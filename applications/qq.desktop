@@ -1,0 +1,13 @@
+[Desktop Entry]
+Categories=Network;
+Comment=QQ（Wayland 修复版：屏幕共享/剪贴板/截图）
+Exec=env GDK_SCALE=1 /home/zooeywm/.local/bin/qq-wayland %U
+Icon=qq
+Name=QQ
+NoDisplay=false
+Path=
+PrefersNonDefaultGPU=false
+StartupNotify=true
+StartupWMClass=QQ
+Terminal=false
+Type=Application

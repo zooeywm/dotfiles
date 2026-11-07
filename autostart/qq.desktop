@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=QQ
-Comment=QQ
-Exec=/opt/QQ/start.sh %U
+Comment=QQ（Wayland 修复版）
+Exec=env GDK_SCALE=1 /home/zooeywm/.local/bin/qq-wayland %U
 Icon=qq
 Terminal=false
 SingleMainWindow=true

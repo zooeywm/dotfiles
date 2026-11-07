@@ -1,0 +1,6 @@
+#!/bin/sh
+# 启动带 Wayland 修复的 QQ（linuxqq-nt-bwrap 沙箱版）
+# 修复内容：屏幕共享 / 共享电脑声音 / 剪贴板 / 截图闪退
+# 依赖：linuxqq-wayland-fix-git（AUR）+ xdg-desktop-portal-gnome（niri 的 ScreenCast 后端）
+export QQ_WAYLAND_FIX_QQ="${QQ_WAYLAND_FIX_QQ:-/opt/QQ/start.sh}"
+exec /usr/bin/linuxqq-wayland-fix "$@"
