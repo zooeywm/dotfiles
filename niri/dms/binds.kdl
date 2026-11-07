@@ -6,7 +6,7 @@ binds {
     Mod+F2 { spawn-sh "dms restart"; }
     Mod+M hotkey-overlay-title="Task Manager" { spawn-sh "dms ipc call processlist focusOrToggle"; }
     Mod+N hotkey-overlay-title="Notepad" { spawn-sh "dms ipc call notepad toggle"; }
-    Mod+P { spawn-sh "dms color pick"; }
+    Mod+P hotkey-overlay-title="Play/Pause Music" { spawn-sh "dms ipc call mpris playPause"; }
     Mod+Shift+E { spawn-sh "dms ipc call powermenu open"; }
     Mod+Shift+N hotkey-overlay-title="Notification Center" { spawn-sh "dms ipc call notifications toggle"; }
     Mod+V hotkey-overlay-title="Clipboard Manager" { spawn-sh "dms ipc call clipboard toggle"; }
