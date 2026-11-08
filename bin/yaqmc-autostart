@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# 等待网络就绪后再启动 YAQMC，避免开机时会话恢复失败（显示"无法连接 QQ 音乐"）
+for _ in $(seq 1 60); do
+  if /usr/bin/curl -sf --max-time 2 -o /dev/null https://y.qq.com/; then
+    break
+  fi
+  sleep 2
+done
+exec /usr/bin/yaqmc
