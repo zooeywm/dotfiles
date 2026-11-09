@@ -3,6 +3,11 @@
 // (originally "Custom Rules", applied to the 空气糖果 subscription only).
 function main(config, profileName) {
   const prependRules = [
+    // 微软官方下载/更新：直连（ISO、Windows Update、下载页 API），不消耗机场流量
+    "DOMAIN-SUFFIX,microsoft.com,DIRECT",
+    "DOMAIN-SUFFIX,windowsupdate.com,DIRECT",
+    "DOMAIN-SUFFIX,windows.com,DIRECT",
+    "DOMAIN-SUFFIX,microsoftonline.com,DIRECT",
     // Tailscale：控制面(login/controlplane)走代理（国内直连被墙），其余流量（P2P/DERP）直连
     "DOMAIN-SUFFIX,tailscale.com,🚀 节点选择",
     "DOMAIN-SUFFIX,tailscale.io,🚀 节点选择",
