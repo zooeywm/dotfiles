@@ -1,0 +1,3 @@
+#!/bin/sh
+# 微信主窗口和内嵌网页统一使用 XWayland。
+exec env -u WAYLAND_DISPLAY QT_QPA_PLATFORM=xcb /usr/lib/wechat-universal/start.sh "$@"

@@ -1,0 +1,20 @@
+[Desktop Entry]
+Type=Application
+Name=WeChat (Universal)
+Name[zh_CN]=微信 Universal
+Comment=WeChat Universal
+TryExec=/home/zooeywm/.local/bin/wechat-universal
+Exec=/home/zooeywm/.local/bin/wechat-universal %u
+Icon=wechat-universal
+Categories=Network;InstantMessaging;Chat;
+Terminal=false
+StartupWMClass=wechat
+X-GNOME-SingleWindow=true
+SingleMainWindow=true
+Actions=quit;
+
+[Desktop Action quit]
+Name=Quit WeChat
+Name[zh_CN]=退出
+Exec=/usr/lib/wechat-universal/stop.sh
+Icon=application-exit

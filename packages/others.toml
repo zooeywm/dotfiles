@@ -5,6 +5,7 @@
 aarch64-linux-gnu-binutils = {}
 acpi                       = {}
 alacritty                  = {}
+antigravity                = {}
 android-tools              = {}
 archlinuxcn-keyring        = {}
 asciinema                  = {}
@@ -68,7 +69,6 @@ cpio                       = {}
 cppcheck                   = {}
 d2                         = {}
 dagtoc-bin                 = { aur = true }
-dbeaver                    = {}
 debtap                     = { aur = true }
 difftastic                 = {}
 dmenu                      = {}
