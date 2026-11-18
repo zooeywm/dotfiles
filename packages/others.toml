@@ -240,6 +240,7 @@ qt5ct                          = {}
 qt6-languageserver             = {}
 qt6ct                          = {}
 quickshell                     = {}
+qview                      = { aur = true }
 radeontop                      = {}
 rclone                         = {}
 remmina                        = {}
