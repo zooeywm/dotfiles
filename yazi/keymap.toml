@@ -174,9 +174,9 @@ keymap = [
   { on = "<C-d>", run = "plugin diff", desc = "Diff the selected with the hovered file" },
   { on = ["c", "s"], run = "plugin what-size", desc = "Calc size of selection or cwd" },
   { on = ["y", "s"], run = [
-    "shell -- python3 -c 'import pathlib, sys; sys.stdout.write(\"\".join(pathlib.Path(p).as_uri() + \"\\r\\n\" for p in sys.argv[1:]))' %s | wl-copy -t text/uri-list",
+    "shell -- python3 -c 'import pathlib, subprocess, sys; d = \"\".join(pathlib.Path(p).as_uri() + chr(13) + chr(10) for p in sys.argv[1:]).encode(); subprocess.run([\"wl-copy\", \"-t\", \"text/uri-list\"], input=d); subprocess.run([\"xclip\", \"-selection\", \"clipboard\", \"-t\", \"text/uri-list\", \"-i\"], input=d)' %s",
     "yank",
-  ], desc = "Copy to system clipboard" },
+  ], desc = "Copy to system clipboard (Wayland + X11)" },
   { on = "M", run = "plugin toggle-pane max-preview", desc = "Maximize or restore preview" },
   { on = "H", run = "plugin toggle-pane min-preview", desc = "Hide or show preview" },
   { on = ["g", "l"], run = "plugin lazygit", desc = "Run lazygit" },
