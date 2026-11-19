@@ -21,17 +21,12 @@ return {
                 stdin = true,
             },
             ["c,cpp"] = "clang-format",
-            go = "gofmt",
             ["javascript,typescript,javascriptreact,typescriptreact,css,json,jsonc,json5,markdown,vue,html,yaml"] = {
                 cmd = "oxfmt",
                 fname = true,
                 stdin = false,
             },
             ["xml,astro,scss,less"] = "prettier",
-            cs = {
-                cmd = "dotnet-csharpier",
-                args = { "--write-stdout" },
-            },
             typst = "typstyle",
             slint = {
                 cmd = "slint-lsp",
