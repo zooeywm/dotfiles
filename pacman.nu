@@ -13,7 +13,7 @@
 # 用法：
 #   ./pacman.nu                 默认 sync：装缺失，逐项询问卸载未声明
 #   ./pacman.nu sync [flags]    同上
-#   ./pacman.nu update          升级：pacman/AUR 全量 + 原生管理器里清单内的包
+#   ./pacman.nu update          升级：pacman/AUR 全量 + 原生管理器清单内的包 + pkgbuilds/ 上游检查
 #   ./pacman.nu audit           只报告差异，有差异时退出码 1
 #   ./pacman.nu export          从当前系统导出清单（TOML 输出到 stdout）
 #   ./pacman.nu list            打印合并后的清单
@@ -544,6 +544,51 @@ def cargo-update-plan [manifest] {
 }
 
 # 升级：系统 + AUR 全量升级，再升级清单里各原生管理器管理的包。
+# ---------- 本地打包（pkgbuilds/） ----------
+# 约定：pkgbuilds/<包名>/update.sh，支持 `--check` 时输出上游最新版本号。
+
+def ver-parts [v: string] {
+    ($v
+    | str replace --regex '[-+].*$' ''
+    | split row '.'
+    | each {|p|
+        let d = ($p | str replace --regex '\D' '')
+        if ($d | is-empty) { 0 } else { $d | into int }
+    })
+}
+
+def ver-lt [a: string, b: string] {
+    let pa = (ver-parts $a)
+    let pb = (ver-parts $b)
+    let n = ([($pa | length) ($pb | length)] | math max)
+    mut i = 0
+    mut lt = false
+    while $i < $n {
+        let x = ($pa | get --optional $i | default 0)
+        let y = ($pb | get --optional $i | default 0)
+        if ($x < $y) { $lt = true; break }
+        if ($x > $y) { break }
+        $i = $i + 1
+    }
+    $lt
+}
+
+def pkgbuild-plan [] {
+    let dir = ((base-dir) | path join 'pkgbuilds')
+    if not ($dir | path exists) { return [] }
+    glob ($dir | path join '*/update.sh')
+    | each {|s|
+        let pkg = (($s | path dirname) | path basename)
+        let q = (^pacman -Q $pkg | complete)
+        if ($q.exit_code != 0) { return null }
+        let installed = ($q.stdout | str trim | str replace --regex '^\S+\s+' '')
+        let c = (do { ^$s --check } | complete)
+        let latest = (if ($c.exit_code == 0) { ($c.stdout | str trim) } else { '' })
+        {pkg: $pkg, installed: $installed, latest: $latest, script: $s}
+    }
+    | compact
+}
+
 def update [--dry-run] {
     let manifest = (load-manifest)
 
@@ -584,6 +629,21 @@ def update [--dry-run] {
         print $"  uv: ($manifest.uv | columns | str join ' ')"
         print $"  bun: ($manifest.bun | columns | str join ' ')"
         print '  rustup update（跳过 nightly）'
+        print $"(ansi green_bold)本地打包（pkgbuilds/）(ansi reset)"
+        let lp = (pkgbuild-plan)
+        if ($lp | is-empty) {
+            print '  （无）'
+        } else {
+            for e in $lp {
+                if ($e.latest | is-empty) {
+                    print $"  ($e.pkg): 无法获取上游版本，已装 ($e.installed)"
+                } else if (ver-lt $e.installed $e.latest) {
+                    print $"  ($e.pkg): ($e.installed) -> ($e.latest)  (ansi yellow)可更新(ansi reset)"
+                } else {
+                    print $"  ($e.pkg): 已是最新（($e.installed)）"
+                }
+            }
+        }
         return
     }
 
@@ -661,6 +721,27 @@ def update [--dry-run] {
         print $"(ansi yellow)  只装了 nightly，跳过(ansi reset)"
     } else if not (run-live 'rustup' ...(['rustup' 'update'] ++ $tcs)) {
         $failed = ($failed | append 'rustup')
+    }
+
+    print $"(ansi green_bold)检查本地打包（pkgbuilds/）(ansi reset)"
+    for e in (pkgbuild-plan) {
+        if ($e.latest | is-empty) {
+            print $"  ($e.pkg): 无法获取上游版本，跳过"
+            continue
+        }
+        if not (ver-lt $e.installed $e.latest) {
+            print $"  ($e.pkg): 已是最新（($e.installed)）"
+            continue
+        }
+        print $"  ($e.pkg): ($e.installed) -> ($e.latest)"
+        let reply = (try { input $"  现在构建并安装? [y/N] " } catch { 'n' })
+        if (($reply | str trim | str lowercase) in ['y' 'yes']) {
+            if not (run-live $"pkgbuild:($e.pkg)" $e.script) {
+                $failed = ($failed | append $"pkgbuild:($e.pkg)")
+            }
+        } else {
+            print '  已跳过'
+        }
     }
 
     let p = (plan $manifest)
