@@ -14,6 +14,7 @@ atuin                      = {}
 audacity                   = {}
 aurpublish                 = {}
 azure-cli                  = {}
+baidupcs-go                = {}
 bandwhich                  = {}
 base-devel                 = {}
 bash-completion            = {}
@@ -388,7 +389,8 @@ xorg-xwininfo                  = {}
 xorg-xwud                      = {}
 xwayland-satellite             = {}
 xwaylandvideobridge            = { aur = true }
-yaqmc-bin                      = {}
+# AUR 的 yaqmc-bin 长期停在 0.1.1；装最新版请跑 pkgbuilds/yaqmc-bin/update.sh
+yaqmc-bin                  = { aur = true }
 yaml-language-server           = {}
 yazi-git                       = {}
 ydotool                        = {}
