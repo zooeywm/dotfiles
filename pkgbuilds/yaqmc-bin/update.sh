@@ -8,6 +8,7 @@
 #   ./update.sh                # 取最新 release
 #   ./update.sh 0.1.2          # 指定版本
 #   ./update.sh 0.1.2 --no-install
+#   ./update.sh --check        # 只输出上游最新版本号（供 pacman.nu update 调用）
 #
 # 可调环境变量：
 #   GH_MIRROR=https://ghfast.top/   # 下载镜像（为空则直连）
@@ -21,10 +22,12 @@ cd "$WORKDIR"
 REPO=YAQMC/YAQMC
 MIRROR=${GH_MIRROR-https://ghfast.top/}
 NO_INSTALL=0
+CHECK=0
 VER=""
 for arg in "$@"; do
   case "$arg" in
     --no-install) NO_INSTALL=1 ;;
+    --check) CHECK=1 ;;
     -h|--help) sed -n '2,14p' "$0"; exit 0 ;;
     *) VER=$arg ;;
   esac
@@ -36,6 +39,7 @@ if [[ -z $VER ]]; then
         | sed -n 's/.*"tag_name": *"v\?\([^"]*\)".*/\1/p' | head -1)
 fi
 [[ -n $VER ]] || { echo "无法确定版本号，请显式传入，例如 ./update.sh 0.1.2" >&2; exit 1; }
+if (( CHECK )); then echo "$VER"; exit 0; fi
 echo "==> 目标版本: $VER"
 
 # ---- 2. 下载 ----
