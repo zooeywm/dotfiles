@@ -62,6 +62,7 @@ cliphist                   = {}
 cmake-language-server      = {}
 cmatrix                    = {}
 codespell                  = {}
+codex-desktop-git          = { aur = true }
 coppwr-bin                 = { aur = true }
 copyq                      = {}
 corplink-bin               = { aur = true }

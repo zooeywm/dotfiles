@@ -1,0 +1,14 @@
+[Desktop Entry]
+Categories=Development;
+Comment=ChatGPT 桌面端（codex-desktop-linux，pacman 包 codex-desktop-git）
+Exec=env BAMF_DESKTOP_FILE_HINT=/usr/share/applications/codex-desktop.desktop CHROME_DESKTOP=codex-desktop.desktop /usr/bin/codex-desktop %u
+Icon=codex-desktop
+Keywords=chatgpt;openai;gpt;ai;coding;assistant;
+MimeType=x-scheme-handler/codex;x-scheme-handler/codex-browser-sidebar;
+Name=Codex
+NoDisplay=false
+StartupNotify=true
+StartupWMClass=codex-desktop
+Terminal=false
+Type=Application
+X-GNOME-WMClass=codex-desktop
