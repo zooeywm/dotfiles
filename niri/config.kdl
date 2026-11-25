@@ -214,6 +214,16 @@ window-rule {
     default-window-height { proportion 0.60; }
 }
 
+// Codex 桌面端（pacman 包 codex-desktop-git）以浮动窗口打开。
+// dms/windowrules.kdl 里 DMS 生成过一条同名 open-floating false 规则，
+// 这里放在 include 之后，靠顺序覆盖它。
+window-rule {
+    match app-id=r#"^codex-desktop$"#
+    open-floating true
+    default-column-width { proportion 0.62; }
+    default-window-height { proportion 0.82; }
+}
+
 
 // 自定义快捷键：放在 dms/*.kdl include 之后，覆盖 DMS 生成的同名绑定。
 // app-toggle：按一下打开窗口，再按一下关闭（有托盘的 app 关闭时收进托盘，不退出、不开新实例）。
