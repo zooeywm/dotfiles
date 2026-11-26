@@ -22,6 +22,7 @@ bash-language-server       = {}
 bat                        = {}
 bc                         = {}
 bear                       = {}
+bibata-cursor-theme        = { aur = true }
 binary                     = {}
 biome                      = {}
 bottom                     = {}
