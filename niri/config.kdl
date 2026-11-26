@@ -126,8 +126,8 @@ prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/Screenshot-%Y-%m-%d_%H_%M_%S.png"
 
 cursor {
-    xcursor-theme "Breeze_Light"
-    xcursor-size 48
+    xcursor-theme "Bibata-Modern-Ice"
+    xcursor-size 24
 }
 
 animations {

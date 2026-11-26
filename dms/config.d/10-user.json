@@ -1,4 +1,5 @@
 {
+  "notificationDndWhileScreenSharing": false,
   "osdMediaPlaybackEnabled": false,
   "customPowerButtons": [
     {
@@ -22,7 +23,7 @@
   "matugenTemplateNeovim": true,
   "greeterPamExternallyManaged": true,
   "cursorSettings": {
-    "theme": "Breeze_Light",
+    "theme": "Bibata-Modern-Ice",
     "size": 24,
     "niri": {
       "hideWhenTyping": false,
