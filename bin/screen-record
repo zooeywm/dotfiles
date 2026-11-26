@@ -6,14 +6,22 @@ OUTDIR="$HOME/Videos/Screencasts"
 OUTFILE="$OUTDIR/vid-$(date +"%Y-%m-%d-%H%M%S").mp4"
 mkdir -p "$OUTDIR"
 
+# 通知只是附带的：set -e 下 notify-send 失败（比如通知服务没起来）
+# 会直接中断脚本，连录屏都起不来，所以一律吞掉返回值。
+notify() {
+    notify-send -a screen-record "$1" "${2:-}" || true
+}
+
 pid_count=$(fuser /usr/bin/wl-screenrec 2>/dev/null | wc -w)
 
 if [ "$pid_count" -gt 0 ]; then
     pkill wl-screenrec
+    notify "录屏结束" "已停止"
     exit 0
 fi
 
 get_geometry_hyprland() {
+    command -v hyprctl >/dev/null 2>&1 || return 1
     hyprctl monitors -j 2>/dev/null | jq -r '
 		.[] | select(.focused == true) |
 		"\(.x),\(.y) \(.width)x\(.height)"
@@ -21,6 +29,7 @@ get_geometry_hyprland() {
 }
 
 get_geometry_niri() {
+    command -v niri >/dev/null 2>&1 || return 1
     niri msg focused-output 2>/dev/null | awk '
         /Logical position:/ {
             split($3, a, ",")
@@ -37,25 +46,33 @@ get_geometry_niri() {
     '
 }
 
-# 获取 geometry
-if geometry=$(get_geometry_hyprland) && [ -n "$geometry" ]; then
-    :
-elif geometry=$(get_geometry_niri) && [ -n "$geometry" ]; then
-    :
-else
-    echo "screen-record: unable to detect monitor geometry" >&2
-    exit 1
-fi
-
 case "${1:-}" in
 area)
+    # area 模式不需要显示器 geometry：先选区域，选完再弹通知，
+    # 避免通知出现在拖选之前、也避免 geometry 探测失败导致一整个模式不可用。
+    if ! selection=$(slurp); then
+        echo "screen-record: selection cancelled" >&2
+        exit 1
+    fi
+    [ -n "$selection" ] || exit 1
+    notify "开始录屏" "区域 ${selection}"
     exec wl-screenrec \
         --audio \
         --audio-device="$AUDIO_DEV" \
         -f "$OUTFILE" \
-        -g "$(slurp)"
+        -g "$selection"
     ;;
 screen | "")
+    if geometry=$(get_geometry_hyprland) && [ -n "$geometry" ]; then
+        :
+    elif geometry=$(get_geometry_niri) && [ -n "$geometry" ]; then
+        :
+    else
+        echo "screen-record: unable to detect monitor geometry" >&2
+        notify "录屏失败" "无法获取显示器尺寸"
+        exit 1
+    fi
+    notify "开始录屏" "全屏 ${geometry}"
     exec wl-screenrec \
         --audio \
         --audio-device="$AUDIO_DEV" \
