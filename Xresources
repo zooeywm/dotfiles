@@ -7,4 +7,5 @@ Xft.hintstyle:  hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
-Xcursor.theme: Bibata-Modern-Ice
+! Xcursor.theme / Xcursor.size 由 DMS 的光标设置维护（DMS 会用 mv 原子重写这两行），
+! deploy.nu 部署时只替换基础行、保留当前文件里的 Xcursor.* 值；缺失时补默认 Bibata-Modern-Ice/24。

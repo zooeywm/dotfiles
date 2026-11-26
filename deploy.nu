@@ -23,7 +23,8 @@ def main [--dry-run (-n), --prune] {
         # hard-link on
         | target gtk/gtk-3.0 ~/.config/gtk-3.0 -h
         | target gtk/gtk-4.0 ~/.config/gtk-4.0 -h
-        | target Xresources ~/.Xresources -h
+        # Xresources 不做链接：DMS 会按光标设置重写 Xcursor.*（mv 原子替换），
+        # 链接必断。改为在 main 末尾调用 deploy-xresources 做内容合并。
         # hard-link off
         | target bin -p ~/.local
         | target cargo ~/.cargo
@@ -49,7 +50,8 @@ def main [--dry-run (-n), --prune] {
         | target qq-bwrap-flags.conf ~/.config/qq-bwrap-flags.conf
         | targets [memo applications] ~/.local/share
         | target autostart ~/.config/autostart
-        | each {|item| deploy-item $item --dry-run=$dry_run }
+        | each {|item| deploy-item $item --dry-run=$dry_run}
+        | append (deploy-xresources --dry-run=$dry_run)
     )
 
     let prune_result = (if $prune {
@@ -513,6 +515,42 @@ def link [
             { linked: 0, failed: [$"($src) => ($dest): ($r.stderr | str trim | str substring 0..200)"] }
         }
     }
+}
+
+# ~/.Xresources 由两方共同维护：仓库提供基础内容（Xft.* 等），DMS 按光标设置用
+# mv 原子重写 Xcursor.theme / Xcursor.size（所以硬链/软链必断）。这里做内容合并：
+# 基础行取自仓库，光标行沿用当前文件（DMS 维护），缺失时补默认值。
+def deploy-xresources [--dry-run] {
+    let src = (pwd | path join 'Xresources')
+    let dest = ($env.HOME | path join '.Xresources')
+    let pat = '^\s*Xcursor\.(theme|size):'
+    let base = (open $src | lines)
+    let live = (if ($dest | path exists) { open $dest | lines } else { [] })
+    let cur = ($live | where {|l| $l =~ $pat })
+    let cur2 = (if ($cur | is-empty) {
+            ['Xcursor.theme: Bibata-Modern-Ice' 'Xcursor.size: 24']
+        } else {
+            $cur
+        })
+    let body = ($base | where {|l| not ($l =~ $pat) })
+    let out = (($body | append $cur2) | str join (char nl)) + (char nl)
+    let desc = ($cur2 | each {|l| $l | str trim } | str join ', ')
+
+    if $dry_run {
+        log info $"[dry-run] merge Xresources => ($dest) [($desc)]"
+        return { linked: 0, failed: [] }
+    }
+
+    let old = (if ($dest | path exists) { open --raw $dest } else { '' })
+    if $old == $out {
+        return { linked: 0, failed: [] }
+    }
+    try { $out | save -f $dest } catch {|e|
+        return { linked: 0, failed: [$"Xresources: ($e.msg)"] }
+    }
+    try { ^xrdb -merge $dest } catch { }
+    log info $"merge Xresources => ($dest) [($desc)]"
+    { linked: 1, failed: [] }
 }
 
 # 删除指向本仓库、但目标已不存在的 symlink（文件已从仓库删除/改名）。
