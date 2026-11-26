@@ -1,3 +1,6 @@
 # Python 字节码缓存
 __pycache__/
 *.py[cod]
+
+# AGENTS.md 是本仓库的"系统规则"文档，必须入库（全局 gitignore 默认忽略它）
+!AGENTS.md
