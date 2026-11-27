@@ -63,6 +63,9 @@ function main(config, profileName) {
   ];
 
   const prependRules = [
+    // Antigravity（Google AI IDE）：真正的网络请求由它的 Go 语言服务器子进程发出，
+    // 进程名是 language_server 而非 antigravity；按完整路径匹配避免误伤别的 IDE。
+    `PROCESS-PATH,/opt/Antigravity/resources/bin/language_server,${AI_GROUP}`,
     // 微软官方下载/更新：直连（ISO、Windows Update、下载页 API），不消耗机场流量
     "DOMAIN-SUFFIX,microsoft.com,DIRECT",
     "DOMAIN-SUFFIX,windowsupdate.com,DIRECT",
