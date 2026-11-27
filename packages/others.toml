@@ -58,6 +58,7 @@ choose                     = {}
 google-chrome                  = {}
 clang                      = {}
 clash-verge-rev-bin        = { aur = true }
+claude-code                = { aur = true }
 clazy                      = {}
 cliphist                   = {}
 cmake-language-server      = {}
